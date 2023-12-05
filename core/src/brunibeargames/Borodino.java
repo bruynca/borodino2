@@ -66,7 +66,7 @@ public class Borodino implements ApplicationListener, GestureListener, InputProc
 		Gdx.graphics.setFullscreenMode(mode);
 //		Gdx.graphics.setWindowedMode((int)GamePreferences.getWindowSize().x, (int)GamePreferences.getWindowSize().y - 75);
 		Gdx.graphics.setUndecorated(false);
-		Gdx.graphics.setTitle("Ardennes");
+		Gdx.graphics.setTitle("Borodino");
 		Gdx.graphics.setWindowedMode(1920, 1080);
 		//		Gdx.graphics.setResizable(false);
 //			Gdx.graphics.setWindowedMode(1366, 600);
@@ -183,6 +183,16 @@ public class Borodino implements ApplicationListener, GestureListener, InputProc
 
 	 @Override
 	 public boolean scrolled(float amountX, float amountY) {
+//		 Gdx.app.log("Mouse Event", "Scrolled amountx="+amountX+" Amounty="+amountY);
+
+		 if (isMainMenu) {
+			 return false;
+		 }
+		 if (amountY < 0) {
+			 Screen.instance.ZoomBigger();
+		 } else if (amountY > 0) {
+			 Screen.instance.ZoomSmaller();
+		 }
 		 return false;
 	 }
 
