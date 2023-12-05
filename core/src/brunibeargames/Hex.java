@@ -1,0 +1,932 @@
+package brunibeargames;
+
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+
+import java.util.ArrayList;
+
+public class Hex {
+	//
+	// these constants are map area that has playable part
+	// rest of map is informational 
+	//   the hex table are goes x from 0 to 76 y from 0 to 21 
+	//
+	protected  static int xStart = 1; // 
+	protected  static int xEnd = 45;
+	protected  static int yStart = 1;
+	protected  static int yEnd = 31;
+	protected  static Hex[][] hexTable;
+	private static ArrayList<Hex> arrHexMap =  new ArrayList<Hex>();
+	public Hex[] tableSurroundHex = new Hex[6];
+    //	
+		//       1  2
+		//     0      3
+		//       5  4
+
+	private ArrayList<Hex> arrLeft = new ArrayList();
+	private ArrayList<Hex> arrRight = new ArrayList();
+
+
+
+	protected int xTable; // whete in hexTable this hex is
+	protected int yTable; // 
+	
+	public Hex(int xIn, int yIn)
+	{
+		xTable = xIn;
+		yTable = yIn;
+        hexTable[xIn][yIn] = this;
+ 	}
+
+
+	/**
+	 * Use current Hex
+	 * @return vector2 pointing at bottom right point
+	 */
+	public Vector2 GetDisplayCoord()
+	{
+		Polygon poly = Map.GetBackPoly(this);
+		float[] vertices = poly.getVertices();
+		Vector2 v1 = new Vector2(vertices[10],vertices[11]);
+		Vector2 v2 = Map.BackToWorld(v1);
+//		v2.y -= 30;
+//		v2.x += 50;
+		return v2;
+
+	}
+	public Vector2 GetMidPoint()
+	{
+		Polygon poly = Map.GetBackPoly(this);
+		float[] vertices = poly.getVertices();
+		Vector2 v1 = new Vector2();
+		v1.y = (vertices[0] + vertices[6]) / 2;
+		v1.x = vertices[0];
+		return v1;
+
+	}
+
+	public Vector2 GetDisplayCoordHex()
+	{
+		Polygon poly = Map.GetBackPoly(this);
+		float[] vertices = poly.getVertices();
+		Vector2 v1 = new Vector2(vertices[2],vertices[3]);
+		Vector2 v2 = Map.BackToWorld(v1);
+		v2.y -= 70; //65
+		v2.x -= 6; //10
+
+		return v2;
+
+	}
+	public String toString()
+	{
+		return new String(xTable+ " "+yTable);
+	}
+	/**
+	 *  Get Hex pointed to by screen location
+	 * @param x 
+	 * @param y
+	 * @return Hex
+	 */
+	static public Hex GetHexFromScreenPosition(float x, float y)
+	{
+	    Vector3 worldCoordinates = Screen.instance.GetCamera().unproject(new Vector3(x,y,0));
+	    Vector2 world = new Vector2(worldCoordinates.x, worldCoordinates.y);
+	    Vector2 back =  Map.WorldToBack(world);
+		Gdx.app.log("Hex", "Get Hex looking at x ="+back.x+" y="+back.y); 
+
+	    Vector2 pHex = Map.ConvertToHex(back);
+	    int xInt = (int)pHex.x;
+	    int yInt = (int)pHex.y;
+	    Hex hex = Hex.hexTable[xInt][yInt];
+	    return hex;
+	}
+	boolean isRoad = false;
+	boolean isClear = true;
+	boolean isTown = false;
+	boolean isPath = false;
+	boolean isBridge = false;
+	boolean isStreamBank = false;
+	boolean isRiverBank = false;
+	boolean isForest = false;
+	NoPath npath = null;
+	private ArrayList<Hex> arrSurroundHex = new ArrayList<Hex>();
+
+//	Stream stream;
+//	River river;
+	public ArrayList<Hex> GetSurround()
+	{
+		ArrayList<Hex> arrReturn = new ArrayList<Hex>();
+		arrReturn.addAll(arrSurroundHex);
+		return arrReturn;
+	}
+	public ArrayList<Hex> GetSurround(int length)
+	{
+		if (length == 0)
+		{
+			return GetSurround();
+		}
+
+		ArrayList<Hex>[] arrHexList = new ArrayList[length];
+		ArrayList<Hex> arrReturn =  new ArrayList<Hex>();
+
+		for (int i=0; i< length; i++)
+		{
+			if (i == 0)
+			{
+				arrHexList[i] = GetSurround();
+			}
+			else 
+			{
+				arrHexList[i] = new ArrayList<Hex>();
+				for (Hex hex:arrHexList[i-1])
+				{
+					arrHexList[i].addAll(hex.GetSurround());
+				}
+			}
+			arrReturn.addAll(arrHexList[i]);
+		}
+		AIUtil.RemoveDuplicateHex(arrReturn);
+		return arrReturn;
+	}
+
+
+
+
+
+
+	static int[][] roads = {{0,18},{1,17},{2,18},{3,17},{4,17},{5,16},{6,16},{7,16},{8,17},
+			{9,16},{10,16},{11,15},{12,15},{13,14},{14,14},{15,14},{16,14},{17,13},
+			{18,13},{19,12},{20,12},{21,11},{22,11},{23,10},{24,11},{25,10},{26,10},
+			{27,10},{28,10},{29,10},{30,11},{31,11},{32,12},{33,12},{34,12},{35,12},
+			{36,13},{37,12},{38,13},{39,12},{40,13},{41,13},{42,14},{43,13},{44,13},
+			{44,13},{44,14},{43,14},{42,15},{41,14},{40,15},{39,15},{38,16},
+			{37,15},{36,16},{35,16},{34,16},{33,16},{32,16},{31,16},{30,17},{29,17},
+			{28,18},{27,18},{26,19},{25,19},{24,20},{23,20},{22,21},{21,21},{21,22},
+			{20,23},{19,23},{19,24},{18,25},{17,24},{16,25},{15,24},{14,25},{13,25},
+			{12,26},{11,26},{11,27},{10,27},{9,27},{8,27},{7,27},{6,28},{5,28},
+			{4,29},{3,28},
+			{2,29},{1,28},{0,29}};
+	static int[][] path1 ={{0,23},{1,23},{2,24},{3,23},{4,23},{5,22},{6,22},{7,22},{8,23},{8,24},{8,25},{8,26},
+			{7,21},{8,22},{9,21},{10,21},{11,20},{12,21},{12,22},{13,22},{13,23},{14,24},{15,24},{16,25},
+			{16,26},{15,23},{15,22},{15,21},{16,21},{16,20},{16,19},{15,19},{14,19},{13,19},{12,20},{10,20},
+			{10,19},{9,18},{9,17},{8,17},{17,18},{16,18},{16,17},{15,16},{14,16},{13,15},{12,15},{12,14},
+			{11,13},{10,14},{9,13},{8,13},{7,12},{6,12},{7,11},{8,11},{9,10},{9,9},{9,8},{10,9},
+			{8,8},{7,8},{6,9},{5,9},{4,10},{3,9},{2,9},{1,9},{0,10},{11,9},{11,10},{12,11},
+			{13,11},{14,12},{15,12},{15,13},{16,14},{16,13},{16,12},{16,11},{17,10},{18,11},{19,11},{20,12},
+			{20,13},{20,14},{20,15},{20,16},{19,16},{20,17},{21,17},{22,17},{23,17},{24,18},{25,18},{25,19},
+			{25,20},{24,21},{24,22},{24,23},{25,23},{24,24},{23,24},{22,24},{21,24},{20,24},{28,26},{28,25},
+			{27,24},{26,24},{26,23},{27,22},{28,23},{28,22},{29,23},{30,24},{31,23},{32,24},{33,24},{34,25},
+			{34,26},{34,24},{35,23},{36,23},{37,23},{38,23},{39,22},{40,22},{41,21},{42,22},{41,22},{40,23},
+			{39,23},{38,24},{38,25},{38,26},{40,21},{40,20},{39,19},{39,18},{39,17},{39,16},{38,16},{32,16},
+			{33,16},{33,17},{33,18},{33,19},{34,20},{35,20},{35,21},{35,22},{28,21},{29,20},{30,20},{30,19},
+			{30,18},{30,17},{31,16},{32,16},{31,15},{30,16},{29,16},{28,16},{27,15},{26,15},{25,14},{24,15},
+			{24,16},{24,17},{25,17},{23,14},{22,14},{21,14},{23,13},{22,13},{21,12},{21,11},{17,9},{18,9},
+			{18,8},{19,7},{20,7},{19,6},{19,5},{18,5},{17,4},{16,5},{15,5},{14,5},{15,4},{16,4},
+			{13,5},{12,6},{11,6},{11,7},{10,8},{44,13},{44,12},{44,11},{44,10},{44,9},{44,8},{43,7},
+			{42,7},{42,6},{42,5},{41,4},{40,5},{39,4},{38,4},{43,13},{42,13},{42,12},{41,11},{40,11},
+			{39,10},{38,10},{37,9},{36,9},{36,10},{37,10},{37,11},{37,12},{35,8},{34,9},{33,9},{32,9},
+			{31,9},{30,10},{29,10},{29,9},{28,9},{27,8},{27,9},{26,8},{26,7},{28,8},{29,7},{30,7},
+			{30,6},{31,5},{32,5},{31,4},{30,4},{32,4},{25,7},{25,6},{24,8},{24,9},{23,9},{23,10},
+			{30,6},{32,3},{32,2},{31,1},{30,1},{29,0},{28,1},{27,1},{27,2},{28,3},{29,3},{36,3},
+			{37,3},{36,4},{36,5},{36,6},{24,3},{25,3},{27,14},
+			{36,7},{36,8},{18,0},{18,1},{17,1},{16,2},{26,6},
+			{15,2},{15,3},{15,4},{31,14},{31,13},{26,3},{26,4},{26,5},
+	        {34,25},{19,30},{20,30},{21,29},{22,30},{23,29},{24,29},{25,29},
+	         {26,29},{27,28},{28,28},{29,27},{30,27},{29,26},{31,27},{32,28},
+	         {33,27},{34,28},{34,27},{35,27},{36,27},{37,26},{38,27},{39,27},{40,28},
+	         {41,28},{42,28},{43,28},{44,28},{19,29},{19,28},
+				{23,02},{22,03},{21,03},{20,03},{19,03},{18,03},{17,03},{18,28},{17,27},{16,27}};
+	static int[][] stream1A = {{00,04},{01,03},{02,04},{03,03},{04,03},{05,03},{06,03},
+			{07,02},{8,03},{9,02},{10,03},{11,02},{12,02},{12,01},{13,01},{13,02}
+			,{13,03},{13,04},{13,05},{14,06},{15,06},{16,07},{17,07},{18,8},
+			{19,8},{20,8},{20,9},{20,10},{21,10},{21,11},{22,12},{23,11},
+			{24,11},{24,10},{25,9},{26,9},{26,8},{26,07},{27,8},{28,8},
+			{28,07},{28,06},{28,05},{27,04},{27,03},{28,03}};
+	static int[][] stream1B = {{0,4},{1,4},{2,3},{3,3},{4,3},{5,3},{6,2},
+			{6,1},{7,2},{8,2},{8,3},{8,4},{8,5},{8,6},{8,7},{9,8},{10,8},
+			{11,9},{12,9},{13,10},{14,10},{15,11},{16,10},{17,10},{17,11},{16,11},{16,12},
+			{17,13},{18,13},{18,14}};	
+	static int[][] stream2a = {{00,10},{01,9},{02,10},{03,9},{04,10},{05,9},{06,10},
+			{07,10},{8,11},{9,11},{10,12},{11,12},{12,12},{13,12},{13,13},{13,14},
+			{14,15},{15,15},{15,14},{16,14},{17,14},{18,14},{18,13},{19,12},{20,12}
+			,{21,11}};
+	static int[][] stream2b = {{14,10},{14,11},{13,12},{12,12},{11,13}};
+	static int[][] stream3a = {{25,3},{25,4},{24,4},{24,5},{24,6},{24,7},{25,8},{26,7},
+			{26,6},{25,9},{26,9},{23,8},{23,9},{23,10},{23,11},{22,10},{21,11},{21,12},
+			{22,12},{20,12},{20,13},{19,14},{18,14}};
+	static int[][] stream3b = {{26,2},{26,3},{26,4},{25,5},{25,6},{25,7},{26,5},{27,6},
+			{27,7},{27,8},{26,8},{27,9},{27,10},{26,10},{25,10},{24,9},{24,8},{24,10},
+			{24,11},{23,12},{22,11},{23,13},{22,13},{21,13},{21,14},{20,14},{19,15}}; 
+	static int[][] stream4a = {{1,13},{1,14},{2,14},{3,15},{4,15},{5,16},{6,15},{7,16},
+			{7,17},{8,17},{8,18},{9,19},{10,19},{11,20},{12,20},{13,21},{14,21},{14,22},
+			{14,23},{14,24}};
+	static int[][] stream4b= {{0,13},{0,14},{1,15},{2,15},{3,16},{4,16},{5,17},{6,16},
+			{6,17},{7,18},{7,19},{8,19},{9,20},{10,20},{11,21},{12,21},{13,22},{13,23},{13,24}};
+	static int[][] stream5a = {{34,17},{34,16},{33,16},{32,15},{31,15},{30,14},{29,14},{28,13},
+			{27,14},{26,13},{25,13},{24,12},{23,13},{22,13},{21,14},{20,14},{19,14},{18,14},
+			{17,15},{16,15},{15,16},{14,16},{14,17},{13,18},{12,18},{11,18},{10,18},{10,19},
+			{9,20},{8,20},{7,21},{7,22},{6,22},{7,24},{5,23},{5,24},{5,25},
+			{4,25},{4,26},{5,27}};
+	static int[][] stream5b = {{33,18},{33,17},{32,16},{31,16},{30,15},{29,15},{28,14},{27,15},
+			{26,14},{25,14},{24,13},{23,14},{22,14},{21,15},{20,15},{19,15},{18,15},{17,16},
+			{16,16},{15,17},{15,18},{14,18},{13,19},{12,19},{11,19},{11,20},{10,20},{9,21},{8,21}
+			,{8,22},{7,23},{6,23},{6,24},{6,25},{5,26},{6,26},{6,27}};
+	static int[][] stream6a ={{23,0},{23,1},{22,1},{22,2},{23,3},{24,3},{25,3},{26,2},
+			{27,2},{28,1},{28,2},{29,3},{29,4},{30,4},{31,5},{31,6},{32,6},{33,6},
+			{34,5},{34,4},{35,5},{36,4},{33,7},{33,8},{34,8},{35,9},{36,9},{37,9},
+			{38,8},{38,9},{38,10},{38,11},{39,12},{40,11},{40,10},{41,10},{41,9},{41,8},
+			{42,7},{42,8},{42,9},{42,10},{43,11},{44,11},{45,12},{46,11},{47,11},{47,10},
+			{47,9}};
+	static int[][] stream6B = {{24,0},{24,1},{23,2},{24,2},{25,2},{26,1},{27,1},{28,0},{29,1},{29,2},
+			{30,2},{30,3},{31,4},{32,4},{32,5},{33,5},{33,4},{34,3},{35,4},{36,3},{37,4},{37,5},
+			{36,5},{35,6},{34,6},{34,7},{35,8},{36,8},{37,8},{38,7},{39,8},{39,9},{39,10},{39,11},{40,9},
+			{40,8},{40,7},{41,7},{42,6},{43,7},{43,8},{43,9},{43,10},{44,10},{45,11},{46,10},{46,9},{46,8},
+			{47,8}};
+	static int[][] stream7a = {{12,26},{11,27},{10,27},{9,28},{9,29},{9,30},{9,31},{9,32},{8,32},{8,33},
+			{7,34},{6,34},{5,35},{4,35},{4,36},{5,37},{4,37}};
+	static int[][] stream7b ={{12,27},{11,28},{10,28},{10,29},{10,30},{10,31},
+			{10,32},{9,33},{9,34},{8,34},{7,35},{6,35},{5,36},{6,36},{6,37}};
+	static int[][] stream8a = {{43,24},{44,24},{45,25},{46,25},{47,26},{47,27},{47,29},{46,29},{45,29},{44,29},
+			{43,30},{43,31},{42,31},{41,31},{40,31},{42,32},{41,33},{40,33},{41,34},{41,35},{40,35},{39,35},{38,35},
+			{38,36},{37,37},{36,36},{35,37},{34,36},{33,37},{32,37}};
+	static int[][] stream8b ={{32,36},{33,36},{34,35},{35,36},{36,35},{37,36},{37,35},{38,34},{40,34},{39,34},{39,33},
+			{40,32},{41,32},{39,32},{39,31},{40,30},{41,30},{42,30},{42,29},{43,29},{44,28},
+			{44,25},{43,25},{42,24}};
+	static int[][] stream9a = {{23,32},{22,32},{22,33},{22,34},{22,35},{22,36},{22,37}};
+	static int[][] stream9b = {{24,32},{23,33},{23,34},{23,35},{23,36},{23,37}};
+	static int[][] stream10a = {{18,17},{18,15},{18,16},{18,17},{19,18},{20,18},{21,19},{22,19}};
+	static int[][] stream10b = {{19,15},{19,16},{19,17},{20,17},{21,18},{22,18},{23,19}};
+	static int[][] stream11a = {{33,31},{33,32},{33,33},{33,34},{34,34},{35,35},{35,36}};
+	static int[][] stream11b = {{32,31},{32,32},{32,33},{32,34},{33,35},{34,35}};
+	static int[][] stream12a = {{4,34},{20,8},{21,9},{22,9},{23,10},{36,12},{37,13},{38,12},{38,11},{38,10}};
+	static int[][] stream12b = {{4,35},{20,9},{21,10},{22,10},{23,11},{37,12},{37,11},{37,10},{38,9}};
+	static int[][] stream13a = {{5,28},{6,28},{7,29},{7,30},{8,30},{9,31}};
+	static int[][] stream13b = {{6,27},{7,28},{8,28},{8,29},{9,30}};
+	static int[][] stream14a = {{10,28},{10,29},{11,30}};
+	static int[][] stream14b = {{11,28},{11,29},{12,29}};
+	static int[][] stream15a = {{3,23},{0,20},{1,21},{2,21},{3,22},{3,24},{4,24},{3,23}};
+	static int[][] stream15b = {{3,25},{2,24},{2,23},{2,22},{1,22},{0,21}};
+	static int[][] stream16a = {{0,24},{1,24},{2,23}};
+	static int[][] stream16b = {{2,25},{1,25},{2,24}};
+	static int[][] stream17a = {{41,9},{42,9},{42,10},{42,11},{41,12},{40,12}};
+	static int[][] stream17b = {{41,10},{41,11},{40,11}};
+	static int[][] stream18a = {{45,12},{45,13},{44,13},{44,14},{44,15}};
+	static int[][] stream18b = {{46,11},{46,12},{46,13},{45,14},{45,15}};
+	static int[][] stream19a = {{29,8},{29,7},{30,6},{31,6},{6,0},{22,2},{21,3},{20,3},{19,4},{31,6},{30,6},{29,7},{29,8}};
+	static int[][] stream19b = {{30,7},{31,7},{32,6},{7,0},{23,3},{22,3},{21,4},{20,4},{32,6},{31,7},{30,7},{7,1}
+	};
+	static int[][][] nopath =
+			{{{36,8},{36,9}},{{36,10},{37,9}},{{30,10},{29,9}},{{28,8},{28,9}},{{28,9},{27,9}},{{26,07},{26,06}},{{25,07},{26,07}},{{26,04},{25,03}},
+			{{31,05},{31,04}},{{31,04},{32,04}},{{15,05},{15,04}},{{16,05},{16,04}},{{19,07},{19,06}},
+			{{16,13},{15,13}},{{16,13},{15,12}},{{10,9},{10,8}},{{9,9},{10,9}},
+			{{07,12},{07,11}},{{07,22},{07,21}},{{07,22},{8,22}},{{10,21},{10,20}},{{12,21},{12,20}}
+   			,{{15,23},{14,24}},{{16,19},{16,18}},{{24,18},{25,17}},{{24,17},{24,18}},
+			{{24,24},{24,23}},{{26,24},{26,23}},{{28,23},{28,22}},{{29,27},{29,26}},{{33,27},{34,27}},
+			{{34,25},{34,24}},{{35,27},{34,27}},{{35,22},{36,23}},{{38,27},{38,26}},
+			{{38,24},{38,23}},{{39,22},{39,23}},{{40,22},{40,23}},{{40,21},{40,22}},
+			{{41,21},{41,22}},{{41,22},{40,22}},{{20,16},{20,17}},{{20,14},{21,14}},
+			{{28,16},{28,15}},{{31,16},{30,16}},{{30,16},{30,17}},{{30,14},{31,14}},
+			{{23,14},{23,13}},{{36,04},{37,03}},{{15,03},{16,04}},{{20,13},{21,12}}};
+	static int[][] forest = {{9,18},{10,5},{8,4},{0,0},{1,0},{0,1},{2,0},{3,0},{4,0},
+			{5,0},{6,0},{7,0},{8,0},{7,1},{7,2},{8,3},{9,3},
+			{9,2},{10,3},{11,2},{12,2},{13,2},{12,3},{13,3},{12,4},
+			{11,3},{11,4},{10,4},{11,5},{12,6},{12,7},{11,6},{10,6},
+			{9,6},{9,5},{9,4},{8,5},{7,4},{7,3},{6,4},{6,5},
+			{5,4},{4,4},{3,3},{2,3},{1,2},{0,3},{0,4},{1,3},
+			{2,4},{0,5},{1,4},{2,5},{3,4},{4,5},{0,6},{1,5},
+			{2,6},{3,5},{4,6},{5,5},{6,6},{7,5},{8,6},{7,6},
+			{6,7},{5,6},{5,7},{4,7},{3,6},{2,7},{1,6},{0,7},
+			{0,8},{0,9},{0,10},{0,11},{1,10},{1,11},{0,12},{0,13},
+			{1,12},{1,13},{2,15},{2,14},{2,13},{2,12},{2,11},{3,10},
+			{3,11},{4,11},{5,10},{5,11},{4,12},{3,12},{3,13},{2,15},
+			{3,14},{4,15},{4,14},{5,14},{6,14},{6,15},{7,15},{7,14},
+			{7,13},{6,13},{8,13},{8,14},{8,15},{9,15},{9,14},{8,12},
+			{8,11},{9,10},{8,10},{7,9},{9,9},{10,9},{10,8},{10,7},
+			{11,7},{11,8},{11,9},{11,10},{11,11},{10,12},{10,11},{10,10},
+			{12,11},{13,11},{13,10},{13,9},{12,10},{12,9},{12,8},{13,7},
+			{14,7},{14,8},{15,7},{16,7},{16,5},{17,7},{17,8},{16,8},
+			{16,9},{15,8},{15,9},{14,9},{14,10},{15,10},{16,11},{15,11},
+			{14,11},{16,12},{17,11},{18,12},{17,12},{16,6},{16,4},{16,3},
+			{17,2},{18,2},{19,2},{20, 3},{19,3},{18,3},{18,4},{18,5},
+			{21,3},{22,3},{23,2},{23,1},{24,2},{24,1},{24,0},{26,1},
+			{27,0},{0,0},{28,6},{29,5},{28,5},{29,4},{28,4},{29,3},
+			{0,0},{32,0},{32,1},{33,1},{33,0},{0,0},{34,0},{34,1},
+			{35,0},{35,1},{36,1},{36,2},{36,0},{37,0},{37,1},{37,2},
+			{38,2},{38,1},{38,0},{39,0},{40,0},{40,1},{40,2},{39,2},
+			{39,3},{38,3},{41,0},{42,1},{43,0},{42,0},{44,0},{44,1},
+			{44,2},{44,3},{44,4},{43,3},{43,2},{43,1},{42,2},{42,3},
+			{42,4},{41,3},{40,4},{40,3},{39,4},{39,5},{37,3},{36,4},
+			{36,5},{30,8},{31,8},{31,9},{30,9},{29,8},{28,9},{29,9},
+			{30,10},{31,10},{32,11},{35,10},{35,11},{36,11},{36,12},{37,10},
+			{37,11},{37,12},{38,12},{38,11},{39,11},{40,12},{41,12},{42,12},
+			{41,11},{40,11},{41,10},{41,9},{42,10},{42,14},{43,15},{43,16},
+			{43,17},{42,17},{42,16},{42,15},{41,14},{41,15},{41,16},{41,17},
+			{40,18},{40,17},{40,16},{40,15},{39,15},{39,16},{39,17},{39,18},
+			{38,15},{38,16},{38,17},{38,18},{38,19},{38,20},{38,21},{39,20},
+			{39,19},{37,14},{37,15},{37,16},{37,17},{37,18},{37,19},{37,20},
+			{37,21},{36,14},{36,15},{36,16},{36,17},{36,18},{36,19},{36,20},
+			{36,21},{35,14},{35,15},{35,16},{35,17},{35,18},{35,19},{35,21},
+			{34,16},{34,17},{34,18},{34,19},{33,16},{33,17},{33,18},{33,19},
+			{33,20},{34,21},{33,21},{32,17},{32,18},{32,14},{32,15},{33,14},
+			{33,13},{32,19},{32,20},{32,21},{31,17},{31,18},{31,19},{31,20},
+			{31,21},{30,18},{30,19},{30,20},{30,21},{29,18},{29,19},{29,20},
+			{29,21},{28,20},{28,21},{30,16},{30,15},{30,14},{29,14},{28,14},
+			{28,15},{29,15},{30,16},{28,16},{27,21},{25,21},{28,18},{27,17},
+			{26,17},{25,16},{25,17},{26,18},{24,18},{24,17},{23,18},{23,19},
+			{22,19},{22,20},{22,21},{21,15},{21,14},{21,13},{21,12},{21,21},
+			{21,20},{21,19},{21,18},{20,19},{20,20},{20,21},{0,0},{19,19},
+			{19,20},{19,21},{18,19},{18,20},{18,21},{17,19},{17,20},{17,21},
+			{16,19},{16,20},{15,17},{14,17},{13,17},{14,18},{15,18},{15,19},
+			{14,19},{13,18},{14,20},{15,20},{14,21},{13,21},{0,20},{0,21},
+			{1,20},{1,19},{2,20},{2,19},{3,18},{3,19},{4,19},{4,20},
+			{5,18},{5,19},{6,20},{6,19},{7,18},{7,19},{18,21},{18,21},
+			{0,25},{0,26},{0,27},{0,28},{1,25},{1,26},{1,27},{2,26},
+			{2,27},{3,27},{3,26},{3,25},{4,25},{4,26},{4,27},{5,26},
+			{5,25},{5,24},{6,24},{7,24},{7,25},{6,25},{6,26},{6,27},
+			{1,30},{2,30},{3,29},{3,30},{4,30},{5,29},{5,30},{6,29},
+			{6,30},{7,29},{7,30},{8,30},{9,30},{9,29},{9,28},{8,29},
+			{10,30},{10,29},{10,28},{9,27},{9,26},{9,25},{9,24},{9,23},
+			{9,22},{10,22},{11,22},{12,23},{12,22},{13,22},{13,23},{14,22},
+			{11,23},{11,24},{10,25},{11,25},{10,26},{11,26},{10,27},{11,27},
+			{11,28},{11,29},{12,30},{12,29},{12,28},{12,27},{12,26},{12,25},
+			{12,24},{13,24},{13,25},{13,26},{13,27},{13,28},{14,28},{14,27},
+			{15,27},{15,26},{16,26},{17,26},{17,25},{17,22},{18,22},{18,23},
+			{18,24},{18,25},{18,26},{18,27},{19,22},{19,23},{19,24},{19,25},
+			{19,26},{19,27},{20,22},{20,23},{20,24},{20,25},{20,26},{20,27},
+			{21,28},{21,27},{21,26},{21,25},{21,24},{21,23},{21,22},{22,22},
+			{22,23},{22,24},{22,25},{22,26},{22,27},{22,28},{23,26},{23,25},
+			{23,24},{24,22},{26,22},{28,22},{27,24},{28,24},{28,25},{27,27},
+			{28,28},{28,29},{29,29},{29,28},{30,29},{29,27},{29,26},{29,25},
+			{29,24},{29,23},{30,24},{30,25},{30,26},{30,27},{30,28},{31,28},
+			{31,27},{31,26},{31,25},{31,24},{32,26},{32,27},{32,28},{33,26},
+			{30,23},{30,22},{29,22},{32,23},{31,22},{32,22},{31,23},{33,22},
+			{34,22},{38,22},{38,23},{37,23},{38,24},{38,25},{36,25},{37,25},
+			{38,26},{39,25},{37,26},{37,27},{36,27},{36,26},{36,25},{41,23},
+			{41,24},{42,24},{43,23},{43,24},{44,25},{44,24},{44,23},{0,0},
+			{42,29},{42,30},{41,29},{40,30},{40,29},{39,28},{39,29},{38,30},
+			{38,29},{37,29},{14,25},{41,2},{19,18},{41,1},{39,1},{13,8},{9,11}};
+	static int[][] town = {{2,11},{12,8},{9,7},{14,0},{20,1},{24,3},{16,9},{23,9},{19,14},{11,18},{10,20},
+			{2,21},{2,11},{20,1},{24,3},{32,6},{37,4},{37,12},{46,9},{46,17},{30,17},{31,15},{25,13},{23,19},{16,21},
+			{19,14},{23,9},{10,20},{2,21},{36,29},{44,28},{40,34},{34,35},{23,30},{10,31},{0,27},{5,26},{13,23},{23,25}};
+	static int[][] bridges = {{13,5},{14,5},{7,11},{8,11},{12,15},{13,14},{4,17},{5,16},{10,19},{10,20},{14,16},
+			{15,16},{21,11},{22,11},{22,13},{21,12},{32,13},{33,12},{33,12},{36,7},{36,6},
+			{32,4},{32,5},{27,2},{27,1},{44,8},{43,7},{12,15},
+			{18,8},{19,7},{10,21},{11,20},{25,6},{23,10},{25,7},{24,11},
+			{32,13},{26,7},{24,15},{25,14},{20,12},{20,13}};
+
+	public static void LoadHexes()
+	{
+		hexTable = new Hex[xEnd][yEnd];
+		for (int x=0; x< xEnd; x++)
+		{
+			for (int y=0; y < yEnd; y++)
+			{
+				hexTable[x][y] = new Hex(x, y);
+				arrHexMap.add(hexTable[x][y]);
+			}
+		}
+		LoadRoads();
+		LoadPaths();
+//		LoadTowns();
+		LoadForest();
+		//LoadRiversStream();
+		LoadBridges();
+		LoadSurround();
+
+	}
+
+
+	private static void LoadSurround()
+	{
+
+		for (Hex hex:arrHexMap)
+		{
+			hex.arrSurroundHex = HexSurround.getSurrounMapArrNoNullArrayList(hex, 1);
+			hex.arrLeft.addAll(hex.arrSurroundHex);
+			hex.arrRight.addAll(hex.arrSurroundHex);
+			int yHex = hex.yTable;
+			int xHex = hex.xTable;
+//		     Gdx.app.log("Hex", "Load Surround  Hex="+ hex.toString());
+
+			for (Hex hexCheck:hex.arrSurroundHex)
+			{
+				int yHexCheck = hexCheck.yTable; 
+				int xHexCheck = hexCheck.xTable; 
+				
+				if (xHex % 2 == 0 ) // even
+				{
+					/**
+					 *  for even
+					 *  on left must be less x
+					 */
+					if (yHexCheck > yHex)
+					{
+						hex.arrLeft.remove(hexCheck);
+						if (xHex == xHexCheck)
+						{
+							hex.tableSurroundHex[3] = hexCheck;
+						}else if ( xHex < xHexCheck)
+						{
+							hex.tableSurroundHex[2] = hexCheck;
+						}else
+						{
+							hex.tableSurroundHex[4] = hexCheck;
+						}
+					}
+					else
+					{
+						hex.arrRight.remove(hexCheck);
+						if (xHex == xHexCheck)
+						{
+							hex.tableSurroundHex[0] = hexCheck;
+						}else if ( xHex < xHexCheck)
+						{
+							hex.tableSurroundHex[1] = hexCheck;
+						}else
+						{
+							hex.tableSurroundHex[5] = hexCheck;
+						}
+
+					}
+				}
+				else  // odd 
+ 				{
+					/** for odd
+					 *   on right must be greater x
+					 */
+					if (yHexCheck < yHex)
+					{
+						hex.arrRight.remove(hexCheck);
+						if (xHex == xHexCheck)
+						{
+							hex.tableSurroundHex[0] = hexCheck;
+						}else if ( xHex < xHexCheck)
+						{
+							hex.tableSurroundHex[1] = hexCheck;
+						}else
+						{
+							hex.tableSurroundHex[5] = hexCheck;
+						}
+
+						
+					}
+					else
+					{
+						hex.arrLeft.remove(hexCheck);
+						if (xHex == xHexCheck)
+						{
+							hex.tableSurroundHex[3] = hexCheck;
+						}
+						else if ( xHex < xHexCheck)
+						{
+							hex.tableSurroundHex[2] = hexCheck;
+						}else
+						{
+							hex.tableSurroundHex[4] = hexCheck;
+						}
+					}
+
+					
+				}
+			}
+		}
+		int i=0;
+
+		i++;
+	}
+
+
+
+	private static void LoadRiversStream()
+	{
+		River river = new River(true); // if stream set to true;
+		for (int i=0; i <stream1A.length; i++)
+		{
+			int x = stream1A[i][0];
+			int y = stream1A[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addAbank(hex);
+		}
+		for (int i=0; i <stream1B.length; i++)
+		{
+			int x = stream1B[i][0];
+			int y = stream1B[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addBbank(hex);
+		}
+
+		river = new River(true); // if stream set to true;
+		for (int i=0; i <stream2a.length; i++)
+		{
+			int x = stream2a[i][0];
+			int y = stream2a[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addAbank(hex);
+		}
+		for (int i=0; i <stream2b.length; i++)
+		{
+			int x = stream2b[i][0];
+			int y = stream2b[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addBbank(hex);
+		}
+		river = new River(true); // if stream set to true;
+		for (int i=0; i <stream3a.length; i++)
+		{
+			int x = stream3a[i][0];
+			int y = stream3a[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addAbank(hex);
+		}
+		for (int i=0; i <stream3b.length; i++)
+		{
+			int x = stream3b[i][0];
+			int y = stream3b[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addBbank(hex);
+		}
+		river = new River(true); // if stream set to true;
+		for (int i=0; i <stream4a.length; i++)
+		{
+			int x = stream4a[i][0];
+			int y = stream4a[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addAbank(hex);
+		}
+		for (int i=0; i <stream4b.length; i++)
+		{
+			int x = stream4b[i][0];
+			int y = stream4b[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addBbank(hex);
+		}
+		river = new River(true); // if stream set to true;
+		for (int i=0; i <stream5a.length; i++)
+		{
+			int x = stream5a[i][0];
+			int y = stream5a[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addAbank(hex);
+		}
+		for (int i=0; i <stream5b.length; i++)
+		{
+			int x = stream5b[i][0];
+			int y = stream5b[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addBbank(hex);
+		}
+		river = new River(false); // if stream set to true;
+		for (int i=0; i <stream6a.length; i++)
+		{
+			int x = stream6a[i][0];
+			int y = stream6a[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isRiverBank = true;
+			river.addAbank(hex);
+		}
+		for (int i=0; i <stream6B.length; i++)
+		{
+			int x = stream6B[i][0];
+			int y = stream6B[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addBbank(hex);
+		}
+		river = new River(true); // if stream set to true;
+		for (int i=0; i <stream7a.length; i++)
+		{
+			int x = stream7a[i][0];
+			int y = stream7a[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addAbank(hex);
+		}
+		for (int i=0; i <stream7b.length; i++)
+		{
+			int x = stream7b[i][0];
+			int y = stream7b[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addBbank(hex);
+		}
+		river = new River(true); // if stream set to true;
+		for (int i=0; i <stream8a.length; i++)
+		{
+			int x = stream8a[i][0];
+			int y = stream8a[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addAbank(hex);
+		}
+		for (int i=0; i <stream8b.length; i++)
+		{
+			int x = stream8b[i][0];
+			int y = stream8b[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addBbank(hex);
+		}
+		river = new River(true); // if stream set to true;
+		for (int i=0; i <stream9a.length; i++)
+		{
+			int x = stream9a[i][0];
+			int y = stream9a[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addAbank(hex);
+		}
+		for (int i=0; i <stream9b.length; i++)
+		{
+			int x = stream9b[i][0];
+			int y = stream9b[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addBbank(hex);
+		}
+		river = new River(true); // if stream set to true;
+		for (int i=0; i <stream10a.length; i++)
+		{
+			int x = stream10a[i][0];
+			int y = stream10a[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addAbank(hex);
+		}
+		for (int i=0; i <stream10b.length; i++)
+		{
+			int x = stream10b[i][0];
+			int y = stream10b[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addBbank(hex);
+		}
+		river = new River(true); // if stream set to true;
+		for (int i=0; i <stream11a.length; i++)
+		{
+			int x = stream11a[i][0];
+			int y = stream11a[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addAbank(hex);
+		}
+		for (int i=0; i <stream11b.length; i++)
+		{
+			int x = stream11b[i][0];
+			int y = stream11b[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addBbank(hex);
+		}
+		river = new River(true); // if stream set to true;
+		for (int i=0; i <stream12a.length; i++)
+		{
+			int x = stream12a[i][0];
+			int y = stream12a[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addAbank(hex);
+		}
+		for (int i=0; i <stream12b.length; i++)
+		{
+			int x = stream12b[i][0];
+			int y = stream12b[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addBbank(hex);
+		}
+		river = new River(true); // if stream set to true;
+		for (int i=0; i <stream13a.length; i++)
+		{
+			int x = stream13a[i][0];
+			int y = stream13a[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addAbank(hex);
+		}
+		for (int i=0; i <stream13b.length; i++)
+		{
+			int x = stream13b[i][0];
+			int y = stream13b[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addBbank(hex);
+		}
+		river = new River(true); // if stream set to true;
+		for (int i=0; i <stream14a.length; i++)
+		{
+			int x = stream14a[i][0];
+			int y = stream14a[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addAbank(hex);
+		}
+		for (int i=0; i <stream14b.length; i++)
+		{
+			int x = stream14b[i][0];
+			int y = stream14b[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addBbank(hex);
+		}
+		river = new River(true); // if stream set to true;
+		for (int i=0; i <stream15a.length; i++)
+		{
+			int x = stream15a[i][0];
+			int y = stream15a[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addAbank(hex);
+		}
+		for (int i=0; i <stream15b.length; i++)
+		{
+			int x = stream15b[i][0];
+			int y = stream15b[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addBbank(hex);
+		}
+		river = new River(true); // if stream set to true;
+		for (int i=0; i <stream16a.length; i++)
+		{
+			int x = stream16a[i][0];
+			int y = stream16a[i][1];
+			
+			
+			
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addAbank(hex);
+		}
+		for (int i=0; i <stream16b.length; i++)
+		{
+			int x = stream16b[i][0];
+			int y = stream16b[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addBbank(hex);
+		}
+		river = new River(true); // if stream set to true;
+		for (int i=0; i <stream17a.length; i++)
+		{
+			int x = stream17a[i][0];
+			int y = stream17a[i][1];
+			
+			
+			
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addAbank(hex);
+		}
+		for (int i=0; i <stream17b.length; i++)
+		{
+			int x = stream17b[i][0];
+			int y = stream17b[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addBbank(hex);
+		}
+		river = new River(true); // if stream set to true;
+		for (int i=0; i <stream18a.length; i++)
+		{
+			int x = stream18a[i][0];
+			int y = stream18a[i][1];
+			
+			
+			
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addAbank(hex);
+		}
+		for (int i=0; i <stream18b.length; i++)
+		{
+			int x = stream18b[i][0];
+			int y = stream18b[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addBbank(hex);
+		}
+		river = new River(true); // if stream set to true;
+		for (int i=0; i <stream19a.length; i++)
+		{
+			int x = stream19a[i][0];
+			int y = stream19a[i][1];
+			
+			
+			
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addAbank(hex);
+		}
+		for (int i=0; i <stream19b.length; i++)
+		{
+			int x = stream19b[i][0];
+			int y = stream19b[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isStreamBank = true;
+			river.addBbank(hex);
+		}
+
+	}
+
+
+	private static void LoadForest() {
+		for (int i=0; i <forest.length; i++)
+		{
+			int x = forest[i][0];
+			int y = forest[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isForest = true;
+		}
+
+
+	}
+
+
+	private static void LoadTowns() {
+		for (int i=0; i <town.length; i++)
+		{
+			int x = town[i][0];
+			int y = town[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isTown = true;
+		}
+
+	}
+
+
+	private static void LoadPaths() {
+		for (int i=0; i <path1.length; i++)
+		{
+			int x = path1[i][0];
+			int y = path1[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isPath = true;
+		}
+		NoPath.clear();
+		for (int i=0; i<nopath.length; i++){;
+			int x = nopath[i][0][0];
+			int y = nopath[i][0][1];
+			Hex hex1= hexTable[x][y];
+			x = nopath[i][1][0];
+			y = nopath[i][1][1];
+			Hex hex2= hexTable[x][y];
+			hex1.npath = new NoPath(hex1,hex2);
+			hex2.npath = new NoPath(hex2,hex1);
+		}
+
+	}
+	public boolean isPathTo(Hex hex){
+		if (npath == null){
+			return true;
+		}
+		if (!npath.arrHexesNoPath.contains(hex)){
+			return true;
+		}
+		return false;
+	}
+	private static void LoadBridges()
+	{
+		for (int i=0; i <bridges.length; i++)
+		{
+			int x = bridges[i][0];
+			int y = bridges[i][1];
+			Hex hex1= hexTable[x][y];
+			hex1.isBridge = true;
+		}
+		
+	}
+
+
+
+	private static void LoadRoads() {
+		for (int i=0; i <roads.length; i++)
+		{
+			int x = roads[i][0];
+			int y = roads[i][1];
+			Hex hex= hexTable[x][y];
+			hex.isRoad = true;
+		}
+
+	}
+
+
+
+
+
+
+
+
+}
