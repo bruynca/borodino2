@@ -109,6 +109,7 @@ public class Hex {
 	boolean isPath = false;
 	boolean isBridge = false;
 	boolean isStreamBank = false;
+	int streamBank = 0;
 	boolean isRiverBank = false;
 	boolean isForest = false;
 	NoPath npath = null;
@@ -199,85 +200,41 @@ public class Hex {
 	         {33,27},{34,28},{34,27},{35,27},{36,27},{37,26},{38,27},{39,27},{40,28},
 	         {41,28},{42,28},{43,28},{44,28},{19,29},{19,28},
 				{23,02},{22,03},{21,03},{20,03},{19,03},{18,03},{17,03},{18,28},{17,27},{16,27}};
-	static int[][] stream1A = {{00,04},{01,03},{02,04},{03,03},{04,03},{05,03},{06,03},
-			{07,02},{8,03},{9,02},{10,03},{11,02},{12,02},{12,01},{13,01},{13,02}
-			,{13,03},{13,04},{13,05},{14,06},{15,06},{16,07},{17,07},{18,8},
-			{19,8},{20,8},{20,9},{20,10},{21,10},{21,11},{22,12},{23,11},
-			{24,11},{24,10},{25,9},{26,9},{26,8},{26,07},{27,8},{28,8},
-			{28,07},{28,06},{28,05},{27,04},{27,03},{28,03}};
-	static int[][] stream1B = {{0,4},{1,4},{2,3},{3,3},{4,3},{5,3},{6,2},
-			{6,1},{7,2},{8,2},{8,3},{8,4},{8,5},{8,6},{8,7},{9,8},{10,8},
-			{11,9},{12,9},{13,10},{14,10},{15,11},{16,10},{17,10},{17,11},{16,11},{16,12},
-			{17,13},{18,13},{18,14}};	
-	static int[][] stream2a = {{00,10},{01,9},{02,10},{03,9},{04,10},{05,9},{06,10},
-			{07,10},{8,11},{9,11},{10,12},{11,12},{12,12},{13,12},{13,13},{13,14},
-			{14,15},{15,15},{15,14},{16,14},{17,14},{18,14},{18,13},{19,12},{20,12}
-			,{21,11}};
-	static int[][] stream2b = {{14,10},{14,11},{13,12},{12,12},{11,13}};
-	static int[][] stream3a = {{25,3},{25,4},{24,4},{24,5},{24,6},{24,7},{25,8},{26,7},
-			{26,6},{25,9},{26,9},{23,8},{23,9},{23,10},{23,11},{22,10},{21,11},{21,12},
-			{22,12},{20,12},{20,13},{19,14},{18,14}};
-	static int[][] stream3b = {{26,2},{26,3},{26,4},{25,5},{25,6},{25,7},{26,5},{27,6},
-			{27,7},{27,8},{26,8},{27,9},{27,10},{26,10},{25,10},{24,9},{24,8},{24,10},
-			{24,11},{23,12},{22,11},{23,13},{22,13},{21,13},{21,14},{20,14},{19,15}}; 
-	static int[][] stream4a = {{1,13},{1,14},{2,14},{3,15},{4,15},{5,16},{6,15},{7,16},
-			{7,17},{8,17},{8,18},{9,19},{10,19},{11,20},{12,20},{13,21},{14,21},{14,22},
-			{14,23},{14,24}};
-	static int[][] stream4b= {{0,13},{0,14},{1,15},{2,15},{3,16},{4,16},{5,17},{6,16},
-			{6,17},{7,18},{7,19},{8,19},{9,20},{10,20},{11,21},{12,21},{13,22},{13,23},{13,24}};
-	static int[][] stream5a = {{34,17},{34,16},{33,16},{32,15},{31,15},{30,14},{29,14},{28,13},
-			{27,14},{26,13},{25,13},{24,12},{23,13},{22,13},{21,14},{20,14},{19,14},{18,14},
-			{17,15},{16,15},{15,16},{14,16},{14,17},{13,18},{12,18},{11,18},{10,18},{10,19},
-			{9,20},{8,20},{7,21},{7,22},{6,22},{7,24},{5,23},{5,24},{5,25},
-			{4,25},{4,26},{5,27}};
-	static int[][] stream5b = {{33,18},{33,17},{32,16},{31,16},{30,15},{29,15},{28,14},{27,15},
-			{26,14},{25,14},{24,13},{23,14},{22,14},{21,15},{20,15},{19,15},{18,15},{17,16},
-			{16,16},{15,17},{15,18},{14,18},{13,19},{12,19},{11,19},{11,20},{10,20},{9,21},{8,21}
-			,{8,22},{7,23},{6,23},{6,24},{6,25},{5,26},{6,26},{6,27}};
-	static int[][] stream6a ={{23,0},{23,1},{22,1},{22,2},{23,3},{24,3},{25,3},{26,2},
-			{27,2},{28,1},{28,2},{29,3},{29,4},{30,4},{31,5},{31,6},{32,6},{33,6},
-			{34,5},{34,4},{35,5},{36,4},{33,7},{33,8},{34,8},{35,9},{36,9},{37,9},
-			{38,8},{38,9},{38,10},{38,11},{39,12},{40,11},{40,10},{41,10},{41,9},{41,8},
-			{42,7},{42,8},{42,9},{42,10},{43,11},{44,11},{45,12},{46,11},{47,11},{47,10},
-			{47,9}};
-	static int[][] stream6B = {{24,0},{24,1},{23,2},{24,2},{25,2},{26,1},{27,1},{28,0},{29,1},{29,2},
-			{30,2},{30,3},{31,4},{32,4},{32,5},{33,5},{33,4},{34,3},{35,4},{36,3},{37,4},{37,5},
-			{36,5},{35,6},{34,6},{34,7},{35,8},{36,8},{37,8},{38,7},{39,8},{39,9},{39,10},{39,11},{40,9},
-			{40,8},{40,7},{41,7},{42,6},{43,7},{43,8},{43,9},{43,10},{44,10},{45,11},{46,10},{46,9},{46,8},
-			{47,8}};
-	static int[][] stream7a = {{12,26},{11,27},{10,27},{9,28},{9,29},{9,30},{9,31},{9,32},{8,32},{8,33},
-			{7,34},{6,34},{5,35},{4,35},{4,36},{5,37},{4,37}};
-	static int[][] stream7b ={{12,27},{11,28},{10,28},{10,29},{10,30},{10,31},
-			{10,32},{9,33},{9,34},{8,34},{7,35},{6,35},{5,36},{6,36},{6,37}};
-	static int[][] stream8a = {{43,24},{44,24},{45,25},{46,25},{47,26},{47,27},{47,29},{46,29},{45,29},{44,29},
-			{43,30},{43,31},{42,31},{41,31},{40,31},{42,32},{41,33},{40,33},{41,34},{41,35},{40,35},{39,35},{38,35},
-			{38,36},{37,37},{36,36},{35,37},{34,36},{33,37},{32,37}};
-	static int[][] stream8b ={{32,36},{33,36},{34,35},{35,36},{36,35},{37,36},{37,35},{38,34},{40,34},{39,34},{39,33},
-			{40,32},{41,32},{39,32},{39,31},{40,30},{41,30},{42,30},{42,29},{43,29},{44,28},
-			{44,25},{43,25},{42,24}};
-	static int[][] stream9a = {{23,32},{22,32},{22,33},{22,34},{22,35},{22,36},{22,37}};
-	static int[][] stream9b = {{24,32},{23,33},{23,34},{23,35},{23,36},{23,37}};
-	static int[][] stream10a = {{18,17},{18,15},{18,16},{18,17},{19,18},{20,18},{21,19},{22,19}};
-	static int[][] stream10b = {{19,15},{19,16},{19,17},{20,17},{21,18},{22,18},{23,19}};
-	static int[][] stream11a = {{33,31},{33,32},{33,33},{33,34},{34,34},{35,35},{35,36}};
-	static int[][] stream11b = {{32,31},{32,32},{32,33},{32,34},{33,35},{34,35}};
-	static int[][] stream12a = {{4,34},{20,8},{21,9},{22,9},{23,10},{36,12},{37,13},{38,12},{38,11},{38,10}};
-	static int[][] stream12b = {{4,35},{20,9},{21,10},{22,10},{23,11},{37,12},{37,11},{37,10},{38,9}};
-	static int[][] stream13a = {{5,28},{6,28},{7,29},{7,30},{8,30},{9,31}};
-	static int[][] stream13b = {{6,27},{7,28},{8,28},{8,29},{9,30}};
-	static int[][] stream14a = {{10,28},{10,29},{11,30}};
-	static int[][] stream14b = {{11,28},{11,29},{12,29}};
-	static int[][] stream15a = {{3,23},{0,20},{1,21},{2,21},{3,22},{3,24},{4,24},{3,23}};
-	static int[][] stream15b = {{3,25},{2,24},{2,23},{2,22},{1,22},{0,21}};
-	static int[][] stream16a = {{0,24},{1,24},{2,23}};
-	static int[][] stream16b = {{2,25},{1,25},{2,24}};
-	static int[][] stream17a = {{41,9},{42,9},{42,10},{42,11},{41,12},{40,12}};
-	static int[][] stream17b = {{41,10},{41,11},{40,11}};
-	static int[][] stream18a = {{45,12},{45,13},{44,13},{44,14},{44,15}};
-	static int[][] stream18b = {{46,11},{46,12},{46,13},{45,14},{45,15}};
-	static int[][] stream19a = {{29,8},{29,7},{30,6},{31,6},{6,0},{22,2},{21,3},{20,3},{19,4},{31,6},{30,6},{29,7},{29,8}};
-	static int[][] stream19b = {{30,7},{31,7},{32,6},{7,0},{23,3},{22,3},{21,4},{20,4},{32,6},{31,7},{30,7},{7,1}
+	static int[][] stream1A = {{01,9},{02,10},{03,9},{04,10},{05,9},{06,10},{07,10},{8,11},{9,11},
+			{10,12},{11,12},{12,12},{13,12},{13,13},{13,14},{14,15},{15,15},
+			};
+	static int[][] stream1B = {{01,10},{02,11},{03,10},{04,11},{05,10},{06,11},{07,11},{8,12},{9,12},{10,13},
+			{11,13},{12,13},{12,14},{12,15},{13,15},{14,16},};
+	static int[][] stream2a = {{33,8},{27,02},{26,03},{26,04},{26,05},{27,05},{27,06},{27,07}
+			,{26,06},{25,06},{25,07},{25,8},{24,9},{00,00},{23,9},{23,10},{22,11},
 	};
+	static int[][] stream2b = {{28,03},{27,03},{27,04},{00,00},{28,06},{28,07},{28,8},{27,8},{26,8},{26,07},{26,9},{25,9},{24,10},{24,11},{23,11}};
+	static int[][] stream3a = {{23,11},{24,11},{25,10},{26,10},{27,10},{28,11},{29,10},{0,0},{30,11},{31,11},{32,12},{33,12},{33,13},{32,14}};
+	static int[][] stream3b = {{22,12},{23,12},{24,12},{25,11},{26,11},{27,11},{28,12},{29,11},{30,12},{31,12},{32,13}};
+	static int[][] stream4a = {{28,12},{28,13}};
+	static int[][] stream4b= {{27,11},{27,12},{27,13}};
+	static int[][] stream5a = {{22,12},{22,13},{23,13},{24,14},{25,14}};
+	static int[][] stream5b = {{21,12},{21,13},{22,14},{23,14},{24,15}};
+	static int[][] stream6a ={{0,22},{1,21},{2,22},{3,21},{4,21},{5,20},{6,20},{7,20},{8,20},{9,19},{10,19},{11,18},{11,17},{12,17},{13,16},
+			{14,16},{15,15},{15,14},{16,14},{17,14},{18,14},{18,13},{19,12},{20,12},{21,11}};
+	static int[][] stream6B = {{0,23},{1,22},{2,23},{3,22},{4,22},{5,21},{6,21},{7,21},{8,21},{9,20},{10,20},{11,19},{12,19},{12,18},{13,17},{14,17},{15,16},{16,16},{16,15},{17,15},{18,15},{19,14},{19,13},{20,13},{21,12},{22,12}};
+	static int[][] stream7a = {{0,15},{1,15},{2,16},{3,16},{4,16},{5,16},{6,17},{7,16},{8,17},{9,17},{9,18},{10,19},
+	};
+	static int[][] stream7b ={{0,16},{1,16},{2,17},{3,17},{4,17},{5,17},{6,18},{7,17},{8,18},{8,19},{9,19}};
+	static int[][] stream8a = {{0,4},{1,3},{2,4},{3,3},{4,3},{5,3},{6,3},{7,2},{8,3},{9,2},{10,3},{11,2},{12,2},{12,1},{13,1},{13,2}
+			,{13,3},{13,4},{13,5},{14,6},{15,6},{16,7},{17,7},{18,8},{19,8},{20,8},{20,9},{20,10},{21,10},{21,11},
+	};
+	static int[][] stream8b ={{0,3},{1,2},{2,3},{3,2},{4,2},{5,2},{6,2},{7,1},{8,2},{9,1},{10,2},{11,1},{11,0},{12,0},{13,0},{14,1},{14,2},{14,3},{14,4},{14,5}
+			,{15,5},{16,6},{17,6},{18,7},{19,7},{20,7},{21,7},{21,8},{21,9},{22,10},{22,11},};
+	static int[][] stream9a = {{10,21},{11,21},{11,22},{12,23},{12,24},{13,24},{14,25},
+	};
+	static int[][] stream9b ={{11,20},{12,21},{12,22},{13,22},{13,23},{14,24},};
+	static int[][] river1a ={{25,0},{24,1},{24,2},{25,2},{26,3},{27,2},{28,2},{29,1},{30,2},{30,3},{31,3},{31,4},{32,5},{33,4},{34,4},{35,3},{33,5},{33,6},{34,7},{35,7},{36,7},{37,6},{37,7},{37,8},{38,9},{39,8},{39,7},{39,6},{40,8},{41,8},{42,9},{43,9},{44,9},{44,8},{44,7},
+	};
+	static int[][] river1b ={{27,0},{26,0},{26,1},{26,2},{27,1},{28,1},{29,0},{30,1},{31,1},{0,0},{31,2},{32,3},{32,4},{33,3},{34,3},{35,2},{0,0},{36,3},{36,4},{35,4},{34,5},{34,6},{35,6},{36,6},{37,5},{38,6},{38,7},{38,8},{39,5},{40,5},{40,6}
+			,{40,7},{41,7},{42,8},{43,8},{43,7},{43,6},{44,6},{0,0}
+	};
+
 	static int[][][] nopath =
 			{{{36,8},{36,9}},{{36,10},{37,9}},{{30,10},{29,9}},{{28,8},{28,9}},{{28,9},{27,9}},{{26,07},{26,06}},{{25,07},{26,07}},{{26,04},{25,03}},
 			{{31,05},{31,04}},{{31,04},{32,04}},{{15,05},{15,04}},{{16,05},{16,04}},{{19,07},{19,06}},
@@ -392,7 +349,7 @@ public class Hex {
 		LoadPaths();
 //		LoadTowns();
 		LoadForest();
-		//LoadRiversStream();
+		LoadRiversStream();
 		LoadBridges();
 		LoadSurround();
 
@@ -509,6 +466,7 @@ public class Hex {
 			int y = stream1A[i][1];
 			Hex hex= hexTable[x][y];
 			hex.isStreamBank = true;
+			hex.streamBank =1;
 			river.addAbank(hex);
 		}
 		for (int i=0; i <stream1B.length; i++)
@@ -517,6 +475,7 @@ public class Hex {
 			int y = stream1B[i][1];
 			Hex hex= hexTable[x][y];
 			hex.isStreamBank = true;
+			hex.streamBank =1;
 			river.addBbank(hex);
 		}
 
@@ -527,6 +486,8 @@ public class Hex {
 			int y = stream2a[i][1];
 			Hex hex= hexTable[x][y];
 			hex.isStreamBank = true;
+			hex.streamBank =2;
+
 			river.addAbank(hex);
 		}
 		for (int i=0; i <stream2b.length; i++)
@@ -535,6 +496,8 @@ public class Hex {
 			int y = stream2b[i][1];
 			Hex hex= hexTable[x][y];
 			hex.isStreamBank = true;
+			hex.streamBank =2;
+
 			river.addBbank(hex);
 		}
 		river = new River(true); // if stream set to true;
@@ -544,6 +507,8 @@ public class Hex {
 			int y = stream3a[i][1];
 			Hex hex= hexTable[x][y];
 			hex.isStreamBank = true;
+			hex.streamBank =3;
+
 			river.addAbank(hex);
 		}
 		for (int i=0; i <stream3b.length; i++)
@@ -552,6 +517,8 @@ public class Hex {
 			int y = stream3b[i][1];
 			Hex hex= hexTable[x][y];
 			hex.isStreamBank = true;
+			hex.streamBank =3;
+
 			river.addBbank(hex);
 		}
 		river = new River(true); // if stream set to true;
@@ -561,6 +528,8 @@ public class Hex {
 			int y = stream4a[i][1];
 			Hex hex= hexTable[x][y];
 			hex.isStreamBank = true;
+			hex.streamBank =4;
+
 			river.addAbank(hex);
 		}
 		for (int i=0; i <stream4b.length; i++)
@@ -569,6 +538,8 @@ public class Hex {
 			int y = stream4b[i][1];
 			Hex hex= hexTable[x][y];
 			hex.isStreamBank = true;
+			hex.streamBank =4;
+
 			river.addBbank(hex);
 		}
 		river = new River(true); // if stream set to true;
@@ -578,6 +549,8 @@ public class Hex {
 			int y = stream5a[i][1];
 			Hex hex= hexTable[x][y];
 			hex.isStreamBank = true;
+			hex.streamBank =5;
+
 			river.addAbank(hex);
 		}
 		for (int i=0; i <stream5b.length; i++)
@@ -586,6 +559,8 @@ public class Hex {
 			int y = stream5b[i][1];
 			Hex hex= hexTable[x][y];
 			hex.isStreamBank = true;
+			hex.streamBank =5;
+
 			river.addBbank(hex);
 		}
 		river = new River(false); // if stream set to true;
@@ -594,15 +569,20 @@ public class Hex {
 			int x = stream6a[i][0];
 			int y = stream6a[i][1];
 			Hex hex= hexTable[x][y];
-			hex.isRiverBank = true;
+			hex.isStreamBank = true;
+			hex.streamBank =6;
+
 			river.addAbank(hex);
 		}
+
 		for (int i=0; i <stream6B.length; i++)
 		{
 			int x = stream6B[i][0];
 			int y = stream6B[i][1];
 			Hex hex= hexTable[x][y];
 			hex.isStreamBank = true;
+			hex.streamBank =6;
+
 			river.addBbank(hex);
 		}
 		river = new River(true); // if stream set to true;
@@ -612,6 +592,8 @@ public class Hex {
 			int y = stream7a[i][1];
 			Hex hex= hexTable[x][y];
 			hex.isStreamBank = true;
+			hex.streamBank =7;
+
 			river.addAbank(hex);
 		}
 		for (int i=0; i <stream7b.length; i++)
@@ -620,6 +602,8 @@ public class Hex {
 			int y = stream7b[i][1];
 			Hex hex= hexTable[x][y];
 			hex.isStreamBank = true;
+			hex.streamBank =7;
+
 			river.addBbank(hex);
 		}
 		river = new River(true); // if stream set to true;
@@ -629,6 +613,8 @@ public class Hex {
 			int y = stream8a[i][1];
 			Hex hex= hexTable[x][y];
 			hex.isStreamBank = true;
+			hex.streamBank =8;
+
 			river.addAbank(hex);
 		}
 		for (int i=0; i <stream8b.length; i++)
@@ -637,6 +623,8 @@ public class Hex {
 			int y = stream8b[i][1];
 			Hex hex= hexTable[x][y];
 			hex.isStreamBank = true;
+			hex.streamBank =8;
+
 			river.addBbank(hex);
 		}
 		river = new River(true); // if stream set to true;
@@ -646,6 +634,8 @@ public class Hex {
 			int y = stream9a[i][1];
 			Hex hex= hexTable[x][y];
 			hex.isStreamBank = true;
+			hex.streamBank =9;
+
 			river.addAbank(hex);
 		}
 		for (int i=0; i <stream9b.length; i++)
@@ -653,189 +643,27 @@ public class Hex {
 			int x = stream9b[i][0];
 			int y = stream9b[i][1];
 			Hex hex= hexTable[x][y];
+			hex.streamBank =9;
+
 			hex.isStreamBank = true;
 			river.addBbank(hex);
 		}
 		river = new River(true); // if stream set to true;
-		for (int i=0; i <stream10a.length; i++)
+
+		for (int i=0; i <river1a.length; i++)
 		{
-			int x = stream10a[i][0];
-			int y = stream10a[i][1];
+			int x = river1a[i][0];
+			int y = river1a[i][1];
 			Hex hex= hexTable[x][y];
-			hex.isStreamBank = true;
+			hex.isRiverBank = true;
 			river.addAbank(hex);
 		}
-		for (int i=0; i <stream10b.length; i++)
+		for (int i=0; i <river1b.length; i++)
 		{
-			int x = stream10b[i][0];
-			int y = stream10b[i][1];
+			int x = river1b[i][0];
+			int y = river1b[i][1];
 			Hex hex= hexTable[x][y];
-			hex.isStreamBank = true;
-			river.addBbank(hex);
-		}
-		river = new River(true); // if stream set to true;
-		for (int i=0; i <stream11a.length; i++)
-		{
-			int x = stream11a[i][0];
-			int y = stream11a[i][1];
-			Hex hex= hexTable[x][y];
-			hex.isStreamBank = true;
-			river.addAbank(hex);
-		}
-		for (int i=0; i <stream11b.length; i++)
-		{
-			int x = stream11b[i][0];
-			int y = stream11b[i][1];
-			Hex hex= hexTable[x][y];
-			hex.isStreamBank = true;
-			river.addBbank(hex);
-		}
-		river = new River(true); // if stream set to true;
-		for (int i=0; i <stream12a.length; i++)
-		{
-			int x = stream12a[i][0];
-			int y = stream12a[i][1];
-			Hex hex= hexTable[x][y];
-			hex.isStreamBank = true;
-			river.addAbank(hex);
-		}
-		for (int i=0; i <stream12b.length; i++)
-		{
-			int x = stream12b[i][0];
-			int y = stream12b[i][1];
-			Hex hex= hexTable[x][y];
-			hex.isStreamBank = true;
-			river.addBbank(hex);
-		}
-		river = new River(true); // if stream set to true;
-		for (int i=0; i <stream13a.length; i++)
-		{
-			int x = stream13a[i][0];
-			int y = stream13a[i][1];
-			Hex hex= hexTable[x][y];
-			hex.isStreamBank = true;
-			river.addAbank(hex);
-		}
-		for (int i=0; i <stream13b.length; i++)
-		{
-			int x = stream13b[i][0];
-			int y = stream13b[i][1];
-			Hex hex= hexTable[x][y];
-			hex.isStreamBank = true;
-			river.addBbank(hex);
-		}
-		river = new River(true); // if stream set to true;
-		for (int i=0; i <stream14a.length; i++)
-		{
-			int x = stream14a[i][0];
-			int y = stream14a[i][1];
-			Hex hex= hexTable[x][y];
-			hex.isStreamBank = true;
-			river.addAbank(hex);
-		}
-		for (int i=0; i <stream14b.length; i++)
-		{
-			int x = stream14b[i][0];
-			int y = stream14b[i][1];
-			Hex hex= hexTable[x][y];
-			hex.isStreamBank = true;
-			river.addBbank(hex);
-		}
-		river = new River(true); // if stream set to true;
-		for (int i=0; i <stream15a.length; i++)
-		{
-			int x = stream15a[i][0];
-			int y = stream15a[i][1];
-			Hex hex= hexTable[x][y];
-			hex.isStreamBank = true;
-			river.addAbank(hex);
-		}
-		for (int i=0; i <stream15b.length; i++)
-		{
-			int x = stream15b[i][0];
-			int y = stream15b[i][1];
-			Hex hex= hexTable[x][y];
-			hex.isStreamBank = true;
-			river.addBbank(hex);
-		}
-		river = new River(true); // if stream set to true;
-		for (int i=0; i <stream16a.length; i++)
-		{
-			int x = stream16a[i][0];
-			int y = stream16a[i][1];
-			
-			
-			
-			Hex hex= hexTable[x][y];
-			hex.isStreamBank = true;
-			river.addAbank(hex);
-		}
-		for (int i=0; i <stream16b.length; i++)
-		{
-			int x = stream16b[i][0];
-			int y = stream16b[i][1];
-			Hex hex= hexTable[x][y];
-			hex.isStreamBank = true;
-			river.addBbank(hex);
-		}
-		river = new River(true); // if stream set to true;
-		for (int i=0; i <stream17a.length; i++)
-		{
-			int x = stream17a[i][0];
-			int y = stream17a[i][1];
-			
-			
-			
-			Hex hex= hexTable[x][y];
-			hex.isStreamBank = true;
-			river.addAbank(hex);
-		}
-		for (int i=0; i <stream17b.length; i++)
-		{
-			int x = stream17b[i][0];
-			int y = stream17b[i][1];
-			Hex hex= hexTable[x][y];
-			hex.isStreamBank = true;
-			river.addBbank(hex);
-		}
-		river = new River(true); // if stream set to true;
-		for (int i=0; i <stream18a.length; i++)
-		{
-			int x = stream18a[i][0];
-			int y = stream18a[i][1];
-			
-			
-			
-			Hex hex= hexTable[x][y];
-			hex.isStreamBank = true;
-			river.addAbank(hex);
-		}
-		for (int i=0; i <stream18b.length; i++)
-		{
-			int x = stream18b[i][0];
-			int y = stream18b[i][1];
-			Hex hex= hexTable[x][y];
-			hex.isStreamBank = true;
-			river.addBbank(hex);
-		}
-		river = new River(true); // if stream set to true;
-		for (int i=0; i <stream19a.length; i++)
-		{
-			int x = stream19a[i][0];
-			int y = stream19a[i][1];
-			
-			
-			
-			Hex hex= hexTable[x][y];
-			hex.isStreamBank = true;
-			river.addAbank(hex);
-		}
-		for (int i=0; i <stream19b.length; i++)
-		{
-			int x = stream19b[i][0];
-			int y = stream19b[i][1];
-			Hex hex= hexTable[x][y];
-			hex.isStreamBank = true;
+			hex.isRiverBank = true;
 			river.addBbank(hex);
 		}
 

@@ -81,9 +81,13 @@ public class WinDebug
 		for (int y = 0; y < Hex.yEnd; y++) {
 			for (int x = 0; x < Hex.xEnd; x++) {
 				Hex hex = Hex.hexTable[x][y];
-				if (hex.isForest || hex.isRoad || hex.isPath || hex.isBridge) {
+				if (x == 0 && y == 22){
+					int b=0;
+				}
+//				if (hex.isForest || hex.isRoad || hex.isPath || hex.isBridge) {
+				if (hex.isRiverBank) {
 					String str = "";
-					if (hex.isRoad) {
+				/**	if (hex.isRoad) {
 						str += " R";
 					}
 					if (hex.isForest) {
@@ -98,7 +102,7 @@ public class WinDebug
 
 					if (hex.isBridge) {
 						str += " B";
-					}
+					}*/
 					str += "\n" + x + "," + y;
 					Label label = new Label(str, skin);
 					label.setScale(20f);

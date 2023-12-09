@@ -239,12 +239,12 @@ public class Borodino implements ApplicationListener, GestureListener, InputProc
 
 		if (isFirstTime)
 		{
-			logger = Gdx.files.local("path.dat");
+			logger = Gdx.files.local("stream.dat");
 			logger.writeString("Path Data", false);
 			isFirstTime = false;
 		}
-		
-		logger.writeString("{"+String.format("%02d", hex.xTable)+","+String.format("%02d", hex.yTable)+"},"
+
+		logger.writeString("{"+Integer.toString(hex.xTable)+","+Integer.toString(hex.yTable)+"},"
 				+ "", true); 
 	}
 
