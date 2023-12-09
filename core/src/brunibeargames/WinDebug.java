@@ -85,7 +85,7 @@ public class WinDebug
 					int b=0;
 				}
 //				if (hex.isForest || hex.isRoad || hex.isPath || hex.isBridge) {
-				if (hex.isRiverBank) {
+				if (hex.isBridge) {
 					String str = "";
 				/**	if (hex.isRoad) {
 						str += " R";
