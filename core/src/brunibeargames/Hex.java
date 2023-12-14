@@ -335,7 +335,7 @@ public class Hex {
 			{18,8},{19,7},{10,21},{11,20},{25,6},{23,10},{25,7},{24,11},
 			{32,13},{26,7},{24,15},{25,14},{20,12},{20,13}};
 
-	public static void LoadHexes()
+	public static void loadHexes()
 	{
 		hexTable = new Hex[xEnd][yEnd];
 		for (int x=0; x< xEnd; x++)

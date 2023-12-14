@@ -18,37 +18,53 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import java.util.Observable;
 
-public class Borodino implements ApplicationListener, GestureListener, InputProcessor
+
+public class Borodino extends Observable implements ApplicationListener, GestureListener, InputProcessor
  {
-	boolean isWriteTerrain = true;
-	public  Stage guiStage;
-	public  Stage mapStage;
+	 SpriteBatch batch;
+	 Texture img;
+	 boolean isWriteTerrain = false;
+	 public Stage guiStage;
+	 public  Stage mapStage;
+	 public  Stage hexStage;
+	 //	public Stage mainmenuStage;
+	 public FontFactory fontFactory;
+	 public SplashScreen splashScreen;
+	 //	TNLog tnlog;
+	 com.badlogic.gdx.Game game;
+	 boolean isMainMenu = false;
+	 public boolean isNoInput = true;
+	 private boolean isSaveGame = false;
+	 InputMultiplexer im;
+	 GestureDetector gd;
+	 static public Borodino instance;
+	 MusicGame music;
+	 ShapeRenderer shapeRenderer;
+	 SoundEffects soundEffects;
+	 Map map;
+	 public boolean isUpdateDice = false;
+	 public boolean isUpdateExplosion = false;
+	 public boolean isUpdateShell = false;
+	 public boolean isBridgeExplosion = false;
+	 public boolean isScroll = false;
+	 private I18NBundle i18NBundle;
+	 private boolean aiRender = false;
+	 private int cntAiRender =0;
+	 static boolean isResumed = false;
+
 	public Stage mainmenuStage;
 	public Screen screen;
-	public FontFactory fontFactory;
 	public Texture texHex;
 	TNLog tnlog;
-	Game game;
-	boolean isMainMenu = false;
-	public boolean isNoInput = true;
 	Skin skin;
 	BitmapFont font;
-
 	Enter enter;
 	Settings settings;
-//	MainMenu mainMenu;
-	InputMultiplexer im;
-    GestureDetector gd;
-    static public Borodino instance;
-	SpriteBatch batch;
-	Texture img;
-	Music music;
-	ShapeRenderer shapeRenderer;
-	SoundEffects soundEffects;
-	Map map;
 //
 	Loader loader;
 	
@@ -74,7 +90,6 @@ public class Borodino implements ApplicationListener, GestureListener, InputProc
 
 
 		settings = new Settings();
-		music = new Music();
 		shapeRenderer = new ShapeRenderer();
 		soundEffects = new SoundEffects();
 //		VisUI.load();
@@ -97,7 +112,7 @@ public class Borodino implements ApplicationListener, GestureListener, InputProc
 		Randomizer randomizer = new Randomizer();
 		batch = new SpriteBatch();
 		screen = new Screen(mapStage);
-		Hex.LoadHexes();
+		Hex.loadHexes();
 		map = new Map();
 		Map.InitializeHexSearch();
 		CreateInputProcessors();
