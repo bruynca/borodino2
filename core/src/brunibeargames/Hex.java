@@ -7,6 +7,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
+import java.util.Collection;
+
+import brunibeargames.Unit.Unit;
 
 public class Hex {
 	//
@@ -32,8 +35,9 @@ public class Hex {
 
 
 	protected int xTable; // whete in hexTable this hex is
-	protected int yTable; // 
-	
+	protected int yTable; //
+	private ArrayList<Unit> arrUnitsInHex = new ArrayList<>();
+
 	public Hex(int xIn, int yIn)
 	{
 		xTable = xIn;
@@ -66,6 +70,17 @@ public class Hex {
 		v1.x = vertices[0];
 		return v1;
 
+	}
+	public ArrayList<Unit> getUnitsInHex() {
+		ArrayList<Unit> arrRetrun = new ArrayList<>();
+		arrRetrun.addAll(arrUnitsInHex);
+		return arrRetrun;
+	}
+	public Vector2 getCounterPosition(){
+		Vector2 pos = GetDisplayCoord();
+		pos.x += 14;
+		pos.y +=14;
+		return pos;
 	}
 
 	public Vector2 GetDisplayCoordHex()

@@ -17,12 +17,11 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.I18NBundle;
-import com.bruinbeargames.ardenne.GameLogic.SoundsLoader;
+
 
 public class SplashScreen {
     static public SplashScreen instance;
     Image splashImage;
-    public Image splashMapImage;
     Texture bruinbearLogo;
     Logo logo;
     I18NBundle i18NBundle;
@@ -64,17 +63,14 @@ public class SplashScreen {
         assetManager = new AssetManager();
 
         // Load splash screen and music
-        assetManager.load("sounds/bastogne.mp3", Sound.class);
+        assetManager.load("sounds/levictoireestanous.mp3", Sound.class);
         assetManager.finishLoading();
-        sound = assetManager.get("sounds/bastogne.mp3");
+        sound = assetManager.get("sounds/levictoireestanous.mp3");
         float level =  GamePreferences.getVolume();
         sound.play(level);
         assetManager.load("menus/splashscreen.jpg", Texture.class);
         assetManager.finishLoading();
         Texture splash = assetManager.get("menus/splashscreen.jpg", Texture.class);
-        assetManager.load("menus/splashmap.png", Texture.class);
-        assetManager.finishLoading();
-        Texture splashmap = assetManager.get("menus/splashmap.png", Texture.class);
         assetManager.load("logo/logo.txt", TextureAtlas.class);
         assetManager.finishLoading();
         logoAtlas = assetManager.get("logo/logo.txt");
@@ -117,7 +113,7 @@ public class SplashScreen {
             default:
                 break;
         }
-
+        /*
         // Load Maps
         mapsManager.load("map/ardenne.jpg", Texture.class);
 
@@ -164,6 +160,8 @@ public class SplashScreen {
         cardManager.load("cards/2ndpanzerloses2units.jpg", Texture.class,param);
         cardManager.load("cards/hilite.png", Texture.class,param);
         cardManager.load("cards/empty.png", Texture.class,param);
+        */
+
         if (Gdx.graphics.getHeight()< 800){
             //font.setOwnsTexture(true);
             //font.getData().setScale(1.2f,1.2f);
@@ -175,15 +173,6 @@ public class SplashScreen {
         splashImage.setWidth(x);
         splashImage.setHeight(y);
         stage.addActor(splashImage);
-        splashMapImage = new Image(splashmap);
-        splashMapImage.setWidth(x);
-        splashMapImage.setHeight(y);
-
-    //   stage.addActor(splashMapImage);
-        splashMapImage.addAction(Actions.alpha(0));
-        splashMapImage.addAction(Actions.fadeIn(3f));
-
-
         logo = new Logo(logoAtlas, stage);
 
 
@@ -222,7 +211,6 @@ public class SplashScreen {
             screenHeight= Gdx.graphics.getHeight();
             screenWidth = Gdx.graphics.getWidth();
             gameMenu = new GameMenu(stage, sound,atlas,screenHeight, screenWidth);
-            splashMapImage.addAction(Actions.fadeOut(.5f));
  //           gameMenu.addObserver(this);
             languageSupport = new LanguageSupport();
  //           languageSupport.addObserver(this);

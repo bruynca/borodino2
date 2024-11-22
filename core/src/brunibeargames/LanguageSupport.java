@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
-import com.bruinbeargames.ardenne.UI.EventOK;
+//import com.bruinbeargames.ardenne.UI.EventOK;
 
 import java.util.Locale;
 import java.util.Observable;
@@ -26,7 +26,7 @@ public class LanguageSupport extends Observable {
 
 
     public LanguageSupport(){
-        Stage stage = ardenne.instance.guiStage;
+        Stage stage = Borodino.instance.guiStage;
         screenWidth = Gdx.graphics.getWidth();
         group = new Group();
 

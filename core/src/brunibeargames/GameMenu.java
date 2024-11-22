@@ -22,11 +22,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
-import com.bruinbeargames.ardenne.UI.EventOK;
-import com.bruinbeargames.ardenne.UI.EventPopUp;
 
 import java.io.File;
 import java.util.Observable;
+
+import brunibeargames.UI.EventOK;
+import brunibeargames.UI.EventPopUp;
 
 public class GameMenu extends Observable {
 

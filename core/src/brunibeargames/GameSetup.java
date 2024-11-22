@@ -1,6 +1,5 @@
 package brunibeargames;
 
-import com.bruinbeargames.ardenne.GameLogic.CardHandler;
 
 public class GameSetup {
 
@@ -47,8 +46,6 @@ public class GameSetup {
 
     public void setEasyGerman(boolean easyGerman) {
         this.easyGerman = easyGerman;
-        CardHandler.instance.setCountAllied(2);
-        CardHandler.instance.setCountGerman(4);
     }
     public void setScenario(Scenario scenario)
     {
@@ -64,8 +61,6 @@ public class GameSetup {
 
     public void setEasyAmerican(boolean easyAmerican) {
         this.easyAmerican = easyAmerican;
-        CardHandler.instance.setCountAllied(4);
-        CardHandler.instance.setCountGerman(2);
 
     }
 
@@ -75,8 +70,6 @@ public class GameSetup {
 
     public void setBalanced(boolean balanced) {
         this.balanced = balanced;
-        CardHandler.instance.setCountAllied(3);
-        CardHandler.instance.setCountGerman(3);
     }
 
     public boolean isAlliedVersusAI() {

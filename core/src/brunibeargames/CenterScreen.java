@@ -103,7 +103,7 @@ public class CenterScreen extends Observable {
         if ((xScrollDone || results[0]) &&(yScrollDone || results[1])){
             // done
             timerStarted = false;
-            ardenne.instance.isScroll = false;
+            Borodino.instance.isScroll = false;
             isScrolling = false;
             WinModal.instance.release();
             setChanged();
@@ -121,7 +121,7 @@ public class CenterScreen extends Observable {
         yScrollDone = false;
         timerStarted = true;
         isStartOfScroll = true;
-        ardenne.instance.isScroll = true;
+        Borodino.instance.isScroll = true;
         WinModal.instance.set();
 
     }

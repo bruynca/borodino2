@@ -21,15 +21,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
-import com.bruinbeargames.ardenne.GameLogic.CardHandler;
-import com.bruinbeargames.ardenne.UI.EventConfirm;
-import com.bruinbeargames.ardenne.UI.EventOK;
-import com.bruinbeargames.ardenne.UI.EventPopUp;
-import com.bruinbeargames.ardenne.UI.MouseImage;
 
 import java.io.File;
 
+import brunibeargames.UI.EventConfirm;
+import brunibeargames.UI.EventOK;
+import brunibeargames.UI.EventPopUp;
+import brunibeargames.UI.MouseImage;
+
 public class GameSelection {
+    static public GameSelection instance;
 
 
     private Label game1Label;
@@ -57,13 +58,12 @@ public class GameSelection {
 //    private Setup setup;
     private ScrollPane scenariosScrollPane;
     private final TextTooltip.TextTooltipStyle tooltipStyle;
-    static public GameSelection instance;
 
 
     public GameSelection(Stage stage, final Sound sound) {
         instance = this;
         EventOK eventOK = new EventOK();
-        EventPopUp eventPopUp = new EventPopUp(ardenne.instance.guiStage);
+        EventPopUp eventPopUp = new EventPopUp(Borodino.instance.guiStage);
         EventConfirm eventConfirm = new EventConfirm();
         group = new Group();
         group.setVisible(false);
@@ -75,7 +75,6 @@ public class GameSelection {
         tooltipStyle.background = new NinePatchDrawable(np);
 
         MouseImage mouseImage = new MouseImage();
-        CardHandler cardHandler = new CardHandler();
         GameSetup gameSetup = new GameSetup();
 
 
@@ -205,7 +204,7 @@ public class GameSelection {
                 if (!event.getType().equals("touchUp")) {
                     Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
                     SplashScreen.instance.end();
-                    Game game = new Game("",false);
+                    Game game = new Game();
 //                    sound.stop();
 //                    game.showGameScreen(false);
                 }
@@ -443,7 +442,7 @@ public class GameSelection {
         listStyle.selection.setMinWidth(400);
         NinePatch np = new NinePatch(GameMenuLoader.instance.gameMenu.asset.get("tooltip"), 5, 5, 5, 5);
         listStyle.background = new NinePatchDrawable(np);
-        List<String> list = new List<>(listStyle);
+        final List<String> list = new List<>(listStyle);
         File folder = GamePreferences.getSaveGamesLocation().file();
         int filecount = 0;
         String[] strings = new String[3];
@@ -472,17 +471,7 @@ public class GameSelection {
                     if (choice.equals("Introduction")){
                         game1Label.setText(i18NBundle.get("scenario1"));
                         GameSetup.instance.setScenario(GameSetup.Scenario.Intro);
-                    }else if (choice.equals("2nd Panzer Goes West")){
-                        list.setSelected("2nd Panzer Goes West");
-                        game1Label.setText(i18NBundle.get("scenario2"));
-                        GameSetup.instance.setScenario(GameSetup.Scenario.SecondPanzer);
-                        CardHandler.instance.adjustForScenario(GameSetup.Scenario.SecondPanzer);
-                    }else if (choice.equals("Bastogne Breakout")){
-                        list.setSelected("Bastogne Breakout");
-                        game1Label.setText(i18NBundle.get("scenario3"));
-                        GameSetup.instance.setScenario(GameSetup.Scenario.Lehr);
-                        CardHandler.instance.adjustForScenario(GameSetup.Scenario.SecondPanzer);
-                    }else{
+                    }                    }else{
                         EventOK.instance.show(i18NBundle.get("notavailable"));
                         list.setSelected("Introduction");
                         return;
@@ -491,7 +480,7 @@ public class GameSelection {
 //                        GameSetup.instance.setScenario(GameSetup.Scenario.CounterAttack);
                     }
                 }
-            }
+
         });
 
         group.addActor(scenariosScrollPane);

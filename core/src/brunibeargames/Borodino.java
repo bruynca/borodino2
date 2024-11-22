@@ -60,7 +60,6 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 	public Stage mainmenuStage;
 	public Screen screen;
 	public Texture texHex;
-	TNLog tnlog;
 	Skin skin;
 	BitmapFont font;
 	Enter enter;
@@ -97,7 +96,6 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 //   	VisUI.load(SkinScale.X2);
 		batch = new SpriteBatch();
 		fontFactory = new FontFactory();
-		tnlog = new TNLog();
 //		img = new Texture(Gdx.files.internal("data/RedMenaceSplash.png"));
 //		hexStage = new Stage(new ScreenViewport());
 		guiStage = new Stage(new ScreenViewport());
