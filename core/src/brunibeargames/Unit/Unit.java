@@ -16,7 +16,10 @@ import com.badlogic.gdx.utils.XmlReader.Element;
 
 import java.util.ArrayList;
 
+import brunibeargames.Borodino;
+import brunibeargames.ErrorGame;
 import brunibeargames.Hex;
+import brunibeargames.HexSurround;
 import brunibeargames.SplashScreen;
 
 /**
@@ -235,16 +238,6 @@ public class Unit {
 //				isExertZOC = true;
 
 			}
-			if (isAllies){
-				artAmmo = 2;
-			}else{
-				if (MoreGermanAmmo.instance != null && MoreGermanAmmo.instance.isMoreGermanAmmo()){
-					artAmmo = 2;
-				}else {
-					artAmmo = 1;
-				}
-			}
-            setArtilleryLimbered();;
 
 		}else{
 			isArtillery = false;
@@ -520,12 +513,6 @@ public class Unit {
          *   other program logic depends on it being set immediatly
          */
 		if (!isExit) {
-			if (GameSetup.instance.getScenario().ordinal() > 0) {
-				SecondPanzerExits.instance.checkEliminate(this);
-			}
-			if (GameSetup.instance.getScenario().ordinal() > 1) {
-				LehrExits.instance.checkEliminate(this);
-			}
 		}
 		isEliminated = true;
 		float x=0; float y=0;
@@ -542,7 +529,7 @@ public class Unit {
 			final Stack stack = work.getCounterStack().getStack();
 			stack.setPosition(x, y);
 			stack.addAction(Actions.fadeOut(1.5f));
-			ardenne.instance.mapStage.addActor(stack);
+			Borodino.instance.mapStage.addActor(stack);
 			Timer.schedule(new Timer.Task() {
 							   @Override
 							   public void run() {
@@ -609,7 +596,7 @@ public class Unit {
 			image.setPosition(stack.getX()+10,stack.getY()+10);
 			image.addAction(Actions.fadeIn((.05f)));
 			image.addAction(Actions.fadeOut(.5f));
-			ardenne.instance.mapStage.addActor(image);
+			Borodino.instance.mapStage.addActor(image);
 			Timer.schedule(new Timer.Task(){
 							   @Override
 							   public void run() {

@@ -9,10 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.Align;
-import com.bruinbeargames.ardenne.FontFactory;
-import com.bruinbeargames.ardenne.SplashScreen;
 
 import java.util.ArrayList;
+
+import brunibeargames.FontFactory;
+import brunibeargames.SplashScreen;
 
 public class CounterStack {
     Unit unit;

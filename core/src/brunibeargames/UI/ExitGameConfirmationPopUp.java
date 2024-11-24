@@ -16,40 +16,41 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
 
-
-import java.util.Observable;
-
 import brunibeargames.Borodino;
+import brunibeargames.Combat;
 import brunibeargames.Fonts;
 import brunibeargames.GameMenuLoader;
-import brunibeargames.ObserverPackage;
+import brunibeargames.SplashScreen;
 
-public class EventOK extends Observable {
+
+public class ExitGameConfirmationPopUp {
 
     private Group group;
     private Image backgroundImage;
     private Label textLabel;
-    private Button okButton;
+    private Button yesButton;
+    private Button noButton;
     private I18NBundle i18NBundle;
     private TextButton.TextButtonStyle textButtonStyle;
 
-    public static EventOK instance;
+    static public ExitGameConfirmationPopUp instance;
 
-    public EventOK(){
+    public ExitGameConfirmationPopUp(){
+
         instance = this;
         group = new Group();
         i18NBundle= GameMenuLoader.instance.localization;
         initializeStyles();
         initializeImageBackGround();
         initializeTextLabel();
-        initializeokButton();
-        group.setVisible(false);
-    }
+        initializeYesButton();
+        initializeNoButton();
 
-    public void show(String text) {
-        if (EventPopUp.instance.isShowing()){
-            EventPopUp.instance.hide();
-        }
+        group.setVisible(false);
+        Borodino.instance.guiStage.addActor(group);
+   }
+
+    public void show(String text){
         textLabel.setText(text);
         textLabel.pack();
         GlyphLayout layout = textLabel.getGlyphLayout();
@@ -68,31 +69,9 @@ public class EventOK extends Observable {
         backgroundImage.setPosition((Gdx.graphics.getWidth() / 2) - (backgroundImage.getWidth()/2),
                 (Gdx.graphics.getHeight() / 2) - (backgroundImage.getHeight()/2));
         textLabel.setPosition((backgroundImage.getX() + backgroundImage.getWidth()/2) - (textLabel.getWidth()/2), backgroundImage.getY() +  (backgroundImage.getHeight() - height - (20)));
-        okButton.setPosition(backgroundImage.getX() + backgroundImage.getWidth()/2 - 10 -50, backgroundImage.getY() +  (10));
+        yesButton.setPosition(backgroundImage.getX() + (10), backgroundImage.getY() +  (10));
+        noButton.setPosition(backgroundImage.getX() + backgroundImage.getWidth() - 10 - 100, backgroundImage.getY() +  (10));
         group.setVisible(true);
-        Borodino.instance.guiStage.addActor(group);
- /* attempt for modal       NinePatch np = new NinePatch(UILoader.instance.unitSelection.asset.get("window"), 10, 10, 33, 6);
-        Window.WindowStyle windowStyle = new Window.WindowStyle(Fonts.getFont24(), Color.WHITE, new NinePatchDrawable(np));
-        final Window win = new Window(" xxxxxx",windowStyle);
-        win.setVisible(false);
-        win.setHeight(2000);
-        win.setWidth(4000);
-        win.setPosition(0,0);
-        win.setModal(true);
-        win.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                if (!event.getType().equals("touchUp")) {
-                    group.setVisible(false);
-                    group.remove();
-                    setChanged();
-                    notifyObservers(new ObserverPackage(ObserverPackage.Type.OK,null,0,0));
-                    win.remove() ;
-                }
-            }
-        });
-        ardenne.instance.guiStage.addActor(win); */
-
     }
 
     private void initializeStyles(){
@@ -105,6 +84,7 @@ public class EventOK extends Observable {
             textButtonStyle.font.getData().scale(0f);
         }
     }
+
     private void initializeImageBackGround() {
 
 
@@ -113,47 +93,59 @@ public class EventOK extends Observable {
         backgroundImage.setDrawable(new NinePatchDrawable(np));
         backgroundImage.setHeight(281 );
         backgroundImage.setWidth(500 );
-        backgroundImage.setPosition((Gdx.graphics.getWidth() / 2) - (250 / 1f),
-                (Gdx.graphics.getHeight() / 2) - (140 / 1f));
+        backgroundImage.setPosition((Gdx.graphics.getWidth() / 2) - (250 ),
+                (Gdx.graphics.getHeight() / 2) - (140 ));
         backgroundImage.setVisible(true);
         group.addActor(backgroundImage);
     }
+
     private void initializeTextLabel(){
         Label.LabelStyle style = new Label.LabelStyle();
         style.font = Fonts.getFont24();
         if (!Gdx.app.getType().equals(Application.ApplicationType.Desktop)){
-            style.font.getData().scale(0f);
+            style.font.getData().scale(0);
         }
         textLabel = new Label("",style);
-        textLabel.setSize(480/1f, 260/1f);
+        textLabel.setSize(480, 260);
         textLabel.setPosition(backgroundImage.getX() + backgroundImage.getWidth()/2 - textLabel.getWidth()/2, backgroundImage.getY() + backgroundImage.getHeight()/2 - textLabel.getWidth()/2);
         textLabel.setVisible(true);
 
         group.addActor(textLabel);
     }
 
-    private void initializeokButton(){
+    private void initializeYesButton(){
 
-        okButton = new TextButton(i18NBundle.get("ok"),textButtonStyle);
-        okButton.setSize(104/1f, 34/1f);
-        okButton.setVisible(true);
-        okButton.addListener(new ClickListener() {
+        yesButton = new TextButton(i18NBundle.get("yes"),textButtonStyle);
+        yesButton.setSize(104, 34);
+        yesButton.setVisible(true);
+        yesButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (!event.getType().equals("touchUp")) {
                     group.setVisible(false);
-                    group.remove();
-                    setChanged();
-                    notifyObservers(new ObserverPackage(ObserverPackage.Type.OK,null,0,0));
-
+                    Combat.instance.cleanup(false);
+                    SplashScreen.instance.reStart();
                 }
             }
         });
-        group.addActor(okButton);
+
+        group.addActor(yesButton);
     }
 
+    private void initializeNoButton(){
 
-    public void toFront() {
-        group.toFront();
+        noButton = new TextButton(i18NBundle.get("no"),textButtonStyle);
+        noButton.setSize(104, 34);
+        noButton.setVisible(true);
+        noButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (!event.getType().equals("touchUp")) {
+                    group.setVisible(false);
+                }
+            }
+        });
+
+        group.addActor(noButton);
     }
 }

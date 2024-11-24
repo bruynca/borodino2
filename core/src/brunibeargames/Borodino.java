@@ -66,10 +66,12 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 	Settings settings;
 //
 	Loader loader;
-	
 
-	
-	@Override
+	 public static void setIsStopPan(boolean b) {
+	 }
+
+
+	 @Override
 	public void create () {
 	    Gdx.app.log("Create", "Create");
 

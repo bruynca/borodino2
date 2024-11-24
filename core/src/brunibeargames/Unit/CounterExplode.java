@@ -5,11 +5,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.Timer;
-import com.bruinbeargames.ardenne.Hex.Hex;
-import com.bruinbeargames.ardenne.Map;
-import com.bruinbeargames.ardenne.ardenne;
 
 import java.util.ArrayList;
+
+import brunibeargames.Borodino;
+import brunibeargames.Hex;
+import brunibeargames.Map;
 
 /**
  *  create a display of the counter stack 
@@ -84,14 +85,14 @@ public class CounterExplode {
         Gdx.app.log("CounterExplode", "y="+startY);
         for (Stack stack:arrCounters){
             stack.setPosition(startX,startY);
-            ardenne.instance.guiStage.addActor(stack);
+            Borodino.instance.guiStage.addActor(stack);
             startX +=size;
         }
         if (Gdx.app.getType() != Application.ApplicationType.Desktop) {
             Gdx.app.log("CounterExplode ", "enter for android");
 
             counter.cycleUnits();
-            ardenne.setIsStopPan(true);
+            Borodino.setIsStopPan(true);
             //fullScreen.remove();
             //initializeFullScreenCheckBox();
         }
@@ -105,6 +106,6 @@ public class CounterExplode {
             stack.remove();
         }
         arrCounters.clear();
-        ardenne.setIsStopPan(false);
+        Borodino.setIsStopPan(false);
     }
 }

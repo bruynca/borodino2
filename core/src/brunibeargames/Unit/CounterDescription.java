@@ -4,12 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.Timer;
-import com.bruinbeargames.ardenne.GameLogic.Division;
-import com.bruinbeargames.ardenne.Hex.Hex;
-import com.bruinbeargames.ardenne.Map;
-import com.bruinbeargames.ardenne.UI.WinToolTip;
 
 import java.util.ArrayList;
+
+import brunibeargames.Hex;
+import brunibeargames.Map;
+import brunibeargames.UI.WinToolTip;
 
 public class CounterDescription {
     Counter counter;
@@ -47,7 +47,7 @@ public class CounterDescription {
         Vector2 v2 = Map.ConvertToScreen(unit.getHexOccupy());
         int y = Gdx.graphics.getHeight();
         int x = Gdx.graphics.getWidth();
-        String str = unit.subDesignation + "\n"+ Division.instance.getName(unit.designation);
+        String str = unit.subDesignation + "\n";
         winToolTip = new WinToolTip(str);
         if (v2.y > y - 50){
             v2.y -=100;

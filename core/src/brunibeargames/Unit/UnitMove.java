@@ -1,14 +1,15 @@
 package brunibeargames.Unit;
 
 import com.badlogic.gdx.Gdx;
-import com.bruinbeargames.ardenne.AI.AIUtil;
-import com.bruinbeargames.ardenne.ErrorGame;
-import com.bruinbeargames.ardenne.GameLogic.Move;
-import com.bruinbeargames.ardenne.Hex.Hex;
-import com.bruinbeargames.ardenne.Hex.HexCanNotCross;
-import com.bruinbeargames.ardenne.Hex.HexHelper;
 
 import java.util.ArrayList;
+
+import brunibeargames.ErrorGame;
+import brunibeargames.Hex;
+import brunibeargames.HexCanNotCross;
+import brunibeargames.HexHelper;
+import brunibeargames.Move;
+import brunibeargames.AIUtil;
 
 public class UnitMove {
 

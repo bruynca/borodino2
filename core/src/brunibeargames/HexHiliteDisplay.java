@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import java.util.ArrayList;
 
+import brunibeargames.UI.MouseImage;
 import brunibeargames.Unit.Unit;
 
 /**
@@ -72,14 +73,7 @@ public class HexHiliteDisplay {
         }
         else if (type == HiliteHex.TypeHilite.Hilite){
                 image = new Image(backHilite);
-        }else if (type == HiliteHex.TypeHilite.MoveExit) {
-            if (SecondPanzerExits.instance.isInExit(hex)
-                    && GameSetup.instance.getScenario().ordinal() > 0) {
-                image = new Image(backHiliteExit);
-            } else {
-                type = HiliteHex.TypeHilite.Move;
-                image = new Image(backHiliteMove);
-            }
+
         }else if (type == HiliteHex.TypeHilite.Move){
             image = new Image(backHiliteMove);
         }else if (type != HiliteHex.TypeHilite.Debug) {
@@ -106,17 +100,11 @@ public class HexHiliteDisplay {
             image.addAction(Actions.fadeIn(.5f/(hex.getCalcMoveCost(0)+1)));
         }
         if (image != null) {
-            ardenne.instance.hexStage.addActor(image);
+            Borodino.instance.hexStage.addActor(image);
         }
         if (typeIn == HiliteHex.TypeHilite.Debug) {
 
-            ardenne.instance.hexStage.addActor(label);
-        }
-        if (typeIn == HiliteHex.TypeHilite.Move) {
-            if (ardenne.instance.getisShowMovepoints()) {
-
-                ardenne.instance.hexStage.addActor(label2);
-            }
+            Borodino.instance.hexStage.addActor(label);
         }
 
         arrHexHilite.add(this);
@@ -126,49 +114,7 @@ public class HexHiliteDisplay {
         image.addListener(new ClickListener() {
 
          public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-           MouseImage.instance.setMouseGerman();
-           ArrayList<Hex> arrHex = Supply.instance.getunitsInRadius(hex);
-             for (Unit unit:arrUnitsToShade){
-                 if (!unit.getInSupplyThisTurn()) {
-                     unit.getMapCounter().getCounterStack().shade();
-                     if (unit.isExit){
-                         Hex hex=unit.getHexOccupy();
-                         SecondPanzerExits.instance.shade(hex);
-
-                     }
-                 }
-             }
-           for (Hex hex2:arrHex){
-             for (Unit unit:hex2.getUnitsInHex()){
-                 if (unit.isAxis){
-                     if (unit.getMapCounter() != null){
-                         if (unit.isExit){
-                             Hex hex=unit.getHexOccupy();
-                             SecondPanzerExits.instance.removeShade(hex);
-                             arrUnitsToShade.add(unit);
-                         }
-                         if (unit.getMapCounter().getCounterStack().isShaded()){
-                             arrUnitsToShade.add(unit);
-                             unit.getMapCounter().getCounterStack().removeShade();
-                         }
-                     }
-                 }
-             }
-           }
         }
-            public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                MouseImage.instance.mouseImageReset();
-                for (Unit unit:arrUnitsToShade){
-                    if (!unit.getInSupplyThisTurn()) {
-                        unit.getMapCounter().getCounterStack().shade();
-                        if (unit.isExit){
-                            SecondPanzerExits.instance.shade(unit.getHexOccupy());
-                        }
-
-                    }
-                }
-                arrUnitsToShade.clear();
-            }
     });
    }
 

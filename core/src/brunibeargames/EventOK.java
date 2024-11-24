@@ -1,4 +1,4 @@
-package brunibeargames.UI;
+package brunibeargames;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
@@ -16,13 +16,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
 
-
 import java.util.Observable;
 
-import brunibeargames.Borodino;
-import brunibeargames.Fonts;
-import brunibeargames.GameMenuLoader;
-import brunibeargames.ObserverPackage;
+import brunibeargames.UI.EventPopUp;
 
 public class EventOK extends Observable {
 

@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 public class River {
 
-	static ArrayList<River> arrRivers = new ArrayList();
+    public static Object instance;
+    static ArrayList<River> arrRivers = new ArrayList();
 	ArrayList<Hex> arrAbank = new ArrayList();
 	ArrayList<Hex> arrBbank = new ArrayList();
 	boolean isStream = true;

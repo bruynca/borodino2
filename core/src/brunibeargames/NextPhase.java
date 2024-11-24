@@ -8,9 +8,14 @@ import com.badlogic.gdx.utils.Timer;
 
 import java.util.UUID;
 
+import brunibeargames.UI.BottomMenu;
+import brunibeargames.Unit.ClickAction;
+import brunibeargames.Unit.CounterStack;
+
 public class NextPhase {
 
     static public NextPhase instance;
+    public Weather weather;
     private int phase = -1;
     public final  Phase[] Phases;
     public boolean isAlliedPlayer = true;
@@ -122,246 +127,13 @@ public class NextPhase {
         ClickAction.unLock();
         ClickAction.clearClickListeners();
         Hex.initOccupied(); // bug somewhere
-        if (aiMain.isHandleAlliedPhase(phase)) {
-            Gdx.app.log("nextPhase","AI in New ="+Phases[phase].toString());
-            aiMain.handlePhase(phase);
-            return;
-        } else if (aiMain.isHandleAxisPhase(phase)) {
-            Gdx.app.log("nextPhase","AI in New ="+Phases[phase].toString());
-            aiMain.handlePhase(phase);
-            return;
-        }else {
+
+        {
             isAIControl = false;
             Gdx.app.log("nextPhase","next  ="+Phases[phase].toString());
             BottomMenu.instance.setEnablePhaseChange(true);
 
             switch (Phases[phase]) {
-                case CARD_CLEANUP:
-                    CardHandler.instance.cleanLastTurn(turn);
-                    break;
-                case ALLIED_CARD:
-                    isAlliedPlayer = true;
-                    CardHandler.instance.alliedCardPhase(turn);
-                    break;
-                case GERMAN_CARD:
-                    isAlliedPlayer = false;
-                    CardHandler.instance.germanCardPhase(turn);
-                    break;
-                case GERMAN_ROLL_BRIDGE:
-                    isAlliedPlayer = false;
-                    AccessInternet.updateGame(NextPhase.instance.turn, "");
-                    FixBridge.instance.display(null);
-                    break;
-                case GERMAN_PRE_MOVEMENT:
-                    isAlliedPlayer = false;
-                    LimberArtillery.instance.initializeLimber(false,false);
-                    break;
-                case GERMAN_MOVEMENT:
-                    isAlliedPlayer = false;
-                    Move.instance.intializeMove(false, false, false);
-  //                  endPhase(getPhase());
-                    break;
-                case GERMAN_POST_MOVEMENT:
-                    EventPopUp.instance.hide();
-                    isAlliedPlayer = false;
-                    Move.instance.endMove(false, false);
-//                    Hex.checkStacking();
- //                   Hex.checkStacking();
- //                   OverStacking.instance.check();
-                    nextPhase();
-                    break;
-                case US_BARRAGE_DEFENSE:
-                    isInBarrage = true;
-                    isAlliedPlayer = true;
-                    Barrage.instance.intialize(true,false);
- //                   endPhase(getPhase());
-                    break;
-                case GERMAN_BARRAGE_ATTACK:
-                    isInBarrage = true;
-                    isAlliedPlayer = false;
-                    EventPopUp.instance.hide();
-  //                  Unit.initUnShade();
-                    Barrage.instance.intialize(false,false);
-                    break;
-                case GERMAN_BARRAGE_RESOLVE:
-                    isInBarrage = true;
-
-                    isAlliedPlayer = false;
-                    //                  Unit.initUnShade();
-                    BarrageExplode barrageExplode = new BarrageExplode();
-                    break;
-                case GERMAN_BARRAGE_END:
-                    isInBarrage = true;
-
-                    isAlliedPlayer = false;
-                    BarrageExplode.End();
-                    Barrage.clearTargets();
-                    nextPhase();
-                    break;
-                case GERMAN_COMBAT:
-                    isAlliedPlayer = false;
-                    Combat.instance.Intialize(false, false);
-                    break;
-                case GERMAN_COMBAT_END:
-                    isAlliedPlayer = false;
-                    EventPopUp.instance.hide();
-                    Combat.instance.cleanup(true);
-                    nextPhase();
-                    break;
-                case GERMAN_EXPLOTATION:
-                    Move.instance.intializeMove(false, false, true);
-                    break;
-                case GERMAN_POST_EXPLOTATION:
-                    EventPopUp.instance.hide();
-                    Move.instance.endMove(false, false);
-                    Hex.checkStacking();
-                    if (LehrHalts.instance.isLehrHalted()){
-                        LehrHalts.instance.restore();
-                    }
-                    if (SecondPanzerHalts.instance.is2NDPanzerHalted()){
-                        SecondPanzerHalts.instance.restore();
-                    }
-                    if (noExitCheck()){
-                        return;
-                    }
-                    nextPhase();
-                    break;
-                case GERMAN_SUPPLY:
-                    if (turn == GameSetup.instance.getScenario().getLength()) {
-                        if (GameSetup.instance.getScenario().ordinal() > 0){
-                            String str = i18NBundle.format("exitinsupply");
-                            EventPopUp.instance.show(str);
-                            if (SecondPanzerExits.instance.unitExit1.size() > 0){
-                                CenterScreen.instance.start(SecondPanzerExits.instance.hexExit1);
-                            }else{
-                                CenterScreen.instance.start(SecondPanzerExits.instance.hexExit1);
-                            }
-                        }
-                    }
-
-                    isAlliedPlayer = false;
-                    Unit.initOutOfSupplyThisTurn(false);
-                    Supply.instance.doGermanSupply();
-                    break;
-                case GERMAN_SUPPLY_END:
-                    isAlliedPlayer = false;
-                    Supply.instance.EndSupplyGerman();
-                    if (turn == GameSetup.instance.getScenario().getLength()) {
-                        if (GameSetup.instance.getScenario().ordinal() > 0){
-                            VictoryPopup.instance.announceVictorAtEnd();
-                            return;
-                        }
-                    }
-
-// done in Supply                    nextPhase();
-                    break;
-                case GERMAN_END:
-                    isAlliedPlayer = false;
-                    Unit.initUnShade();
-                    SecondPanzerExits.unShadeAll();
-                    ClickAction.cancelAll();
-                    if (turn == GameSetup.instance.getScenario().getLength()) {
-                        if (GameSetup.instance.getScenario().ordinal() > 0){
-                            VictoryPopup.instance.announceVictorAtEnd();
-                            return;
-                        }
-                    }
-                    nextPhase();
-                    break;
-                case ALLIED_PRE_MOVEMENT:
-                    isAlliedPlayer = true;
-                    LimberArtillery.instance.initializeLimber(true,false);
-                    break;
-                case ALLIED_REINFORCEMENT:
-                    isAlliedPlayer = true;
-                    if (getTurn() == 3){
-                        Supply.instance.loadOtherUSSupply();
-                    }
-                    if (Reinforcement.instance.getReinforcementsAvailable(turn).size() > 0){
-                        Reinforcement.instance.showWindow(false);
-                    }else{
-                        nextPhase();
-                    }
-                    break;
-
-                case ALLIED_MOVEMENT:
-                    isAlliedPlayer = true;
-                    Move.instance.intializeMove(true, false,false);
-                    break;
-                case ALLIED_POST_MOVEMENT:
-                    isAlliedPlayer = true;
-                    EventPopUp.instance.hide();
-                    Move.instance.endMove(false, false);
-                    Hex.checkStacking();
-                    nextPhase();
-                    break;
-                case BRIDGE_GERMAN:
-                    HooufGas.instance.checkHooufgas();
-
-                    nextPhase();
-                    break;
-                case BRIDGE_ALLIED:
-                    nextPhase();
-                    break;
-                case GERMAN_BARRAGE_DEFEND:
-                    isInBarrage = true;
-
-                    isAlliedPlayer = false;
-
-                    Barrage.instance.intialize(false,false);
-                    break;
-                case ALLIED_BARRAGE_ATTACK:
-                    isInBarrage = true;
-
-                    isAlliedPlayer = true;
-                    EventPopUp.instance.hide();
-                    Barrage.instance.intialize(true,false);
-                    break;
-                case ALLIED_BARRAGE_RESOLVE:
-                    isInBarrage = true;
-
-                    isAlliedPlayer = true;
-                    barrageExplode = new BarrageExplode();
-                    break;
-                case ALLIED_BARRAGE_END:
-                    isInBarrage = true;
-
-                    isAlliedPlayer = true;
-                    BarrageExplode.End();
-                    Barrage.clearTargets();
-
-                    nextPhase();
-                    break;
-                case ALLIED_COMBAT:
-                    isAlliedPlayer = true;
-                    Combat.instance.Intialize(true,false);
-                    break;
-                case ALLIED_COMBAT_END:
-                    isAlliedPlayer = true;
-                    EventPopUp.instance.hide();
-                    Combat.instance.cleanup(true);
-                    nextPhase();
-                    break;
-                case ALLIED_EXPLOTATION:
-                    Move.instance.intializeMove(true, false,true);
-                    break;
-                case ALLIED_POST_EXPLOTATION:
-                    EventPopUp.instance.hide();
-                    Move.instance.endMove(false, false);
-                    Hex.checkStacking();
-                    nextPhase();
-                    break;
-                case ALLIED_SUPPLY:
-                    isAlliedPlayer = true;
-                    Unit.initOutOfSupplyThisTurn(true);
-                    Supply.instance.doAlliedSupply();
-                    break;
-
-                case ALLIED_END:
-                    isAlliedPlayer = true;
-                    Supply.instance.endSupplyUS();
-                    nextPhase();
-                    break;
                 case NEXT_TURN:
                     break;
                 default:
@@ -378,6 +150,7 @@ public class NextPhase {
         if (phaseToEnd != getPhase()){
             ErrorGame errorGame = new ErrorGame("EndPhase and current Phase do not Match",this);
         }
+
         CounterStack.removeAllHilites();
         CounterStack.removeAllShaded();
 
@@ -392,28 +165,6 @@ public class NextPhase {
         }, .065F);
    }
 
-    private boolean noExitCheck(){
-        boolean iswarned = false;
-        if (GameSetup.instance.getScenario().ordinal() > 0) {
-            if (SecondPanzerExits.instance.checkExits()){
-                String winner = VictoryPopup.instance.announceVictorAtEnd();
-                BottomMenu.instance.setEnablePhaseChange(false);
-                AccessInternet.updateGame(turn, winner);
-                iswarned = true;
-                return true;
-            }
-        }
-        if (GameSetup.instance.getScenario().ordinal() > 1 && !iswarned) {
-            if (LehrExits.instance.checkExits()){
-                String winner = VictoryPopup.instance.announceVictorAtEnd();
-                BottomMenu.instance.setEnablePhaseChange(false);
-                AccessInternet.updateGame(turn, winner);
-                return true;
-            }
-        }
-        return false;
-
-    }
 
 
     public void setDebug() {
@@ -436,13 +187,13 @@ public class NextPhase {
     public boolean isAlliedPlayer(){
         return isAlliedPlayer;
     }
-    public AIMain getAiMain(){
-        return aiMain;
-    }
     public boolean isAIControl(){
         return isAIControl;
     }
     public boolean isInBarrage(){
         return isInBarrage;
+    }
+
+    public void continuePhaseFirstTime() {
     }
 }

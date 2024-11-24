@@ -1,8 +1,9 @@
 package brunibeargames.Unit;
 
-import com.bruinbeargames.ardenne.Hex.Hex;
 
 import java.util.ArrayList;
+
+import brunibeargames.Hex;
 
 public class UnitHexes {
     public Unit unit;

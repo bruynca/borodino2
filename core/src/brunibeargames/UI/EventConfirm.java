@@ -14,12 +14,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
-import com.bruinbeargames.ardenne.Fonts;
-import com.bruinbeargames.ardenne.GameMenuLoader;
-import com.bruinbeargames.ardenne.ObserverPackage;
-import com.bruinbeargames.ardenne.ardenne;
 
 import java.util.Observable;
+
+import brunibeargames.Borodino;
+import brunibeargames.Fonts;
+import brunibeargames.GameMenuLoader;
+import brunibeargames.ObserverPackage;
 
 public class EventConfirm extends Observable {
 
@@ -69,7 +70,7 @@ public class EventConfirm extends Observable {
             yesButton.setPosition(backgroundImage.getX() + (10), backgroundImage.getY() +  (10));
             noButton.setPosition(backgroundImage.getX() + backgroundImage.getWidth() - 10 - 100, backgroundImage.getY() +  (10));
             group.setVisible(true);
-            ardenne.instance.guiStage.addActor(group);
+            Borodino.instance.guiStage.addActor(group);
         }
 
         private void initializeStyles(){

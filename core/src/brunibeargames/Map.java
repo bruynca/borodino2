@@ -237,7 +237,7 @@ public class Map
 	* output is point on screen in Pixels
 	* output will be set to center of the hex on screen.
 	*/
-	static Vector2 ConvertToScreen(Hex hex)
+	public static Vector2 ConvertToScreen(Hex hex)
 	{
 		Polygon poly = Map.GetBackPoly(hex);
 		float[] vertices = poly.getVertices();

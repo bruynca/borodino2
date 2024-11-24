@@ -26,6 +26,9 @@ import java.util.Observable;
 import brunibeargames.Borodino;
 import brunibeargames.Fonts;
 import brunibeargames.GameMenuLoader;
+import brunibeargames.HelpPage;
+import brunibeargames.NextPhase;
+import brunibeargames.ObserverPackage;
 
 public class EventPopUp extends Observable {
 

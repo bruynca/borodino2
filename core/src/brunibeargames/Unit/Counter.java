@@ -13,8 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import java.util.ArrayList;
 
 import brunibeargames.Borodino;
+import brunibeargames.Combat;
 import brunibeargames.Hex;
+import brunibeargames.HexSurround;
 import brunibeargames.HiliteHex;
+import brunibeargames.NextPhase;
+import brunibeargames.Phase;
 
 public class Counter {
     public static final int size =130;
@@ -60,7 +64,7 @@ public class Counter {
         v2.x -= adjust;
         v2.y += adjust;
         stack.setPosition(v2.x, v2.y);
-        addToStage(ardenne.instance.mapStage);
+        addToStage(Borodino.instance.mapStage);
         rePlace(hexPlace);
     }
 
@@ -85,6 +89,7 @@ public class Counter {
                 {
                     Gdx.app.log("Counter","Right");
                     cycleUnits();
+
                     if (NextPhase.instance.getPhase() == Phase.ALLIED_COMBAT.ordinal() ||
                         NextPhase.instance.getPhase() == Phase.GERMAN_COMBAT.ordinal()){
                         if (Combat.instance.isAttackArrows()) {
@@ -192,7 +197,7 @@ public class Counter {
                 pos.x -= counterStackAdjust;
                 pos.y += counterStackAdjust;
                 counter.stack.setPosition(pos.x, pos.y);
-                counter.addToStage(ardenne.instance.mapStage);
+                counter.addToStage(Borodino.instance.mapStage);
                 pos.x -= counterStackAdjust;
                 pos.y += counterStackAdjust;
             }

@@ -1,6 +1,7 @@
 package brunibeargames.Unit;
 
-import com.bruinbeargames.ardenne.Hex.Hex;
+
+import brunibeargames.Hex;
 
 public class UnitHex {
     public Unit unit;
