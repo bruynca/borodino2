@@ -28,7 +28,7 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
  {
 	 SpriteBatch batch;
 	 Texture img;
-	 boolean isWriteTerrain = false;
+	 boolean isWriteTerrain = true;
 	 public Stage guiStage;
 	 public  Stage mapStage;
 	 public  Stage hexStage;

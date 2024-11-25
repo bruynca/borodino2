@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import brunibeargames.Unit.Counter;
 import brunibeargames.Unit.Unit;
@@ -147,6 +146,8 @@ public class Hex {
 	boolean isBridge = false;
 	boolean isStreamBank = false;
 	int streamBank = 0;
+	ArrayList<Integer> arrStreamBank = new ArrayList<>();
+	boolean isMultipleStreamBank = false;
 	boolean isRiverBank = false;
 	boolean isForest = false;
 	NoPath npath = null;
@@ -465,6 +466,7 @@ public class Hex {
 			Hex hex = hexTable[x][y];
 			hex.isStreamBank = true;
 			hex.streamBank = 1;
+			hex.arrStreamBank.add(1);
 			river.addAbank(hex);
 		}
 		for (int i = 0; i < stream1B.length; i++) {
@@ -473,6 +475,7 @@ public class Hex {
 			Hex hex = hexTable[x][y];
 			hex.isStreamBank = true;
 			hex.streamBank = 1;
+			hex.arrStreamBank.add(1);
 			river.addBbank(hex);
 		}
 
@@ -481,9 +484,12 @@ public class Hex {
 			int x = stream2a[i][0];
 			int y = stream2a[i][1];
 			Hex hex = hexTable[x][y];
-			hex.isStreamBank = true;
 			hex.streamBank = 2;
-
+			if (hex.isStreamBank){
+				hex.arrStreamBank.add(2);
+				hex.isMultipleStreamBank = true;
+			}
+			hex.isStreamBank = true;
 			river.addAbank(hex);
 		}
 		for (int i = 0; i < stream2b.length; i++) {
@@ -492,7 +498,10 @@ public class Hex {
 			Hex hex = hexTable[x][y];
 			hex.isStreamBank = true;
 			hex.streamBank = 2;
-
+			if (hex.isStreamBank){
+				hex.arrStreamBank.add(2);
+				hex.isMultipleStreamBank = true;
+			}
 			river.addBbank(hex);
 		}
 		river = new River(true); // if stream set to true;
@@ -500,6 +509,11 @@ public class Hex {
 			int x = stream3a[i][0];
 			int y = stream3a[i][1];
 			Hex hex = hexTable[x][y];
+			if (hex.isStreamBank){
+				hex.arrStreamBank.add(3);
+				hex.isMultipleStreamBank = true;
+			}
+
 			hex.isStreamBank = true;
 			hex.streamBank = 3;
 
@@ -509,6 +523,11 @@ public class Hex {
 			int x = stream3b[i][0];
 			int y = stream3b[i][1];
 			Hex hex = hexTable[x][y];
+			if (hex.isStreamBank){
+				hex.arrStreamBank.add(3);
+				hex.isMultipleStreamBank = true;
+			}
+
 			hex.isStreamBank = true;
 			hex.streamBank = 3;
 
@@ -519,6 +538,11 @@ public class Hex {
 			int x = stream4a[i][0];
 			int y = stream4a[i][1];
 			Hex hex = hexTable[x][y];
+			if (hex.isStreamBank){
+				hex.arrStreamBank.add(4);
+				hex.isMultipleStreamBank = true;
+			}
+
 			hex.isStreamBank = true;
 			hex.streamBank = 4;
 
@@ -528,6 +552,11 @@ public class Hex {
 			int x = stream4b[i][0];
 			int y = stream4b[i][1];
 			Hex hex = hexTable[x][y];
+			if (hex.isStreamBank){
+				hex.arrStreamBank.add(4);
+				hex.isMultipleStreamBank = true;
+			}
+
 			hex.isStreamBank = true;
 			hex.streamBank = 4;
 
@@ -538,6 +567,11 @@ public class Hex {
 			int x = stream5a[i][0];
 			int y = stream5a[i][1];
 			Hex hex = hexTable[x][y];
+			if (hex.isStreamBank){
+				hex.arrStreamBank.add(5);
+				hex.isMultipleStreamBank = true;
+			}
+
 			hex.isStreamBank = true;
 			hex.streamBank = 5;
 
@@ -547,6 +581,11 @@ public class Hex {
 			int x = stream5b[i][0];
 			int y = stream5b[i][1];
 			Hex hex = hexTable[x][y];
+			if (hex.isStreamBank){
+				hex.arrStreamBank.add(5);
+				hex.isMultipleStreamBank = true;
+			}
+
 			hex.isStreamBank = true;
 			hex.streamBank = 5;
 
@@ -557,6 +596,11 @@ public class Hex {
 			int x = stream6a[i][0];
 			int y = stream6a[i][1];
 			Hex hex = hexTable[x][y];
+			if (hex.isStreamBank){
+				hex.arrStreamBank.add(6);
+				hex.isMultipleStreamBank = true;
+			}
+
 			hex.isStreamBank = true;
 			hex.streamBank = 6;
 
@@ -567,6 +611,11 @@ public class Hex {
 			int x = stream6B[i][0];
 			int y = stream6B[i][1];
 			Hex hex = hexTable[x][y];
+			if (hex.isStreamBank){
+				hex.arrStreamBank.add(6);
+				hex.isMultipleStreamBank = true;
+			}
+
 			hex.isStreamBank = true;
 			hex.streamBank = 6;
 
@@ -577,6 +626,11 @@ public class Hex {
 			int x = stream7a[i][0];
 			int y = stream7a[i][1];
 			Hex hex = hexTable[x][y];
+			if (hex.isStreamBank){
+				hex.arrStreamBank.add(7);
+				hex.isMultipleStreamBank = true;
+			}
+
 			hex.isStreamBank = true;
 			hex.streamBank = 7;
 
@@ -586,6 +640,11 @@ public class Hex {
 			int x = stream7b[i][0];
 			int y = stream7b[i][1];
 			Hex hex = hexTable[x][y];
+			if (hex.isStreamBank){
+				hex.arrStreamBank.add(7);
+				hex.isMultipleStreamBank = true;
+			}
+
 			hex.isStreamBank = true;
 			hex.streamBank = 7;
 
@@ -596,6 +655,11 @@ public class Hex {
 			int x = stream8a[i][0];
 			int y = stream8a[i][1];
 			Hex hex = hexTable[x][y];
+			if (hex.isStreamBank){
+				hex.arrStreamBank.add(8);
+				hex.isMultipleStreamBank = true;
+			}
+
 			hex.isStreamBank = true;
 			hex.streamBank = 8;
 
@@ -605,6 +669,11 @@ public class Hex {
 			int x = stream8b[i][0];
 			int y = stream8b[i][1];
 			Hex hex = hexTable[x][y];
+			if (hex.isStreamBank){
+				hex.arrStreamBank.add(8);
+				hex.isMultipleStreamBank = true;
+			}
+
 			hex.isStreamBank = true;
 			hex.streamBank = 8;
 
@@ -615,6 +684,11 @@ public class Hex {
 			int x = stream9a[i][0];
 			int y = stream9a[i][1];
 			Hex hex = hexTable[x][y];
+			if (hex.isStreamBank){
+				hex.arrStreamBank.add(9);
+				hex.isMultipleStreamBank = true;
+			}
+
 			hex.isStreamBank = true;
 			hex.streamBank = 9;
 
@@ -625,6 +699,10 @@ public class Hex {
 			int y = stream9b[i][1];
 			Hex hex = hexTable[x][y];
 			hex.streamBank = 9;
+			if (hex.isStreamBank){
+				hex.arrStreamBank.add(9);
+				hex.isMultipleStreamBank = true;
+			}
 
 			hex.isStreamBank = true;
 			river.addBbank(hex);

@@ -73,43 +73,40 @@ public class WinDebug
 
 
 	}
-	ArrayList<Actor> arrActors =  new ArrayList();
 
 	private void DoShowAll() {
 		arrActors.clear();
-
-		for (int y = 0; y < Hex.yEnd; y++) {
-			for (int x = 0; x < Hex.xEnd; x++) {
+		for (int y = 0; y < Hex.yEnd; y++)
+		{
+			for (int x = 0; x< Hex.xEnd; x++)
+			{
 				Hex hex = Hex.hexTable[x][y];
-				if (x == 0 && y == 22){
-					int b=0;
-				}
-//				if (hex.isForest || hex.isRoad || hex.isPath || hex.isBridge) {
-				if (hex.isBridge) {
+				if (hex.isForest || hex.isRoad || hex.isPath|| hex.isBridge)
+				{
 					String str = "";
-				/**	if (hex.isRoad) {
-						str += " R";
+					if (hex.isRoad){
+						str +=" R";
 					}
-					if (hex.isForest) {
-						str += " F";
+					if (hex.isForest){
+						str +=" F";
 					}
-					if (hex.isPath) {
-						str += " P";
+					if (hex.isPath){
+						str +=" P";
 					}
-					if (hex.npath != null) {
-						str += "n";
+					if (hex.npath != null){
+						str +="n";
 					}
 
-					if (hex.isBridge) {
-						str += " B";
-					}*/
-					str += "\n" + x + "," + y;
-					Label label = new Label(str, skin);
+					if (hex.isBridge){
+						str +=" B";
+					}
+					str += "\n"+x+","+y;
+					Label label = new Label(str,skin);
 					label.setScale(20f);
 					label.setColor(Color.YELLOW);
 					label.setFontScale(2f);
-					Vector2 vector2 = hex.GetDisplayCoord();
-					label.setPosition(vector2.x + 35, vector2.y + 25);
+					Vector2 vector2 =  hex.GetDisplayCoord();
+					label.setPosition(vector2.x+35,vector2.y+25);
 					mapStage.addActor(label);
 					arrActors.add(label);
 				}
@@ -118,7 +115,7 @@ public class WinDebug
 		}
 	}
 
-
+	ArrayList<Actor> arrActors =  new ArrayList();
 	private void DoShowRivers()
 	{
 		arrActors.clear();
