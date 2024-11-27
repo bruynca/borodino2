@@ -146,6 +146,7 @@ public class Hex {
 	boolean isBridge = false;
 	boolean isStreamBank = false;
 	int streamBank = 0;
+	int riverBank = 0;
 	ArrayList<Integer> arrStreamBank = new ArrayList<>();
 	boolean isMultipleStreamBank = false;
 	boolean isRiverBank = false;
@@ -370,13 +371,14 @@ public class Hex {
 				arrHexMap.add(hexTable[x][y]);
 			}
 		}
+		LoadSurround();  // need surround for river and stream processing
+
 		LoadRoads();
 		LoadPaths();
 		LoadTowns();
 		LoadForest();
 		LoadRiversStream();
 		LoadBridges();
-		LoadSurround();
 
 	}
 
@@ -456,55 +458,73 @@ public class Hex {
 
 		i++;
 	}
-
+	static ArrayList<Hex> arrStream10 = new ArrayList<>();
+	static ArrayList<Hex> arrStream11 = new ArrayList<>();
+	static ArrayList<Hex> arrStream20 = new ArrayList<>();
+	static ArrayList<Hex> arrStream21 = new ArrayList<>();
+	static ArrayList<Hex> arrStream30 = new ArrayList<>();
+	static 	ArrayList<Hex> arrStream31 = new ArrayList<>();
+	static ArrayList<Hex> arrStream40 = new ArrayList<>();
+	static ArrayList<Hex> arrStream41 = new ArrayList<>();
+	static ArrayList<Hex> arrStream50 = new ArrayList<>();
+	static ArrayList<Hex> arrStream51 = new ArrayList<>();
+	static ArrayList<Hex> arrStream60 = new ArrayList<>();
+	static ArrayList<Hex> arrStream61 = new ArrayList<>();
+	static ArrayList<Hex> arrStream70 = new ArrayList<>();
+	static ArrayList<Hex> arrStream71 = new ArrayList<>();
+	static ArrayList<Hex> arrStream80 = new ArrayList<>();
+	static ArrayList<Hex> arrStream81 = new ArrayList<>();
+	static ArrayList<Hex> arrStream90 = new ArrayList<>();
+	static ArrayList<Hex> arrStream91 = new ArrayList<>();
+	static ArrayList<Hex> arrRiver10 = new ArrayList<>();
+	static ArrayList<Hex> arrRiver11 = new ArrayList<>();
 
 	private static void LoadRiversStream() {
-		River river = new River(true); // if stream set to true;
 		for (int i = 0; i < stream1A.length; i++) {
 			int x = stream1A[i][0];
 			int y = stream1A[i][1];
 			Hex hex = hexTable[x][y];
 			hex.isStreamBank = true;
-			hex.streamBank = 1;
+			hex.streamBank = 10;
 			hex.arrStreamBank.add(1);
-			river.addAbank(hex);
+			arrStream10.add(hex);
 		}
 		for (int i = 0; i < stream1B.length; i++) {
 			int x = stream1B[i][0];
 			int y = stream1B[i][1];
 			Hex hex = hexTable[x][y];
 			hex.isStreamBank = true;
-			hex.streamBank = 1;
+			hex.streamBank = 11;
 			hex.arrStreamBank.add(1);
-			river.addBbank(hex);
+			arrStream11.add(hex);
 		}
 
-		river = new River(true); // if stream set to true;
 		for (int i = 0; i < stream2a.length; i++) {
 			int x = stream2a[i][0];
 			int y = stream2a[i][1];
 			Hex hex = hexTable[x][y];
-			hex.streamBank = 2;
+			hex.streamBank = 20;
 			if (hex.isStreamBank){
 				hex.arrStreamBank.add(2);
 				hex.isMultipleStreamBank = true;
 			}
 			hex.isStreamBank = true;
-			river.addAbank(hex);
+			arrStream20.add(hex);
 		}
 		for (int i = 0; i < stream2b.length; i++) {
 			int x = stream2b[i][0];
 			int y = stream2b[i][1];
 			Hex hex = hexTable[x][y];
 			hex.isStreamBank = true;
-			hex.streamBank = 2;
+			hex.streamBank = 21;
 			if (hex.isStreamBank){
 				hex.arrStreamBank.add(2);
 				hex.isMultipleStreamBank = true;
+
 			}
-			river.addBbank(hex);
+			arrStream21.add(hex);
+
 		}
-		river = new River(true); // if stream set to true;
 		for (int i = 0; i < stream3a.length; i++) {
 			int x = stream3a[i][0];
 			int y = stream3a[i][1];
@@ -515,9 +535,8 @@ public class Hex {
 			}
 
 			hex.isStreamBank = true;
-			hex.streamBank = 3;
-
-			river.addAbank(hex);
+			hex.streamBank = 30;
+			arrStream30.add(hex);
 		}
 		for (int i = 0; i < stream3b.length; i++) {
 			int x = stream3b[i][0];
@@ -529,11 +548,10 @@ public class Hex {
 			}
 
 			hex.isStreamBank = true;
-			hex.streamBank = 3;
+			hex.streamBank = 31;
+			arrStream31.add(hex);
 
-			river.addBbank(hex);
 		}
-		river = new River(true); // if stream set to true;
 		for (int i = 0; i < stream4a.length; i++) {
 			int x = stream4a[i][0];
 			int y = stream4a[i][1];
@@ -544,9 +562,9 @@ public class Hex {
 			}
 
 			hex.isStreamBank = true;
-			hex.streamBank = 4;
+			hex.streamBank = 40;
+			arrStream40.add(hex);
 
-			river.addAbank(hex);
 		}
 		for (int i = 0; i < stream4b.length; i++) {
 			int x = stream4b[i][0];
@@ -558,11 +576,9 @@ public class Hex {
 			}
 
 			hex.isStreamBank = true;
-			hex.streamBank = 4;
-
-			river.addBbank(hex);
+			hex.streamBank = 41;
+			arrStream41.add(hex);
 		}
-		river = new River(true); // if stream set to true;
 		for (int i = 0; i < stream5a.length; i++) {
 			int x = stream5a[i][0];
 			int y = stream5a[i][1];
@@ -573,9 +589,9 @@ public class Hex {
 			}
 
 			hex.isStreamBank = true;
-			hex.streamBank = 5;
+			hex.streamBank = 50;
+			arrStream50.add(hex);
 
-			river.addAbank(hex);
 		}
 		for (int i = 0; i < stream5b.length; i++) {
 			int x = stream5b[i][0];
@@ -587,11 +603,9 @@ public class Hex {
 			}
 
 			hex.isStreamBank = true;
-			hex.streamBank = 5;
-
-			river.addBbank(hex);
+			hex.streamBank = 51;
+			arrStream51.add(hex);
 		}
-		river = new River(false); // if stream set to true;
 		for (int i = 0; i < stream6a.length; i++) {
 			int x = stream6a[i][0];
 			int y = stream6a[i][1];
@@ -602,9 +616,9 @@ public class Hex {
 			}
 
 			hex.isStreamBank = true;
-			hex.streamBank = 6;
+			hex.streamBank = 60;
+			arrStream60.add(hex);
 
-			river.addAbank(hex);
 		}
 
 		for (int i = 0; i < stream6B.length; i++) {
@@ -617,11 +631,10 @@ public class Hex {
 			}
 
 			hex.isStreamBank = true;
-			hex.streamBank = 6;
+			hex.streamBank = 61;
+			arrStream61.add(hex);
 
-			river.addBbank(hex);
 		}
-		river = new River(true); // if stream set to true;
 		for (int i = 0; i < stream7a.length; i++) {
 			int x = stream7a[i][0];
 			int y = stream7a[i][1];
@@ -632,9 +645,8 @@ public class Hex {
 			}
 
 			hex.isStreamBank = true;
-			hex.streamBank = 7;
-
-			river.addAbank(hex);
+			hex.streamBank = 70;
+			arrStream70.add(hex);
 		}
 		for (int i = 0; i < stream7b.length; i++) {
 			int x = stream7b[i][0];
@@ -646,11 +658,10 @@ public class Hex {
 			}
 
 			hex.isStreamBank = true;
-			hex.streamBank = 7;
+			hex.streamBank = 71;
+			arrStream71.add(hex);
 
-			river.addBbank(hex);
 		}
-		river = new River(true); // if stream set to true;
 		for (int i = 0; i < stream8a.length; i++) {
 			int x = stream8a[i][0];
 			int y = stream8a[i][1];
@@ -661,9 +672,9 @@ public class Hex {
 			}
 
 			hex.isStreamBank = true;
-			hex.streamBank = 8;
+			hex.streamBank = 80;
+			arrStream80.add(hex);
 
-			river.addAbank(hex);
 		}
 		for (int i = 0; i < stream8b.length; i++) {
 			int x = stream8b[i][0];
@@ -675,11 +686,10 @@ public class Hex {
 			}
 
 			hex.isStreamBank = true;
-			hex.streamBank = 8;
+			hex.streamBank = 81;
+			arrStream81.add(hex);
 
-			river.addBbank(hex);
 		}
-		river = new River(true); // if stream set to true;
 		for (int i = 0; i < stream9a.length; i++) {
 			int x = stream9a[i][0];
 			int y = stream9a[i][1];
@@ -690,38 +700,61 @@ public class Hex {
 			}
 
 			hex.isStreamBank = true;
-			hex.streamBank = 9;
-
-			river.addAbank(hex);
+			hex.streamBank = 90;
+			arrStream90.add(hex);
 		}
 		for (int i = 0; i < stream9b.length; i++) {
 			int x = stream9b[i][0];
 			int y = stream9b[i][1];
 			Hex hex = hexTable[x][y];
-			hex.streamBank = 9;
+			hex.streamBank = 91;
 			if (hex.isStreamBank){
 				hex.arrStreamBank.add(9);
 				hex.isMultipleStreamBank = true;
 			}
 
 			hex.isStreamBank = true;
-			river.addBbank(hex);
+			arrStream91.add(hex);
+
 		}
-		river = new River(true); // if stream set to true;
 
 		for (int i = 0; i < river1a.length; i++) {
 			int x = river1a[i][0];
 			int y = river1a[i][1];
 			Hex hex = hexTable[x][y];
 			hex.isRiverBank = true;
-			river.addAbank(hex);
+			hex.riverBank = 10;
+			arrRiver10.add(hex);
 		}
 		for (int i = 0; i < river1b.length; i++) {
 			int x = river1b[i][0];
 			int y = river1b[i][1];
 			Hex hex = hexTable[x][y];
 			hex.isRiverBank = true;
-			river.addBbank(hex);
+			hex.riverBank =11;
+			arrRiver11.add(hex);
+
+		}
+
+	}
+
+	/**
+	 *  check if there is a stream from this hex to passed hex
+	 * @param hexTo
+	 * @return
+	 */
+	public boolean isStreamAcross(Hex hexTo){
+		if (!isStreamBank){
+			return false;
+		}
+		ArrayList<Hex> arrToTest = null;
+		switch (streamBank){
+			case 10:
+				arrToTest = arrStream11; // opposite side
+				break;
+			case 11:
+				arrToTest = arrStream10; // opposite side
+				break;
 		}
 
 	}
