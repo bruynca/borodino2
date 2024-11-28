@@ -384,79 +384,18 @@ public class Hex {
 
 
 	private static void LoadSurround() {
-
-		for (Hex hex : arrHexMap) {
-			hex.arrSurroundHex = HexSurround.getSurrounMapArrNoNullArrayList(hex, 1);
-			hex.arrLeft.addAll(hex.arrSurroundHex);
-			hex.arrRight.addAll(hex.arrSurroundHex);
-			int yHex = hex.yTable;
-			int xHex = hex.xTable;
-//		     Gdx.app.log("Hex", "Load Surround  Hex="+ hex.toString());
-
-			for (Hex hexCheck : hex.arrSurroundHex) {
-				int yHexCheck = hexCheck.yTable;
-				int xHexCheck = hexCheck.xTable;
-
-				if (xHex % 2 == 0) // even
-				{
-					/**
-					 *  for even
-					 *  on left must be less x
-					 */
-					if (yHexCheck > yHex) {
-						hex.arrLeft.remove(hexCheck);
-						if (xHex == xHexCheck) {
-							hex.tableSurroundHex[3] = hexCheck;
-						} else if (xHex < xHexCheck) {
-							hex.tableSurroundHex[2] = hexCheck;
-						} else {
-							hex.tableSurroundHex[4] = hexCheck;
-						}
-					} else {
-						hex.arrRight.remove(hexCheck);
-						if (xHex == xHexCheck) {
-							hex.tableSurroundHex[0] = hexCheck;
-						} else if (xHex < xHexCheck) {
-							hex.tableSurroundHex[1] = hexCheck;
-						} else {
-							hex.tableSurroundHex[5] = hexCheck;
-						}
-
-					}
-				} else  // odd
-				{
-					/** for odd
-					 *   on right must be greater x
-					 */
-					if (yHexCheck < yHex) {
-						hex.arrRight.remove(hexCheck);
-						if (xHex == xHexCheck) {
-							hex.tableSurroundHex[0] = hexCheck;
-						} else if (xHex < xHexCheck) {
-							hex.tableSurroundHex[1] = hexCheck;
-						} else {
-							hex.tableSurroundHex[5] = hexCheck;
-						}
-
-
-					} else {
-						hex.arrLeft.remove(hexCheck);
-						if (xHex == xHexCheck) {
-							hex.tableSurroundHex[3] = hexCheck;
-						} else if (xHex < xHexCheck) {
-							hex.tableSurroundHex[2] = hexCheck;
-						} else {
-							hex.tableSurroundHex[4] = hexCheck;
-						}
-					}
-
+		for (int x=0; x< xEnd; x++)
+		{
+			for (int y=0; y < yEnd; y++)
+			{
+				Hex hex = hexTable[x][y];
+				hex.arrSurroundHex = new ArrayList<>();
+				for (Hex hexs:HexHandler.getSurround(hex)){
+					hex.arrSurroundHex.add(hexs);
 
 				}
 			}
 		}
-		int i = 0;
-
-		i++;
 	}
 	static ArrayList<Hex> arrStream10 = new ArrayList<>();
 	static ArrayList<Hex> arrStream11 = new ArrayList<>();
@@ -743,21 +682,97 @@ public class Hex {
 	 * @param hexTo
 	 * @return
 	 */
-	public boolean isStreamAcross(Hex hexTo){
-		if (!isStreamBank){
+	public static boolean isStreamAcross(Hex hexfrom, Hex hexTo){
+		if (hexfrom.isStreamBank && hexTo.isStreamBank ){
+			//return false;
+		}else{
 			return false;
 		}
 		ArrayList<Hex> arrToTest = null;
-		switch (streamBank){
+		switch (hexfrom.streamBank){
 			case 10:
 				arrToTest = arrStream11; // opposite side
 				break;
 			case 11:
 				arrToTest = arrStream10; // opposite side
 				break;
+			case 20:
+				arrToTest = arrStream21; // opposite side
+				break;
+			case 21:
+				arrToTest = arrStream20; // opposite side
+				break;
+			case 30:
+				arrToTest = arrStream31; // opposite side
+				break;
+			case 31:
+				arrToTest = arrStream30; // opposite side
+				break;
+			case 40:
+				arrToTest = arrStream41; // opposite side
+				break;
+			case 41:
+				arrToTest = arrStream40; // opposite side
+				break;
+			case 50:
+				arrToTest = arrStream51; // opposite side
+				break;
+			case 51:
+				arrToTest = arrStream50; // opposite side
+				break;
+			case 60:
+				arrToTest = arrStream61; // opposite side
+				break;
+			case 61:
+				arrToTest = arrStream60; // opposite side
+				break;
+			case 70:
+				arrToTest = arrStream71; // opposite side
+				break;
+			case 71:
+				arrToTest = arrStream70; // opposite side
+				break;
+			case 80:
+				arrToTest = arrStream81; // opposite side
+				break;
+			case 81:
+				arrToTest = arrStream10; // opposite side
+				break;
+			case 90:
+				arrToTest = arrStream91; // opposite side
+				break;
+			case 91:
+				arrToTest = arrStream90; // opposite side
+				break;
+			default:
+				arrToTest = null; // opposite side
+				break;
 		}
-
+		if (arrToTest == null){
+			return false;
+		}
+		for(Hex hex:arrToTest){
+			if (hex == hexTo){
+				return true;
+			}
+		}
+		return false;
 	}
+
+	/**
+	 *  find all hexes across stream from this hex
+	 * @return an array of hexes across from this hex
+	 */
+	public ArrayList<Hex> findOtherSideStream(){
+		ArrayList<Hex> arrReturn = new ArrayList<>();
+		for (Hex hex:getSurround()){
+			if (isStreamAcross(this, hex)){
+				arrReturn.add(hex);
+			}
+		}
+		return arrReturn;
+	}
+
 
 
 	private static void LoadForest() {

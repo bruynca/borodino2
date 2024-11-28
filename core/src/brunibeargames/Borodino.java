@@ -16,7 +16,6 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -232,10 +231,11 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 		Gdx.app.log("Mouse Event", "Click at " + x+ " y-"+y); 
 		Hex hex = Hex.GetHexFromScreenPosition(x, y); 
 		Gdx.app.log("Mouse Event", "Hex clicked=" + hex.xTable+ " y-"+hex.yTable);
-		Image image = new Image(texHex);
-		Vector2 v2 =  hex.GetDisplayCoord();
-		image.setPosition(v2.x,v2.y);
-		mapStage.addActor(image);
+//		Image image = new Image(texHex);
+//		Vector2 v2 =  hex.GetDisplayCoord();
+//		image.setPosition(v2.x,v2.y);
+//		mapStage.addActor(image);
+		WinDebug.instance.doShowStream(hex);
 		if (isWriteTerrain)
 		{
 			
@@ -331,5 +331,7 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 		
 	}
 
-
-}
+	 public Texture getTexHex() {
+		 return texHex;
+	 }
+ }

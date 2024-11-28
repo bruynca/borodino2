@@ -2,10 +2,12 @@ package brunibeargames;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -114,6 +116,16 @@ public class WinDebug
 
 		}
 	}
+	public Label getHexLable(Hex hex){
+		String str = hex.xTable+", "+hex.yTable;
+		Label label = new Label(str,skin);
+		label.setScale(20f);
+		label.setColor(Color.YELLOW);
+		label.setFontScale(2f);
+		Vector2 vector2 =  hex.GetDisplayCoord();
+		label.setPosition(vector2.x+35,vector2.y+25);
+		return label;
+	}
 
 	ArrayList<Actor> arrActors =  new ArrayList();
 	private void DoShowRivers()
@@ -157,6 +169,40 @@ public class WinDebug
 			
 		}
 
+	}
+	public void doShowStream(Hex hex){
+		Gdx.app.log("Windebug", "Do Show Stream=" + hex);
+
+		if (!hex.isStreamBank){
+			return;
+		}
+		Texture texHex = Borodino.instance.getTexHex();
+		Image image = new Image(texHex);
+		Vector2 v2 =  hex.GetDisplayCoord();
+		image.setPosition(v2.x,v2.y);
+
+		mapStage.addActor(image);
+		mapStage.addActor(getHexLable(hex));
+		ArrayList<Hex> arrHex = hex.findOtherSideStream();
+		ArrayList<Hex> arrTest = hex.getSurround();
+
+		for (Hex hex2:arrTest){
+			image = new Image(texHex);
+			v2 =  hex2.GetDisplayCoord();
+			image.setPosition(v2.x,v2.y);
+			mapStage.addActor(image);
+			mapStage.addActor(getHexLable(hex2));
+
+		}
+
+/*		for (Hex hex2:arrHex){
+			image = new Image(texHex);
+			v2 =  hex2.GetDisplayCoord();
+			image.setPosition(v2.x,v2.y);
+			mapStage.addActor(image);
+			mapStage.addActor(getHexLable(hex2));
+
+		} */
 	}
 
 	/**

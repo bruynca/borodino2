@@ -6,8 +6,8 @@ public class HexHandler {
 static public int xCount = 118; // entire game map x value
 static public int yCount = 32;// entire hgame map y value
 //		static public Hex [,] hexTable; // this is hex table of playable game
-static int[][] oddArray =  { { 0, -1 }, { 1, -1 }, { 1, 0 }, { 0, 1 }, { -1, 0 }, { -1, -1 } };
-static int[][] evenArray = { { 0, -1 }, { 1, 0 }, { 1, 1 }, { 0, 1 }, { -1, 1 }, { -1, 0 } };
+static int[][] oddArray =  { { 0, -1 }, { 1, 0}, { 1,1 }, { 0, 1 }, { -1,1}, { -1, 0} };
+static int[][] evenArray = { { 0, -1 }, { 1,-1 }, { 1, 0 }, { 0, 1 }, { -1, 0 }, { -1, -1} };
 
 
 static public int[] displayToTable(int displayOffsett)
@@ -71,6 +71,9 @@ public static Hex[] getSurround(Hex sourceHex)
 	}
 	int xHex = sourceHex.xTable;
 	int yHex = sourceHex.yTable;
+	if (xHex == 16 && yHex == 15){
+		int b=0;
+	}
 	int xRem = xHex % 2; // odd or even hex
 	// set array to add based on odd or even
 	if (xRem == 0)
