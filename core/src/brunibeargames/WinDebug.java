@@ -172,7 +172,7 @@ public class WinDebug
 	}
 	public void doShowStream(Hex hex){
 		Gdx.app.log("Windebug", "Do Show Stream=" + hex);
-
+		mapStage.clear();
 		if (!hex.isStreamBank){
 			return;
 		}
@@ -186,7 +186,16 @@ public class WinDebug
 		ArrayList<Hex> arrHex = hex.findOtherSideStream();
 		ArrayList<Hex> arrTest = hex.getSurround();
 
-		for (Hex hex2:arrTest){
+/*		for (Hex hex2:arrTest){
+			image = new Image(texHex);
+			v2 =  hex2.GetDisplayCoord();
+			image.setPosition(v2.x,v2.y);
+			mapStage.addActor(image);
+			mapStage.addActor(getHexLable(hex2));
+
+		}*/
+
+		for (Hex hex2:arrHex){
 			image = new Image(texHex);
 			v2 =  hex2.GetDisplayCoord();
 			image.setPosition(v2.x,v2.y);
@@ -194,15 +203,6 @@ public class WinDebug
 			mapStage.addActor(getHexLable(hex2));
 
 		}
-
-/*		for (Hex hex2:arrHex){
-			image = new Image(texHex);
-			v2 =  hex2.GetDisplayCoord();
-			image.setPosition(v2.x,v2.y);
-			mapStage.addActor(image);
-			mapStage.addActor(getHexLable(hex2));
-
-		} */
 	}
 
 	/**
