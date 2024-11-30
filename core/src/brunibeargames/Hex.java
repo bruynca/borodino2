@@ -23,7 +23,7 @@ public class Hex {
 	protected static int yStart = 1;
 	public static int yEnd = 31;
 	public static Hex[][] hexTable;
-	private static ArrayList<Hex> arrHexMap = new ArrayList<Hex>();
+	public static ArrayList<Hex> arrHexMap = new ArrayList<Hex>();
 	public Hex[] tableSurroundHex = new Hex[6];
 	//
 	//       1  2
@@ -147,7 +147,7 @@ public class Hex {
 	boolean isStreamBank = false;
 	int streamBank = 0;
 	int riverBank = 0;
-	ArrayList<Integer> arrStreamBank = new ArrayList<>();
+	ArrayList<Integer> arrMultiplStreamBank = new ArrayList<>();
 	boolean isMultipleStreamBank = false;
 	boolean isRiverBank = false;
 	boolean isForest = false;
@@ -254,9 +254,9 @@ public class Hex {
 	};
 	static int[][] stream8b = {{0, 3}, {1, 2}, {2, 3}, {3, 2}, {4, 2}, {5, 2}, {6, 2}, {7, 1}, {8, 2}, {9, 1}, {10, 2}, {11, 1}, {11, 0}, {12, 0}, {13, 0}, {14, 1}, {14, 2}, {14, 3}, {14, 4}, {14, 5}
 			, {15, 5}, {16, 6}, {17, 6}, {18, 7}, {19, 7}, {20, 7}, {21, 7}, {21, 8}, {21, 9}, {22, 10}, {22, 11},};
-	static int[][] stream9a = {{10, 21}, {11, 21}, {11, 22}, {12, 23}, {12, 24}, {13, 24}, {14, 25},
+	static int[][] stream9a = {{10, 21},{10,20},{11,19}, {11, 21}, {11, 22}, {12, 23}, {12, 24}, {13, 24}, {14, 25},
 	};
-	static int[][] stream9b = {{11, 20}, {12, 21}, {12, 22}, {13, 22}, {13, 23}, {14, 24},};
+	static int[][] stream9b = {{12,20},{11, 20}, {12, 21}, {12, 22}, {13, 22}, {13, 23}, {14, 24},};
 	static int[][] river1a = {{25, 0}, {24, 1}, {24, 2}, {25, 2}, {26, 3}, {27, 2}, {28, 2}, {29, 1}, {30, 2}, {30, 3}, {31, 3}, {31, 4}, {32, 5}, {33, 4}, {34, 4}, {35, 3}, {33, 5}, {33, 6}, {34, 7}, {35, 7}, {36, 7}, {37, 6}, {37, 7}, {37, 8}, {38, 9}, {39, 8}, {39, 7}, {39, 6}, {40, 8}, {41, 8}, {42, 9}, {43, 9}, {44, 9}, {44, 8}, {44, 7},
 	};
 	static int[][] river1b = {{27, 0}, {26, 0}, {26, 1}, {26, 2}, {27, 1}, {28, 1}, {29, 0}, {30, 1}, {31, 1}, {0, 0}, {31, 2}, {32, 3}, {32, 4}, {33, 3}, {34, 3}, {35, 2}, {0, 0}, {36, 3}, {36, 4}, {35, 4}, {34, 5}, {34, 6}, {35, 6}, {36, 6}, {37, 5}, {38, 6}, {38, 7}, {38, 8}, {39, 5}, {40, 5}, {40, 6}
@@ -429,7 +429,7 @@ public class Hex {
 			Hex hex = hexTable[x][y];
 			hex.isStreamBank = true;
 			hex.streamBank = 10;
-			hex.arrStreamBank.add(10);
+			hex.arrMultiplStreamBank.add(10);
 			arrStream10.add(hex);
 		}
 		for (int i = 0; i < stream1B.length; i++) {
@@ -438,7 +438,7 @@ public class Hex {
 			Hex hex = hexTable[x][y];
 			hex.isStreamBank = true;
 			hex.streamBank = 11;
-			hex.arrStreamBank.add(11);
+			hex.arrMultiplStreamBank.add(11);
 			arrStream11.add(hex);
 		}
 
@@ -446,27 +446,26 @@ public class Hex {
 			int x = stream2a[i][0];
 			int y = stream2a[i][1];
 			Hex hex = hexTable[x][y];
+			arrStream20.add(hex);
 			if (hex.isStreamBank){
-				hex.arrStreamBank.add(20);
+				hex.arrMultiplStreamBank.add(20);
 				hex.isMultipleStreamBank = true;
 			}else {
-				hex.streamBank = 20;
 				hex.isStreamBank = true;
-				arrStream20.add(hex);
+				hex.streamBank = 20;
 			}
 		}
 		for (int i = 0; i < stream2b.length; i++) {
 			int x = stream2b[i][0];
 			int y = stream2b[i][1];
 			Hex hex = hexTable[x][y];
+			arrStream21.add(hex);
 			if (hex.isStreamBank){
-				hex.arrStreamBank.add(21);
+				hex.arrMultiplStreamBank.add(21);
 				hex.isMultipleStreamBank = true;
-
 			}else {
-				hex.streamBank = 21;
 				hex.isStreamBank = true;
-				arrStream21.add(hex);
+				hex.streamBank = 21;
 			}
 
 		}
@@ -474,27 +473,27 @@ public class Hex {
 			int x = stream3a[i][0];
 			int y = stream3a[i][1];
 			Hex hex = hexTable[x][y];
+			arrStream30.add(hex);
 			if (hex.isStreamBank){
-				hex.arrStreamBank.add(30);
+				hex.arrMultiplStreamBank.add(30);
 				hex.isMultipleStreamBank = true;
 			}else {
 				hex.isStreamBank = true;
 				hex.streamBank = 30;
-				arrStream30.add(hex);
+
 			}
 		}
 		for (int i = 0; i < stream3b.length; i++) {
 			int x = stream3b[i][0];
 			int y = stream3b[i][1];
 			Hex hex = hexTable[x][y];
+			arrStream31.add(hex);
 			if (hex.isStreamBank){
-				hex.arrStreamBank.add(31);
+				hex.arrMultiplStreamBank.add(31);
 				hex.isMultipleStreamBank = true;
 			}else {
-
 				hex.isStreamBank = true;
 				hex.streamBank = 31;
-				arrStream31.add(hex);
 			}
 
 		}
@@ -502,41 +501,45 @@ public class Hex {
 			int x = stream4a[i][0];
 			int y = stream4a[i][1];
 			Hex hex = hexTable[x][y];
+			arrStream40.add(hex);
+
 			if (hex.isStreamBank){
-				hex.arrStreamBank.add(40);
+				hex.arrMultiplStreamBank.add(40);
 				hex.isMultipleStreamBank = true;
 			}else {
 				hex.isStreamBank = true;
 				hex.streamBank = 40;
-				arrStream40.add(hex);
 			}
 
 		}
 		for (int i = 0; i < stream4b.length; i++) {
 			int x = stream4b[i][0];
 			int y = stream4b[i][1];
+			if (x==27 && y ==11){
+				int b=0;
+			}
+
 			Hex hex = hexTable[x][y];
+			arrStream41.add(hex);
 			if (hex.isStreamBank){
-				hex.arrStreamBank.add(41);
+				hex.arrMultiplStreamBank.add(41);
 				hex.isMultipleStreamBank = true;
 			}else {
 				hex.isStreamBank = true;
 				hex.streamBank = 41;
-				arrStream41.add(hex);
 			}
 		}
 		for (int i = 0; i < stream5a.length; i++) {
 			int x = stream5a[i][0];
 			int y = stream5a[i][1];
 			Hex hex = hexTable[x][y];
+			arrStream50.add(hex);
 			if (hex.isStreamBank){
-				hex.arrStreamBank.add(50);
+				hex.arrMultiplStreamBank.add(50);
 				hex.isMultipleStreamBank = true;
 			}else {
-
 				hex.isStreamBank = true;
 				hex.streamBank = 50;
-				arrStream50.add(hex);
 			}
 
 		}
@@ -544,28 +547,26 @@ public class Hex {
 			int x = stream5b[i][0];
 			int y = stream5b[i][1];
 			Hex hex = hexTable[x][y];
+			arrStream51.add(hex);
 			if (hex.isStreamBank){
-				hex.arrStreamBank.add(51);
+				hex.arrMultiplStreamBank.add(51);
 				hex.isMultipleStreamBank = true;
 			}else {
-
 				hex.isStreamBank = true;
 				hex.streamBank = 51;
-				arrStream51.add(hex);
 			}
 		}
 		for (int i = 0; i < stream6a.length; i++) {
 			int x = stream6a[i][0];
 			int y = stream6a[i][1];
 			Hex hex = hexTable[x][y];
+			arrStream60.add(hex);
 			if (hex.isStreamBank){
-				hex.arrStreamBank.add(60);
+				hex.arrMultiplStreamBank.add(60);
 				hex.isMultipleStreamBank = true;
 			}else {
-
 				hex.isStreamBank = true;
 				hex.streamBank = 60;
-				arrStream60.add(hex);
 			}
 
 		}
@@ -574,14 +575,14 @@ public class Hex {
 			int x = stream6B[i][0];
 			int y = stream6B[i][1];
 			Hex hex = hexTable[x][y];
+			arrStream61.add(hex);
 			if (hex.isStreamBank){
-				hex.arrStreamBank.add(61);
+				hex.arrMultiplStreamBank.add(61);
 				hex.isMultipleStreamBank = true;
 			}else {
+				hex.streamBank = 61;
 
 				hex.isStreamBank = true;
-				hex.streamBank = 61;
-				arrStream61.add(hex);
 			}
 
 		}
@@ -589,83 +590,78 @@ public class Hex {
 			int x = stream7a[i][0];
 			int y = stream7a[i][1];
 			Hex hex = hexTable[x][y];
+				arrStream70.add(hex);
 			if (hex.isStreamBank){
-				hex.arrStreamBank.add(70);
+				hex.arrMultiplStreamBank.add(70);
 				hex.isMultipleStreamBank = true;
 			}else {
-
 				hex.isStreamBank = true;
 				hex.streamBank = 70;
-				arrStream70.add(hex);
 			}
 		}
 		for (int i = 0; i < stream7b.length; i++) {
 			int x = stream7b[i][0];
 			int y = stream7b[i][1];
 			Hex hex = hexTable[x][y];
+			arrStream71.add(hex);
 			if (hex.isStreamBank){
-				hex.arrStreamBank.add(71);
+				hex.arrMultiplStreamBank.add(71);
 				hex.isMultipleStreamBank = true;
 			}else {
-
 				hex.isStreamBank = true;
 				hex.streamBank = 71;
-				arrStream71.add(hex);
 			}
 		}
 		for (int i = 0; i < stream8a.length; i++) {
 			int x = stream8a[i][0];
 			int y = stream8a[i][1];
 			Hex hex = hexTable[x][y];
+			arrStream80.add(hex);
 			if (hex.isStreamBank){
-				hex.arrStreamBank.add(80);
+				hex.arrMultiplStreamBank.add(80);
 				hex.isMultipleStreamBank = true;
 			}else {
-
 				hex.isStreamBank = true;
 				hex.streamBank = 80;
-				arrStream80.add(hex);
 			}
 		}
 		for (int i = 0; i < stream8b.length; i++) {
 			int x = stream8b[i][0];
 			int y = stream8b[i][1];
 			Hex hex = hexTable[x][y];
+			arrStream81.add(hex);
 			if (hex.isStreamBank){
-				hex.arrStreamBank.add(81);
+				hex.arrMultiplStreamBank.add(81);
 				hex.isMultipleStreamBank = true;
 			}else {
-
 				hex.isStreamBank = true;
 				hex.streamBank = 81;
-				arrStream81.add(hex);
 			}
 		}
 		for (int i = 0; i < stream9a.length; i++) {
 			int x = stream9a[i][0];
 			int y = stream9a[i][1];
 			Hex hex = hexTable[x][y];
+			arrStream90.add(hex);
 			if (hex.isStreamBank){
-				hex.arrStreamBank.add(90);
+				hex.arrMultiplStreamBank.add(90);
 				hex.isMultipleStreamBank = true;
 			}else {
-
 				hex.isStreamBank = true;
 				hex.streamBank = 90;
-				arrStream90.add(hex);
 			}
 		}
 		for (int i = 0; i < stream9b.length; i++) {
 			int x = stream9b[i][0];
 			int y = stream9b[i][1];
 			Hex hex = hexTable[x][y];
+			arrStream91.add(hex);
 			if (hex.isStreamBank){
-				hex.arrStreamBank.add(91);
+				hex.arrMultiplStreamBank.add(91);
 				hex.isMultipleStreamBank = true;
 			}else {
 				hex.streamBank = 91;
-				hex.isStreamBank = true;
-				arrStream91.add(hex);
+				hex.streamBank = 91;
 			}
 		}
 
@@ -701,6 +697,8 @@ public class Hex {
 		if (hexfrom.isStreamBank && hexTo.isStreamBank ){
 			//return false;
 		}else{
+			Gdx.app.log("Hex isstreamaccros", "Return no Bank");
+
 			return false;
 		}
 		ArrayList<Hex> arrToTest = new ArrayList<>();
@@ -726,62 +724,62 @@ public class Hex {
 	private static ArrayList<Hex> getMultiStreamBanksToCheck(Hex hexfrom) {
 		ArrayList<Hex> arrTurn = new ArrayList<>();
 		ArrayList<Hex> arrWork = new ArrayList<>();
-		for (Integer in:hexfrom.arrStreamBank ) {
+		for (Integer in:hexfrom.arrMultiplStreamBank) {
 			arrWork.clear();
 			switch (in) {
 				case 10:
-					arrWork = arrStream11; // opposite side
+					arrWork.addAll(arrStream11); // opposite side
 					break;
 				case 11:
-					arrWork = arrStream10; // opposite side
+					arrWork.addAll(arrStream10); // opposite side
 					break;
 				case 20:
-					arrWork = arrStream21; // opposite side
+					arrWork.addAll(arrStream21); // opposite side
 					break;
 				case 21:
-					arrWork = arrStream20; // opposite side
+					arrWork.addAll(arrStream20); // opposite side
 					break;
 				case 30:
-					arrWork = arrStream31; // opposite side
+					arrWork.addAll(arrStream31); // opposite side
 					break;
 				case 31:
-					arrWork = arrStream30; // opposite side
+					arrWork.addAll(arrStream30); // opposite side
 					break;
 				case 40:
-					arrWork = arrStream41; // opposite side
+					arrWork.addAll(arrStream41); // opposite side
 					break;
 				case 41:
-					arrWork = arrStream40; // opposite side
+					arrWork.addAll(arrStream40); // opposite side
 					break;
 				case 50:
-					arrWork = arrStream51; // opposite side
+					arrWork.addAll(arrStream51); // opposite side
 					break;
 				case 51:
-					arrWork = arrStream50; // opposite side
+					arrWork.addAll(arrStream50); // opposite side
 					break;
 				case 60:
-					arrWork = arrStream61; // opposite side
+					arrWork.addAll(arrStream61); // opposite side
 					break;
 				case 61:
-					arrWork = arrStream60; // opposite side
+					arrWork.addAll(arrStream60); // opposite side
 					break;
 				case 70:
-					arrWork = arrStream71; // opposite side
+					arrWork.addAll(arrStream71); // opposite side
 					break;
 				case 71:
-					arrWork = arrStream70; // opposite side
+					arrWork.addAll(arrStream70); // opposite side
 					break;
 				case 80:
-					arrWork = arrStream81; // opposite side
+					arrWork.addAll(arrStream81); // opposite side
 					break;
 				case 81:
-					arrWork = arrStream80; // opposite side
+					arrWork.addAll(arrStream80); // opposite side
 					break;
 				case 90:
-					arrWork = arrStream91; // opposite side
+					arrWork.addAll(arrStream91); // opposite side
 					break;
 				case 91:
-					arrWork = arrStream90; // opposite side
+					arrWork.addAll(arrStream90); // opposite side
 					break;
 				default:
 					arrWork = null; // opposite side
@@ -798,70 +796,69 @@ public class Hex {
 	private static ArrayList<Hex> getStreamBanksToCheck(Hex hexfrom) {
 		Gdx.app.log("Hex getStreamBankToCheck", "Hex=" + hexfrom);
 
-		ArrayList<Hex> arrReturn = new ArrayList<>();
+		ArrayList<Hex> arrWork = new ArrayList<>();
 		Gdx.app.log("Hit", "on ="+ hexfrom.streamBank);
 
 		switch (hexfrom.streamBank){
 			case 10:
-				arrReturn = arrStream11; // opposite side
-
+				arrWork.addAll(arrStream11); // opposite side
 				break;
 			case 11:
-				arrReturn = arrStream10; // opposite side
+				arrWork.addAll(arrStream10); // opposite side
 				break;
 			case 20:
-				arrReturn = arrStream21; // opposite side
+				arrWork.addAll(arrStream21); // opposite side
 				break;
 			case 21:
-				arrReturn = arrStream20; // opposite side
+				arrWork.addAll(arrStream20); // opposite side
 				break;
 			case 30:
-				arrReturn = arrStream31; // opposite side
+				arrWork.addAll(arrStream31); // opposite side
 				break;
 			case 31:
-				arrReturn = arrStream30; // opposite side
+				arrWork.addAll(arrStream30); // opposite side
 				break;
 			case 40:
-				arrReturn = arrStream41; // opposite side
+				arrWork.addAll(arrStream41); // opposite side
 				break;
 			case 41:
-				arrReturn = arrStream40; // opposite side
+				arrWork.addAll(arrStream40); // opposite side
 				break;
 			case 50:
-				arrReturn = arrStream51; // opposite side
+				arrWork.addAll(arrStream51); // opposite side
 				break;
 			case 51:
-				arrReturn = arrStream50; // opposite side
+				arrWork.addAll(arrStream50); // opposite side
 				break;
 			case 60:
-				arrReturn = arrStream61; // opposite side
+				arrWork.addAll(arrStream61); // opposite side
 				break;
 			case 61:
-				arrReturn = arrStream60; // opposite side
+				arrWork.addAll(arrStream60); // opposite side
 				break;
 			case 70:
-				arrReturn = arrStream71; // opposite side
+				arrWork.addAll(arrStream71); // opposite side
 				break;
 			case 71:
-				arrReturn = arrStream70; // opposite side
+				arrWork.addAll(arrStream70); // opposite side
 				break;
 			case 80:
-				arrReturn = arrStream81; // opposite side
+				arrWork.addAll(arrStream81); // opposite side
 				break;
 			case 81:
-				arrReturn = arrStream80; // opposite side
+				arrWork.addAll(arrStream80); // opposite side
 				break;
 			case 90:
-				arrReturn = arrStream91; // opposite side
+				arrWork.addAll(arrStream91); // opposite side
 				break;
 			case 91:
-				arrReturn = arrStream90; // opposite side
+				arrWork.addAll(arrStream90); // opposite side
 				break;
 			default:
-				arrReturn = null; // opposite side
+				arrWork = null; // opposite side
 				break;
 		}
-		return arrReturn;
+		return arrWork;
 
 	}
 
@@ -872,7 +869,7 @@ public class Hex {
 	public ArrayList<Hex> findOtherSideStream(){
 		Gdx.app.log("Hex findOtherSideStream", "Hex=" + this);
 		Gdx.app.log("Hex findOtherSideStream", "Hex=" + this);
-		Gdx.app.log("Hex findOtherSideStream", "Hex=" + this);
+		Gdx.app.log("Hex findOtherSideStream", "Surrond=" + this.getSurround());
 		Gdx.app.log("Hex findOtherSideStream", "Hex=" + this);
 
 		ArrayList<Hex> arrReturn = new ArrayList<>();

@@ -15,6 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import java.util.ArrayList;
 
+import static brunibeargames.Hex.arrHexMap;
+
 public class WinDebug
 {
 	TextButton textButton;
@@ -58,9 +60,10 @@ public class WinDebug
 	{
 		if (clicked)
 		{
-			DoShowAll();
+//			DoShowAll();
 //			DoShowPath();
 //			DoShowRivers();
+			showAllStreams();
 
 			clicked = false;
 		}
@@ -173,6 +176,7 @@ public class WinDebug
 	public void doShowStream(Hex hex){
 		Gdx.app.log("Windebug", "Do Show Stream=" + hex);
 		mapStage.clear();
+		showAllStreams();
 		if (!hex.isStreamBank){
 			return;
 		}
@@ -204,6 +208,35 @@ public class WinDebug
 
 		}
 	}
+	public void showAllStreams(){
+		ArrayList<Hex> arrFound = new ArrayList<>();
+		ArrayList<String> arrString = new ArrayList<>();
+		int ix=0;
+		for (Hex hex:arrHexMap){
+			if (hex.isStreamBank){
+				arrFound.add(hex);
+				String str = String.valueOf(hex.streamBank);
+				for (int in: hex.arrMultiplStreamBank){
+					str+=" "+in;
+				}
+				arrString.add(str);
+			}
+		}
+		for (int i=0; i<arrFound.size();i++){
+			if (arrFound.get(i).xTable==22 & arrFound.get(i).yTable == 12){
+				int br=0;
+			}
+			Label label = new Label(arrString.get(i),skin);
+			label.setScale(20f);
+			label.setColor(Color.YELLOW);
+			Vector2 vector2 =  arrFound.get(i).GetDisplayCoord();
+			label.setPosition(vector2.x+ 60,vector2.y+ 60);
+			mapStage.addActor(label);
+			arrActors.add(label);
+		}
+	}
+
+
 
 	/**
 	private void DoSelectedRegions()
