@@ -60,10 +60,10 @@ public class WinDebug
 	{
 		if (clicked)
 		{
-//			DoShowAll();
+			DoShowAll();
 //			DoShowPath();
 //			DoShowRivers();
-			showAllStreams();
+//			showAllStreams();
 
 			clicked = false;
 		}

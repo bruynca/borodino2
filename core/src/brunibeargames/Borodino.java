@@ -236,7 +236,7 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 //		image.setPosition(v2.x,v2.y);
 //		mapStage.addActor(image);
 //		WinDebug.instance.doShowStream(hex);
-		WinDebug.instance.doRiver(hex);
+//		WinDebug.instance.doRiver(hex);
 		if (isWriteTerrain)
 		{
 			
