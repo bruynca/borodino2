@@ -235,6 +235,41 @@ public class WinDebug
 			arrActors.add(label);
 		}
 	}
+	public void doRiver(Hex hex){
+		Gdx.app.log("Windebug", "DoRiver=" + hex);
+		mapStage.clear();
+		showAllStreams();
+		if (!hex.isRiverBank){
+			return;
+		}
+		Texture texHex = Borodino.instance.getTexHex();
+		Image image = new Image(texHex);
+		Vector2 v2 =  hex.GetDisplayCoord();
+		image.setPosition(v2.x,v2.y);
+
+		mapStage.addActor(image);
+		mapStage.addActor(getHexLable(hex));
+		ArrayList<Hex> arrHex = Hex.showAllRiverCrossings(hex);
+
+/*		for (Hex hex2:arrTest){
+			image = new Image(texHex);
+			v2 =  hex2.GetDisplayCoord();
+			image.setPosition(v2.x,v2.y);
+			mapStage.addActor(image);
+			mapStage.addActor(getHexLable(hex2));
+
+		}*/
+
+		for (Hex hex2:arrHex){
+			image = new Image(texHex);
+			v2 =  hex2.GetDisplayCoord();
+			image.setPosition(v2.x,v2.y);
+			mapStage.addActor(image);
+			mapStage.addActor(getHexLable(hex2));
+
+		}
+
+	}
 
 
 
