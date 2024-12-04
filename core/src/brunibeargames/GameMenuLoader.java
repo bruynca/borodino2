@@ -36,8 +36,8 @@ public class GameMenuLoader implements Disposable, AssetErrorListener {
         gameMenu = new GameMenu(atlas);
         atlas = assetManager.get("menus/flags.txt");
         flags = new Flags(atlas);
-        atlas = assetManager.get("menus/gameselectionbuttons.txt");
-        gameButtons = new GameButtons(atlas);
+//        atlas = assetManager.get("menus/gameselectionbuttons.txt");
+//        gameButtons = new GameButtons(atlas);
         atlas = assetManager.get("menus/victory.txt");
         victory = new Victory(atlas);
         String language = "i18n/"+GamePreferences.getLanguage();

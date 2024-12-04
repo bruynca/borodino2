@@ -61,7 +61,7 @@ public class Screen
 
 		instance = this;
 		mapStage = inStage;
-		texture = Loader.instance.instanceGetMap();
+		texture = SplashScreen.instance.getMap();
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		backSprite = new Sprite(texture);
 //		zoom = CalculateZoomParms();

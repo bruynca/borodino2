@@ -1,0 +1,649 @@
+gamemenu.png
+size: 4010, 3669
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+abrams
+  rotate: false
+  xy: 2325, 697
+  size: 360, 339
+  orig: 360, 339
+  offset: 0, 0
+  index: -1
+aflag
+  rotate: false
+  xy: 2644, 100
+  size: 377, 188
+  orig: 377, 188
+  offset: 0, 0
+  index: -1
+autosetup
+  rotate: false
+  xy: 2139, 0
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+autosetupdisabled
+  rotate: false
+  xy: 2239, 0
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+autosetuppressed
+  rotate: false
+  xy: 2339, 0
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+back
+  rotate: false
+  xy: 2439, 0
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+backpressed
+  rotate: false
+  xy: 2539, 0
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+blackscreen
+  rotate: false
+  xy: 1924, 100
+  size: 107, 152
+  orig: 107, 152
+  offset: 0, 0
+  index: -1
+bmp
+  rotate: false
+  xy: 1117, 1057
+  size: 380, 380
+  orig: 380, 380
+  offset: 0, 0
+  index: -1
+button
+  rotate: false
+  xy: 170, 0
+  size: 104, 34
+  orig: 104, 34
+  offset: 0, 0
+  index: -1
+button1
+  rotate: false
+  xy: 2031, 100
+  size: 160, 154
+  orig: 160, 154
+  offset: 0, 0
+  index: -1
+buttonpressed
+  rotate: false
+  xy: 274, 0
+  size: 104, 34
+  orig: 104, 34
+  offset: 0, 0
+  index: -1
+checkbox
+  rotate: false
+  xy: 758, 0
+  size: 42, 42
+  orig: 42, 42
+  offset: 0, 0
+  index: -1
+checkboxover
+  rotate: false
+  xy: 378, 0
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+checkboxselected
+  rotate: false
+  xy: 800, 0
+  size: 42, 42
+  orig: 42, 42
+  offset: 0, 0
+  index: -1
+checkboxselectedover
+  rotate: false
+  xy: 418, 0
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+close
+  rotate: false
+  xy: 0, 0
+  size: 19, 20
+  orig: 19, 20
+  offset: 0, 0
+  index: -1
+done
+  rotate: false
+  xy: 2639, 0
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+donedisabled
+  rotate: false
+  xy: 2739, 0
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+donepressed
+  rotate: false
+  xy: 2839, 0
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+dragon
+  rotate: false
+  xy: 2685, 697
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: -1
+eventsbackground
+  rotate: false
+  xy: 3510, 100
+  size: 500, 281
+  orig: 500, 281
+  offset: 0, 0
+  index: -1
+exit
+  rotate: false
+  xy: 1604, 100
+  size: 160, 125
+  orig: 160, 125
+  offset: 0, 0
+  index: -1
+fastforward
+  rotate: false
+  xy: 2939, 0
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+fastforwardpressed
+  rotate: false
+  xy: 3039, 0
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+help
+  rotate: false
+  xy: 19, 0
+  size: 19, 20
+  orig: 19, 20
+  offset: 0, 0
+  index: -1
+infantry
+  rotate: false
+  xy: 3045, 697
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: -1
+infantrysoviet
+  rotate: false
+  xy: 3405, 697
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: -1
+info
+  rotate: false
+  xy: 3398, 100
+  size: 112, 196
+  orig: 112, 196
+  offset: 0, 0
+  index: -1
+leftarrow
+  rotate: false
+  xy: 2191, 100
+  size: 113, 169
+  orig: 113, 169
+  offset: 0, 0
+  index: -1
+leftarrowselected
+  rotate: false
+  xy: 2304, 100
+  size: 114, 169
+  orig: 114, 169
+  offset: 0, 0
+  index: -1
+loadsetup
+  rotate: false
+  xy: 3139, 0
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+loadsetupdisabled
+  rotate: false
+  xy: 3239, 0
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+loadsetuppressed
+  rotate: false
+  xy: 3339, 0
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+m113
+  rotate: false
+  xy: 1497, 1057
+  size: 380, 380
+  orig: 380, 380
+  offset: 0, 0
+  index: -1
+m901
+  rotate: false
+  xy: 1877, 1057
+  size: 380, 380
+  orig: 380, 380
+  offset: 0, 0
+  index: -1
+metalscreenbare
+  rotate: false
+  xy: 0, 2589
+  size: 1920, 1080
+  orig: 1920, 1080
+  offset: 0, 0
+  index: -1
+metalscreenreg
+  rotate: false
+  xy: 1920, 2589
+  size: 1920, 1080
+  orig: 1920, 1080
+  offset: 0, 0
+  index: -1
+midpanelempty
+  rotate: false
+  xy: 2325, 1563
+  size: 1073, 1000
+  orig: 1073, 1000
+  offset: 0, 0
+  index: -1
+moveicon
+  rotate: false
+  xy: 130, 0
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+pause
+  rotate: false
+  xy: 3439, 0
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+pausepressed
+  rotate: false
+  xy: 3539, 0
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+pbembackground
+  rotate: false
+  xy: 1400, 100
+  size: 204, 104
+  orig: 204, 104
+  offset: 0, 0
+  index: -1
+play
+  rotate: false
+  xy: 3639, 0
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+playpressed
+  rotate: false
+  xy: 3739, 0
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+redo
+  rotate: false
+  xy: 3839, 0
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+redodisabled
+  rotate: false
+  xy: 0, 100
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+redopressed
+  rotate: false
+  xy: 100, 100
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+replay
+  rotate: false
+  xy: 200, 100
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+replaypressed
+  rotate: false
+  xy: 300, 100
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+restart
+  rotate: false
+  xy: 400, 100
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+restartdisabled
+  rotate: false
+  xy: 500, 100
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+restartpressed
+  rotate: false
+  xy: 600, 100
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+rewind
+  rotate: false
+  xy: 700, 100
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+rewindpressed
+  rotate: false
+  xy: 800, 100
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+rightarrow
+  rotate: false
+  xy: 2418, 100
+  size: 113, 169
+  orig: 113, 169
+  offset: 0, 0
+  index: -1
+rightarrowselected
+  rotate: false
+  xy: 2531, 100
+  size: 113, 169
+  orig: 113, 169
+  offset: 0, 0
+  index: -1
+rocket
+  rotate: false
+  xy: 38, 0
+  size: 65, 27
+  orig: 65, 27
+  offset: 0, 0
+  index: -1
+russianstar
+  rotate: false
+  xy: 1995, 0
+  size: 59, 59
+  orig: 59, 59
+  offset: 0, 0
+  index: -1
+sagger
+  rotate: false
+  xy: 0, 1057
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: -1
+save
+  rotate: false
+  xy: 900, 100
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+savedisabled
+  rotate: false
+  xy: 1000, 100
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+savepressed
+  rotate: false
+  xy: 1100, 100
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+selectedbutton
+  rotate: false
+  xy: 842, 0
+  size: 281, 44
+  orig: 281, 44
+  offset: 0, 0
+  index: -1
+sflag
+  rotate: false
+  xy: 3021, 100
+  size: 377, 188
+  orig: 377, 188
+  offset: 0, 0
+  index: -1
+showmenu
+  rotate: false
+  xy: 2054, 0
+  size: 85, 62
+  orig: 85, 62
+  offset: 0, 0
+  index: -1
+sidepanelleft
+  rotate: false
+  xy: 3398, 1563
+  size: 359, 1026
+  orig: 359, 1026
+  offset: 0, 0
+  index: -1
+sliderbackground
+  rotate: false
+  xy: 1685, 0
+  size: 310, 50
+  orig: 310, 50
+  offset: 0, 0
+  index: -1
+sliderknob
+  rotate: false
+  xy: 160, 0
+  size: 10, 30
+  orig: 10, 30
+  offset: 0, 0
+  index: -1
+smallmap
+  rotate: false
+  xy: 2257, 1057
+  size: 775, 506
+  orig: 775, 506
+  offset: 0, 0
+  index: -1
+smallmapbottom
+  rotate: false
+  xy: 0, 381
+  size: 775, 316
+  orig: 775, 316
+  offset: 0, 0
+  index: -1
+smallmaptop
+  rotate: false
+  xy: 775, 381
+  size: 775, 316
+  orig: 775, 316
+  offset: 0, 0
+  index: -1
+sovietaboriginal
+  rotate: false
+  xy: 1550, 381
+  size: 775, 316
+  orig: 775, 316
+  offset: 0, 0
+  index: -1
+sovietaboriginalvictory
+  rotate: false
+  xy: 2325, 381
+  size: 775, 316
+  orig: 775, 316
+  offset: 0, 0
+  index: -1
+sovietcounterattack
+  rotate: false
+  xy: 3032, 1057
+  size: 775, 506
+  orig: 775, 506
+  offset: 0, 0
+  index: -1
+sovietendwar
+  rotate: false
+  xy: 0, 1563
+  size: 775, 506
+  orig: 775, 506
+  offset: 0, 0
+  index: -1
+sovietknife
+  rotate: false
+  xy: 3100, 381
+  size: 775, 316
+  orig: 775, 316
+  offset: 0, 0
+  index: -1
+sovietknifevictory
+  rotate: false
+  xy: 0, 697
+  size: 775, 316
+  orig: 775, 316
+  offset: 0, 0
+  index: -1
+start
+  rotate: false
+  xy: 1764, 100
+  size: 160, 136
+  orig: 160, 136
+  offset: 0, 0
+  index: -1
+stop
+  rotate: false
+  xy: 1200, 100
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+stoppressed
+  rotate: false
+  xy: 1300, 100
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+t72
+  rotate: false
+  xy: 737, 1057
+  size: 380, 378
+  orig: 380, 378
+  offset: 0, 0
+  index: -1
+t80
+  rotate: false
+  xy: 360, 1057
+  size: 377, 370
+  orig: 377, 370
+  offset: 0, 0
+  index: -1
+tab
+  rotate: false
+  xy: 458, 0
+  size: 150, 40
+  orig: 150, 40
+  offset: 0, 0
+  index: -1
+tabselected
+  rotate: false
+  xy: 608, 0
+  size: 150, 40
+  orig: 150, 40
+  offset: 0, 0
+  index: -1
+tooltip
+  rotate: false
+  xy: 1123, 0
+  size: 281, 44
+  orig: 281, 44
+  offset: 0, 0
+  index: -1
+unselectedbutton
+  rotate: false
+  xy: 1404, 0
+  size: 281, 44
+  orig: 281, 44
+  offset: 0, 0
+  index: -1
+usaboriginal
+  rotate: false
+  xy: 775, 697
+  size: 775, 316
+  orig: 775, 316
+  offset: 0, 0
+  index: -1
+uscounterattack
+  rotate: false
+  xy: 775, 1563
+  size: 775, 506
+  orig: 775, 506
+  offset: 0, 0
+  index: -1
+usendwar
+  rotate: false
+  xy: 1550, 1563
+  size: 775, 506
+  orig: 775, 506
+  offset: 0, 0
+  index: -1
+usknife
+  rotate: false
+  xy: 1550, 697
+  size: 775, 316
+  orig: 775, 316
+  offset: 0, 0
+  index: -1
+window
+  rotate: false
+  xy: 103, 0
+  size: 27, 29
+  orig: 27, 29
+  offset: 0, 0
+  index: -1

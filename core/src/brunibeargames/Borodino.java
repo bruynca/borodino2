@@ -1,9 +1,11 @@
 package brunibeargames;
 
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.files.FileHandle;
@@ -15,11 +17,20 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Observable;
 
 
@@ -28,6 +39,8 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 	 SpriteBatch batch;
 	 Texture img;
 	 boolean isWriteTerrain = true;
+	 public Stage splashStage;
+
 	 public Stage guiStage;
 	 public  Stage mapStage;
 	 public  Stage hexStage;
@@ -55,8 +68,10 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 	 private boolean aiRender = false;
 	 private int cntAiRender =0;
 	 static boolean isResumed = false;
+	 GamePreferences gamePreferences;
 
-	public Stage mainmenuStage;
+
+	 public Stage mainmenuStage;
 	public Screen screen;
 	public Texture texHex;
 	Skin skin;
@@ -65,6 +80,12 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 	Settings settings;
 //
 	Loader loader;
+	 private boolean isDesktop = false;
+	 private boolean isAndroid = false;
+	 private boolean isIOS = false;
+	 private boolean inSplash = true;
+	 private float calcHeight;
+	 private Dimension scrnSize;
 
 	 public static void setIsStopPan(boolean b) {
 	 }
@@ -73,56 +94,100 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 	 @Override
 	public void create () {
 	    Gdx.app.log("Create", "Create");
-
 		instance = this;
-		font = new BitmapFont(Gdx.files.internal("scene2d/default.fnt"));
-	    skin = new Skin(Gdx.files.internal("scene2d/uiskin.json"));
-	    texHex = new Texture(Gdx.files.internal("hexhilite.png"));
-		Graphics.DisplayMode mode = Gdx.graphics.getDisplayMode();
-		Gdx.graphics.setFullscreenMode(mode);
-//		Gdx.graphics.setWindowedMode((int)GamePreferences.getWindowSize().x, (int)GamePreferences.getWindowSize().y - 75);
-		Gdx.graphics.setUndecorated(false);
-		Gdx.graphics.setTitle("Borodino");
-		Gdx.graphics.setWindowedMode(1920, 1080);
-		//		Gdx.graphics.setResizable(false);
-//			Gdx.graphics.setWindowedMode(1366, 600);
+		 if(Gdx.app.getType() == Application.ApplicationType.Desktop) {
+			 isDesktop = true;
+
+		 }
+		 if(Gdx.app.getType() == Application.ApplicationType.Android) {
+			 isAndroid = true;
+		 }
+		 if(Gdx.app.getType() == Application.ApplicationType.iOS) {
+			 isIOS = true;
+		 }
+		 setScreenSize();
+		 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		 Date date = new Date();
+
+		 Gdx.app.log("SS", "Date Time="+dateFormat.format(date));
+//		music = new MusicGame();
+		 if (!GamePreferences.isInPackage) {
+			 if(Gdx.app.getType() == Application.ApplicationType.Desktop) {
+//				DoRedirectConsole();
+			 }
+//			analytics.registerUncaughtExceptionHandler();
+		 }
+		 splashStage = new Stage(new ScreenViewport());
+		 guiStage = new Stage(new ScreenViewport());
+		 mapStage = new Stage(new ScreenViewport());
+		 hexStage = new Stage(new ScreenViewport());
+		 gd = new GestureDetector(this);
+		 gamePreferences = new GamePreferences();
+		 splashScreen = new SplashScreen();
+		 batch = new SpriteBatch();
+		 Hex.loadHexes();
+		 FontFactory fontFactory = new FontFactory();
+		 CreateInputProcessors();
+
+	 }
+	 private void setScreenSize() {
+		 Graphics.Monitor currMonitor = Gdx.graphics.getMonitor();
+		 Graphics.DisplayMode[] modes = Gdx.graphics.getDisplayModes(currMonitor);
+		 Graphics.DisplayMode currMode = Gdx.graphics.getDisplayMode(currMonitor);
 
 
+		 float height = currMode.height;
+//		height = 1080; // test
+		 float width = currMode.width;
+		 calcHeight = 0;
+		 float calcWidth = 0;
+		 boolean isWindow = true;
+		 Vector2 v2ScreenSize = GamePreferences.getWindowSize();
+		 isWindow = GamePreferences.getFullScreen();
+		 /**
+		  *  if none saved then first time
+		  *  check if we can do 1920 X 1080 windowed mode
+		  */
+//		v2ScreenSize.x =0; // test
+		 if (v2ScreenSize.x == 0) {
+			 isWindow = true;
+			 if (height > 1080) {
+				 calcHeight = 1080;
+				 calcWidth = 1920;
+			 } else if (height > 900) {
+				 calcHeight = 900;
+				 calcWidth = 1600;
+			 } else {
+				 calcHeight = 768;
+				 calcWidth = 1366;
+			 }
+			 GamePreferences.putWindowSize(new Vector2(calcWidth, calcHeight));
+		 } else {
+			 calcWidth = v2ScreenSize.x;
+			 calcHeight = v2ScreenSize.y;
+		 }
+		 Graphics.DisplayMode mode = Gdx.graphics.getDisplayMode();
+//			taskBarHeight = scrnSize.height - winSize.height;
+		 Gdx.graphics.setFullscreenMode(mode);
+		 Gdx.graphics.setUndecorated(false);
+		 Gdx.graphics.setTitle("Sticks and Stones");
+		 Gdx.graphics.setResizable(false);
+//		Gdx.graphics.setWindowedMode((int)calcWidth, (int)calcHeight);
+//		Gdx.graphics.setWindowedMode(1366,768);
+		 Gdx.graphics.setWindowedMode(1920, 1080);
+//		Gdx.graphics.setWindowedMode(2560,1440);
+		 Dimension scrnSize = Toolkit.getDefaultToolkit().getScreenSize();
+		 Rectangle winSize = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
 
-		settings = new Settings();
-		shapeRenderer = new ShapeRenderer();
-		soundEffects = new SoundEffects();
-//		VisUI.load();
-//		VisUI.setDefaultTitleAlign(Align.center);
-//   	VisUI.load(SkinScale.X2);
-		batch = new SpriteBatch();
-		fontFactory = new FontFactory();
-//		img = new Texture(Gdx.files.internal("data/RedMenaceSplash.png"));
-//		hexStage = new Stage(new ScreenViewport());
-		guiStage = new Stage(new ScreenViewport());
-		mapStage = new Stage(new ScreenViewport());
-		mainmenuStage = new Stage(new ScreenViewport());
-//		mainMenu = new MainMenu(mainmenuStage);
-		loader = new Loader();
-//		screen = new Screen(mapStage);
-		gd = new GestureDetector(this);
-		Messages messages = new Messages();
-//		SetMainMenu();
-		Randomizer randomizer = new Randomizer();
-		batch = new SpriteBatch();
-		screen = new Screen(mapStage);
-		Hex.loadHexes();
-		map = new Map();
-		Map.InitializeHexSearch();
-		CreateInputProcessors();
-		WinDebug winDebug = new WinDebug(mapStage,guiStage, skin);
-	}
+	 }
 
-	private void CreateInputProcessors() {
+		 private void CreateInputProcessors() {
 		im = new InputMultiplexer(this);
+	    im.addProcessor(0, splashStage);
 		im.addProcessor(1, guiStage);
 		im.addProcessor(2, mapStage);
-		im.addProcessor(3, gd);
+  		im.addProcessor(2, hexStage);
+		im.addProcessor(4, gd);
 		Gdx.input.setInputProcessor(im);
 
 		
@@ -132,15 +197,96 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 	public void render () {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		screen.instance.Render(batch);
-		mapStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
-	    mapStage.draw(); // make sure done after sprite batch end
-		guiStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
-	    guiStage.draw(); // make sure done after sprite batch end
+		if (inSplash){
+			splashStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
+			splashStage.draw(); // make sure done after sprite batch end
+		}else {
+			if (ScreenGame.instance != null) {
+				ScreenGame.instance.render(batch);
+			}
+//			if (ScreenGameNew.instance != null) {
+//				ScreenGameNew.instance.render();
+//			}
+			hexStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
+			hexStage.draw(); // make sure done after sprite batch end
+			mapStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
+			mapStage.draw(); // make sure done after sprite batch end
+			Array<Actor> arr =  guiStage.getActors();
+			guiStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
+			guiStage.draw(); // make sure done after sprite batch end
+		}
+/*		if (aiRender){
+			cntAiRender++;
+			if (cntAiRender > 15) {
+				EventAI.instance.tick();
+				cntAiRender =0;
+			}
+		} */
+		checkKeyPress();
+		if (ScreenGame.instance != null) {
+			if (isUpdateExplosion || isScroll || isUpdateDice || isBridgeExplosion || isUpdateShell) {
+				batch.setProjectionMatrix(ScreenGame.instance.cameraBackGround.combined);
+				batch.begin();
+				if (isUpdateExplosion) {
+//					Explosions.instance.update(batch);
+				}
+				if (isUpdateDice) { // changes viewpoint
+//					DiceEffect.instance.update(batch);
+				}
+				if (isBridgeExplosion) {
+//					BridgeExplosion.instance.update(batch);
+				}
+				if (isScroll) {
+//					CenterScreen.instance.update();
+				}
+				if (isUpdateShell){
+//					FlyingShell.instance.update();
+				}
+
+				batch.end();
+			}
+		}
+
+		SplashScreen.instance.checkLoad(batch);
+
 
 	}
-	
-	@Override
+
+	 private void checkKeyPress() {
+		 if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+			 if (ScreenGame.instance != null) {
+				 ScreenGame.instance.panCamera(+4, 0);
+			 }
+		 }
+		 if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+			 if (ScreenGame.instance != null) {
+				 ScreenGame.instance.panCamera(-4, 0);
+			 }
+		 }
+		 if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+			 if (ScreenGame.instance != null) {
+				 ScreenGame.instance.panCamera(+4, 0);
+			 }
+		 }
+		 if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+			 if (ScreenGame.instance != null) {
+				 ScreenGame.instance.panCamera(-4, 0);
+			 }
+		 }
+		 if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+			 if (ScreenGame.instance != null) {
+				 ScreenGame.instance.panCamera(0, +4);
+			 }
+		 }
+		 if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+			 if (ScreenGame.instance != null) {
+				 ScreenGame.instance.panCamera(0, -4);
+			 }
+		 }
+
+	 }
+
+	 @Override
 	public void dispose () {
 	    Gdx.app.log("Red Menance","Dispose");
 		batch.dispose();
@@ -335,4 +481,9 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 	 public Texture getTexHex() {
 		 return texHex;
 	 }
+
+	 public float getCalcHeight() {
+		 return calcHeight;
+	 }
+
  }

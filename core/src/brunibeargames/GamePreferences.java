@@ -19,28 +19,25 @@ import java.util.UUID;
 public class GamePreferences {
 
     public  static GamePreferences instance;
-    private static Preferences prefs = Gdx.app.getPreferences("ardenne_prefs");
-    private static Preferences prefsAnalytics = Gdx.app.getPreferences("ardenne_analytics_prefs");
-    private static Preferences mobileprefs = Gdx.app.getPreferences("ardenne_prefs");
-    private static Preferences mobileprefsAnalytics = Gdx.app.getPreferences("ardenne_analytics_prefs");
-    private static String buildNumber = "2.7.0.0";
-    private static String gameDir = "bruinbeargames/ardenne/savedgames/";
+    private static Preferences prefs = Gdx.app.getPreferences("borodino_prefs");
+    private static Preferences prefsAnalytics = Gdx.app.getPreferences("borodino_analytics_prefs");
+    private static Preferences mobileprefs = Gdx.app.getPreferences("borodino_prefs");
+    private static Preferences mobileprefsAnalytics = Gdx.app.getPreferences("borodino_analytics_prefs");
+    private static String buildNumber = "0.9.0.0";
+    private static String gameDir = "bruinbeargames/borodino/savedgames/";
     String strIPAddress = "IPAddress";
     String strLanguage = "language";
+    private Player playerUS;
+    private Player playerSoviet;
+    private Scenario scenarioChosen;
     public static boolean isDEbug=false;
 
-
-    public GamePreferences() {
+    public static boolean isInPackage =false;
+   public GamePreferences() {
 
         instance = this;
     }
 
-    public static GamePreferences getInstance(){
-        if(instance == null){
-            instance = new GamePreferences();
-        }
-        return instance;
-    }
 
 
     public static void saveWindowSize(int width, int height) {
@@ -163,6 +160,18 @@ public class GamePreferences {
     }
 
 
+    public static void putFullScreen(boolean fullscreen){
+
+        if (Gdx.app.getType().equals(Application.ApplicationType.Desktop)) {
+            prefs.putBoolean("fullscreen", fullscreen);
+            prefs.flush();
+        }else{
+            mobileprefs.putBoolean("fullscreen", fullscreen);
+            mobileprefs.flush();
+        }
+    }
+
+
 
 
 
@@ -260,5 +269,28 @@ public class GamePreferences {
     }
 
 
+    public static boolean getFullScreen() {
+        boolean isFull = false;
+        if (Gdx.app.getType().equals(Application.ApplicationType.Desktop)) {
+            isFull = prefs.getBoolean("fullscreen", false);
+        }else{
+            isFull = prefs.getBoolean("fullscreen", false);
+        }
+        isFull = false;
+
+        return isFull;
+    }
+
+    public static void putWindowSize(Vector2 vIn) {
+        if (Gdx.app.getType().equals(Application.ApplicationType.Desktop)) {
+            prefs.putInteger("screensize_width", (int) vIn.x);
+            prefs.putInteger("screensize_height", (int) vIn.y);
+            prefs.flush();
+        }
+
+    }
 }
+
+
+
 

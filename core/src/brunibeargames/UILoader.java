@@ -27,8 +27,8 @@ public class UILoader {
         buttons = new Buttons(atlas);
         atlas = assetManager.get("menus/bottommenu.txt");
         bottomMenu = new BottomMenu(atlas);
-        atlas = assetManager.get("effects/combatdisplay.txt");
-        combatDisplay = new CombatDisplay(atlas);
+//        atlas = assetManager.get("effects/combatdisplay.txt");
+//        combatDisplay = new CombatDisplay(atlas);
         atlas = assetManager.get("menus/unitselection.txt");
         unitSelection = new UnitSelection(atlas);
         atlas = assetManager.get("menus/topmenu.txt");
