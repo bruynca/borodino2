@@ -14,8 +14,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.I18NBundle;
+import com.kotcrab.vis.ui.VisUI;
 
 import java.util.ArrayList;
 
@@ -27,13 +29,6 @@ public class SplashScreen {
     Logo logo;
     I18NBundle i18NBundle;
 
-    TextureRegion texFrenchCalvary;
-    TextureRegion texRussianCalvary;
-    TextureRegion borodino;
-    TextureRegion dot;
-    TextureRegion loadbox;
-    TextureRegion loading;
-    TextureRegion title;
     private  AssetManager assetManager;
     public AssetManager soundsManager;
     public AssetManager effectsManager;
@@ -45,14 +40,12 @@ public class SplashScreen {
     private TextureAtlas atlas;
     private TextureAtlas logoAtlas;
     private Texture map;
-    Image imgTitle;
     Image imgBorodino;
-    Image imgRussianCalvary;
-    Image imgFrenchCalvary;
-    Image imgDot;
+    Image imgCannon;
     Image imgLoading;
     Image imgLoadBox;
-    int xStartTank;
+    int xStartCannon;
+    int yStartCannon= 0;
 
     private TextureRegion menuimage = null;
     boolean isInitialLoad = true;
@@ -72,10 +65,10 @@ public class SplashScreen {
     float screenRatio;
     float heightDiff;
     int numTanksToMark;
-    int cntHorse = 0;
+    int cntCannon = 0;
     int cntLoaded  = 0;
-    int percentNewTank;
-    ArrayList<Image> arrImageTanks = new ArrayList<>();
+    int percentNewCannon = 5;
+    ArrayList<Image> arrImageCannon = new ArrayList<>();
 
 
 
@@ -83,11 +76,211 @@ public class SplashScreen {
         Gdx.app.log("SplashScreen", "COnstructor");
 
         instance = this;
-        this.stage = Borodino.instance.guiStage;
+        this.stage = Borodino.instance.splashStage;
         stage.clear();
         loadSplash();
+        loadAssets();
+
 //        Gdx.input.setInputProcessor(stage);
 
+
+
+
+    }
+
+    TextureRegion cannon;
+    TextureRegion tank;
+
+    TextureRegion borodino;
+    TextureRegion dot;
+    TextureRegion loadbox;
+    TextureRegion loading;
+    ArrayList<Image> arrImage = new ArrayList<>();
+
+
+    private void loadSplash() {
+        /**
+         *  load and dislplay the splashscreen
+         *  anytime screen is resized will load
+         */
+        //        Gdx.input.setInputProcessor(stage);
+        float x=0;
+        float y=0;
+        Stage stage = Borodino.instance.splashStage;
+        stage.clear();
+        if (isInitialLoad) {
+            assetSplashScreenManager = new AssetManager();
+            assetSplashScreenManager.load("splash/splash.txt", TextureAtlas.class);
+            assetSplashScreenManager.finishLoading();
+
+            TextureAtlas textureAtlas = assetSplashScreenManager.get("splash/splash.txt");
+            borodino = textureAtlas.findRegion("splashimage");
+            dot =  textureAtlas.findRegion("dot");
+            loading =  textureAtlas.findRegion("loading");
+            loadbox =  textureAtlas.findRegion("loadbox");
+            cannon =  textureAtlas.findRegion("cannon");
+            percentNewCannon = 05;
+            isInitialLoad = false;
+            assetSplashScreenManager.load("sounds/levictoireestanous.mp3", Sound.class);
+            assetSplashScreenManager.finishLoading();
+            sound = assetSplashScreenManager.get("sounds/levictoireestanous.mp3");
+
+            float level =  GamePreferences.getVolume();
+            sound.play(level);
+
+            isInitialLoad = false;
+        }
+        float height = Gdx.graphics.getHeight();
+        float width = Gdx.graphics.getWidth();
+        screenRatio = (float)Gdx.graphics.getWidth()/1920;
+        heightDiff = height - Borodino.instance.getCalcHeight();
+        imgBorodino = new Image(borodino);
+        imgLoading = new Image(loading);
+        imgLoadBox = new Image(loadbox);
+        imgCannon = new Image(cannon);
+        float sticksWidth = imgBorodino.getWidth();
+        imgBorodino.setScale(screenRatio);
+        imgBorodino.setPosition(0,0);
+        /**
+         *  place loading
+         */
+        x  =   (int)((width -(imgLoading.getWidth() * screenRatio))/2);
+        y = 193  * screenRatio;
+        imgLoading.setScale(screenRatio);
+        imgLoading.setPosition(x,y);
+
+        /**
+         *  place loadBox
+         */
+        x  =   (int)((width -(imgLoadBox.getWidth() * screenRatio))/2);
+        y = 85*screenRatio;
+        imgLoadBox.setScale(screenRatio);
+        imgLoadBox.setPosition(x,y);
+
+
+
+        xStartCannon = (int)x+5;
+        yStartCannon = (int)y+5;
+
+
+
+
+        stage.addActor(imgBorodino);
+        stage.addActor(imgLoadBox);
+        stage.addActor(imgLoading);
+ /*       x +=5;
+        y +=5;
+        for (float x1 = 20;x1< 1920f; x1++){
+            setCannon(x1,100);
+        };
+        setCannon(0, 0);
+        setCannon(x, y);
+        setCannon(x+80, y);
+
+*/
+
+        int i=0;
+
+    }
+
+    private void setCannon(float x, float y) {
+
+        Image image = new Image(cannon);
+        image.setScale(screenRatio);
+        image.setPosition(x,y);
+        stage.addActor(image);
+        arrImage.add(image);
+    }
+
+    boolean isLoaded = false;
+    public void checkLoad(Batch batch) {
+        batch.begin();
+        float progress = (mapsManager.getProgress() + effectsManager.getProgress() + unitsManager.getProgress() + UIManager.getProgress() + soundsManager.getProgress()+cardManager.getProgress())/5;
+        if (!beenHere) {
+ /*           Gdx.app.log("SplashScreen", "Progress ="+progress);
+            Gdx.app.log("SplashScreen", "mapsManage ="+mapsManager.getProgress());
+            Gdx.app.log("SplashScreen", "effectsMan ="+effectsManager.getProgress());
+            Gdx.app.log("SplashScreen", "unitMKan   ="+unitsManager.getProgress());
+            Gdx.app.log("SplashScreen", "UIManage   ="+UIManager.getProgress());
+            Gdx.app.log("SplashScreen", "Sounds     ="+soundsManager.getProgress());
+*/
+        font.setColor(Color.WHITE);
+
+        font.draw(batch, "Version:" + GamePreferences.getBuildNumber() + " Loading at " + Math.round((progress * 100)-18) + "%", 10,50 );
+        int profDisplay =  Math.round((progress * 100)-18);
+        int percentNewCannon = 05;  // every 5 percent need new cannon
+        if (profDisplay > (cntLoaded+1)*percentNewCannon){
+//            cntLoaded = (int) (profDisplay + percentNewCannon - 1);
+            cntLoaded++;
+            Gdx.app.log("SplashScreen", "Displaying next Progress="+profDisplay+ " num cannons="+cntLoaded);
+            Image imgCannonD = new Image(cannon);
+            imgCannonD.setScale(screenRatio);
+            imgCannonD.setPosition(xStartCannon, yStartCannon);
+      //      imgCannonD.setPosition(0,0);
+            stage.addActor(imgCannonD);
+            arrImageCannon.add(imgCannonD);
+            xStartCannon += (imgCannonD.getWidth() * screenRatio);
+        }
+        font.setColor(Color.WHITE);
+        font.draw(batch, "Version:" + GamePreferences.getBuildNumber() + " Loading at " + Math.round((progress * 100)-18) + "%", 10,50 );
+        //logo.update(progress);
+        //            music.setVolume(music.getVolume() + 0.01f);
+    }
+
+        if (mapsManager.update() && effectsManager.update() && soundsManager.update() && unitsManager.update() && UIManager.update() && !beenHere) {
+            map = mapsManager.get("map/borodinoprod.jpg", Texture.class);
+            /**
+             *  fadeout and fade in
+             */
+
+            for (Image img:arrImageCannon){
+                img.addAction(Actions.fadeOut(.4f));
+            }
+            //          VisUI.load();            //	VisUI.load(VisUI.SkinScale.X2);
+            VisUI.load();
+            //       VisUI.load(VisUI.SkinScale.X2);
+            VisUI.setDefaultTitleAlign(Align.left);
+
+
+
+            imgLoadBox.addAction(Actions.fadeOut(.4f));
+            imgLoading.addAction(Actions.fadeOut(.4f));
+
+
+//            Game game = new Game();
+            Screen screenGame = new Screen(Borodino.instance.mapStage);
+            CenterScreen centerScreen = new CenterScreen();
+            Hex.loadHexes();
+            Map map = new Map();
+            SoundsLoader soundsLoader = new SoundsLoader();
+            map.InitializeHexSearch();
+            UILoader.instance.assignAssets(UIManager);
+            screenHeight= Gdx.graphics.getHeight();
+            screenWidth = Gdx.graphics.getWidth();
+ //           MainMenu mainMenu = new MainMenu(stage, sound,atlas,screenHeight, screenWidth);
+            gameMenu = new GameMenu(stage, sound,atlas,screenHeight, screenWidth);
+//            gameMenu.addObserver(this);
+            languageSupport = new LanguageSupport();
+ //           languageSupport.addObserver(this);
+            beenHere = true;
+/**            if (ardenne.isResumed){
+                Gdx.app.log("SplashScreen", "inIsResume");
+
+                String strResume = "Does Not Matter";
+                i18NBundle = GameMenuLoader.instance.localization;
+                if (SaveGame.getResume() != null)  {
+                    end();
+                    Game game = new Game(strResume, true);
+                    EventPopUp.instance.show(i18NBundle.format("resumegame"));
+                }
+            } */
+        }
+        batch.end();
+    }
+    /**
+     *  load all assets associated with the the game  see checkLoad for completion check
+     */
+    private void loadAssets() {
         assetManager = new AssetManager();
 
         // Load splash screen and music
@@ -105,7 +298,7 @@ public class SplashScreen {
         String language = "i18n/"+GamePreferences.getLanguage();
         gameMenuManager.load(language, I18NBundle.class);
 //        gameMenuManager.load("console/uiskin.atlas", TextureAtlas.class);
- //       gameMenuManager.load("menus/gameselectionbuttons.txt", TextureAtlas.class);
+        //       gameMenuManager.load("menus/gameselectionbuttons.txt", TextureAtlas.class);
 
         gameMenuManager.finishLoading();
         GameMenuLoader.instance.assignAssets(gameMenuManager);
@@ -150,156 +343,8 @@ public class SplashScreen {
         param.minFilter = Texture.TextureFilter.Linear;
 
 
-
-
     }
 
-    private void loadSplash() {
-        /**
-         *  load and dislplay the splashscreen
-         *  anytime screen is resized will load
-         */
-        //        Gdx.input.setInputProcessor(stage);
-        Stage stage = Borodino.instance.splashStage;
-        stage.clear();
-        if (isInitialLoad) {
-            assetSplashScreenManager = new AssetManager();
-            assetSplashScreenManager.load("splash/splash.txt", TextureAtlas.class);
-            assetSplashScreenManager.finishLoading();
-            TextureAtlas textureAtlas = assetSplashScreenManager.get("splash/splash.txt");
-            title =  textureAtlas.findRegion("title");
-            texRussianCalvary =  textureAtlas.findRegion("abrams");
-            dot =  textureAtlas.findRegion("dot");
-            loading =  textureAtlas.findRegion("loading");
-            loadbox =  textureAtlas.findRegion("loadbox");
-            borodino =  textureAtlas.findRegion("splashscreen");
-            cntHorse = title.getTexture().getWidth() / title.getTexture().getWidth();
-            percentNewTank = 05;
-            isInitialLoad = false;
-            assetSplashScreenManager.load("sounds/levictoireestanous.mp3", Sound.class);
-            assetSplashScreenManager.finishLoading();
-            sound = assetSplashScreenManager.get("sounds/levictoireestanous.mp3");
-            float level =  GamePreferences.getVolume();
-            sound.play(level);
-        }
-        float height = Gdx.graphics.getHeight();
-        float width = Gdx.graphics.getWidth();
-        screenRatio = (float)Gdx.graphics.getWidth()/1920;
-        heightDiff = height - Borodino.instance.getCalcHeight();
-
-
-        imgTitle = new Image(title);
-        imgBorodino = new Image(borodino);
-        imgRussianCalvary = new Image(texRussianCalvary);
-        imgDot = new Image(dot);
-        imgLoading = new Image(loading);
-        imgLoadBox = new Image(loadbox);
-        float markWidth = imgTitle.getWidth();
-        float sticksWidth = imgBorodino.getWidth();
-        /**
-         *  place top mark
-         */
-        int x = (int)((width -(markWidth * screenRatio))/2);
-        int y = (int)(height - (((imgTitle.getHeight() + 40)  * screenRatio)));
-        int saveY =y;
-        imgTitle.setScale(screenRatio);
-        imgTitle.setPosition(x,y);
-        /**
-         *  place loading
-         */
-        x  =   (int)((width -(imgLoading.getWidth() * screenRatio))/2);
-        y -= 400  * screenRatio;
-        imgLoading.setScale(screenRatio);
-        imgLoading.setPosition(x,y);
-
-        /**
-         *  place loadBox
-         */
-        x  =   (int)((width -(imgLoadBox.getWidth() * screenRatio))/2);
-        y -= 100;
-        imgLoadBox.setScale(screenRatio);
-        imgLoadBox.setPosition(x,y);
-        xStartTank = x + 6;
-
-
-
-
-        /**
-         *  place Sticks and Stones
-         */
-        x = (int)((width -(sticksWidth * screenRatio))/2);
-        y = (int)(height - ((((imgTitle.getHeight() + 40) + (imgBorodino.getHeight() + 40)) * screenRatio)));
-
-//        y = (int) ((int)((imgMark.getY() + imgMark.getHeight()) + 40)  * screenRatio);
-        imgBorodino.setScale(screenRatio);
-        imgBorodino.setPosition(x,y);
-        imgBorodino.addAction(Actions.fadeOut(.001f));
-
-
-
-
-        stage.addActor(imgTitle);
-        stage.addActor(imgLoadBox);
-        stage.addActor(imgLoading);
-        stage.addActor(imgBorodino);
-
-
-        int i=0;
-
-    }
-
-    boolean isLoaded = false;
-    public void checkLoad(Batch batch) {
-        batch.begin();
-        float progress = (mapsManager.getProgress() + effectsManager.getProgress() + unitsManager.getProgress() + UIManager.getProgress() + soundsManager.getProgress()+cardManager.getProgress())/5;
-        if (!beenHere) {
- /*           Gdx.app.log("SplashScreen", "Progress ="+progress);
-            Gdx.app.log("SplashScreen", "mapsManage ="+mapsManager.getProgress());
-            Gdx.app.log("SplashScreen", "effectsMan ="+effectsManager.getProgress());
-            Gdx.app.log("SplashScreen", "unitMKan   ="+unitsManager.getProgress());
-            Gdx.app.log("SplashScreen", "UIManage   ="+UIManager.getProgress());
-            Gdx.app.log("SplashScreen", "Sounds     ="+soundsManager.getProgress());
-*/
-            font.setColor(Color.WHITE);
-
-            font.draw(batch, "Version:" + GamePreferences.getBuildNumber() + " Loading at " + Math.round((progress * 100)-18) + "%", 10,50 );
-            //logo.update(progress);
-            //            music.setVolume(music.getVolume() + 0.01f);
-        }else {
- //           font.setColor(Color.WHITE);
- //           font.draw(stateEngine.getBatch(), GamePreferences.getBuildNumber(), 20, 20);
-        }
-        if (mapsManager.update() && effectsManager.update() && soundsManager.update() && unitsManager.update() && UIManager.update() && !beenHere) {
-            map = mapsManager.get("map/borodinoprod.jpg", Texture.class);
-//            Game game = new Game();
-            Screen screenGame = new Screen(Borodino.instance.mapStage);
-            CenterScreen centerScreen = new CenterScreen();
-            Hex.loadHexes();
-            Map map = new Map();
-            SoundsLoader soundsLoader = new SoundsLoader();
-            map.InitializeHexSearch();
-            UILoader.instance.assignAssets(UIManager);
-            screenHeight= Gdx.graphics.getHeight();
-            screenWidth = Gdx.graphics.getWidth();
-            gameMenu = new GameMenu(stage, sound,atlas,screenHeight, screenWidth);
- //           gameMenu.addObserver(this);
-            languageSupport = new LanguageSupport();
- //           languageSupport.addObserver(this);
-            beenHere = true;
-/**            if (ardenne.isResumed){
-                Gdx.app.log("SplashScreen", "inIsResume");
-
-                String strResume = "Does Not Matter";
-                i18NBundle = GameMenuLoader.instance.localization;
-                if (SaveGame.getResume() != null)  {
-                    end();
-                    Game game = new Game(strResume, true);
-                    EventPopUp.instance.show(i18NBundle.format("resumegame"));
-                }
-            } */
-        }
-        batch.end();
-    }
     public Texture getMap(){
         return map;
 
@@ -316,6 +361,10 @@ public class SplashScreen {
     }
     public void sounOff(){
         sound.stop();
+    }
+
+    public float getScreenRatio() {
+        return screenRatio;
     }
 }
 

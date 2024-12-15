@@ -81,11 +81,11 @@ public class GameMenu extends Observable {
         initializeImageBackGround();
         initializeExitButton();
         initializeInstructionsButton();
+        initializeCreditsButton();
         initializeNewGameButton(screenHeight,  sound );
         initializeLoadSavedGameButton();
         initializeLoadGameButton(sound);
         initializeScrollPane(atlas);
-        initializeCreditsButton();
         initializeMainMenuButton();
         initializeBackButton();
         initializeOptionsButton();
@@ -230,10 +230,15 @@ public class GameMenu extends Observable {
 
     private void initializeImageBackGround() {
 
-        NinePatch np = new NinePatch(GameMenuLoader.instance.gameMenu.asset.get("tooltip"),5, 5, 5, 5);
-        backGroundImage = new Image();
-        backGroundImage.setDrawable(new NinePatchDrawable(np));
-        backGroundImage.setHeight(486 / (1));
+        TextureRegion back = new TextureRegion(GameMenuLoader.instance.gameMenu.asset.get("backimage"));
+        backGroundImage = new Image(back);
+ //       backGroundImage.setDrawable(new NinePatchDrawable(np));
+//        NinePatch np = new NinePatch(GameMenuLoader.instance.gameMenu.asset.get("tooltip"),5, 5, 5, 5);
+//        backGroundImage = new Image();
+//        backGroundImage.setDrawable(new NinePatchDrawable(np));
+//        backGroundImage.setHeight(900 / (1));
+//        backGroundImage.setWidth(900 / (1));
+         backGroundImage.setHeight(486 / (1));
         backGroundImage.setWidth(474 / (1));
         backGroundImage.setVisible(true);
         backGroundImage.setPosition((screenWidth / 2) - (239 / 1),
@@ -261,14 +266,21 @@ public class GameMenu extends Observable {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (!event.getType().equals("touchUp")) {
+                    /**
+                     *
+                     */
+                    /*
                     backGroundImage.setHeight(backGroundHeight / (1));
-                    backGroundImage.setWidth(800 / (1));
+                    backGroundImage.setWidth(1000 / (1));
                     backGroundImage.setVisible(true);
-                    backGroundImage.setPosition((Gdx.graphics.getWidth() / 2) - (400 / 1),
+                    backGroundImage.setPosition((Gdx.graphics.getWidth() / 2) - (500 / 1),
                             (Gdx.graphics.getHeight() / 2) - (250 / 1));
+                    */
                     hide();
+                    backGroundImage.setVisible(false);
+
                     mainMenuButton.setPosition(backGroundImage.getX() + 20, backGroundImage.getY() +  (10 / 1));
-                    gameSelection.show(true);
+                    gameSelection.show(true, mainMenuButton);
                 }
             }
         });
@@ -546,7 +558,7 @@ public class GameMenu extends Observable {
                             (Gdx.graphics.getHeight() / 2) - (243 / 1));
                     mainMenuButton.setPosition(backGroundImage.getX() + ((backGroundImage.getWidth()/2) - (exitButton.getWidth()/2)), backGroundImage.getY() + backGroundImage.getHeight() - ((410) / 1));
                     if (gameSelection.isVisible()){
-                        gameSelection.show(false);
+                        gameSelection.show(false, mainMenuButton);
                     }
                     showMainMenu();
                 }

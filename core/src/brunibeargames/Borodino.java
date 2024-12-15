@@ -90,11 +90,15 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 	 public static void setIsStopPan(boolean b) {
 	 }
 
-
+	public Borodino(){
+		 super();
+	}
 	 @Override
 	public void create () {
 	    Gdx.app.log("Create", "Create");
 		instance = this;
+		int width = Gdx.graphics.getWidth();
+		int height = Gdx.graphics.getHeight();
 		 if(Gdx.app.getType() == Application.ApplicationType.Desktop) {
 			 isDesktop = true;
 
@@ -170,7 +174,7 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 //			taskBarHeight = scrnSize.height - winSize.height;
 		 Gdx.graphics.setFullscreenMode(mode);
 		 Gdx.graphics.setUndecorated(false);
-		 Gdx.graphics.setTitle("Sticks and Stones");
+		 Gdx.graphics.setTitle("Borodino");
 		 Gdx.graphics.setResizable(false);
 //		Gdx.graphics.setWindowedMode((int)calcWidth, (int)calcHeight);
 //		Gdx.graphics.setWindowedMode(1366,768);

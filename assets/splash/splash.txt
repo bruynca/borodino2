@@ -1,47 +1,40 @@
 splash.png
-size: 1745, 1155
+size: 1920, 1160
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-frenchhorse
+cannon
   rotate: false
-  xy: 144, 0
-  size: 200, 159
-  orig: 200, 159
+  xy: 0, 0
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+dot
+  rotate: false
+  xy: 70, 0
+  size: 16, 40
+  orig: 16, 40
   offset: 0, 0
   index: -1
 loadbox
   rotate: false
-  xy: 0, 900
+  xy: 86, 0
   size: 1438, 80
   orig: 1438, 80
   offset: 0, 0
   index: -1
 loading
   rotate: false
-  xy: 0, 0
+  xy: 1524, 0
   size: 144, 40
   orig: 144, 40
   offset: 0, 0
   index: -1
-russianhorse
+splashimage
   rotate: false
-  xy: 344, 0
-  size: 200, 138
-  orig: 200, 138
-  offset: 0, 0
-  index: -1
-splashscreen
-  rotate: false
-  xy: 544, 0
-  size: 1201, 900
-  orig: 1201, 900
-  offset: 0, 0
-  index: -1
-title
-  rotate: false
-  xy: 0, 980
-  size: 1712, 175
-  orig: 1712, 175
+  xy: 0, 80
+  size: 1920, 1080
+  orig: 1920, 1080
   offset: 0, 0
   index: -1

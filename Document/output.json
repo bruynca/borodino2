@@ -1,0 +1,389 @@
+{
+  "FrenchArmy": {
+    "Corp": [
+      {
+        "name": "Imperial",
+        "Division": [
+          {
+            "name": "1st",
+            "Brigade": [
+              {
+                "name": "Berthezene",
+                "moveFactor": 4
+              },
+              {
+                "name": "Lanusse",
+                "moveFactor": 4
+              }
+            ]
+          },
+          {
+            "name": "2nd",
+            "Brigade": [
+              {
+                "name": "Lanabere",
+                "moveFactor": 4
+              },
+              {
+                "name": "Boyledieu",
+                "moveFactor": 4
+              }
+            ]
+          },
+          {
+            "name": "3rd",
+            "Brigade": [
+              {
+                "name": "Boyer",
+                "moveFactor": 4
+              },
+              {
+                "name": "Curial",
+                "moveFactor": 4
+              },
+              {
+                "name": "Chlopicki",
+                "moveFactor": 4
+              },
+              {
+                "name": "Bronikowski",
+                "moveFactor": 4
+              }
+            ]
+          },
+          {
+            "name": "Imperial",
+            "Brigade": [
+              {
+                "name": "St",
+                "moveFactor": 4
+              },
+              {
+                "name": "Guyot",
+                "moveFactor": 4
+              },
+              {
+                "name": "Colbert",
+                "moveFactor": 4
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "1st",
+        "Division": [
+          {
+            "name": "1st",
+            "Brigade": [
+              {
+                "name": "d'Alton",
+                "moveFactor": 4
+              },
+              {
+                "name": "Gratien",
+                "moveFactor": 4
+              },
+              {
+                "name": "Bonamy",
+                "moveFactor": 4
+              }
+            ]
+          },
+          {
+            "name": "2nd",
+            "Brigade": [
+              {
+                "name": "Dufour",
+                "moveFactor": 4
+              },
+              {
+                "name": "Vandedem",
+                "moveFactor": 4
+              },
+              {
+                "name": "Grandeau",
+                "moveFactor": 4
+              }
+            ]
+          },
+          {
+            "name": "3rd",
+            "Brigade": [
+              {
+                "name": "Desailly",
+                "moveFactor": 4
+              },
+              {
+                "name": "Leclerc",
+                "moveFactor": 4
+              }
+            ]
+          },
+          {
+            "name": "4th",
+            "Brigade": [
+              {
+                "name": "Frederichs",
+                "moveFactor": 4
+              },
+              {
+                "name": "Leguay",
+                "moveFactor": 4
+              }
+            ]
+          },
+          {
+            "name": "5th",
+            "Brigade": [
+              {
+                "name": "Duppelin",
+                "moveFactor": 4
+              },
+              {
+                "name": "Teste",
+                "moveFactor": 4
+              },
+              {
+                "name": "Goyordet",
+                "moveFactor": 4
+              },
+              {
+                "name": "Juillet",
+                "moveFactor": 4
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "3rd",
+        "Division": [
+          {
+            "name": "10th",
+            "Brigade": [
+              {
+                "name": "Gengoult",
+                "moveFactor": 4
+              },
+              {
+                "name": "Morion",
+                "moveFactor": 4
+              },
+              {
+                "name": "Bruny",
+                "moveFactor": 4
+              }
+            ]
+          },
+          {
+            "name": "11th",
+            "Brigade": [
+              {
+                "name": "Joubert",
+                "moveFactor": 4
+              },
+              {
+                "name": "Compere",
+                "moveFactor": 4
+              },
+              {
+                "name": "d'Henin",
+                "moveFactor": 4
+              },
+              {
+                "name": "von",
+                "moveFactor": 4
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "4th",
+        "Division": [
+          {
+            "name": "13th",
+            "Brigade": [
+              {
+                "name": "Huard",
+                "moveFactor": 4
+              },
+              {
+                "name": "Roussel",
+                "moveFactor": 4
+              },
+              {
+                "name": "de",
+                "moveFactor": 4
+              },
+              {
+                "name": "Almeras",
+                "moveFactor": 4
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "5th",
+        "Division": [
+          {
+            "name": "16th",
+            "Brigade": [
+              {
+                "name": "Mielzynski",
+                "moveFactor": 4
+              },
+              {
+                "name": "Poszhowski",
+                "moveFactor": 4
+              },
+              {
+                "name": "Grabowski",
+                "moveFactor": 4
+              },
+              {
+                "name": "Wierbinski",
+                "moveFactor": 4
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "8th",
+        "Division": [
+          {
+            "name": "2nd",
+            "Brigade": [
+              {
+                "name": "Damas",
+                "moveFactor": 4
+              },
+              {
+                "name": "von",
+                "moveFactor": 4
+              },
+              {
+                "name": "Legras",
+                "moveFactor": 4
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "1st",
+        "Division": [
+          {
+            "name": "1st",
+            "Brigade": [
+              {
+                "name": "Jacquinot",
+                "moveFactor": 4
+              },
+              {
+                "name": "Niewiewski",
+                "moveFactor": 4
+              }
+            ]
+          },
+          {
+            "name": "1st",
+            "Brigade": [
+              {
+                "name": "Bruno",
+                "moveFactor": 4
+              },
+              {
+                "name": "Reyand",
+                "moveFactor": 4
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "2nd",
+        "Division": [
+          {
+            "name": "2nd",
+            "Brigade": [
+              {
+                "name": "Saint-Genies",
+                "moveFactor": 4
+              },
+              {
+                "name": "Suberwiecz",
+                "moveFactor": 4
+              }
+            ]
+          },
+          {
+            "name": "2nd",
+            "Brigade": [
+              {
+                "name": "Caulaincourt",
+                "moveFactor": 4
+              },
+              {
+                "name": "Berkheim",
+                "moveFactor": 4
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "3rd",
+        "Division": [
+          {
+            "name": "3rd",
+            "Brigade": [
+              {
+                "name": "Gauthrin",
+                "moveFactor": 4
+              },
+              {
+                "name": "Domanget",
+                "moveFactor": 4
+              },
+              {
+                "name": "Thiry",
+                "moveFactor": 4
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "4th",
+        "Division": [
+          {
+            "name": "4th",
+            "Brigade": [
+              {
+                "name": "Turno",
+                "moveFactor": 4
+              }
+            ]
+          },
+          {
+            "name": "7th",
+            "Brigade": [
+              {
+                "name": "Thielemann",
+                "moveFactor": 4
+              },
+              {
+                "name": "Lepel",
+                "moveFactor": 4
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

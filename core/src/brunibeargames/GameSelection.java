@@ -37,14 +37,15 @@ public class GameSelection {
     private Label game2Label;
     private Label scenariosLabel;
     private Label scenarioDetailsLabel;
-    private CheckBox humanVAmericanAICheckBox;
-    private CheckBox humanVGermanAICheckBox;
+    private CheckBox humanVfrenchAICheckBox;
+    private CheckBox humanVRussianAICheckBox;
     private CheckBox emailGermanCheckBox;
     private CheckBox emailAmericanCheckBox;
     private CheckBox hotseatCheckBox;
-    private CheckBox easyGerman;
+    private CheckBox easyRussian;
     private CheckBox balanced;
-    private CheckBox easyAmerican;
+
+    private CheckBox easyFrench;
     private CheckBox sovietMandatoryAttacks;
     private Image backgroundImage;
     private Group group;
@@ -84,20 +85,23 @@ public class GameSelection {
         initializeScenariosScrollPane();
         initializeScenarioDetailsLabel();
         initializegame1Label();
-        //initializehumanVAmericanAICheckBox();
+        initializehumanVAmericanAICheckBox();
         initializeMainMenuButton();
         initializePlayButton(sound);
         initializeHotseatCheckBox();
         initializeHumanVGermanAICheckBox();
-        initializeEasyGermanCheckBox();
+        initializeEasyRussianCheckBox();
         initializeBalancedCheckBox();
-        initializeEasyAmericanCheckBox();
+        initializeEasyFrenchCheckBox();
         initializeButtonGroups();
 
         stage.addActor(group);
     }
 
-    public void show(boolean display) {
+    public void show(boolean display, TextButton mainMenuButton) {
+        this.mainMenuButton = mainMenuButton;
+        mainMenuButton.setPosition(backgroundImage.getX() + 20, backgroundImage.getY() +  (10 / 1));
+
         group.setVisible(display);
     }
 
@@ -121,12 +125,13 @@ public class GameSelection {
 
     private void initializeImageBackGround() {
 
-        NinePatch np = new NinePatch(GameMenuLoader.instance.gameMenu.asset.get("tooltip"), 5, 5, 5, 5);
-        backgroundImage = new Image();
-        backgroundImage.setDrawable(new NinePatchDrawable(np));
+ //       NinePatch np = new NinePatch(GameMenuLoader.instance.gameMenu.asset.get("tooltip"), 5, 5, 5, 5);
+        TextureRegion texp = GameMenuLoader.instance.gameMenu.asset.get("backimage");
+        backgroundImage = new Image(texp);
+ //       backgroundImage.setDrawable(new NinePatchDrawable(np));
         backgroundImage.setHeight(GameMenu.instance.getBackGroundHeight() / (1));
-        backgroundImage.setWidth(800 / (1));
-        backgroundImage.setVisible(false);
+        backgroundImage.setWidth(1000 / (1));
+        backgroundImage.setVisible(true);
         backgroundImage.setPosition((Gdx.graphics.getWidth() / 2) - (400 / 1),
                 (Gdx.graphics.getHeight() / 2) - (250 / 1));
 
@@ -215,27 +220,27 @@ public class GameSelection {
         group.addActor(playButton);
     }
 
-    private void initializeEasyGermanCheckBox() {
+    private void initializeEasyRussianCheckBox() {
 
-        easyGerman = new CheckBox("  " + i18NBundle.get("easygerman"), checkBoxStyle);
-        easyGerman.setPosition(backgroundImage.getX() + backgroundImage.getWidth()/2 + (20 / 1), scenariosScrollPane.getY() - 80);
-        easyGerman.setVisible(true);
-        easyGerman.setChecked(true);
+        easyRussian = new CheckBox("  " + i18NBundle.get("easyrussian"), checkBoxStyle);
+        easyRussian.setPosition(backgroundImage.getX() + backgroundImage.getWidth()/2 + (20 / 1), scenariosScrollPane.getY() - 80);
+        easyRussian.setVisible(true);
+        easyRussian.setChecked(true);
 
-        easyGerman.addListener(new ClickListener() {
+        easyRussian.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (!event.getType().equals("touchUp")) {
-                    if (easyGerman.isChecked()) {
-                        GameSetup.instance.setEasyGerman(true);
+                    if (easyRussian.isChecked()) {
+                        GameSetup.instance.setEasyRussian(true);
                     } else {
-                        GameSetup.instance.setEasyGerman(false);
+                        GameSetup.instance.setEasyRussian(false);
                     }
                 }
             }
         });
 
-        group.addActor(easyGerman);
+        group.addActor(easyRussian);
 
     }
 
@@ -246,7 +251,7 @@ public class GameSelection {
         balanced.setPosition(backgroundImage.getX() + backgroundImage.getWidth()/2 + (20 / 1), scenariosScrollPane.getY() - 130);
         balanced.setVisible(true);
         balanced.setChecked(false);
-        GameSetup.instance.setEasyGerman(false);
+        GameSetup.instance.setEasyRussian(false);
 
         balanced.addListener(new ClickListener() {
             @Override
@@ -279,9 +284,9 @@ public class GameSelection {
                 if (!event.getType().equals("touchUp")) {
                     if (hotseatCheckBox.isChecked()) {
                         GameSetup.instance.setHotSeatGame(true);
-                        GameSetup.instance.setGermanVersusAI(false);
-                        GameSetup.instance.setAlliedVersusAI(false);
-                        MouseImage.instance.setMouseHotseat();
+                        GameSetup.instance.setRussianVersusAI(false);
+                        GameSetup.instance.setFrenchVersusAI(false);
+                     //   MouseImage.instance.setMouseHotseat();
 
                     } else {
                         MouseImage.instance.mouseImageReset();
@@ -299,25 +304,25 @@ public class GameSelection {
     private void initializeHumanVGermanAICheckBox() {
 
  
-        humanVGermanAICheckBox = new CheckBox("  " + i18NBundle.format("playas", i18NBundle.get("german")), checkBoxStyle);
-        humanVGermanAICheckBox.setPosition(backgroundImage.getX() + (20 / 1), scenariosScrollPane.getY() - 80);
+        humanVRussianAICheckBox = new CheckBox("  " + i18NBundle.format("playas", i18NBundle.get("russian")), checkBoxStyle);
+        humanVRussianAICheckBox.setPosition(backgroundImage.getX() + (20 / 1), scenariosScrollPane.getY() - 80);
 
-        humanVGermanAICheckBox.setVisible(true);
-        humanVGermanAICheckBox.setChecked(false);
+        humanVRussianAICheckBox.setVisible(true);
+        humanVRussianAICheckBox.setChecked(false);
 
-        humanVGermanAICheckBox.addListener(new ClickListener() {
+        humanVRussianAICheckBox.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (!event.getType().equals("touchUp")) {
-                    if (humanVGermanAICheckBox.isChecked()) {
-                        GameSetup.instance.setGermanVersusAI(true);
+                    if (humanVRussianAICheckBox.isChecked()) {
+                        GameSetup.instance.setRussianVersusAI(true);
                         GameSetup.instance.setHotSeatGame(false);
-                        GameSetup.instance.setAlliedVersusAI(false);
-                        MouseImage.instance.setMouseGerman();
+                        GameSetup.instance.setFrenchVersusAI(false);
+                        //MouseImage.instance.setMouseGerman();
 
                     } else {
                         MouseImage.instance.mouseImageReset();
-                        GameSetup.instance.setGermanVersusAI(false);
+                        GameSetup.instance.setRussianVersusAI(false);
 
                     }
                 }
@@ -325,91 +330,91 @@ public class GameSelection {
         });
 
 
-        group.addActor(humanVGermanAICheckBox);
+        group.addActor(humanVRussianAICheckBox);
 
     }
 
      private void initializehumanVAmericanAICheckBox() {
 
-        humanVAmericanAICheckBox = new CheckBox("  " + i18NBundle.format("playas", i18NBundle.get("american")), checkBoxStyle);
-        humanVAmericanAICheckBox.setPosition(backgroundImage.getX() + (20 / 1), scenariosScrollPane.getY() - 180);
+        humanVfrenchAICheckBox = new CheckBox("  " + i18NBundle.format("playas", i18NBundle.get("french")), checkBoxStyle);
+        humanVfrenchAICheckBox.setPosition(backgroundImage.getX() + (20 / 1), scenariosScrollPane.getY() - 180);
 
-        humanVAmericanAICheckBox.setVisible(false);
-        humanVAmericanAICheckBox.setChecked(false);
+        humanVfrenchAICheckBox.setVisible(true);
+        humanVfrenchAICheckBox.setChecked(false);
 
-        humanVAmericanAICheckBox.addListener(new ClickListener() {
+        humanVfrenchAICheckBox.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (!event.getType().equals("touchUp")) {
-                    if (humanVAmericanAICheckBox.isChecked()) {
-                        GameSetup.instance.setAlliedVersusAI(true);
-                        GameSetup.instance.setGermanVersusAI(false);
+                    if (humanVfrenchAICheckBox.isChecked()) {
+                        GameSetup.instance.setFrenchVersusAI(true);
+                        GameSetup.instance.setRussianVersusAI(false);
                         GameSetup.instance.setHotSeatGame(false);
-                        MouseImage.instance.setMouseAmerican();
+                        //MouseImage.instance.setMouseAmerican();
 
 
                     } else {
                         MouseImage.instance.mouseImageReset();
-                        GameSetup.instance.setAlliedVersusAI(false);
+                        GameSetup.instance.setFrenchVersusAI(false);
                     }
                 }
             }
         });
 
 
-        group.addActor(humanVAmericanAICheckBox);
+        group.addActor(humanVfrenchAICheckBox);
 
     }
 
     private void initializeEmailGermanCheckBox() {
 
-        humanVAmericanAICheckBox = new CheckBox("  " + i18NBundle.format("playas", i18NBundle.get("american")), checkBoxStyle);
-        humanVAmericanAICheckBox.setPosition(backgroundImage.getX() + (20 / 1), scenariosScrollPane.getY() - 180);
+        humanVfrenchAICheckBox = new CheckBox("  " + i18NBundle.format("playas", i18NBundle.get("american")), checkBoxStyle);
+        humanVfrenchAICheckBox.setPosition(backgroundImage.getX() + (20 / 1), scenariosScrollPane.getY() - 180);
 
-        humanVAmericanAICheckBox.setVisible(true);
-        humanVAmericanAICheckBox.setChecked(false);
+        humanVfrenchAICheckBox.setVisible(true);
+        humanVfrenchAICheckBox.setChecked(false);
 
-        humanVAmericanAICheckBox.addListener(new ClickListener() {
+        humanVfrenchAICheckBox.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (!event.getType().equals("touchUp")) {
-                    if (humanVAmericanAICheckBox.isChecked()) {
-                        GameSetup.instance.setAlliedVersusAI(true);
-                        GameSetup.instance.setGermanVersusAI(false);
+                    if (humanVfrenchAICheckBox.isChecked()) {
+                        GameSetup.instance.setFrenchVersusAI(true);
+                        GameSetup.instance.setRussianVersusAI(false);
                         GameSetup.instance.setHotSeatGame(false);
                         MouseImage.instance.setMouseAmerican();
 
 
                     } else {
                         MouseImage.instance.mouseImageReset();
-                        GameSetup.instance.setAlliedVersusAI(false);
+                        GameSetup.instance.setFrenchVersusAI(false);
                     }
                 }
             }
         });
 
 
-        group.addActor(humanVAmericanAICheckBox);
+        group.addActor(humanVfrenchAICheckBox);
 
     }
-    private void initializeEasyAmericanCheckBox() {
+    private void initializeEasyFrenchCheckBox() {
 
 
-        easyAmerican = new CheckBox("  " + i18NBundle.get("easyamerican"), checkBoxStyle);
-        easyAmerican.setPosition(backgroundImage.getX() + backgroundImage.getWidth()/2 + (20 / 1), scenariosScrollPane.getY() - 180);
+        easyFrench = new CheckBox("  " + i18NBundle.get("easyfrench"), checkBoxStyle);
+        easyFrench.setPosition(backgroundImage.getX() + backgroundImage.getWidth()/2 + (20 / 1), scenariosScrollPane.getY() - 180);
 
-        easyAmerican.setVisible(true);
-        easyAmerican.setChecked(false);
+        easyFrench.setVisible(true);
+        easyFrench.setChecked(false);
 
 
-        easyAmerican.addListener(new ClickListener() {
+        easyFrench.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (!event.getType().equals("touchUp")) {
-                    if (easyAmerican.isChecked()) {
-                        GameSetup.instance.setEasyAmerican(true);
+                    if (easyFrench.isChecked()) {
+                        GameSetup.instance.setEasyFrench(true);
                     } else {
-                        GameSetup.instance.setEasyAmerican(false);
+                        GameSetup.instance.setEasyFrench(false);
                     }
                 }
             }
@@ -419,7 +424,7 @@ public class GameSelection {
   //              i18NBundle.get("easyamericantooltip"),
   ///              tooltipStyle));
 
-       group.addActor(easyAmerican);
+       group.addActor(easyFrench);
 
     }
 
@@ -445,10 +450,11 @@ public class GameSelection {
         final List<String> list = new List<>(listStyle);
         File folder = GamePreferences.getSaveGamesLocation().file();
         int filecount = 0;
-        String[] strings = new String[3];
-        strings[0] = "Introduction";
-        strings[1] = "2nd Panzer Goes West";
-        strings[2] = "Bastogne Breakout";
+        String[] strings = new String[4];
+        strings[0] = "September 5th";
+        strings[1] = "September 6th";
+        strings[2] = "September 7th";
+        strings[3] = "Free Setup";
  //       strings[3] = "CounterAttack";
 
         list.setItems(strings);
@@ -468,10 +474,22 @@ public class GameSelection {
                 if (!event.getType().equals("touchUp")) {
                     List<String> list = (List<String>) scenariosScrollPane.getActor();
                     String choice = list.getSelected();
-                    if (choice.equals("Introduction")){
+                    if (choice.equals("September 5th")){
                         game1Label.setText(i18NBundle.get("scenario1"));
-                        GameSetup.instance.setScenario(GameSetup.Scenario.Intro);
-                    }                    }else{
+                        GameSetup.instance.setScenario(GameSetup.Scenario.Sept5);
+                    }else if (choice.equals("September 6th")){
+                        list.setSelected("September 6th");
+                        game1Label.setText(i18NBundle.get("scenario2"));
+                        GameSetup.instance.setScenario(GameSetup.Scenario.Sept6);
+                    }else if (choice.equals("September 7th")){
+                        list.setSelected("September 7th");
+                        game1Label.setText(i18NBundle.get("scenario3"));
+                        GameSetup.instance.setScenario(GameSetup.Scenario.Sept5);
+                    }else if (choice.equals("Free Setup")){
+                        list.setSelected("Free Setup");
+                        game1Label.setText(i18NBundle.get("scenario4"));
+                        GameSetup.instance.setScenario(GameSetup.Scenario.Free);
+                    }else{
                         EventOK.instance.show(i18NBundle.get("notavailable"));
                         list.setSelected("Introduction");
                         return;
@@ -480,7 +498,7 @@ public class GameSelection {
 //                        GameSetup.instance.setScenario(GameSetup.Scenario.CounterAttack);
                     }
                 }
-
+            }
         });
 
         group.addActor(scenariosScrollPane);
@@ -489,19 +507,19 @@ public class GameSelection {
     private void initializeButtonGroups() {
         buttonGroupAI = new ButtonGroup();
         buttonGroupAI.add(hotseatCheckBox);
-        buttonGroupAI.add(humanVGermanAICheckBox);
- //       buttonGroupAI.add(humanVAmericanAICheckBox);
+        buttonGroupAI.add(humanVRussianAICheckBox);
+        buttonGroupAI.add(humanVfrenchAICheckBox);
         buttonGroupAI.setMaxCheckCount(1);
-        humanVGermanAICheckBox.setChecked(true);
-        GameSetup.instance.setGermanVersusAI(true);
+        humanVRussianAICheckBox.setChecked(true);
+        GameSetup.instance.setRussianVersusAI(true);
 
         buttonGroupSetUp = new ButtonGroup();
-        buttonGroupSetUp.add(easyGerman);
+        buttonGroupSetUp.add(easyRussian);
         buttonGroupSetUp.add(balanced);
-        buttonGroupSetUp.add(easyAmerican);
+        buttonGroupSetUp.add(easyFrench);
         buttonGroupSetUp.setMaxCheckCount(1);
-        easyGerman.setChecked(true);
-        GameSetup.instance.setEasyGerman(true);
+        easyRussian.setChecked(true);
+        GameSetup.instance.setEasyRussian(true);
 
     }
 }

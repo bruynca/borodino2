@@ -144,16 +144,7 @@ public class VictoryPopup {
 
     public String announceVictorAtEnd() {
         SoundsLoader.instance.playTada();
-        if (GameSetup.instance.getScenario() == GameSetup.Scenario.Intro){
-            return checkIntro();
-        }else  if (GameSetup.instance.getScenario() == GameSetup.Scenario.Lehr) {
-            return checkLehr();
-        }if (GameSetup.instance.getScenario() == GameSetup.Scenario.SecondPanzer) {
-            return checkSecondPanzerEnd();
-        }else{
-            checkCounterAttack();
             return"";
-        }
     }
     public  void announceVictorEliminate(boolean isSecondPanzer){
         SoundsLoader.instance.playTada();

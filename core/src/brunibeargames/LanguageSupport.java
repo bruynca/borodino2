@@ -26,7 +26,7 @@ public class LanguageSupport extends Observable {
 
 
     public LanguageSupport(){
-        Stage stage = Borodino.instance.guiStage;
+        Stage stage = Borodino.instance.splashStage;
         screenWidth = Gdx.graphics.getWidth();
         group = new Group();
 

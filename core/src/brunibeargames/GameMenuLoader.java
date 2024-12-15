@@ -70,6 +70,7 @@ public class GameMenuLoader implements Disposable, AssetErrorListener {
             asset.put("selectedbutton", atlas.findRegion("selectedbutton"));
             asset.put("unselectedbutton", atlas.findRegion("unselectedbutton"));
             asset.put("tooltip", atlas.findRegion("tooltip"));
+            asset.put("backimage", atlas.findRegion("backimage"));
             asset.put("checkbox", atlas.findRegion("checkbox"));
             asset.put("checkboxselected", atlas.findRegion("checkboxselected"));
             asset.put("checkboxover", atlas.findRegion("checkboxover"));

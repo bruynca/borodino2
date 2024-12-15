@@ -6,14 +6,14 @@ public class GameSetup {
     private boolean hotSeatGame;
 
 
-    private boolean germanVersusAI;
-    private boolean alliedVersusAI;
-    private boolean easyGerman;
-    private boolean easyAmerican;
+    private boolean russianVersusAI;
+    private boolean frenchVersusAI;
+    private boolean easyRussian;
+    private boolean easyFrench;
 
     private boolean balanced;
 
-    private Scenario scenario = Scenario.Intro;
+    private Scenario scenario = Scenario.Sept5;
    static public GameSetup instance;
    public GameSetup(){
         instance = this;
@@ -26,26 +26,26 @@ public class GameSetup {
         this.hotSeatGame = hotSeatGame;
     }
 
-    public boolean isGermanVersusAI() {
-        return germanVersusAI;
+    public boolean isRussianVersusAI() {
+        return russianVersusAI;
     }
 
-    public void setGermanVersusAI(boolean germanVersusAI) {
+    public void setRussianVersusAI(boolean russianVersusAI) {
 
-        this.germanVersusAI = germanVersusAI;
+        this.russianVersusAI = russianVersusAI;
     }
 
 
-    public void setAlliedVersusAI(boolean isIn) {
-        this.alliedVersusAI = isIn;
+    public void setFrenchVersusAI(boolean isIn) {
+        this.frenchVersusAI = isIn;
     }
 
-    public boolean isEasyGerman() {
-        return easyGerman;
+    public boolean isEasyRussian() {
+        return easyRussian;
     }
 
-    public void setEasyGerman(boolean easyGerman) {
-        this.easyGerman = easyGerman;
+    public void setEasyRussian(boolean easyRussian) {
+        this.easyRussian = easyRussian;
     }
     public void setScenario(Scenario scenario)
     {
@@ -55,12 +55,12 @@ public class GameSetup {
     {
         return scenario;
     }
-    public boolean isEasyAmerican() {
-        return easyAmerican;
+    public boolean isEasyFrench() {
+        return easyFrench;
     }
 
-    public void setEasyAmerican(boolean easyAmerican) {
-        this.easyAmerican = easyAmerican;
+    public void setEasyFrench(boolean easyFrench) {
+        this.easyFrench = easyFrench;
 
     }
 
@@ -72,14 +72,14 @@ public class GameSetup {
         this.balanced = balanced;
     }
 
-    public boolean isAlliedVersusAI() {
-        return alliedVersusAI;
+    public boolean isFrenchVersusAI() {
+        return frenchVersusAI;
     }
 
 
 
 
-    public enum Scenario{Intro(6),SecondPanzer(8),Lehr(9),CounterAttack(11);
+    public enum Scenario{Sept5(6),Sept6(8),Sept7(9),Free(11);
 
             private int length;
             Scenario(int length){

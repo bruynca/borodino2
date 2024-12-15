@@ -269,7 +269,7 @@ public class SaveGame {
 			saveGame.append("\"/>");
 
 			saveGame.append("<germanversusai value=\"");
-			if (GameSetup.instance.isGermanVersusAI()){
+			if (GameSetup.instance.isRussianVersusAI()){
 				saveGame.append("true");
 			}else{
 				saveGame.append("false");
@@ -277,14 +277,14 @@ public class SaveGame {
 			saveGame.append("\"/>");
 
 			saveGame.append("<alliedversusai value=\"");
-			if (GameSetup.instance.isAlliedVersusAI()){
+			if (GameSetup.instance.isFrenchVersusAI()){
 				saveGame.append("true");
 			}else{
 				saveGame.append("false");
 			}
 			saveGame.append("\"/>");
 		saveGame.append("<easygerman value=\"");
-		if (GameSetup.instance.isEasyGerman()){
+		if (GameSetup.instance.isEasyRussian()){
 			saveGame.append("true");
 		}else{
 			saveGame.append("false");
@@ -292,7 +292,7 @@ public class SaveGame {
 		saveGame.append("\"/>");
 
 		saveGame.append("<easyamerican value=\"");
-		if (GameSetup.instance.isEasyAmerican()){
+		if (GameSetup.instance.isEasyFrench()){
 			saveGame.append("true");
 		}else{
 			saveGame.append("false");

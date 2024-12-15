@@ -395,7 +395,7 @@ public class TopMenu {
                     if (!objectivesButton.isChecked()) {
                         //stateEngine.setShowOBjectives(false);
                     } else {
-                        if (GameSetup.instance.getScenario() == GameSetup.Scenario.Intro){
+                        if (GameSetup.instance.getScenario() == GameSetup.Scenario.Free){
 
                             EventPopUp.instance.show(GameMenuLoader.instance.localization.get("scenario1objectives"));
                         }else{

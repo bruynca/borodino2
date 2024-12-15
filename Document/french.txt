@@ -1,0 +1,122 @@
+ 	 
+Imperial Guard Infantry Corps - Lefebvre
+1st Division - Delaborde	Brigade Berthezene - 6 bases veteran (4th Tirailleurs, 4th & 5th Voltigeurs)
+ 	Brigade Lanusse - 6 bases veteran (5th & 6th Tirailleurs, 6th Voltigeurs)
+ 	 
+2nd Division - Roguet	Brigade Lanabere - 4 bases veteran (1st Voltigeurs, 1st Tirailleurs)
+ 	Brigade Boyledieu - 4 bases elite (Fusilier Chasseurs, Fusilier Grenadiers)
+ 	1 Veteran medium foot artillery battery
+ 	 
+3rd Division - Curial	Brigade Boyer - 5 bases elite (1st & 2nd Chasseurs a Pied)
+ 	Brigade Curial - 6 bases elite (1st, 2nd & 3rd Grenadiers a Pied)
+ 	2 Elite heavy foot artillery batteries
+ 	 
+Legion Vistula - Claparede	Brigade Chlopicki - 4 bases veteran (1st & 2nd Vistula Regts)
+ 	Brigade Bronikowski - 2 bases veteran (3rd Vistula Regt)
+ 	1 Light foot artillery battery
+ 	 
+Imperial Guard Cavalry Division - Bessieres	Brigade St Sulpice - 4 bases elite heavy cavalry (Grenadiers a Cheval & Empress Dragoons)
+ 	Brigade Guyot - 2 bases elite medium cavalry (Chasseurs a Cheval & Mamelukes)
+ 	Brigade Colbert - 2 basesveteran medium cavalry (1st & 2nd Chevauleger Lancers)
+ 	1 Elite medium horse artillery battery
+ 	 
+Imperial Guard Artillery - Sorbier	2 Elite heavy foot artillery batteries, 1 Elite medium horse artillery battery
+ 	General (Army) Artillery Park: 7 Veteran medium foot artillery batteries
+ 	 
+1st Corps- Davout
+ 	 
+1st Division - Morand (attached to IV Cps)	Brigade d'Alton - 4 bases (13th Light)
+ 	Brigade Gratien - 4 bases (17th Line)
+ 	Brigade Bonamy - 4 bases (30th Line)
+ 	1 Medium foot artillery battery
+ 	 
+2nd Division - Friant	Brigade Dufour - 5 bases (15th Light)
+ 	Brigade Vandedem - 4 bases (33rd Line)
+ 	Brigade Grandeau - 4 bases (48th Line, Spanish Regiment Joseph Napoleon)
+ 	1 Medium foot artillery battery
+ 	 
+3rd Division - Gerard (attached to IV Cos)	Brigade Desailly - 6 bases (7th Light &12th Line)
+ 	Brigade Leclerc - 5 bases (21st Line, 127th Line)
+ 	1 Medium foot artillery battery
+ 	 
+4th Division - Desaix	Brigade Frederichs - 4 bases (85th Line)
+ 	Brigade Leguay - 4 bases (108th Line)
+ 	1 Medium foot artillery battery
+ 	 
+5th Division - Compans	Brigade Duppelin - 4 bases (25th Line)
+ 	Brigade Teste - 4 bases (57th Line)
+ 	Brigade Goyordet - 4 bases (61st Line)
+ 	Brigade Juillet - 4 bases (111th Line)
+ 	1 Medium foot artillery battery
+ 	 
+3rd Corps - Ney
+ 	 
+10th Division - Ledru	Brigade Gengoult - 2 bases (24th Light, 1st Portuguese Infantry)
+ 	Brigade Morion - 3 bases (46th Line)
+ 	Brigade Bruny - 3 bases (72nd Line)
+ 	1 Medium foot artillery battery
+ 	 
+11th Division - Razout	Brigade Joubert - 3 bases (4th Line)
+ 	Brigade Compere - 4 bases (18th Line, 2nd Portuguese Infantry)
+ 	Brigade d'Henin - 3 bases (93rd Line) 1 Medium foot artillery battery
+ 	Brigade von Hugel - 3 bases (1st, 2nd & 3rd Provisional Wurtemberg Bns)
+ 	1 Medium foot artillery battery, 1 Medium horse artillery battery
+ 	 
+4th Corps - Eugene
+ 	Brigade Count von Seydewitz - 2 bases light cavalry (3rd & 4th Bavarian Chevaux-Leger)
+ 	 
+Royal Italian Guard - Lecchi	Guard Brigade - 6 bases veteran (Gardes d'Honneur, Infantry Regiment, Conscript Regiment, Royal Velites, Marines)
+ 	Brigade Triaire - 1 base medium veteran cavalry (Guard Dragoons, Queen's Dragoons)
+ 	1 Medium foot artillery battery, 1 Medium horse artillery battery
+ 	 
+13th Division - Delzon	Brigade Huard - 6 bases(8th Light, 84th Line, 1st Croatian)
+ 	Brigade Roussel - 3 bases (92nd Line) Brigade Guyon - 4 bases (106th Line)
+ 	Brigade de Sivray - 6 bases (18th Light, Spanish Infantry Regt Joseph Napoleon, 53rd Line)
+ 	Brigade Almeras - 6 bases (9th & 35th Line)
+ 	2 Medium foot artillery battery
+ 	 
+5th Corps (Polish) - Poniatowski
+ 	 
+16th Division - Zayonczek	Brigade Mielzynski - 5 bases (3rd & 15th Infantry)
+ 	Brigade Poszhowski - 3 bases (16th Infantry)
+ 	Brigade Grabowski - 4 bases (2nd & 8th Infantry)
+ 	Brigade Wierbinski - 3 bases (12th Infantry)
+ 	2 Medium foot artillery battery
+8th Corps (Westphalian) - Junot
+ 	 
+2nd Division - Tharreau	Brigade Damas - 6 bases (3rd Light Bn, 2nd & 6th Line Regt)
+ 	Brigade von Borstell - 5 bases (2nd Light Bn, 3rd & 7th Line Regt)
+ 	Brigade Legras - 4 bases (Jaeger-Carabiniers, Gardes-Jaegers, Gardes-Grenadiers, 1st Light Bn)
+ 	2 Medium foot artillery batteries
+ 	 
+1st Cavalry Corps - Nansouty
+1st Light Cavalry Division - Bruyere	Brigade Jacquinot - 2 bases light cavalry (7th Hussars, 16 Chasseurs)
+ 	Brigade Niewiewski - 2 bases medium cavalry (6th & 8th Polish Lancers)
+ 	 
+1st Cuirassier Division - St.Germain	Brigade Bruno - 3 bases armoured cavalry (2nd, 3rd & 9th Cuirassiers)
+ 	Brigade Reyand - 3 bases armoured cavalry (6th, 11th & 12th Cuirassiers)
+ 	2 Medium horse artillery batteries
+ 	 
+2nd Cavalry Corps - Montbrun
+2nd Light Cavalry Division - Sebastiani	Brigade Saint-Genies - 2 bases light cavalry (11th Chasseurs & 5th Hussars)
+ 	Brigade Suberwiecz - 1 base light cavalry (10th Polish Hussars)
+ 	 
+2nd Cuirassier Division - Wathier	Brigade Caulaincourt - 3 bases armoured cavalry (5th, 8th & 10th Cuirassiers)
+ 	Brigade Berkheim - 3 bases armoured cavalry (1st & 2nd Carabiniers, 1st Cuirassiers)
+ 	1 Medium horse artillery battery
+ 	 
+3rd Cavalry Corps - Grouchy
+3rd Light Cavalry Division - Chastel	Brigade Gauthrin - 2 bases light cavalry (6th Chasseurs & 6th Hussars)
+ 	Brigade Domanget - 2 bases light cavalry (1st & 2nd Bavarian Chevaux Leger)
+ 	Brigade Thiry - 2 bases medium cavalry (7th & 23rd Dragoons)
+ 	2 Medium horse artillery battery
+ 	 
+4th Cavalry Corps - Latour-Maubourg
+4th Light Cavalry Division (Polish) - General Rozniecki	Brigade Turno -2 bases medium cavalry (3rd, 11th & 16th Lancers)
+ 	 
+7th Cuirassier Division - Lorge	Brigade Thielemann - 2 bases armoured cavalry (Saxon Garde du Cos, Saxon von Zastrow Cuirassiers, 14th Polish Cuirassiers)
+ 	Brigade Lepel - 2 bases armoured cavalry (1st & 2nd Westphalian Cuirassiers)
+ 	1 Medium horse artillery battery
+ 	
+ 	Copyright © 1996-2022 by The War Times Journal at www.wtj.com. All rights reserved.
+All games shown here may be freely downloaded for personal use only. Not for resale or any other commercial venture not authorized by The War Times Journal.

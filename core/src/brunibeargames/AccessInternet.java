@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
 import com.badlogic.gdx.net.HttpParametersUtils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -97,7 +96,7 @@ public class AccessInternet {
         String sb = Integer.toString(turn);
         params.put("turn", sb);
         String type="";
-             if (GameSetup.instance.isGermanVersusAI()){
+             if (GameSetup.instance.isRussianVersusAI()){
                 type="AI";
             }else{
                 type="HotSet";

@@ -1,0 +1,122 @@
+<?xml version="1.0" ?>
+<FrenchArmy>
+  <Corp name="Imperial">
+    <Division name="1st">
+      <Brigade name="Berthezene"/>
+      <Brigade name="Lanusse"/>
+    </Division>
+    <Division name="2nd">
+      <Brigade name="Lanabere"/>
+      <Brigade name="Boyledieu"/>
+    </Division>
+    <Division name="3rd">
+      <Brigade name="Boyer"/>
+      <Brigade name="Curial"/>
+      <Brigade name="Chlopicki"/>
+      <Brigade name="Bronikowski"/>
+    </Division>
+    <Division name="Imperial">
+      <Brigade name="St"/>
+      <Brigade name="Guyot"/>
+      <Brigade name="Colbert"/>
+    </Division>
+  </Corp>
+  <Corp name="1st">
+    <Division name="1st">
+      <Brigade name="d'Alton"/>
+      <Brigade name="Gratien"/>
+      <Brigade name="Bonamy"/>
+    </Division>
+    <Division name="2nd">
+      <Brigade name="Dufour"/>
+      <Brigade name="Vandedem"/>
+      <Brigade name="Grandeau"/>
+    </Division>
+    <Division name="3rd">
+      <Brigade name="Desailly"/>
+      <Brigade name="Leclerc"/>
+    </Division>
+    <Division name="4th">
+      <Brigade name="Frederichs"/>
+      <Brigade name="Leguay"/>
+    </Division>
+    <Division name="5th">
+      <Brigade name="Duppelin"/>
+      <Brigade name="Teste"/>
+      <Brigade name="Goyordet"/>
+      <Brigade name="Juillet"/>
+    </Division>
+  </Corp>
+  <Corp name="3rd">
+    <Division name="10th">
+      <Brigade name="Gengoult"/>
+      <Brigade name="Morion"/>
+      <Brigade name="Bruny"/>
+    </Division>
+    <Division name="11th">
+      <Brigade name="Joubert"/>
+      <Brigade name="Compere"/>
+      <Brigade name="d'Henin"/>
+      <Brigade name="von"/>
+    </Division>
+  </Corp>
+  <Corp name="4th">
+    <Division name="13th">
+      <Brigade name="Huard"/>
+      <Brigade name="Roussel"/>
+      <Brigade name="de"/>
+      <Brigade name="Almeras"/>
+    </Division>
+  </Corp>
+  <Corp name="5th">
+    <Division name="16th">
+      <Brigade name="Mielzynski"/>
+      <Brigade name="Poszhowski"/>
+      <Brigade name="Grabowski"/>
+      <Brigade name="Wierbinski"/>
+    </Division>
+  </Corp>
+  <Corp name="8th">
+    <Division name="2nd">
+      <Brigade name="Damas"/>
+      <Brigade name="von"/>
+      <Brigade name="Legras"/>
+    </Division>
+  </Corp>
+  <Corp name="1st">
+    <Division name="1st">
+      <Brigade name="Jacquinot"/>
+      <Brigade name="Niewiewski"/>
+    </Division>
+    <Division name="1st">
+      <Brigade name="Bruno"/>
+      <Brigade name="Reyand"/>
+    </Division>
+  </Corp>
+  <Corp name="2nd">
+    <Division name="2nd">
+      <Brigade name="Saint-Genies"/>
+      <Brigade name="Suberwiecz"/>
+    </Division>
+    <Division name="2nd">
+      <Brigade name="Caulaincourt"/>
+      <Brigade name="Berkheim"/>
+    </Division>
+  </Corp>
+  <Corp name="3rd">
+    <Division name="3rd">
+      <Brigade name="Gauthrin"/>
+      <Brigade name="Domanget"/>
+      <Brigade name="Thiry"/>
+    </Division>
+  </Corp>
+  <Corp name="4th">
+    <Division name="4th">
+      <Brigade name="Turno"/>
+    </Division>
+    <Division name="7th">
+      <Brigade name="Thielemann"/>
+      <Brigade name="Lepel"/>
+    </Division>
+  </Corp>
+</FrenchArmy>

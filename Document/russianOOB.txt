@@ -1,0 +1,120 @@
+
+The War Times Journal Home Page
+
+ 	
+REPUBLIQUE
+GRAND-TACTICAL NAPOLEONIC WARFARE IN MINIATURE
+
+
+
+Russian Order of Battle for Borodino
+ 
+This corps system organization is more a variant of the column/wing system (see rules text), but most Russian divisions as they appear in the historical OOB are rather too understrength to function well as full sized divisions in Republique. So for game play purposes we have rolled all but one of the Russian "Corps" for Borodino down one level; with "corps" becoming divisions for game play. The formations have been retitled to match the command level they will represent at game board level in order to prevent confusion (i.e., not referring to a formation as both a division and a corps in the same sentence). The aforementioned process of attrition would continue on in the campaign until the fighting at the Beresina would see entire corps fighting as regimental sized formations. Guard and more valuable reserve formations organized as divisions might retain their higher level command status in the OOB due to having the extra command resources. Thanks to David Oliver for his work on this OOB.
+
+For reference, under each division number is listed in parenthesis the two historical divisions of which it was composed. As noted above, those divisions do not operate as divisions in game play, but knowing which historical divisions were present at the battle can help any players which have identified their wargaming miniatures by pre-1812 historical Division numbers.
+ 
+Russian Army - Field Marshal Kutuzov
+ 	 
+Army Right Wing [Corps] - General Miloradovich
+2nd Division - Lt General Baggovut	1st Brigade - 3 bases (Krementchug & Minsk Infantry Regts)
+(old 4th & 17th divs)	2nd Brigade - 4 bases (Tobolsk & Volhynie Infantry Regts)
+ 	3rd Brigade - 3 bases (4th & 34th Jaeger Regts)
+ 	4th Brigade - 4 bases (Ryazan & BieloserkInfantry Regts)
+ 	5th Brigade -3 bases (Wilmanstrand & BrestInfantry Regts)
+ 	6th Brigade- 3 bases (3rd & 48th Jaeger Regts)
+ 	2 Heavy foot artillery battery 3 Medium foot artillery batteries
+ 	 
+4th Division - Lt General Ostermann-Tolstoi	1st Brigade - 4 bases veteran (Karporsk Infantry Regt, 1st/2nd Combined Grenadier Bns)
+(old 11th & 23rd divs)	2nd Brigade - 4 bases(Polotsk & Jeletz Infantry Regts)
+ 	3rd Brigade - 3 bases (Kexholm & Pernov Infantry Regts)
+ 	4th Brigade - 3 bases (1st, 18th & 33rd Jaeger Regts)
+ 	5th Brigade - 3 bases (Rylsk & Ekaterinburg Infantry Regts)
+ 	1 Heavy foot artillery battery, 3 Medium foot artillery batteries
+ 	 
+Army Center [Corps] - General Barclay de Tolly
+5th Division (Guards) - Grand Duke Constantine	1st Brigade - 6 bases elite (Preobrazhensky & Semonovsky Lifeguards)
+ 	2nd Brigade - 6 bases elite (Izmail & Litovsk Lifeguards)
+ 	3rd Brigade - 6 bases elite (Lifeguard Jaeger & Finland Lifeguard Jaeger)
+ 	4th Brigade - 4 bases veteran (combined grenadiers of 4th & 17th Divisions)
+ 	2 Heavy foot artillery batteries, 2 Medium foot artillery batteries
+ 	 
+1st Cuirassier Division - Lt General Depreradovitch	1st Brigade - 3 bases armoured cavalry elite (Chevalier Guards, Horse Guards Regts)
+ 	2nd Brigade - 2 bases armored cavalry elite (Emperor's & Empress' Cuirassier, Astrakan Cuirassier Regts)
+ 	1 Medium horse artillery battery
+ 	 
+1st Cavalry Division - Lt General Uvarov	1st Brigade - 2 bases medium cavalry elite (Lifeguard Dragoons, Lifeguard Uhlans, Nizhin Dragoons)
+ 	2nd Brigade - 3 bases light cavalry elite (Lifeguard Hussars, Lifeguard Cossacks, Elisabeth Hussars)
+ 	1 Medium horse artillery battery
+ 	 
+2nd Cavalry Division - General Korff	1st Brigade - 2 bases medium cavalry (Moscow & Pskov Dragoons)
+ 	2nd Brigade - 2 bases medium cavalry (Courland & Orenburg Dragoons)
+ 	3rd Brigade - 2 bases medium cavalry (Siberian & Irkutsk Dragoons)
+ 	4th Brigade - 2 bases light cavalry (Iziumsk Hussars & Polish Uhlans)
+ 	5th Brigade - 3 bases light cavalry (Soum & Mariupol Hussars)
+ 	2 Medium horse artillery battery
+ 	 
+Platov's Cossack Division - General Platov	Ilovaisk Cossacks - 3 bases light cavalry militia
+ 	Khartonov Cossacks - 2 bases light cavalry militia
+ 	Zhirov Cossacks - 2 bases light cavalry militia
+ 	Ataman Cossacks - 2 bases light cavalry militia
+ 	Simferopol Mounted Tartars - 2 bases light cavalry militia
+ 	1 Medium horse artillery battery
+ 	 
+Army Reserve Artillery - Major General Count Kutaizov	2 Heavy foot artillery batteries, 3 Medium foot artillery batteries, 5 Medium horse artillery batteries
+ 	 
+6th Division - General Doctorov	1st Brigade - 3 bases (Moscow & Pskov Infantry Regts)
+(old 7th & 24th divs)	2nd Brigade - 4 bases (Libau & Sofia Infantry Regts)
+ 	3rd Brigade - 2 bases (36 Jaeger Regt)
+ 	4th Brigade - 4 bases (Ufimsk & Shirvan Infantry Regts)
+ 	5th Brigade - 3 bases (Butyrsk & Tomsk Infantry Regts)
+ 	6th Brigade - 2 bases (19th & 40th Jaeger Regts)
+ 	2 Heavy foot artillery battery, 4 Medium foot artillery batteries
+ 	 
+2nd Corps - General Prince Bagraton
+2nd Cuirassier Division - Major General Knorring	1st Brigade - 2 bases armoured cavalry (Ekaterinoslav & Military Order Cuirassiers)
+ 	2nd Brigade - 2 bases armoured cavalry (Glukhov, Little Russia & Novgorod Cuirassiers)
+ 	 
+4th Cavalry Division - Major General Sievers	1st Brigade - 2 bases medium cavalry (Kharkov & Chernigov Dragoons)
+ 	2nd Brigade - 2 bases medium cavalry (Kiev & New Russian Dragoons)
+ 	3rd Brigade - 3 bases (Akhtyra Hussars & Litovsk Uhlans)
+ 	1 Medium horse artillery battery
+ 	 
+Reserve Artillery Division - Major General Lowenstern	7 Heavy foot artillery batteries (2 of these deployed in Bagration Fleches),
+ 	6 Medium foot artillery batteries
+ 	 
+7th Division - Lt General Raevsky	1st Brigade - 4 bases (Smolensk & Narva Infantry Regts)
+(old 12th & 26th divisions)	2nd Brigade - 3 bases (New Ingermannland & Alexopol Infantry Regts)
+ 	3rd Brigade - 3 base (5th, 6th & 42nd Jaeger Regt)
+ 	4th Brigade - 3 bases (Lagoda & Poltava Infantry Regts)
+ 	5th Brigade - 4 bases (Orel & Nivegorod Infantry Regts)
+ 	1 Heavy foot artillery battery (in Raevsky Redoubt), 1 Medium foot artillery battery
+ 	 
+8th Division - Lt General Borozdin	1st Brigade - 4 bases veteran (Kiev & Moscow Grenadier Regts)
+(old 2nd Gren & 27th divisions)	2nd Brigade - 3 bases veteran (Astrakan & Fangoria Grenadier Regts)
+ 	3rd Brigade - 3 bases veteran (Siberia & Little Russia Grenadier Regts)
+ 	4th Brigade - 4 bases (Vilna & Simbirsk Infantry Regts)
+ 	5th Brigade - 3 bases (Odessa & Tarnopol Infantry Regts)
+ 	6th Brigade - 3 bases (49th & 50th JaegerRegts)
+ 	 
+3rd Corps - Lt General Tuchkov [Under Bagration]
+1st Grenadier Division - Lt General P A Stroganov	1st Brigade - 4 bases veteran (Pavlov & Ekaterinoslav Grenadier Regts)
+ 	2nd Brigade - 4 bases veteran (Arakcheyev & Life Grenadier Regts)
+ 	3rd Brigade - 4 bases veteran (St Petersburg & Tauride Grenadier Regts)
+ 	4th Brigade - 2 bases veteran (3rd & 4th Combined Grenadier Bns)
+ 	5th Brigade - 4 bases veteran (Combined grenadiers of 2nd, 12th & 26th Divisions)
+ 	1 Heavy foot artillery battery
+ 	 
+3rd Division - Lt General Konovnitsyn	1st Brigade - 3 bases (Murmansk & Revel Infantry Regts)
+ 	2nd Brigade - 3 bases (Tchernigov & Seleguinsk Infantry Regts)
+ 	3rd Brigade - 3 bases (20th & 21st Jaeger Regts)
+ 	4th Brigade - 2 bases (11th & 41st Jaeger Regts)
+ 	1 Heavy foot artillery battery
+ 	 
+Moscow Opolchenie Division - Lt General Markov	1st Moscow Opolchenie - 5 bases militia
+ 	2nd Moscow Opolchenie - 5 bases militia
+ 	3rd Moscow Opolchenie - 5 bases militia
+ 	Smolensk Opolchenie - 5 bases militia
+ 	Karpov's Brigade - 3 bases militia light cavalry (Cossacks)
+ 	
+ 	Copyright © 1996-2024 by The War Times Journal at www.wtj.com. All rights reserved.
+All games shown here may be freely downloaded for personal use only. Not for resale or any other commercial venture not authorized by The War Times Journal.

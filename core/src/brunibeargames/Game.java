@@ -54,7 +54,7 @@ public class Game {
             if (GameSetup.instance.isHotSeatGame()){
                 TurnCounter.instance.updateText(i18NBundle.format("selectamerican"));
  //               WinCardsChoice winCardsChoice = new WinCardsChoice(true);
-            }else if (GameSetup.instance.isGermanVersusAI()){
+            }else if (GameSetup.instance.isRussianVersusAI()){
                 TurnCounter.instance.updateText(i18NBundle.format("selectgerman"));
  //               WinCardsChoice winCardsChoice = new WinCardsChoice(false);
             }else{
