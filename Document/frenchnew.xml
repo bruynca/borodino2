@@ -5,7 +5,7 @@
 			<name value="3rd Old Guard"/>
 			<Brigade value="Boyer">
 				<mf value="4"/>
-				<cf value="7"/>
+				<cf value="8"/>
 				<or value="frenchguard"/>
 				<type value="infantry"/>
 				<scen1start value="00"/>
@@ -57,16 +57,106 @@
 				<scen4x value="00"/>
 				<scen4y value="00"/>
 			</Brigade>
+			<Brigade value="Saint Sulpice">
+				<mf value="6"/>
+				<cf value="4"/>
+				<or value="frenchguard"/>
+				<type value="calvry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade value="Guyot">
+				<mf value="7"/>
+				<cf value="3"/>
+				<or value="frenchguard"/>
+				<type value="calvry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade value="Lancers">
+				<mf value="7"/>
+				<cf value="1"/>
+				<or value="frenchguard"/>
+				<type value="calvry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade value="Colbert">
+				<mf value="7"/>
+				<cf value="3"/>
+				<or value="frenchguardDutch"/>
+				<type value="calvry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade value="Guard Calvary Artllery">
+				<mf value="6"/>
+				<cf value="2"/>
+				<or value="frenchguard"/>
+				<type value="calvry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
 		</division>
 	</corp>
 	
 	<corp>
 		<name value="Young Guard"/>
 		<division>
-			<name value="3rd Old Guard"/>
+			<name value="1st Young Guard"/>
 			<Brigade value="Berthezene">
 				<mf value="4"/>
-				<cf value="8"/>
+				<cf value="4"/>
 				<or value="frenchguard"/>
 				<type value="infantry"/>
 				<scen1start value="00"/>
@@ -84,7 +174,7 @@
 			</Brigade>
 			<Brigade value="Lanusse">
 				<mf value="4"/>
-				<cf value="8"/>
+				<cf value="5"/>
 				<or value="frenchguard"/>
 				<type value="infantry"/>
 				<scen1start value="00"/>
@@ -102,7 +192,7 @@
 			</Brigade>
 			<Brigade value="Nourry">
 				<mf value="4"/>
-				<cf value="4"/>
+				<cf value="2"/>
 				<or value="frenchguard"/>
 				<type value="artillery"/>
 				<scen1start value="00"/>
@@ -118,6 +208,815 @@
 				<scen4x value="00"/>
 				<scen4y value="00"/>
 			</Brigade>
+		<division>
+			<name value="2nd Young Guard"/>
+			<Brigade name="Lanabere">
+				<mf value="4"/>
+				<cf value="4"/>
+				<or value="frenchguard"/>
+				<type value="infantry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Boyledieu">
+				<mf value="4"/>
+				<cf value="3"/>
+				<or value="frenchguard"/>
+				<type value="infantry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Villeneuve">
+				<mf value="4"/>
+				<cf value="2"/>
+				<or value="frenchguard"/>
+				<type value="infantry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
 		</division>
+		<division>
+			<name value="Vistula"/>
+			<Brigade name="Vistula Artillery">
+				<mf value="4"/>
+				<cf value="2"/>
+				<or value="frenchguard"/>
+				<type value="artillery"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Chlopiki">
+				<mf value="4"/>
+				<cf value="4"/>
+				<or value="frenchguardPolish"/>
+				<type value="artillery"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Bronikwski">
+				<mf value="4"/>
+				<cf value="4"/>
+				<or value="frenchguardPolish"/>
+				<type value="artillery"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+		</division>
+		<division>
+			<name value="Old Guard"/>
+			<Brigade name="Chasscurs">
+				<mf value="7"/>
+				<cf value="1"/>
+				<or value="frenchguard"/>
+				<type value="calvry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Drouot">
+				<mf value="4"/>
+				<cf value="3"/>
+				<or value="frenchguard"/>
+				<type value="artillery"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Desvaux">
+				<mf value="6"/>
+				<cf value="2"/>
+				<or value="frenchguard"/>
+				<type value="horseartillery"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Velites">
+				<mf value="6"/>
+				<cf value="2"/>
+				<or value="frenchguardItalian"/>
+				<type value="horseartillery"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+		</division
+	</corp>
 	<corp>
+		<name value="1st Corp"/>
+	    <Division>
+			<name value="Morand 1st"/>
+			<Brigade name="d'Alton">
+				<mf value="4"/>
+				<cf value="5"/>
+				<or value="french"/>
+				<type value="infantry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Gratien">
+				<mf value="4"/>
+				<cf value="5"/>
+				<or value="french"/>
+				<type value="infantry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Bonnamy">
+				<mf value="4"/>
+				<cf value="6"/>
+				<or value="french"/>
+				<type value="infantry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Raindre"/>
+			</Brigade>
+		</Division>
+		<Division>
+			<name value="Friant 2nd"/>
+			<Brigade name="Dufour">
+				<mf value="4"/>
+				<cf value="5"/>
+				<or value="french"/>
+				<type value="infantry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Vandedem"/
+				<mf value="4"/>
+				<cf value="5"/>
+				<or value="french"/>
+				<type value="infantry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Grandeau">
+				<mf value="4"/>
+				<cf value="6"/>
+				<or value="french"/>
+				<type value="infantry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Cabrie">
+				<mf value="4"/>
+				<cf value="2"/>
+				<or value="french"/>
+				<type value="artillery"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+		<Division>
+			<name value="Gerard 3rd"/>
+			<Brigade name="Desailly">
+				<mf value="4"/>
+				<cf value="5"/>
+				<or value="french"/>
+				<type value="infantry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Leclerc">
+				<mf value="4"/>
+				<cf value="5"/>
+				<or value="french"/>
+				<type value="infantry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Gerard">
+				<mf value="4"/>
+				<cf value="5"/>
+				<or value="french"/>
+				<type value="infantry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Pelgrin">
+				<mf value="4"/>
+				<cf value="2"/>
+				<or value="french"/>
+				<type value="artillery"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+		</Division>
+		<Division>
+			<name value="Dessaix 4th"/>
+			<Brigade name="Barbanegre">
+				<mf value="4"/>
+				<cf value="3"/>
+				<or value="french"/>
+				<type value="infantry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Frederichs">
+				<mf value="4"/>
+				<cf value="5"/>
+				<or value="french"/>
+				<type value="infantry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Leguay">
+				<mf value="4"/>
+				<cf value="5"/>
+				<or value="french"/>
+				<type value="infantry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Thevenot"/>
+				<mf value="4"/>
+				<cf value="2"/>
+				<or value="french"/>
+				<type value="artillery"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+		</Division>
+		<Division>
+			<name value="Compans 5th"/>
+			<Brigade name="Duppelin">
+				<mf value="4"/>
+				<cf value="4"/>
+				<or value="french"/>
+				<type value="infantry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Teste">
+				<mf value="4"/>
+				<cf value="4"/>
+				<or value="french"/>
+				<type value="infantry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Goyordet">
+				<mf value="4"/>
+				<cf value="4"/>
+				<or value="french"/>
+				<type value="infantry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Lonechamp">
+				<mf value="4"/>
+				<cf value="4"/>
+				<or value="french"/>
+				<type value="infantry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Klie">
+				<mf value="4"/>
+				<cf value="2"/>
+				<or value="french"/>
+				<type value="artillery"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+		</Division>
+		<Division>
+			<name value="Corp Calvary and Artillery"/>
+			<Brigade name="Girandin">
+				<mf value="7"/>
+				<cf value="3"/>
+				<or value="french"/>
+				<type value="calvry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Bordesoulle">
+				<mf value="7"/>
+				<cf value="3"/>
+				<or value="french"/>
+				<type value="calvry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Pernety">
+				<mf value="4"/>
+				<cf value="3"/>
+				<or value="french"/>
+				<type value="artillery"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+		<division>
+	</corp>
+	<corp>
+		<name value="3rd Corp"/>
+		<Division>
+			<name value="Ledru"/>
+		  <Brigade name="Gengoult">
+				<mf value="4"/>
+				<cf value="2"/>
+				<or value="french"/>
+				<type value="infantry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+		  <Brigade name="Morion">
+				<mf value="4"/>
+				<cf value="3"/>
+				<or value="french"/>
+				<type value="infantry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+		  <Brigade name="Bruny"/>
+				<mf value="4"/>
+				<cf value="3"/>
+				<or value="french"/>
+				<type value="infantry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+		  <Brigade name="Ragmey"/>
+				<mf value="4"/>
+				<cf value="2"/>
+				<or value="french"/>
+				<type value="artillery"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+		</Division>
+		<Division>
+			<name value="Razout"/>
+			<Brigade name="Joubert"/>
+				<mf value="5"/>
+				<cf value="4"/>
+				<or value="french"/>
+				<type value="infantry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="d'Henin"/>
+				<mf value="4"/>
+				<cf value="3"/>
+				<or value="french"/>
+				<type value="infantry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Bernard"/>
+				<mf value="4"/>
+				<cf value="2"/>
+				<or value="french"/>
+				<type value="artillery"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+		</Division>
+		<Division>
+			<name value="Calvary and Artilery"/>
+			<Brigade name="Mouriez"/>
+				<mf value="7"/>
+				<cf value="3"/>
+				<or value="french"/>
+				<type value="calvry"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+			<Brigade name="Foucher"/>
+				<mf value="4"/>
+				<cf value="2"/>
+				<or value="french"/>
+				<type value="artillery"/>
+				<scen1start value="00"/>
+				<scen2start value="00"/>
+				<scen3start value="00"/>
+				<scen4start value="00"/>
+				<scen1x value="00"/>
+				<scen1y value="00"/>
+				<scen2x value="00"/>
+				<scen2y value="00"/>
+				<scen3x value="00"/>
+				<scen3y value="00"/>
+				<scen4x value="00"/>
+				<scen4y value="00"/>
+			</Brigade>
+		</Division>
+
+  <Corp name="4th">
+	<name value="3rd Corp"/>
+		<Division>
+			<name value="lechi"/>
+			<Brigade name="Huard"/>
+			<Brigade name="Roussel"/>
+			<Brigade name="de"/>
+			<Brigade name="Almeras"/>
+    </Division>
+  </corp>
+
+
 </corps>
