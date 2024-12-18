@@ -1,0 +1,23 @@
+Scenarios 	1=At Start
+		2=sevardnio sept 5th
+		3=Sept 6
+		4=Sept 7 Borodino	
+
+
+Turn 	0=AM Night
+	1=7AM
+	2=8AM
+	3=9AM
+	4=10AM
+	5=11AM
+	6=12AM
+	7=01PM
+	8=02PM
+	9=03PM
+	10=04PM
+	11=05PM
+	12=06PM
+	13=07PM
+	14=08PM
+	15=Night 1
+	16=Night 2
