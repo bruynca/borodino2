@@ -78,19 +78,19 @@
 		</division>
 		<division>
 			<name value="2nd Young Guard"/>
-			<brigade name="Lanabere">
+			<brigade value="Lanabere">
 				<mf value="4"/>
 				<cf value="4"/>
 				<or value="frenchguard"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Boyledieu">
+			<brigade value="Boyledieu">
 				<mf value="4"/>
 				<cf value="3"/>
 				<or value="frenchguard"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Villeneuve">
+			<brigade value="Villeneuve">
 				<mf value="4"/>
 				<cf value="2"/>
 				<or value="frenchguard"/>
@@ -99,19 +99,19 @@
 		</division>
 		<division>
 			<name value="Vistula"/>
-			<brigade name="Vistula Artillery">
+			<brigade value="Vistula Artillery">
 				<mf value="4"/>
 				<cf value="2"/>
 				<or value="frenchguard"/>
 				<type value="artillery"/>
 			</brigade>
-			<brigade name="Chlopiki">
+			<brigade value="Chlopiki">
 				<mf value="4"/>
 				<cf value="4"/>
 				<or value="frenchguardPolish"/>
 				<type value="artillery"/>
 			</brigade>
-			<brigade name="Bronikwski">
+			<brigade value="Bronikwski">
 				<mf value="4"/>
 				<cf value="4"/>
 				<or value="frenchguardPolish"/>
@@ -120,25 +120,25 @@
 		</division>
 		<division>
 			<name value="Old Guard"/>
-			<brigade name="Chasscurs">
+			<brigade value="Chasscurs">
 				<mf value="7"/>
 				<cf value="1"/>
 				<or value="frenchguard"/>
 				<type value="calvry"/>
 			</brigade>
-			<brigade name="Drouot">
+			<brigade value="Drouot">
 				<mf value="4"/>
 				<cf value="3"/>
 				<or value="frenchguard"/>
 				<type value="artillery"/>
 			</brigade>
-			<brigade name="Desvaux">
+			<brigade value="Desvaux">
 				<mf value="6"/>
 				<cf value="2"/>
 				<or value="frenchguard"/>
 				<type value="horseartillery"/>
 			</brigade>
-			<brigade name="Velites">
+			<brigade value="Velites">
 				<mf value="6"/>
 				<cf value="2"/>
 				<or value="frenchguardItalian"/>
@@ -150,25 +150,25 @@
 		<name value="1st corp"/>
 	    <division>
 			<name value="Morand 1st"/>
-			<brigade name="d'Alton">
+			<brigade value="d'Alton">
 				<mf value="4"/>
 				<cf value="5"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Gratien">
+			<brigade value="Gratien">
 				<mf value="4"/>
 				<cf value="5"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Bonnamy">
+			<brigade value="Bonnamy">
 				<mf value="4"/>
 				<cf value="6"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Raindre">
+			<brigade value="Raindre">
 				<mf value="4"/>
 				<cf value="2"/>
 				<or value="french"/>
@@ -177,25 +177,25 @@
 		</division>
 		<division>
 			<name value="Friant 2nd"/>
-			<brigade name="Dufour">
+			<brigade value="Dufour">
 				<mf value="4"/>
 				<cf value="5"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Vandedem">
+			<brigade value="Vandedem">
 				<mf value="4"/>
 				<cf value="5"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Grandeau">
+			<brigade value="Grandeau">
 				<mf value="4"/>
 				<cf value="6"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Cabrie">
+			<brigade value="Cabrie">
 				<mf value="4"/>
 				<cf value="2"/>
 				<or value="french"/>
@@ -204,25 +204,25 @@
 		</division>
 		<division>
 			<name value="Gerard 3rd"/>
-			<brigade name="Desailly">
+			<brigade value="Desailly">
 				<mf value="4"/>
 				<cf value="5"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Leclerc">
+			<brigade value="Leclerc">
 				<mf value="4"/>
 				<cf value="5"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Gerard">
+			<brigade value="Gerard">
 				<mf value="4"/>
 				<cf value="5"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Pelgrin">
+			<brigade value="Pelgrin">
 				<mf value="4"/>
 				<cf value="2"/>
 				<or value="french"/>
@@ -231,25 +231,25 @@
 		</division>
 		<division>
 			<name value="Dessaix 4th"/>
-			<brigade name="Barbanegre">
+			<brigade value="Barbanegre">
 				<mf value="4"/>
 				<cf value="3"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Frederichs">
+			<brigade value="Frederichs">
 				<mf value="4"/>
 				<cf value="5"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Leguay">
+			<brigade value="Leguay">
 				<mf value="4"/>
 				<cf value="5"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Thevenot">
+			<brigade value="Thevenot">
 				<mf value="4"/>
 				<cf value="2"/>
 				<or value="french"/>
@@ -258,31 +258,31 @@
 		</division>
 		<division>
 			<name value="Compans 5th"/>
-			<brigade name="Duppelin">
+			<brigade value="Duppelin">
 				<mf value="4"/>
 				<cf value="4"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Teste">
+			<brigade value="Teste">
 				<mf value="4"/>
 				<cf value="4"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Goyordet">
+			<brigade value="Goyordet">
 				<mf value="4"/>
 				<cf value="4"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Lonechamp">
+			<brigade value="Lonechamp">
 				<mf value="4"/>
 				<cf value="4"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Klie">
+			<brigade value="Klie">
 				<mf value="4"/>
 				<cf value="2"/>
 				<or value="french"/>
@@ -291,19 +291,19 @@
 		</division>
 		<division>
 			<name value="corp Calvary and Artillery"/>
-			<brigade name="Girandin">
+			<brigade value="Girandin">
 				<mf value="7"/>
 				<cf value="3"/>
 				<or value="french"/>
 				<type value="calvry"/>
 			</brigade>
-			<brigade name="Bordesoulle">
+			<brigade value="Bordesoulle">
 				<mf value="7"/>
 				<cf value="3"/>
 				<or value="french"/>
 				<type value="calvry"/>
 			</brigade>
-			<brigade name="Pernety">
+			<brigade value="Pernety">
 				<mf value="4"/>
 				<cf value="3"/>
 				<or value="french"/>
@@ -315,25 +315,25 @@
 		<name value="3rd corp"/>
 		<division>
 			<name value="Ledru"/>
-			<brigade name="Gengoult">
+			<brigade value="Gengoult">
 				<mf value="4"/>
 				<cf value="2"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Morion">
+			<brigade value="Morion">
 				<mf value="4"/>
 				<cf value="3"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-		  <brigade name="Bruny">
+		  <brigade value="Bruny">
 				<mf value="4"/>
 				<cf value="3"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Ragmey">
+			<brigade value="Ragmey">
 				<mf value="4"/>
 				<cf value="2"/>
 				<or value="french"/>
@@ -342,19 +342,25 @@
 		</division>
 		<division>
 			<name value="Razout"/>
-			<brigade name="Joubert">
-				<mf value="5"/>
-				<cf value="4"/>
+			<brigade value="Joubert">
+				<mf value="4"/>
+				<cf value="5"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="d'Henin">
+			<brigade value="Compere">
+				<mf value="4"/>
+				<cf value="1"/>
+				<or value="polish"/>
+				<type value="infantry"/>
+			</brigade>
+			<brigade value="d'Henin">
 				<mf value="4"/>
 				<cf value="3"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Bernard">
+			<brigade value="Bernard">
 				<mf value="4"/>
 				<cf value="2"/>
 				<or value="french"/>
@@ -363,13 +369,13 @@
 		</division>
 		<division>
 			<name value="Calvary and Artilery"/>
-			<brigade name="Mouriez">
+			<brigade value="Mouriez">
 				<mf value="7"/>
 				<cf value="3"/>
 				<or value="french"/>
 				<type value="calvry"/>
 			</brigade>
-			<brigade name="Foucher">
+			<brigade value="Foucher">
 				<mf value="4"/>
 				<cf value="2"/>
 				<or value="french"/>
@@ -381,19 +387,19 @@
 	<name value="4th corp"/>
 		<division>
 			<name value="lechi"/>
-			<brigade name="Lechi">
+			<brigade value="Lechi">
 				<mf value="4"/>
 				<cf value="5"/>
 				<or value="italian"/>
 				<type value="artillery"/>
 			</brigade>
-			<brigade name="Triare">
+			<brigade value="Triare">
 				<mf value="6"/>
 				<cf value="2"/>
 				<or value="italian"/>
 				<type value="calvry"/>
 			</brigade>
-			<brigade name="Clement">
+			<brigade value="Clement">
 				<mf value="4"/>
 				<cf value="2"/>
 				<or value="italian"/>
@@ -402,31 +408,31 @@
 	</division>
 	<division>
 			<name value="Delzons"/>
-			<brigade name="Huard">
+			<brigade value="Huard">
 				<mf value="4"/>
 				<cf value="9"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Roussel">
+			<brigade value="Roussel">
 				<mf value="4"/>
 				<cf value="7"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Plauzonne">
+			<brigade value="Plauzonne">
 				<mf value="4"/>
 				<cf value="8"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Guyon">
+			<brigade value="Guyon">
 				<mf value="7"/>
 				<cf value="2"/>
 				<or value="french"/>
 				<type value="calvry"/>
 			</brigade>
-			<brigade name="Demay">
+			<brigade value="Demay">
 				<mf value="4"/>
 				<cf value="2"/>
 				<or value="french"/>
@@ -435,25 +441,25 @@
     </division>
 	<division>
 			<name value="Broussier 14th"/>
-			<brigade name="De Sivray">
+			<brigade value="De Sivray">
 				<mf value="4"/>
 				<cf value="4"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Almeras">
+			<brigade value="Almeras">
 				<mf value="4"/>
 				<cf value="5"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Pastol">
+			<brigade value="Pastol">
 				<mf value="4"/>
 				<cf value="3"/>
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Hermann">
+			<brigade value="Hermann">
 				<mf value="4"/>
 				<cf value="2"/>
 				<or value="french"/>
@@ -462,25 +468,25 @@
 		</division>
 		<division>
 			<name value="15th"/>
-			<brigade name="Millo">
+			<brigade value="Millo">
 				<mf value="4"/>
 				<cf value="2"/>
 				<or value="french"/>
 				<type value="artillery"/>
 			</brigade>
-			<brigade name="Fontana">
+			<brigade value="Fontana">
 				<mf value="4"/>
 				<cf value="3"/>
 				<or value="italian"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Guillaume">
+			<brigade value="Guillaume">
 				<mf value="4"/>
 				<cf value="4"/>
 				<or value="italian"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade name="Dembowski">
+			<brigade value="Dembowski">
 				<mf value="4"/>
 				<cf value="2"/>
 				<or value="italian"/>
@@ -489,60 +495,221 @@
     </division>
 	<division>
 		<name value="Cavalry and Artillery"/>
-			<brigade name="Villata">
+			<brigade value="Villata">
 				<mf value="7"/>
 				<cf value="1"/>
 				<or value="italian"/>
 				<type value="calvry"/>
 			</brigade>
-			<brigade name="Dziewan">
+			<brigade value="Dziewan">
 				<mf value="7"/>
 				<cf value="2"/>
 				<or value="polish"/>
 				<type value="calvry"/>
 			</brigade>
-			<brigade name="Turno">
+			<brigade value="Turno">
 				<mf value="7"/>
 				<cf value="2"/>
 				<or value="polish"/>
 				<type value="calvry"/>
 			</brigade>
-			<brigade name="Dziewan">
+			<brigade value="Dziewan">
 				<mf value="7"/>
 				<cf value="2"/>
 				<or value="polish"/>
 				<type value="calvry"/>
 			</brigade>
-			<brigade name="Thielemann">
+			<brigade value="Thielemann">
 				<mf value="6"/>
 				<cf value="2"/>
 				<or value="polish"/>
 				<type value="calvry"/>
 			</brigade>
-			<brigade name="Schwerin">
+			<brigade value="Schwerin">
 				<mf value="6"/>
 				<cf value="4"/>
 				<or value="polish"/>
 				<type value="horseartillery"/>
 			</brigade>
-			<brigade name="Fiereck">
+			<brigade value="Fiereck">
 				<mf value="6"/>
 				<cf value="1"/>
 				<or value="bavarian"/>
 				<type value="horseartillery"/>
 			</brigade>
-			<brigade name="SeydeWitz">
+			<brigade value="SeydeWitz">
 				<mf value="7"/>
 				<cf value="2"/>
 				<or value="bavarian"/>
 				<type value="calvry"/>
 			</brigade>
-			<brigade name="Preysing">
+			<brigade value="Preysing">
 				<mf value="7"/>
 				<cf value="2"/>
 				<or value="bavarian"/>
+				<type value="calvry"/>
+			</brigade>
+			<brigade value="Lepel">
+				<mf value="6"/>
+				<cf value="2"/>
+				<or value="westphalian"/>
 				<type value="calvry"/>
 			</brigade>
 	</division>
  </corp>
+ <corp>
+	<division>
+		<name value="16th"/>
+			<brigade value="Mielsynski">
+				<mf value="4"/>
+				<cf value="6"/>
+				<or value="polish"/>
+				<type value="infantry"/>
+			</brigade>
+			<brigade value="Rybinski">
+				<mf value="4"/>
+				<cf value="4"/>
+				<or value="polish"/>
+				<type value="infantry"/>
+			</brigade>
+			<brigade value="Pazkowskiski">
+				<mf value="4"/>
+				<cf value="2"/>
+				<or value="polish"/>
+				<type value="infantry"/>
+			</brigade>
+			<brigade value="Sowinski">
+				<mf value="4"/>
+				<cf value="2"/>
+				<or value="polish"/>
+				<type value="artillery"/>
+			</brigade>
+	
+	</division>
+	<division>
+		<name value="17th"/>
+			<brigade value="Zoltowski">
+				<mf value="4"/>
+				<cf value="7"/>
+				<or value="polish"/>
+				<type value="infantry"/>
+			</brigade>
+			<brigade value="Krazinski">
+				<mf value="4"/>
+				<cf value="4"/>
+				<or value="polish"/>
+				<type value="infantry"/>
+			</brigade>
+			<brigade value="Gugenmus">
+				<mf value="4"/>
+				<cf value="2"/>
+				<or value="polish"/>
+				<type value="artillery"/>
+			</brigade>
+	</division>
+	<division>
+			<name value="18th"/>
+			<brigade value="Grabowski">
+				<mf value="4"/>
+				<cf value="4"/>
+				<or value="polish"/>
+				<type value="infantry"/>
+			</brigade>
+			<brigade value="Pakosz">
+				<mf value="4"/>
+				<cf value="2"/>
+				<or value="polish"/>
+				<type value="infantry"/>
+			</brigade>
+			<brigade value="Uszyski">
+				<mf value="4"/>
+				<cf value="2"/>
+				<or value="polish"/>
+				<type value="artillery"/>
+			</brigade>
+	
+	</division>
+	<division>
+			<name value="Cavalry"/>
+			<brigade value="Kamiensi">
+				<mf value="7"/>
+				<cf value="3"/>
+				<or value="polish"/>
+				<type value="Cavalry"/>
+			</brigade>
+			<brigade value="Gorski">
+				<mf value="6"/>
+				<cf value="1"/>
+				<or value="polish"/>
+				<type value="horseartillery"/>
+			</brigade>
+	</division>
+
+</corp>
+	<corp>
+	<name value="8th corp"/>
+		<division>
+			<name value="23rd"/>
+			<brigade value="Damas, 4,4,westphalian"/>
+			<brigade value="Wicknberg, 4,4,westphalian"/>
+			<brigade value="Frode, 1,4,westphalian,artillery"/>
+		</division>
+		<division>
+			<name value="24th"/>
+			<brigade value="Legras, 4,4,westphalian"/>
+			<brigade value="Burstel, 3,4,westphalian"/>
+			<brigade value="lemaire, 1,4,westphalian,artillery"/>
+		</division>
+		<division>
+			<name value="Calvary and Artillery"/>
+			<brigade value="Hammerstein, 2,7,westphalian,calvry"/>
+			<brigade value="Wolf, 1,7,westphalian,calvry"/>
+			<brigade value="Schultz, 1,6,westphalian,horseartillery"/>
+			<brigade value="Allix, 1,4,westphalian,artillery"/>
+		</division>
+	</corp>
+	<corp>
+	<name value="11th corp"/>
+		<division>
+			<name value="5th Heavy Calvary"/>
+			<brigade value="St Germain, 3,6,calvry"/>
+			<brigade value="Valence, 3,6,calvry"/>
+			<brigade value="Pons, 4,6,horseartillery"/>
+		</division>
+	</corp>
+	<corp>
+	<name value="12th corp"/>
+		<division>
+			<name value="2nd Light Calvary"/>
+			<brigade value="Burthe, 2,7,calvry"/>
+			<brigade value="St Geniez, 2,7,calvry"/>
+			<brigade value="Hussars, 1,7,calvry"/>
+		</division>
+		<division>
+			<name value="2nd Heavy Calvary"/>
+			<brigade value="Wathier, 2,6,calvry"/>
+			<brigade value="DeFrance, 2,6,calvry"/>
+			<brigade value="Parizet, 4,6,horseartillery"/>
+		</division>
+	</corp>
+	<corp>
+		<name value="13th corp"/>
+		<division>
+			<name value="3rd Light Calvary"/>
+			<brigade value="Guathrin, 2,7,calvry"/>
+			<brigade value="Gerard, 2,7,calvry"/>
+			<brigade value="Dommnget, 2,7,bavarian,calvry"/>
+			<brigade value="Chastel, 1,7,calvry"/>
+		</division>
+		<division>
+			<name value="3rd Heavy Calvary"/>
+			<brigade value="Doumerc, 4,6,calvry"/>
+			<brigade value="LaHousssave, 1,6,calvry"/>
+			<brigade value="Mouiller, 3,6,horseartillery"/>
+		</division>
+	</corp>
+
+
+
+	
 </corps>
