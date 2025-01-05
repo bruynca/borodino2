@@ -129,10 +129,10 @@
 	<name value="Cossaks corp"/>
 		<division>
 			<name value="Cossaks Resrve Calvary"/>
-			<brigade value="Vlasov, 2,7,calvary"/>
-			<brigade value="Ilovaisky, 2,7,calvary"/>
-			<brigade value="Denisov, 2,7,calvary"/>
-			<brigade value="Kuteinikov, 1,7,calvary"/>
+			<brigade value="Vlasov, 2,7,cossack"/>
+			<brigade value="Ilovaisky, 2,7,cossack"/>
+			<brigade value="Denisov, 2,7,cossack"/>
+			<brigade value="Kuteinikov, 1,7,cossack"/>
 			<brigade value="Chernsky, 0,7,vedettes"/>
 			<brigade value="Hovaisky, 0,7,vedettes"/>
 			<brigade value="7nd Cossak HorseArtillery,1,6,horseartllty"/>
@@ -201,9 +201,9 @@
 		<name value="Karpov Cossaks Corp"/>
 		<division>
 			<name value="Cossack Calvary"/>
-			<brigade value="Bykhalov, 2,7,calvary"/>
-			<brigade value="Karpov, 1,7,calvary"/>
-			<brigade value="Melinikov, 1,7, calvary"/>
+			<brigade value="Bykhalov, 2,7,cossack"/>
+			<brigade value="Karpov, 1,7,cossack"/>
+			<brigade value="Melinikov, 1,7, cossack"/>
 			<brigade value="Cossack Artilley, 1,6, horseartllty"/>
 		</division>
 	</corp>

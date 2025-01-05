@@ -20,7 +20,7 @@ import brunibeargames.NextPhase;
 import brunibeargames.Phase;
 
 public class Counter {
-    public static final int size =130;
+    public static final int size =110;//130
     public static final int sizeOnMap = 100;
     TypeCounter type;
     Unit unit;

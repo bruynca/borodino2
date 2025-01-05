@@ -28,7 +28,7 @@ public class FontFactory {
 //		TextOverlay textOverlay = new TextOverlay();
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/ariblk.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 26;
+        parameter.size = 18;
         parameter.color = Color.BLACK;
         parameter.genMipMaps = true;
 //        parameter.borderColor = Color.WHITE;

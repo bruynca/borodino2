@@ -241,6 +241,9 @@ public class Unit {
 		currentAttackFactor =atStartAttackFactor;
 		currentMoveFactor = Integer.parseInt(strList[2]);
 		atStartMoveFactor = currentMoveFactor;
+		if (division.isGuard() && isInfantry){
+			isGuard = true;
+		}
 		for (int i=3; i < strList.length;i++){
 			setByValueOfString(strList[i]);
 		}
@@ -250,7 +253,11 @@ public class Unit {
 
 	private void setByValueOfString(String str) {
 		switch(str){
-
+			case "cossack":
+				isCossack =true;
+				isCalvary =true;
+				isInfantry=false;
+				break;
 			case "calvary":
 			case "calvry":
 			case "Cavalry":
@@ -259,6 +266,9 @@ public class Unit {
 				break;
 			case "infantry":
 				isInfantry =true;
+				if (division.isGuard()){
+					isGuard = true;
+				}
 				break;
 			case "french":
 				isFrench =true;
@@ -731,8 +741,8 @@ public class Unit {
 			corp = new Corp(corpName, isAllies);
 			Array<Element> xmlDiv = xmlcorp.getChildrenByName("division");
 			for (Element xmldivision: xmlDiv){
-				String divName = xmlcorp.getChildByName("name").getAttribute("value");
-				Division div = new Division(divName,corp);
+				String divName = xmldivision.getChildByName("name").getAttribute("value");
+				Division div = new Division(divName,corp,isAllies);
 				Array<Element> xmlBrig = xmldivision.getChildrenByName("brigade");
 				for (Element xmlBrigade:xmlBrig){
 					String strBrigade= xmlBrigade.getAttribute("value");

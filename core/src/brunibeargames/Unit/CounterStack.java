@@ -62,11 +62,13 @@ public class CounterStack {
     static Label.LabelStyle labelStyleName;
 
     static Label.LabelStyle labelStyleName2;
+    static Label.LabelStyle labelStyleName3;
     static ArrayList<CounterStack> arrHilited = new ArrayList<>();
     static ArrayList<CounterStack> arrShaded = new ArrayList<>();
 
     ArrayList<Actor> arrActors = new ArrayList<>();
     static boolean isFirstCall = true;
+    private float stackScale = 1.0f;
 
     CounterStack(Unit unit, Stack stack){
 
@@ -134,6 +136,7 @@ public class CounterStack {
         labelStyleName
                 = new Label.LabelStyle(FontFactory.instance.largeFont, Color.RED);
          labelStyleName2 = new Label.LabelStyle(FontFactory.instance.jumboFont, Color.WHITE);
+        labelStyleName3 = new Label.LabelStyle(FontFactory.instance.largeFontWhite, Color.WHITE);
         arrHilited.clear();
         arrShaded.clear();
 
@@ -150,8 +153,16 @@ public class CounterStack {
         imgSil = getRussianSilhouttes();
         imgSil.setTouchable(Touchable.disabled);
         stack.addActor(imgSil);
+        String strBrigade = unit.brigade;
+        labelName= new Label(strBrigade,labelStyleName3);
+        labelName.setTouchable(Touchable.disabled);
+        labelName.setAlignment(Align.top);
+        stack.addActor(labelName);
         arrActors.add(imgSil);
         setPoints();
+        stack.setScale(stackScale);
+        stack.addActor(labelPoints);
+
     }
 
     public void setPoints(){
@@ -165,7 +176,7 @@ public class CounterStack {
         labelPoints = new Label(strPoints,labelStyleName2);
         labelPoints.setTouchable(Touchable.disabled);
         labelPoints.setAlignment(Align.bottom);
-        stack.addActor(labelPoints);
+
     }
     public void setStep(Stack stack){
  /**       if (step != null){
@@ -247,6 +258,8 @@ public class CounterStack {
 
 //        arrActors.add(labelName);
         setPoints();
+        stack.setScale(stackScale);
+
         stack.addActor(labelPoints);
 
 //        arrActors.add(labelPoints);
@@ -285,36 +298,27 @@ public class CounterStack {
 
     private Image getRussianSilhouttes() {
         Image image;
-        switch (unit.type){
-            case "Infantry":
-                if (unit.isGuard){
-                    image = new Image(russianguard2)   ;
-                }else {
-                    image = new Image(russianline2);
-                }
-                break;
-            case "Calvary":
-                if (unit.isCossack) {
-                    image = new Image(cossack);
-                }else{
-                    image = new Image(russiancalvary);
-                }
-                break;
-
-            case "Cannon":
-                image=new Image(cannongame);
-                break;
-
-            default:
-                image=new Image(russianline2);
-                break;
-
-
+        if (unit.isInfantry){
+            if (unit.isGuard){
+                image = new Image(russianguard2)   ;
+            }else{
+                image = new Image(russianline2);
+            }
+            return image;
         }
- //       image.setScale(1.2F);
+        if (unit.isCalvary){
+            if (unit.isCossack){
+                image = new Image(cossack);
+            }else{
+                image = new Image(russiancalvary);
+            }
+            return image;
+        }
+        image = new Image(cannongame);
         return image;
-
     }
+
+
 /*
     private Image getGermanHQs(TextureAtlas tex) {
         Image image = new Image();
