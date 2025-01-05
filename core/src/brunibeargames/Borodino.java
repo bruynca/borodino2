@@ -17,10 +17,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -205,17 +203,14 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 			splashStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
 			splashStage.draw(); // make sure done after sprite batch end
 		}else {
-			if (ScreenGame.instance != null) {
-				ScreenGame.instance.render(batch);
+			if (Screen.instance != null) {
+				Screen.instance.render(batch);
 			}
-//			if (ScreenGameNew.instance != null) {
-//				ScreenGameNew.instance.render();
-//			}
+
 			hexStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
 			hexStage.draw(); // make sure done after sprite batch end
 			mapStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
 			mapStage.draw(); // make sure done after sprite batch end
-			Array<Actor> arr =  guiStage.getActors();
 			guiStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
 			guiStage.draw(); // make sure done after sprite batch end
 		}
@@ -490,4 +485,7 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 		 return calcHeight;
 	 }
 
+	 public void setInSplash(boolean inSplash) {
+		 this.inSplash = inSplash;
+	 }
  }

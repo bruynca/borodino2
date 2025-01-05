@@ -102,7 +102,7 @@ public class Combat implements Observer {
      */
         for (Unit unit : arrUnitWorkFindHexesCanAttack) {
             Hex hexUnit = unit.getHexOccupy();
-            if (unit.canAttackThisTurn && !unit.isArtillery&& !unit.isEliminated() && !unit.isDisorganized()&& unit.getCurrenAttackFactor() > 0) {
+            if (unit.canAttackThisTurn && !unit.isArtillery&& !unit.isEliminated() && !unit.isDisorganized()&& unit.getCurrentAttackFactor() > 0) {
                 ArrayList<Hex> arrHexWork = hexUnit.getSurround();
                 for (Hex hex : arrHexWork) {
                         if (hex.getUnitsInHex().size() > 0) {
@@ -274,7 +274,7 @@ public class Combat implements Observer {
         for (Hex hexCheck : arrHexSurround) {
             if (isAllies && hexCheck.checkAlliesInHex() || !isAllies && hexCheck.checkAxisInHex()) {
                 for (Unit unit : hexCheck.getUnitsInHex()) {
-                    if (unit.canAttackThisTurn && !unit.isArtillery && !unit.isEliminated()&& unit.getCurrenAttackFactor() > 0) {
+                    if (unit.canAttackThisTurn && !unit.isArtillery && !unit.isEliminated()&& unit.getCurrentAttackFactor() > 0) {
                         arrTempAttackers.add(unit);
                         if (!arrHexAttackers.contains(unit.getHexOccupy())) {
                             arrHexAttackers.add(unit.getHexOccupy());
@@ -325,7 +325,7 @@ public class Combat implements Observer {
          */
         for (Unit unit : arrUnitWorkFindHexesCanAttack) {
             Hex hexUnit = unit.getHexOccupy();
-            if (unit.canAttackThisTurn && !unit.isArtillery && !unit.isEliminated() && !unit.isDisorganized() && unit.getCurrenAttackFactor() > 0) {
+            if (unit.canAttackThisTurn && !unit.isArtillery && !unit.isEliminated() && !unit.isDisorganized() && unit.getCurrentAttackFactor() > 0) {
                 ArrayList<Hex> arrHexWork = hexUnit.getSurround();
                 for (Hex hex : arrHexWork) {
                     if (hex.getUnitsInHex().size() > 0) {
@@ -346,7 +346,7 @@ public class Combat implements Observer {
         for (Hex hexCheck : arrHexSurround) {
             if (isAllies && hexCheck.checkAlliesInHex() || !isAllies && hexCheck.checkAxisInHex()) {
                 for (Unit unit : hexCheck.getUnitsInHex()) {
-                    if (unit.canAttackThisTurn && !unit.isArtillery && !unit.isEliminated()&& unit.getCurrenAttackFactor() > 0) {
+                    if (unit.canAttackThisTurn && !unit.isArtillery && !unit.isEliminated()&& unit.getCurrentAttackFactor() > 0) {
                         arrReturn.add(unit);
                     }
                 }
@@ -477,7 +477,7 @@ public class Combat implements Observer {
         int ix=0;
         for (Unit unit : aio.getArrUnit()) {
             Hex hexUnit = aio.getArrHexMoveTo().get(ix);
-            if (unit.canAttackThisTurn && !unit.isArtillery && !unit.isEliminated() && !unit.isDisorganized() && unit.getCurrenAttackFactor() > 0) {
+            if (unit.canAttackThisTurn && !unit.isArtillery && !unit.isEliminated() && !unit.isDisorganized() && unit.getCurrentAttackFactor() > 0) {
                 ArrayList<Hex> arrHexWork = hexUnit.getSurround();
                 for (Hex hex : arrHexWork) {
                     if (hex.getUnitsInHex().size() > 0) {

@@ -113,24 +113,14 @@ public class LoadGame {
 			int attack = Integer.parseInt(xmlunit.getChildByName("currentAttack").getAttribute("value"));
 			unit.setCurrentAttackFactor(attack);
 			int defense = Integer.parseInt(xmlunit.getChildByName("currentDefense").getAttribute("value"));
-			unit.setCurrentDefenseFactor(defense);
 			attack = Integer.parseInt(xmlunit.getChildByName("atstartAttack").getAttribute("value"));
 			unit.setAtStartAttackFactor(attack);
 			defense = Integer.parseInt(xmlunit.getChildByName("atstartDefense").getAttribute("value"));
-			unit.setAtStartDefenseFactor(defense);
 			int turnMoved = Integer.parseInt(xmlunit.getChildByName("turnMoved").getAttribute("value"));
 			unit.setMovedThisTurn(turnMoved);
 			boolean isDG = Boolean.parseBoolean(xmlunit.getChildByName("dg").getAttribute("value"));
 			if (isDG) {
 				unit.setDisorganized();
-			}
-			if (unit.isArtillery) {
-				boolean isLimber = Boolean.parseBoolean(xmlunit.getChildByName("limber").getAttribute("value"));
-				if (isLimber) {
-					unit.setArtilleryLimbered();
-				} else {
-					unit.setArtilleryUnLimbered();
-				}
 			}
 			if (xmlunit.hasChild("attacked")) {
 				unit.hasAttackedThisTurn = Boolean.parseBoolean(xmlunit.getChildByName("attacked").getAttribute("value"));

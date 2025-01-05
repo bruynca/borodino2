@@ -25,57 +25,40 @@ public class CounterStack {
     Image hilite;
     Image moved;
     Image backGround;
-    Image division;
+    Image corp;
     Image step;
+    static TextureRegion bavariancalvary;
+    static TextureRegion bavarianline2;
+    static TextureRegion     cannongame;
+    static TextureRegion    cossack;
+    static TextureRegion    russiancalvary;
+    static TextureRegion    counterbavarian;
+    static TextureRegion    counterwestphalian;
+    static TextureRegion    counterfrenchguard;
+    static TextureRegion    counterfrenchline;
+    static TextureRegion    counteritalian;
+    static TextureRegion    counterpolish;
+    static TextureRegion    counterrussian;
+    static TextureRegion    frechcalvaryguard;
+    static TextureRegion    frenchcavalry;
+    static TextureRegion    frenchgrenadier2;
+    static TextureRegion    frenchline2;
+    static TextureRegion    italiancalvary;
+    static TextureRegion    italianline2;
+    static TextureRegion    polishcalvary;
+    static TextureRegion    polishline2;
+    static TextureRegion    russianguard2;
+    static TextureRegion    russianline2;
+    static TextureRegion    westphaliancalvary;
+    static TextureRegion    westphalianline;
+    static TextureRegion movepic;
+    static TextureRegion hilitePic
+            ;
+
+
     boolean isHilited;
     boolean isShaded;
     static TextureAtlas textureAtlas;
-    static TextureRegion backGerman;
-    static TextureRegion backFj;
-    static TextureRegion backAllied;
-    static TextureRegion hilitePic;
-    static TextureRegion movePic;
-    static TextureRegion abn101;
-    static TextureRegion arm4;
-    static TextureRegion arm9;
-    static TextureRegion arm10;
-    static TextureRegion fj5;
-    static TextureRegion inf26;
-    static TextureRegion inf28;
-    static TextureRegion inf80;
-    static TextureRegion pz2;
-    static TextureRegion pzLehr;
-    static TextureRegion artCorp;
-    static TextureRegion silamericaninf;
-    static TextureRegion silarm;
-    static TextureRegion silart;
-    static TextureRegion silgermanart;
-    static TextureRegion silgermaninf;
-    static TextureRegion siljagd;
-    static TextureRegion silmarder;
-    static TextureRegion silmobileart;
-    static TextureRegion silnber;
-    static TextureRegion silpanzergrenadier;
-    static TextureRegion silpuma;
-    static TextureRegion silstug;
-    static TextureRegion siltank;
-    static TextureRegion silAtank;
-    static TextureRegion silAirArt;
-    static TextureRegion silantiTank;
-    static TextureRegion vg26;
-    static TextureRegion vg276;
-    static TextureRegion vg352;
-    static TextureRegion onestep;
-    static TextureRegion twostep;
-    static TextureRegion threestep;
-    static TextureRegion truck;
-    static TextureRegion pzarmy;
-
-    //    static TextureRegion ammoall =  textureAtlas.findRegion("ammoall");
-//    static TextureRegion ammowarn =  textureAtlas.findRegion("ammowarn");
-//    static TextureRegion ammonone =  textureAtlas.findRegion("ammonone");
-//    static TextureRegion hqvg276 =  textureAtlas.findRegion("twoseventysix");
- //   static TextureRegion hqvg352 =  textureAtlas.findRegion("threehundredfifty");
     static Label.LabelStyle labelStyleName;
 
     static Label.LabelStyle labelStyleName2;
@@ -90,56 +73,65 @@ public class CounterStack {
 
         this.unit = unit;
         this.stack = stack;
-        if (unit.isAxis){
-            createAxisStack(stack);
+        if (!unit.isAllies){
+            createRussianStack(stack);
         }else{
             createAllied(stack);
         }
 
     }
     static public void loadTexture(){
-        textureAtlas = SplashScreen.instance.unitsManager.get("units/germancounteratlas.txt");
-        backGerman =  textureAtlas.findRegion("germanNew");
-        backFj =  textureAtlas.findRegion("luftwaffeNew");
-        backAllied =  textureAtlas.findRegion("alliedNew");
-        hilitePic =  textureAtlas.findRegion("hilite");
-        movePic =  textureAtlas.findRegion("moved");
-         abn101 =  textureAtlas.findRegion("abn101");
-         arm4 =  textureAtlas.findRegion("arm4");
-         arm9 =  textureAtlas.findRegion("arm9");
-         arm10 =  textureAtlas.findRegion("arm10");
-         fj5 =  textureAtlas.findRegion("fj5");
-         inf26 =  textureAtlas.findRegion("inf26");
-         inf28 =  textureAtlas.findRegion("inf28");
-         inf80 =  textureAtlas.findRegion("inf80");
-         pz2 =  textureAtlas.findRegion("pz2");
-         pzLehr =  textureAtlas.findRegion("pzlehr");
-         artCorp =  textureAtlas.findRegion("artcorp");
-         silamericaninf =  textureAtlas.findRegion("silamericaninf");
-         silarm =  textureAtlas.findRegion("silarm");
-         silart =  textureAtlas.findRegion("silart");
-         silgermanart =  textureAtlas.findRegion("silgermanart");
-         silgermaninf =  textureAtlas.findRegion("silgermaninf");
-         siljagd =  textureAtlas.findRegion("siljagd");
-         silmarder =  textureAtlas.findRegion("silmarder");
-         silmobileart =  textureAtlas.findRegion("silmobileart");
-         silnber =  textureAtlas.findRegion("silneber");
-         silpanzergrenadier =  textureAtlas.findRegion("silpanzergrenadier");
-         silpuma =  textureAtlas.findRegion("silpuma");
-         silstug =  textureAtlas.findRegion("silstug");
-         siltank =  textureAtlas.findRegion("siltank");
-         silAtank =  textureAtlas.findRegion("silsherman");
-         silAirArt =  textureAtlas.findRegion("silmairart");
-         silantiTank =  textureAtlas.findRegion("silantitank");
-         vg26 =  textureAtlas.findRegion("vg26");
-         vg276 =  textureAtlas.findRegion("vg276");
-         vg352 =  textureAtlas.findRegion("vg352");
-         onestep =  textureAtlas.findRegion("onestep");
-         twostep =  textureAtlas.findRegion("twostep");
-         threestep =  textureAtlas.findRegion("threestep");
-         truck =  textureAtlas.findRegion("truck");
-         pzarmy =  textureAtlas.findRegion("5pzarmy");
-         labelStyleName
+        textureAtlas = SplashScreen.instance.unitsManager.get("counter/counter.txt");
+        /**
+         *  load the texture regions
+         */
+        bavariancalvary = textureAtlas.findRegion("bavariancalvary");
+        bavarianline2 = textureAtlas.findRegion("bavarianline2");
+
+        cannongame = textureAtlas.findRegion("cannongame");
+
+        cossack = textureAtlas.findRegion("cossack");
+
+        counterbavarian = textureAtlas.findRegion("counterbavarian");
+        counterwestphalian = textureAtlas.findRegion("counterwestphalian");
+
+        counterfrenchguard = textureAtlas.findRegion("counterfrenchguard");
+
+        counterfrenchline = textureAtlas.findRegion("counterfrenchline");
+
+        counteritalian = textureAtlas.findRegion("counteritalian");
+
+        counterpolish = textureAtlas.findRegion("counterpolish");
+
+        counterrussian = textureAtlas.findRegion("counterrussian");
+
+        frechcalvaryguard = textureAtlas.findRegion("frechcalvaryguard");
+
+        frenchcavalry = textureAtlas.findRegion("frenchcavalry");
+
+        frenchgrenadier2 = textureAtlas.findRegion("frenchgrenadier2");
+
+        frenchline2 = textureAtlas.findRegion("frenchline2");
+
+        italiancalvary = textureAtlas.findRegion("italiancalvary");
+
+        italianline2 = textureAtlas.findRegion("italianline2");
+
+        polishcalvary = textureAtlas.findRegion("polishcalvary");
+
+        polishline2 = textureAtlas.findRegion("polishline2");
+
+        russianguard2 = textureAtlas.findRegion("russianguard2");
+
+        russianline2 = textureAtlas.findRegion("russianline2");
+
+        westphaliancalvary = textureAtlas.findRegion("westphaliancalvary");
+
+        westphalianline = textureAtlas.findRegion("westphalianline");
+        russiancalvary = textureAtlas.findRegion("russiancalvary");
+        movepic = textureAtlas.findRegion("moved");
+        hilitePic = textureAtlas.findRegion("hilite");
+        labelStyleName
                 = new Label.LabelStyle(FontFactory.instance.largeFont, Color.RED);
          labelStyleName2 = new Label.LabelStyle(FontFactory.instance.jumboFont, Color.WHITE);
         arrHilited.clear();
@@ -148,86 +140,24 @@ public class CounterStack {
 
     }
 
-    private void createAxisStack(Stack stack) {
-        if (unit.designation.contains("FJ")){
-            backGround  = new Image(backFj);
+    private void createRussianStack(Stack stack) {
+        if (unit.isRussian){
+            backGround  = new Image(counterrussian);
 
-        }else{
-            backGround = new Image(backGerman);
-        }
-        if (unit.subDesignation.contains("38")){
-            int b=0;
         }
         stack.add(backGround);
-//        stack.setScale(.8f);
         stack.setSize(Counter.size,Counter.size);
-        division = getDivision(unit);
-        division.setTouchable(Touchable.disabled);
-        stack.addActor(division);
-        arrActors.add(division);
-        if (!unit.isTransport) {
-            setStep(stack);
-        }
-        imgSil = getGermanSilhouttes(textureAtlas);
+        imgSil = getRussianSilhouttes();
         imgSil.setTouchable(Touchable.disabled);
- //       imgSil.setAlign(Align.top);
- //       imgSil.setScale(1,.3F);
         stack.addActor(imgSil);
         arrActors.add(imgSil);
         setPoints();
- /*       if (!unit.isHQ) {
-            setSupplyAmmo();
-            if (unit.isMechanized) {
-                setSupplyGas();
-            }
-        }*/
-    }
-
-    private Image getDivision(Unit unit) {
-        Image image;
-        switch (unit.designation){
-            case "VG 352":
-                image=new Image(vg352);
-                break;
-            case "VG 26":
-                image=new Image(vg26);
-                break;
-            case "FJ 5":
-                image=new Image(fj5);
-                break;
-            case "VG 276":
-                image=new Image(vg276);
-                break;
-
-            case "2nd Pz":
-                image=new Image(pz2);
-                break;
-            case "Pz Lehr":
-                image=new Image(pzLehr);
-                break;
-            case "Supply":
-                image=new Image(pzarmy);
-                break;
-            default:
-                image=new Image(artCorp);
-                break;
-
-
-        }
-        //       image.setScale(1.2F);
-        return image;
-
-
     }
 
     public void setPoints(){
 
         String strPoints = null;
-        if (unit.isArtillery){
-            strPoints = " "+unit.getCurrenAttackFactor()+"    "+unit.getCurrentMovement();
-        }else{
-            strPoints = unit.getCurrenAttackFactor()+" "+unit.getCurrentDefenseFactor()+" "+unit.getCurrentMovement();
-        }
+        strPoints = " "+unit.getCurrentAttackFactor()+"      "+unit.getCurrentMoveFactor();
         if (labelPoints != null){
             stack.removeActor(labelPoints);
             labelPoints = null;
@@ -238,7 +168,7 @@ public class CounterStack {
         stack.addActor(labelPoints);
     }
     public void setStep(Stack stack){
-        if (step != null){
+ /**       if (step != null){
             stack.removeActor(step);
         }
         if (unit.getCurrentStep() == 3){
@@ -249,7 +179,7 @@ public class CounterStack {
             step = new Image(onestep);
         }
         step.setTouchable(Touchable.disabled);
-        stack.addActor(step);
+        stack.addActor(step); */
     }
     /*
     public void setSupplyAmmo(){
@@ -291,10 +221,12 @@ public class CounterStack {
         }
     }
     private void createAllied(Stack stack) {
-        backGround = new Image(backAllied);
+        backGround = createBackAllied();
+
         stack.add(backGround);
         stack.setSize(Counter.size,Counter.size);
-        labelName= new Label(unit.designation,labelStyleName);
+        String strBrigade = unit.brigade;
+        labelName= new Label(strBrigade,labelStyleName);
         labelName.setTouchable(Touchable.disabled);
         labelName.setAlignment(Align.top);
         stack.addActor(labelName);
@@ -314,62 +246,67 @@ public class CounterStack {
 //        stack.addActor(labelSub);
 
 //        arrActors.add(labelName);
-
-        String strPoints = null;
-        if (unit.isArtillery){
-            strPoints = " "+unit.getCurrenAttackFactor()+"    "+unit.getCurrentMovement();
-        }else{
-            strPoints = unit.getCurrenAttackFactor()+" "+unit.getCurrentDefenseFactor()+" "+unit.getCurrentMovement();
-        }
-        labelPoints = new Label(strPoints,labelStyleName2);
-        labelPoints.setTouchable(Touchable.disabled);
-        labelPoints.setAlignment(Align.bottom);
+        setPoints();
         stack.addActor(labelPoints);
 
 //        arrActors.add(labelPoints);
     }
 
-    private Image getGermanSilhouttes(TextureAtlas tex) {
-        Image image;
-        if (unit.isTransport){
-            image = new Image(truck);
+    private Image createBackAllied() {
+        Image image = null;
+        if (unit.isGuard){
+            image = new Image(counterfrenchguard);
             return image;
         }
+        if (unit.isFrench){
+            image = new Image(counterfrenchline);
+            return image;
+        }
+        if (unit.isItalian){
+            image = new Image(counteritalian);
+            return image;
+        }
+        if (unit.isPolish){
+            image = new Image(counterpolish);
+            return image;
+        }
+        if (unit.isBavarian){
+            image = new Image(counterbavarian);
+            return image;
+        }
+        if (unit.isWestphalian){
+            image = new Image(counterwestphalian);
+            return image;
+        }
+
+        image = new Image(frenchline2);
+        return image;
+    }
+
+    private Image getRussianSilhouttes() {
+        Image image;
         switch (unit.type){
-            case "Tank":
-                image=new Image(siltank);
-                break;
-            case "Grenadier":
-                image=new Image(silpanzergrenadier);
-                break;
             case "Infantry":
-                image=new Image(silgermaninf);
-                break;
-            case "Airborne":
-                image=new Image(silgermaninf);
-                break;
-            case "AntiTank":
-                image=new Image(siljagd);
-                break;
-          case "Recon":
-                image=new Image(silpuma);
-                break;
-           case "Artillery":
-                if (unit.isMobileArtillery) {
-                    image = new Image(silmarder);
-                }else{
-                    image= new Image(silgermanart);
+                if (unit.isGuard){
+                    image = new Image(russianguard2)   ;
+                }else {
+                    image = new Image(russianline2);
                 }
                 break;
-             case "Neber":
-                image=new Image(silnber);
+            case "Calvary":
+                if (unit.isCossack) {
+                    image = new Image(cossack);
+                }else{
+                    image = new Image(russiancalvary);
+                }
                 break;
-            case "Werfer":
-                image=new Image(silnber);
+
+            case "Cannon":
+                image=new Image(cannongame);
                 break;
 
             default:
-                image=new Image(silstug);
+                image=new Image(russianline2);
                 break;
 
 
@@ -398,42 +335,62 @@ public class CounterStack {
     }*/
 
     private Image getAlliedilhouttes() {
-        Image image;
-        switch (unit.type){
-            case "Grenadier":
-                image=new Image(silarm);
-                break;
-            case "Infantry":
-                image=new Image(silamericaninf);
-                break;
-            case "Airborne":
-                image=new Image(silamericaninf);
-                break;
-            case "Tank":
-                image=new Image(silarm);
-                break;
-            case "AntiTank":
-                image=new Image(silantiTank);
-                break;
-            case "Recon":
-                image=new Image(silpuma);
-                break;
-            case "Artillery":
-                if (unit.designation.contains("101 Abn")){
-                        image = new Image(silAirArt);
-                }else if (unit.designation.contains("155 grp")){
-                    image = new Image(silart);
-                 }else{
-                    image= new Image(silmobileart);
-                }
-                break;
+        Image image = null;
+        if (unit.isArtillery){
+            image = new Image(cannongame);
+            return image;
+        }
+        if (unit.isGuard){
+            if (unit.isInfantry) {
+                image = new Image(frenchgrenadier2);
+            }else if(unit.isCalvary){
+                image = new Image(frechcalvaryguard);
+            }
+            return image;
+        }
 
-            default:
-                image=new Image(silstug);
-                break;
-       }
-        //       image.setScale(1.2F);
-        return image;
+        if (unit.isFrench){
+            if (unit.isInfantry) {
+                image = new Image(frenchline2);
+            }else if(unit.isCalvary){
+                image = new Image(frenchcavalry);
+            }
+            return image;
+        }
+        if (unit.isItalian){
+            if (unit.isInfantry) {
+                image = new Image(italianline2);
+            }else if(unit.isCalvary){
+                image = new Image(italiancalvary);
+            }
+            return image;
+        }
+        if (unit.isPolish){
+            if (unit.isInfantry) {
+                image = new Image(polishline2);
+            }else if(unit.isCalvary){
+                image = new Image(polishcalvary);
+            }
+            return image;
+        }
+        if (unit.isBavarian) {
+            if (unit.isInfantry) {
+                image = new Image(bavarianline2);
+            } else if (unit.isCalvary) {
+                image = new Image(bavariancalvary);
+            }
+            return image;
+        }
+        if (unit.isWestphalian) {
+            if (unit.isInfantry) {
+                image = new Image(westphalianline);
+            } else if (unit.isCalvary) {
+                image = new Image(westphaliancalvary);
+            }
+            return image;
+        }
+
+        return null;
 
     }
 
@@ -467,7 +424,7 @@ public class CounterStack {
 //		Gdx.app.log("Counter", "Shadeunit="+getUnit().toString());
 
         if (moved == null) {
-            moved = new Image(movePic);
+            moved = new Image(movepic);
         }
         stack.add(moved);
         arrShaded.add(this);
@@ -500,9 +457,6 @@ public class CounterStack {
         stack.add(hilite);
         isHilited = true;
         arrHilited.add(this);
-    }
-    public static TextureRegion getAllied(){
-        return backAllied;
     }
 
     public static TextureRegion getHilite() {

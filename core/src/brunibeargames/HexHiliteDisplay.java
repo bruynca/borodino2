@@ -43,15 +43,15 @@ public class HexHiliteDisplay {
       if (pos == null){
             int brk = 0;
         }
-        String str = "";
+        String str = hex.xTable+ " "+hex.yTable;
         /**
          *  SPOT to change AISCORE
          */
 
         label = new Label(str,labelStyleName);
         label.setFontScale(.8f);
-        label.setPosition(pos.x-40, pos.y+40);
-        label2.setPosition(pos.x, pos.y+50);
+        label.setPosition(pos.x+ 60, pos.y+40);
+     //   label2.setPosition(pos.x, pos.y+50);
 
 
         pos.x -= 48;  //-48
@@ -124,25 +124,20 @@ public class HexHiliteDisplay {
                 hexHilite.image.remove();
             }
             hexHilite.label.remove();
-            hexHilite.label2.remove();
+ //           hexHilite.label2.remove();
             if (hexHilite.type == HiliteHex.TypeHilite.Supply){
                 MouseImage.instance.mouseImageReset();
-            }
-        }
-        for (Unit unit:arrUnitsToShade){
-            if (!unit.getInSupplyThisTurn()) {
-                unit.getMapCounter().getCounterStack().shade();
             }
         }
         arrHexHilite.clear();
     }
     static public void textTureLoad(){
-        textureAtlas = SplashScreen.instance.unitsManager.get("units/germancounteratlas.txt");
+        textureAtlas = SplashScreen.instance.unitsManager.get("counter/counter.txt");
         backHilite =  textureAtlas.findRegion("hilitehex");
-        backHiliteReinDisplay =  textureAtlas.findRegion("hilitehexreindisplay");
-        backHiliteCannonRange =  textureAtlas.findRegion("hilitehexcannonrange");
+     //   backHiliteReinDisplay =  textureAtlas.findRegion("hilitehexreindisplay");
+      //  backHiliteCannonRange =  textureAtlas.findRegion("hilitehexcannonrange");
         backHiliteMove =  textureAtlas.findRegion("hilitehexmove3");
-        backHiliteExit =  textureAtlas.findRegion("hilitehexexit");
+      //  backHiliteExit =  textureAtlas.findRegion("hilitehexexit");
         arrHexHilite = new ArrayList<>();
         labelStyleName
                 = new Label.LabelStyle(FontFactory.instance.yellowFont, Color.YELLOW);

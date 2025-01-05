@@ -89,12 +89,9 @@ public class Move extends Observable {
         }
         ArrayList<Unit> arrUnitToDisplay = new ArrayList<>()  ;
         for (Unit unit : arrUnitToMoveWork) {
-            if (unit.getID() == 35){
-                int b=0;
-            }
 
             if (unit.getMovedLast() < turn) { // on load only units that have not shade
-               if (((isExplotation && unit.getCurrentMovement() >= 8 && !unit.hasAttackedThisTurn && !unit.hasBeenAttackedThisTurn)) || !isExplotation) {
+               if (((isExplotation && unit.getCurrentMoveFactor() >= 8 && !unit.hasAttackedThisTurn && !unit.hasBeenAttackedThisTurn)) || !isExplotation) {
                    unit.getMapCounter().getCounterStack().removeShade();
                    if (!isAI) {
                        arrUnitToDisplay.add(unit) ;
@@ -161,10 +158,7 @@ public class Move extends Observable {
 
     ArrayList<Hex> arrMove;
     public void moveUnitFromClick(Unit unit, Hex hex, boolean isAI) {
-        if (unit.getID() == 69){
-            int b=0;
-        }
-        UnitMove unitMove = new UnitMove(unit, unit.getCurrentMovement(),true,true,0);
+        UnitMove unitMove = new UnitMove(unit, unit.getCurrentMoveFactor(),true,true,0);
         arrMove=  unitMove.getLeastPath(hex, true, null);
  //       SoundsLoader.instance.playTrucksSound();
         actualMove(unit,arrMove, AfterMove.ToClick, isAI);
@@ -252,7 +246,6 @@ public class Move extends Observable {
             unit.setCurrentMovement((int) (unit.getHexOccupy().getCalcMoveCost(0)));
             unit.getMapCounter().getCounterStack().setPoints();
        //     unit.getMapCounter().getCounterStack().setSupplyGas();
-            int i = unit.getCurrentMovement();
             if (!isAI) {
                 moveReturnFromClick(true,hexEnd,unit);
             }else{
@@ -360,7 +353,7 @@ public class Move extends Observable {
          *
          */
         boolean isEnemyInHex = false;
-        if ((unit.isAllies && endHex.isAxisOccupied[thread] || (unit.isAxis && endHex.isAlliedOccupied[thread]))) {
+        if ((unit.isAllies && endHex.isAxisOccupied[thread] || (!unit.isAllies && endHex.isAlliedOccupied[thread]))) {
             if (isMobileAssault) {
                     isEnemyInHex = true;
             } else {
@@ -378,7 +371,7 @@ public class Move extends Observable {
         if (unit == null){
             int bg =0;
         }
-        if ((unit.isAllies && endHex.isAxisZOC[thread]) || unit.isAxis && endHex.isAlliedZOC[thread] ) {
+        if ((unit.isAllies && endHex.isAxisZOC[thread]) || !unit.isAllies && endHex.isAlliedZOC[thread] ) {
             if (unit.isTransport) {
                 if ((endHex.getAxisZoc(thread) && endHex.isAlliedOccupied[thread]) || endHex.getAlliedZoc(thread) && endHex.isAxisOccupied[thread]){
                     // OK

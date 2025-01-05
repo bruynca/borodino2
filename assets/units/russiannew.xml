@@ -1,0 +1,231 @@
+<corps>
+	<corp>
+	<name value="2nd corp"/>
+		<division>
+			<name value="4th"/>
+			<brigade value="Rossi, 3,4"/>
+			<brigade value="Pyshnitsky, 3,4"/>
+			<brigade value="Pillar, 4,4"/>
+			<brigade value="Voyiekov, 3,4,artillery"/>
+		</division>
+		<division>
+			<name value="17th"/>
+			<brigade value="Ivelich, 3,4"/>
+			<brigade value="Vadkovsky, 3,4"/>
+			<brigade value="Potemkin, 4,4"/>
+			<brigade value="Dieterichs, 3,4,artillery"/>
+			<brigade value="Elisab Hussars, 2,7,calvary"/>
+		</division>
+	</corp>
+	<corp>
+	<name value="3rd corp"/>
+		<division>
+			<name value="1st Guard"/>
+			<brigade value="Zheltukin, 4,4"/>
+			<brigade value="Tsivlenev, 4,4"/>
+			<brigade value="Foch, 4,4"/>
+			<brigade value="Gluckhov, 3,4,artillery"/>
+		</division>
+		<division>
+			<name value="3rd"/>
+			<brigade value="Tuchkv, 2,4"/>
+			<brigade value="MeshRakyv, 2,4"/>
+			<brigade value="Skahvsky, 3,4"/>
+		</division>
+	</corp>
+
+	<corp>
+	<name value="4th corp"/>
+		<division>
+			<name value="2nd"/>
+			<brigade value="Filisov, 3,4"/>
+			<brigade value="laptev, 3,4"/>
+			<brigade value="Bistrom, 4,4"/>
+			<brigade value="Maleyev, 3,4,artillery"/>
+		</division>
+		<division>
+			<name value="23rd"/>
+			<brigade value="Aleksopol, 3,4"/>
+			<brigade value="Ostrovsky, 2,4"/>
+			<brigade value="Okulov, 3,4"/>
+			<brigade value="Goulewicz, 2,4,artillery"/>
+		</division>
+	</corp>
+	<corp>
+	<name value="5th corp"/>
+		<division>
+			<name value="Guard"/>
+			<brigade value="Rosen, 9,4"/>
+			<brigade value="Udom, 9,4"/>
+			<brigade value="Bistrom, 9,4"/>
+			<brigade value="Eyler, 4,4,artillery"/>
+		</division>
+		<division>
+			<name value="1st Guard Infantry"/>
+			<brigade value="Grenadier, 4,4"/>
+			<brigade value="Elite, 1,4"/>
+		</division>
+		<division>
+			<name value="1st Guard Calvary"/>
+			<brigade value="Shevich, 3,6, calvary"/>
+			<brigade value="Borodzin, 3,6,calvary"/>
+			<brigade value="Duka, 3,6,calvary"/>
+			<brigade value="Kozen, 2,6,horseartllty"/>
+		</division>
+	</corp>
+	<corp>
+	<name value="6th corp"/>
+		<division>
+			<name value="7th"/>
+			<brigade value="Lyapunov, 3,4"/>
+			<brigade value="Augustov, 3,4"/>
+			<brigade value="Balla, 3,4"/>
+			<brigade value="Hussars, 0,7,vedettes"/>
+			<brigade value="Devell, 3,4,artillery"/>
+		</division>
+		<division>
+			<name value="24th"/>
+			<brigade value="Tsybulsky, 3,4"/>
+			<brigade value="Denisyev, 3,4"/>
+			<brigade value="Vuich, 3,4"/>
+			<brigade value="Deidrich, 3,4"/>
+			<brigade value="Vuich, 3,4"/>
+			<brigade value="Yefremov, 3,4,artillery"/>
+		</division>
+	</corp>
+	<corp>
+	<name value="1st Reserve Calvary corp"/>
+		<division>
+			<name value="1st Resrve Calvary"/>
+			<brigade value="Chalikov, 1,7,calvary"/>
+			<brigade value="Vsevolzhsky, 2,6,calvary"/>
+			<brigade value="Orlov-Denisov, 2,7,calvary"/>
+			<brigade value="2nd HorseArtillery,1,6,horseartllty"/>
+		</division>
+	</corp>
+	<corp>
+	<name value="2nd Reserve Calvary corp"/>
+		<division>
+			<name value="2nd Resrve Calvary"/>
+			<brigade value="Davydov, 2,6,calvary"/>
+			<brigade value="Klebev, 2,6,calvary"/>
+			<brigade value="Pachulidev, 3,7,calvary"/>
+			<brigade value="Uhlans, 0,7,vedettes"/>
+			<brigade value="6th HorseArtillery,1,6,horseartllty"/>
+		</division>
+	</corp>
+	<corp>
+	<name value="3rd Reserve Calvary corp"/>
+		<division>
+			<name value="3rd Resrve Calvary"/>
+			<brigade value="Kreutz, 2,6,calvary"/>
+			<brigade value="Dyatkov, 2,7,calvary"/>
+			<brigade value="Dorokhov, 3,7,calvary"/>
+			<brigade value="Polish Uhlans, 0,7,vedettes"/>
+			<brigade value="7th HorseArtillery,1,6,horseartllty"/>
+		</division>
+	</corp>
+	<corp>
+	<name value="Cossaks corp"/>
+		<division>
+			<name value="Cossaks Resrve Calvary"/>
+			<brigade value="Vlasov, 2,7,calvary"/>
+			<brigade value="Ilovaisky, 2,7,calvary"/>
+			<brigade value="Denisov, 2,7,calvary"/>
+			<brigade value="Kuteinikov, 1,7,calvary"/>
+			<brigade value="Chernsky, 0,7,vedettes"/>
+			<brigade value="Hovaisky, 0,7,vedettes"/>
+			<brigade value="7nd Cossak HorseArtillery,1,6,horseartllty"/>
+		</division>
+	</corp>
+	<corp>
+		<name value="Reserve Artillery corp"/>
+		<division>
+			<name value="Artillery Reserve"/>
+			<brigade value="1st Reserve, 2,4,artillery"/>
+			<brigade value="2nd Reserve, 2,4,artillery"/>
+			<brigade value="3rd Reserve, 2,4,artillery"/>
+			<brigade value="5th Reserve, 2,6,horseartllty"/>
+			<brigade value="6th Reserve, 2,6,horseartllty"/>
+		</division>
+	</corp>
+	<corp>
+		<name value="7th corp"/>
+		<division>
+			<name value="12th"/>
+			<brigade value="Rylevey, 3,4"/>
+			<brigade value="Panterbiter, 3,4"/>
+			<brigade value="Glebov, 4,4"/>
+		</division>
+		<division>
+			<name value="26th"/>
+			<brigade value="Kadishiv, 3,4"/>
+			<brigade value="Savoini, 3,4"/>
+			<brigade value="Gogel, 4,4"/>
+			<brigade value="Shulman, 2,4,artillery"/>
+		</division>
+	</corp>
+	<corp>
+		<name value="8th corp"/>
+		<division>
+			<name value="2nd Guard"/>
+			<brigade value="Shatilov, 5,4"/>
+			<brigade value="Bushovdn, 5,4"/>
+			<brigade value="Levin, 5,4"/>
+			<brigade value="Frieberg, 5,4"/>
+			<brigade value="Bug Cossacks, 0,7,vedettes"/>
+			<brigade value="Bugoslvsky, 1,4, artillery"/>
+		</division>
+		<division>
+			<name value="27th"/>
+			<brigade value="Knayzinn, 3,4"/>
+			<brigade value="Stavitsky, 3,4"/>
+			<brigade value="Voyeyvkov, 3,4"/>
+			<brigade value="Don Cossacks, 0,7,vedettes"/>
+			<brigade value="BelinHausen, 2,4,artillery"/>
+		</division>
+	</corp>
+	<corp>
+		<name value="4th Reserve Calvary Corp"/>
+		<division>
+			<name value="Reserve Calvary"/>
+			<brigade value="Panchiuldisy, 2,6,calvary"/>
+			<brigade value="Emmanual, 2,6,calvary"/>
+			<brigade value="Vasilchikv, 3,7, calvary"/>
+			<brigade value="TIBuzhin, 3,6,calvary"/>
+			<brigade value="Kretov, 2,6, calvary"/>
+			<brigade value="8th Artilley, 1,6, horseartllty"/>
+		</division>
+	</corp>
+	<corp>
+		<name value="Karpov Cossaks Corp"/>
+		<division>
+			<name value="Cossack Calvary"/>
+			<brigade value="Bykhalov, 2,7,calvary"/>
+			<brigade value="Karpov, 1,7,calvary"/>
+			<brigade value="Melinikov, 1,7, calvary"/>
+			<brigade value="Cossack Artilley, 1,6, horseartllty"/>
+		</division>
+	</corp>
+	<corp>
+		<name value="2nd Reserve Artillery Corp"/>
+		<division>
+			<name value="2nd Artillery"/>
+			<brigade value="1st Artilley, 2,4,artillery"/>
+			<brigade value="2nd Artillery, 3,4,artillery"/>
+			<brigade value="3rd Artillery, 2,4,artillery"/>
+			<brigade value="4th Artillery, 2,4, horseartllty"/>
+		</division>
+	</corp>
+	<corp>
+		<name value="Moscow Militia"/>
+		<division>
+			<name value="Moscow Militia"/>
+			<brigade value="Chicherin, 4,4"/>
+			<brigade value="Arsenyev, 2,4"/>
+			<brigade value="Talyzin, 5,4"/>
+			<brigade value="lebedev, 5,4"/>
+		</division>
+	</corp>
+	
+</corps>

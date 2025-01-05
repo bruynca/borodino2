@@ -56,12 +56,15 @@ public class ScreenGame {
         private float zoomMax;
 
         ///
-        public ScreenGame(Stage inStage)
+        public ScreenGame()
         {
+            /**
+             *  DONT USE
+             */
             Gdx.app.log("Screen", "Constructor");
 
             instance = this;
-            mapStage = inStage;
+            //mapStage = inStage;
             texture = Loader.instance.instanceGetMap();
             texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
             backSprite = new Sprite(texture);

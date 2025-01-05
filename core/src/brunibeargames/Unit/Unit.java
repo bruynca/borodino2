@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
@@ -19,7 +18,6 @@ import java.util.ArrayList;
 import brunibeargames.Borodino;
 import brunibeargames.ErrorGame;
 import brunibeargames.Hex;
-import brunibeargames.HexSurround;
 import brunibeargames.SplashScreen;
 
 /**
@@ -49,21 +47,34 @@ public class Unit {
 	/**
 	 *  Nationality fields
 	 */
+	public boolean isFrench;
 	public boolean isAllies;
-	public boolean isAxis;
+	public boolean isPolish;
+	public boolean isBavarian;
+	public boolean isWestphalian;
+	public boolean isItalian;
+	public boolean isItalianGuard;
+	public boolean isGuard;
+	public boolean isPolishGuard;
+	public boolean isCossack;
+	public boolean isRussian;
 	/**
 	 *  String descriptions
 	 */
-	public String designation; // i.e 2nd SS division
-	public String subDesignation; // i.e 2nd SS division
-	/**
-	 *  Units size  can only be 1
-	 */
-	public boolean isDivision = false;
+	public String brigade;
+	private Corp corp;
+	private Division division;
+
 	public boolean isBrigade= false;
-	public boolean isRegiment= false;
-	public boolean isBattalion=false;
-	public boolean isAdHoc=false;
+	public boolean isVedette= false;
+	public boolean isInfantry;
+	public boolean isCalvary;
+	public boolean isArtllery;
+
+
+
+	//public boolean isBattalion=false;
+	//public boolean isAdHoc=false;
 
 	public String type= "";
 	/**
@@ -73,9 +84,9 @@ public class Unit {
 	public boolean isGroundCombat;
 	public boolean isMechanized;
 	public boolean isHQ;
+
 	public boolean isArtillery;
 	public boolean isTransport;
-	public boolean isExit;
 
 	public int entryTurn;
 
@@ -88,47 +99,28 @@ public class Unit {
 	private int atStartStep;
 	private int currentStep;
 	private int currentAttackFactor;
-	private int currentDefenseFactor;
+//	private int currentDefenseFactor;
 	private int currentMoveFactor;
 	private int atStartAttackFactor;
-	private int atStartDefenseFactor;
+//	private int atStartDefenseFactor;
 	private int atStartMoveFactor;
 	/**
 	 * artillery
 	 */
 	private int range;
-	private int attackFactorLimbered;
-	private int attackFactorUnLimbered;
-	private int moveAtStartUnLimbered;
-	private int moveAtStartLimbered;
+//	private int attackFactorLimbered;
+//	private int attackFactorUnLimbered;
+//	private int moveAtStartUnLimbered;
+//	private int moveAtStartLimbered;
 
-	private boolean isAirplane = false;
+//	private boolean isAirplane = false;
 
-	public static void setZOCMobileArtillery() {
-		for (Unit unit : Unit.getOnBoardAllied()) {
-			if (unit.isMobileArtillery) {
-				unit.setExertZoc();
-			}
-		}
-		for (Unit unit : Unit.getOnBoardAxis()) {
-			if (unit.isMobileArtillery) {
-				unit.setExertZoc();
-			}
-		}
-	}
 
 	public static void loadTexture() {
-		textureAtlas = SplashScreen.instance.unitsManager.get("units/germancounteratlas.txt");
-		tStar =  textureAtlas.findRegion("star");
+		//String strFrench = SplashScreen.instance.unitsManager.get("units/frenchnew.xml");
+		textureAtlas = SplashScreen.instance.unitsManager.get("counter/counter.txt");
 	}
 
-	public int getCurrentMoveNoBarrage() {
-		return attackFactorLimbered;
-	}
-	public int getCurrentMoveBarrage() {
-		return attackFactorUnLimbered;
-	}
-	public boolean isMobileArtillery = false;
 	int xSetup;
 	int ySetup;
 
@@ -158,6 +150,16 @@ public class Unit {
 			}
 		}
 	}
+
+	public static Unit getUnitByID(int id) {
+		for (Unit unit:arrGameCombatUnits){
+			if (unit.ID == id){
+				return unit;
+			}
+		}
+		return null;
+	}
+
 	public int getArtAmmo() {
 		return artAmmo;
 	}
@@ -181,217 +183,136 @@ public class Unit {
 	 * Constructor
 	 * All units are loaded at start of the game
 	 */
-	public Unit(Element childXML, boolean isAllies, boolean isSpecial)
+	public Unit(boolean isAllies, String  strBrigade, Corp corp, Division division, Element xmlBrigade)
 	{
 		/**
 		 * update ID and increment so that each unit is unique
 		 */
 		ID = cntUnit;
 		cntUnit++;
+		this.corp = corp;
+		this.division = division;
 		/**
 		 *  update nationality and set if axis or allies
 		 */
 		if (isAllies) {
-			isAxis = false;
+			isRussian = false;
 			this.isAllies = true;
 		}else{
 			this.isAllies = false;
-			isAxis = true;
-		}
-		if (isSpecial){
-			isAirplane = true;
-			currentAttackFactor =5;
-			return;
-		}
-
-
-		designation = childXML.getChildByName("unitDesignation").getAttribute("value");
-		subDesignation = childXML.getChildByName("unitSubDesignation").getAttribute("value");
-		String teString = childXML.getChildByName("unitGroundCombat").getAttribute("value");
-		isMechanized = Boolean.parseBoolean(childXML.getChildByName("unitMechanized").getAttribute("value"));
-		isGroundCombat = Boolean.parseBoolean(childXML.getChildByName("unitGroundCombat").getAttribute("value"));
-		if (isGroundCombat) {
-			arrGameCombatUnits.add(this);
-		}
-		else {
-			arrGameOtherUnits.add(this);
-		}
-
-		type = childXML.getChildByName("unitType").getAttribute("value");
-		if (type.compareTo("HQ" )== 0){
-			isHQ = true;
-		}
-		if (type.compareTo("Transport" )== 0){
-			isTransport = true;
-		}
-		if (type.compareTo("Exit" )== 0){
-			isExit = true;
-		}
-		if (type.compareTo("Artillery") == 0 || type.compareTo("Neber") == 0){
-			isArtillery = true;
-			attackFactorLimbered = Integer.parseInt(childXML.getChildByName("attackFactorMove").getAttribute("value"));
-			attackFactorUnLimbered = Integer.parseInt(childXML.getChildByName("attackFactorNoMove").getAttribute("value"));
-			moveAtStartUnLimbered = Integer.parseInt(childXML.getChildByName("movementFactorBarrage").getAttribute("value"));
-			moveAtStartLimbered = Integer.parseInt(childXML.getChildByName("movementFactor").getAttribute("value"));
-			if (moveAtStartUnLimbered > 0){
-			    isMobileArtillery = true;
-//				isExertZOC = true;
-
-			}
-
-		}else{
-			isArtillery = false;
-			atStartAttackFactor = Integer.parseInt(childXML.getChildByName("attackFactor").getAttribute("value"));
-			currentAttackFactor = atStartAttackFactor;
-			atStartDefenseFactor = Integer.parseInt(childXML.getChildByName("defenseFactor").getAttribute("value"));
-			currentDefenseFactor = atStartDefenseFactor;
-			atStartMoveFactor = Integer.parseInt(childXML.getChildByName("movementFactor").getAttribute("value"));
-			currentMoveFactor = atStartMoveFactor;
-			isExertZOC = true;
-		}
-		//
-		String strSize = childXML.getChildByName("unitSize").getAttribute("value");
-		switch (strSize) {
-			case "Division":
-				isDivision = true;	isBattalion = false; isAdHoc = false; isRegiment = false; isBrigade = false;
-				break;
-			case "Regiment":
-				isDivision = false;	isBattalion = false; isAdHoc = false; isRegiment = true; isBrigade = false;
-				break;
-			case "KG":
-				isDivision = false;	isBattalion = false; isAdHoc = false; isRegiment = true; isBrigade = false;
-				break;
-			case "Battalion":
-				isDivision = false;	isBattalion = true; isAdHoc = false; isRegiment = false; isBrigade = false;
-				break;
-			case "Brigade":
-				isDivision = false;	isBattalion = false; isAdHoc = false; isRegiment = false; isBrigade = true;
-				break;
-			case "Ad Hoc":
-				isDivision = false;	isBattalion = false; isAdHoc = true; isRegiment = false; isBrigade = false;
-				break;
-			default:
-				isDivision = false;	isBattalion = false; isAdHoc = false; isRegiment = false; isBrigade = false;
-				Gdx.app.log("Unit", "Constructor ID Not Matched="+strSize);
-				break;
+			isRussian = true;
 		}
 		/**
-		 *  Unit either is setup at start or has setup
+		 *  xml can either be 1 long string of values or
+		 *  a number of tags set defaults first and then update
 		 */
-		if (childXML.hasChild("variant")){
-			variant = childXML.getChildByName("variant").getAttribute("value");
-		}else {
-			variant = "";
+		if (isAllies){
+			isFrench = true;
 		}
-		xSetup = Integer.parseInt(childXML.getChildByName("entryAreaX").getAttribute("value"));
-		ySetup = Integer.parseInt(childXML.getChildByName("entryAreaY").getAttribute("value"));
-		atStartStep = Integer.parseInt(childXML.getChildByName("unitStepAtStart").getAttribute("value"));
-		entryNum = Integer.parseInt(childXML.getChildByName("unitEntry").getAttribute("value"));
-		currentStep = atStartStep;
-		supplyUnit = new SupplyUnit(this);
-		Gdx.app.log("Unit"," id="+getID()+ "  -"+designation+subDesignation);
+		isInfantry = true;
 
-
-//		Hex hex = Hex.hexTable[xSetup][ySetup];
-//		placeLogic(hex);
-	}
-	private boolean isLimbered;
-
-	public static ArrayList<Unit> getTransports(boolean isAllies) {
-		ArrayList<Unit> arrReturn = new ArrayList<>();
-		for (Unit unit:arrGameOtherUnits){
-			if (unit.isTransport && unit.isAllies == isAllies){
-				arrReturn.add(unit);
-			}
-		}
-		return arrReturn;
-	}
-	public static ArrayList<Unit> getExits(boolean isAllies) {
-		ArrayList<Unit> arrReturn = new ArrayList<>();
-		for (Unit unit:arrGameOtherUnits){
-			if (unit.isExit && unit.isAllies == isAllies){
-				arrReturn.add(unit);
-			}
-		}
-		return arrReturn;
-	}
-
-	public boolean isLimbered(){
-		return isLimbered;
-	}
-	public void setArtilleryLimbered(){
-		Gdx.app.log("Unit", "Set Limbered ="+this);
-
-		if (!isArtillery){
-			return;
-		}
-		if (artAmmo > 0) {
-			currentAttackFactor = attackFactorLimbered;
+		String strList[] = strBrigade.split("\\s*,\\s*");
+		if (strList.length > 1) {
+			setByString(strList);
 		}else{
-			currentAttackFactor = 0;
+			setByXML(strList[0],xmlBrigade);
 		}
-		currentMoveFactor = moveAtStartLimbered;
-		isLimbered = true;
-		if (getMapCounter() != null) {
-			this.getMapCounter().getCounterStack().setPoints();
-		}
+		arrGameCombatUnits.add(this);
+
+
 
 	}
-	public void checkInitLimber(){
-		ArrayList<Hex> arrHex =  HexSurround.GetSurroundMapArr(getHexOccupy(),getRange());
-		boolean isLimber = true;
-		for (Hex hex:arrHex){
-			if (isAxis){
-				if (hex.checkAlliesInHex()){
-					isLimber =false;
-					break;
-				}
-			}else{
-				if (hex.checkAxisInHex()){
-					isLimber =false;
-					break;
-				}
-			}
-		}
-		if(isLimber){
-			setArtilleryLimbered();
-		}else{
-			setArtilleryUnLimbered();
-		}
+
+	private void setByXML(String strBrigade, Element xmlBrigade) {
+		brigade = strBrigade.toString();
+		atStartMoveFactor = Integer.parseInt(xmlBrigade.getChildByName("mf").getAttribute("value"));
+		currentMoveFactor = atStartMoveFactor;
+		atStartAttackFactor = Integer.parseInt(xmlBrigade.getChildByName("cf").getAttribute("value"));
+		currentAttackFactor =atStartAttackFactor;
+		String str = xmlBrigade.getChildByName("or").getAttribute("value");
+		setByValueOfString(str);
+		str = xmlBrigade.getChildByName("type").getAttribute("value");
+		setByValueOfString(str);
 	}
-	public void setArtilleryUnLimbered(){
-		Gdx.app.log("Unit", "Set UnLimbered ="+this);
-		if (!isArtillery){
-			return;
+
+	private void setByString(String[] strList) {
+		brigade = strList[0].toString();
+		atStartAttackFactor = Integer.parseInt(strList[1]);
+		currentAttackFactor =atStartAttackFactor;
+		currentMoveFactor = Integer.parseInt(strList[2]);
+		atStartMoveFactor = currentMoveFactor;
+		for (int i=3; i < strList.length;i++){
+			setByValueOfString(strList[i]);
 		}
-		 if (artAmmo > 0) {
-			 currentAttackFactor = attackFactorUnLimbered;
-		 }else{
-		 	currentAttackFactor = 0;
-		 }
-		currentMoveFactor = moveAtStartUnLimbered;
-		isLimbered = false;
-		 if (getMapCounter() != null) {
-			 this.getMapCounter().getCounterStack().setPoints();
-		 }
+
 
 	}
+
+	private void setByValueOfString(String str) {
+		switch(str){
+
+			case "calvary":
+			case "calvry":
+			case "Cavalry":
+				isCalvary =true;
+				isInfantry=false;
+				break;
+			case "infantry":
+				isInfantry =true;
+				break;
+			case "french":
+				isFrench =true;
+				break;
+			case "artillery":
+            case "horseartllty":
+			case "horseartillery":
+                isArtillery = true;
+				isInfantry = false;
+				break;
+            case "vedettes":
+				isVedette = true;
+				break;
+			case "westphalian":
+				isWestphalian = true;
+				isFrench = false;
+				break;
+			case "polish":
+				isPolish = true;
+				isFrench = false;
+				break;
+			case "italian":
+				isItalian = true;
+				isFrench = false;
+				break;
+			case "frenchguardPolish":
+			case "frenchguardDutch":
+				isPolish = true;
+				isFrench = false;
+				break;
+			case "frenchguardItalian":
+				isItalianGuard = true;
+				isFrench = false;
+				break;
+			case "frenchguard":
+				isGuard = true;
+				isFrench = true;
+				break;
+			case "bavarian":
+				isBavarian = true;
+				isFrench = false;
+				break;
+			default:
+				Gdx.app.log("Unit", "Select By Value Of String invalid=" + str);
+				break;
+		}
+	}
+
+
+
 
 	/**
 	 *
 	 */
-	public void resetArtillery(){
-		Gdx.app.log("Unit   resetArtillery", "unit= "+ this);
-
-		if (isLimbered){
-			setArtilleryLimbered();
-		}else{
-			setArtilleryUnLimbered();
-		}
-		if (!isAirplane) {
-			this.getMapCounter().getCounterStack().setPoints();
-		}
-	}
 
 
     public static ArrayList<Unit> getOnBoardAlliedNotEliminated() {
@@ -567,23 +488,13 @@ public class Unit {
 		if (currentStep == 0){
 			ErrorGame errorGame=  new ErrorGame("Trying to reduce past 1",this);
 		}
-		float defend = currentDefenseFactor;
 		float attack = currentAttackFactor;
-		currentDefenseFactor = (int)((defend/2)+.5);
 		currentAttackFactor = (int) ((attack/ 2) +.5);
 
-		defend = atStartDefenseFactor;
 		attack = atStartAttackFactor;
-		atStartDefenseFactor = (int)((defend/2)+.5);
 		atStartAttackFactor = (int) ((attack/ 2) +.5);
-		if (currentDefenseFactor < 0){
-			currentDefenseFactor =0;
-		}
 		if (currentAttackFactor < 0){
 			currentAttackFactor =0;
-		}
-		if (atStartDefenseFactor < 1){
-			atStartDefenseFactor =1;
 		}
 		if (atStartAttackFactor < 1){
 			atStartAttackFactor =1;
@@ -612,6 +523,10 @@ public class Unit {
 
 	}
 
+	public Hex getHexOccupy() {
+		return hexOccupy;
+	}
+
 
 	public void setCurrentMovement(int newMove) {
 		currentMoveFactor = newMove;
@@ -619,99 +534,11 @@ public class Unit {
 			currentMoveFactor = 0;
 		}
 	}
-	public void resetCurrentMove(){
-		if (isArtillery){
-			if (isLimbered){
-				currentMoveFactor = moveAtStartLimbered;
-			}else{
-				currentMoveFactor = moveAtStartUnLimbered;
-			}
-		}else {
-			currentMoveFactor = atStartMoveFactor;
-		}
-	}
-
-
-    public boolean getInSupplyThisTurn() {
-		return isInSupplyThisTurn;
-	}
-	public void setInSupplyThisTurn() {
-		isInSupplyThisTurn = true;
-	}
-	public void setOffSupplyThisTurn() {
-		isInSupplyThisTurn = false;
-
-	}
-
-
-	public int getID()
-	{
-		return ID;
-	}
-	public int getCurrentMovement()
-	{
-		return currentMoveFactor;
-	}
-	public int getCurrentDefenseFactor()
-	{
-		return currentDefenseFactor;
-	}
-
-	public int getCurrenAttackFactor(){
-		return currentAttackFactor;
-	}
-	public int getAtStartAttackFactor(){
-		return atStartAttackFactor;
-	}
-
-	public Hex getHexOccupy()
-	{
-		return hexOccupy;
-	}
-	public void setMovedThisTurn(int turn) {
-		turnMoved =  turn;
-	}
-	public int  getMovedLast() {
-		return turnMoved;
-	}
-	public boolean isEliminated(){
-		return isEliminated;
-	}
-	public boolean isExertZOC(){
-		return isExertZOC;
-	}
-	public void setExertZoc(){
-		isExertZOC = true;
-	}
 
 
 
 
-	/**
-	 *  Unit tostring display info about unit for debugging
-	 */
-	@Override
-	public String toString() {
-		return String.format(designation+" "+ID+" ");
-	}
-	/**
-	 *  Get a unit by its ID
-	 * @param idSearch
-	 * @return
-	 */
-	public static Unit getUnitByID(int idSearch)
-	{
-		for (Unit unit:arrGameCombatUnits){
-			if (unit.getID() == idSearch){
-				return unit;
-			}
-		}
-		return null;
-	}
 
-	/**
-	 *  START OF UNIT STATIC METHODS
-	 */
 
 
 	/**
@@ -766,10 +593,10 @@ public class Unit {
 			sXML.append(String.format("%02d", unit.ID));
 			sXML.append(strTerm);
 			sXML.append(strHexX);
-			if (unit.getHexOccupy() == null){
-				unit.hexOccupy =  Hex.hexTable[0][0];
-				int i =0;
-			}
+//			if (unit.getHexOccupy() == null){
+//				unit.hexOccupy =  Hex.hexTable[0][0];
+//				int i =0;
+//			}
 			sXML.append(unit.hexOccupy.xTable);
 			sXML.append(strTerm);
 			sXML.append(strHexY);
@@ -779,19 +606,19 @@ public class Unit {
 			sXML.append(String.format("%02d", unit.currentStep));
 			sXML.append(strTerm);
 			sXML.append(strCurrentMove);
-			sXML.append(String.format("%02d", unit.getCurrentMovement()));
+	//		sXML.append(String.format("%02d", unit.getCurrentMovement()));
 			sXML.append(strTerm);
 			sXML.append(strCurrentAttack);
-			sXML.append(String.format("%02d", unit.getCurrenAttackFactor()));
+	//		sXML.append(String.format("%02d", unit.getCurrenAttackFactor()));
 			sXML.append(strTerm);
 			sXML.append(strCurrentDefense);
-			sXML.append(String.format("%02d", unit.getCurrentDefenseFactor()));
+	//		sXML.append(String.format("%02d", unit.getCurrentDefenseFactor()));
 			sXML.append(strTerm);
 			sXML.append(strAtStartAttack);
 			sXML.append(String.format("%02d", unit.atStartAttackFactor));
 			sXML.append(strTerm);
 			sXML.append(strAtStartDefense);
-			sXML.append(String.format("%02d", unit.atStartDefenseFactor));
+	//		sXML.append(String.format("%02d", unit.atStartDefenseFactor));
 			sXML.append(strTerm);
 			sXML.append(strMoveTurn);
 			sXML.append(String.format("%02d", unit.turnMoved));
@@ -799,13 +626,6 @@ public class Unit {
 
 			sXML.append(strCanAttack);
 			if (unit.canAttackThisTurn) {
-				sXML.append("true");
-			}else{
-				sXML.append("false");
-			}
-			sXML.append(strTerm);
-			sXML.append(strLimbered);
-			if (unit.isLimbered()) {
 				sXML.append("true");
 			}else{
 				sXML.append("false");
@@ -869,10 +689,10 @@ public class Unit {
 		for (Element xmlunit: xmlUnitAll)
 		{
 			int ID  = Integer.parseInt(xmlunit.getChildByName("ID").getAttribute("value"));
-			Unit unit=getUnitByID(ID);
+//			Unit unit=getUnitByID(ID);
 			String strHex = xmlunit.getChildByName("hex").getAttribute("value");
 			Hex  hex = null;
-			unit.hexOccupy = hex;
+//			unit.hexOccupy = hex;
 
 		}
 	}
@@ -889,22 +709,41 @@ public class Unit {
 		 *  Load all Unit xml files for this game
 		 */
 		FileHandle fileHandle;
-		fileHandle = Gdx.files.internal("units/german.xml");
+		fileHandle = Gdx.files.internal("units/russiannew.xml");
 		loadNationUnits(fileHandle, false);
-		fileHandle = Gdx.files.internal("units/allies.xml");
+		fileHandle = Gdx.files.internal("units/frenchnew.xml");
 		loadNationUnits(fileHandle, true);
-		unitAirplane = new Unit(null,true,true);
+		int i=0;
 
 	}
 	private static  void loadNationUnits(FileHandle fileHandle,boolean isAllies)
 	{
 		XmlReader reader = new XmlReader();
 		Element root = reader.parse(fileHandle);
-		Array<Element> xmlUnitAll = root.getChildrenByName("unit");
-		Unit unit;
-		for (Element xmlunit: xmlUnitAll)
+		Array<Element> xmlCorpAll = root.getChildrenByName("corp");
+		Corp corp;
+		for (Element xmlcorp: xmlCorpAll)
 		{
-			unit = new Unit(xmlunit, isAllies, false);
+			if (xmlcorp.getChildByName("name") == null){
+				int b=0;
+			}
+			String corpName = xmlcorp.getChildByName("name").getAttribute("value");
+			corp = new Corp(corpName, isAllies);
+			Array<Element> xmlDiv = xmlcorp.getChildrenByName("division");
+			for (Element xmldivision: xmlDiv){
+				String divName = xmlcorp.getChildByName("name").getAttribute("value");
+				Division div = new Division(divName,corp);
+				Array<Element> xmlBrig = xmldivision.getChildrenByName("brigade");
+				for (Element xmlBrigade:xmlBrig){
+					String strBrigade= xmlBrigade.getAttribute("value");
+					Unit unit= new Unit(isAllies, strBrigade,corp,div,xmlBrigade);
+//					String strList[] = strBrigade.split(",");
+//					this.isAllies = isAllies;
+//					if (strList.length >= 1){
+
+					//};
+				}
+			}
 		}
 
 	}
@@ -974,6 +813,17 @@ public class Unit {
 		}
 		return arrReturn;
 	}
+	public static ArrayList<Unit> getAllRussian() {
+		ArrayList<Unit> arrReturn = new ArrayList<>();
+		for (Unit unit:arrGameCombatUnits)
+		{
+			if (!unit.isAllies&& !unit.isEliminated)
+			{
+				arrReturn.add(unit);
+			}
+		}
+		return arrReturn;
+	}
 	/**
 	 * Get all onboard allied combat units
 	 * @return
@@ -997,7 +847,7 @@ public class Unit {
 		ArrayList<Unit> arrReturn = new ArrayList<>();
 		for (Unit unit:arrGameCombatUnits)
 		{
-			if (unit.isOnBoard  && unit.isAxis && !unit.isEliminated)
+			if (unit.isOnBoard  && !unit.isAllies && !unit.isEliminated)
 			{
 				arrReturn.add(unit);
 			}
@@ -1008,7 +858,7 @@ public class Unit {
 		ArrayList<Unit> arrReturn = new ArrayList<>();
 		for (Unit unit:arrGameCombatUnits)
 		{
-			if (unit.isAxis)
+			if (!unit.isAllies)
 			{
 				arrReturn.add(unit);
 			}
@@ -1052,30 +902,6 @@ public class Unit {
 
 
 
-	public static void initOutOfSupplyThisTurn(boolean isAlliesFlag)
-	{
-		for (Unit unit:arrGameCombatUnits){
-			if (unit.isAllies == isAlliesFlag) {
-				unit.setOffSupplyThisTurn();
-			}
-		}
-	}
-	public static void initLimber(boolean isAllied)
-	{
-		if (isAllied){
-			for (Unit unit:Unit.getAllied()){
-				if (unit.isArtillery){
-					unit.setArtilleryLimbered();
-				}
-			}
-		}else{
-			for (Unit unit:Unit.getAxis()){
-				if (unit.isArtillery){
-					unit.setArtilleryLimbered();
-				}
-			}
-		}
-	}
 
 	public static void initCanAttack()
 	{
@@ -1129,12 +955,6 @@ public class Unit {
 	}
 
 
-	public int getRange() {
-		if (type.contains("Neber") || designation.contains("155")){
-			return 4;
-		}
-		return 3;
-	}
 	int disorganizedAttackSave;
 	int disOrganizedDefendSave;
 	int disOrganizedMove;
@@ -1143,12 +963,9 @@ public class Unit {
 			isDisorganized = true;
 			disorganizedAttackSave = currentAttackFactor;
 			currentAttackFactor = 0;
-			disOrganizedDefendSave = currentDefenseFactor;
 			disOrganizedMove = currentMoveFactor;
-			float defend = currentDefenseFactor;
 			float move = currentMoveFactor;
 			isExertZOC = false;
-			currentDefenseFactor = (int) ((defend / 2F) + .5f);
 			currentMoveFactor = (int) ((move / 2F) + .5f);
 			if (getHexOccupy() != null) {
 				getHexOccupy().setZOCs();
@@ -1159,65 +976,6 @@ public class Unit {
 		}
 	}
 
-	public void setOffDisorganized() {
-		isDisorganized = false;
-		currentAttackFactor = disorganizedAttackSave;
-		isExertZOC = true;
-		currentDefenseFactor = disOrganizedDefendSave;
-		currentMoveFactor = disOrganizedMove;
-		if (getHexOccupy() != null){
-			getHexOccupy().setZOCs();
-		}
-		if (getMapCounter() != null) {
-			getMapCounter().getCounterStack().setPoints();
-		}
-
-	}
-	static public ArrayList<Unit> getAxisDisorganized(){
-		ArrayList<Unit> arrWork = new ArrayList<>();
-		for (Unit unit: getOnBoardAxis()){
-			if (unit.isDisorganized){
-				arrWork.add(unit);
-			}
-		}
-		return arrWork;
-	}
-	static public void initUntouchable(boolean isAllies){
-		ArrayList<Unit> arrUnits = new ArrayList<>();
-		if (!isAllies){
-			arrUnits.addAll(getOnBoardAxis());
-		}else{
-			arrUnits.addAll(getOnBoardAllied());
-		}
-		for (Unit unit:arrUnits){
-			if (unit.getMapCounter() != null){
-				unit.getMapCounter().getCounterStack().stack.setTouchable(Touchable.disabled);
-			}
-		}
-	}
-	static public void initTouchable(boolean isAllies){
-		ArrayList<Unit> arrUnits = new ArrayList<>();
-		if (!isAllies){
-			arrUnits.addAll(getOnBoardAxis());
-		}else{
-			arrUnits.addAll(getOnBoardAllied());
-		}
-		for (Unit unit:arrUnits){
-			if (unit.getMapCounter() != null){
-				unit.getMapCounter().getCounterStack().stack.setTouchable(Touchable.enabled);
-			}
-		}
-	}
-
-	static public ArrayList<Unit> getAlliedDisorganized(){
-		ArrayList<Unit> arrWork = new ArrayList<>();
-		for (Unit unit: getOnBoardAllied()){
-			if (unit.isDisorganized){
-				arrWork.add(unit);
-			}
-		}
-		return arrWork;
-	}
 	public void setCanAttackThisTurnOff() {
 		canAttackThisTurn = false;
 	}
@@ -1245,9 +1003,6 @@ public class Unit {
 		currentStep = stepNum;
 	}
 
-	public void setCurrentDefenseFactor(int defense) {
-		currentDefenseFactor = defense;
-	}
 
 	public boolean isDisorganized() {
 		return isDisorganized;
@@ -1256,38 +1011,11 @@ public class Unit {
 		cntUnit = 0;
 	}
 
-	/**
-	 *  reduce attack by 1/4 and defense by 1/2
-	 */
-	public void reduceCombat() {
-		float attack = currentAttackFactor;
-		float newAttack = (attack/4) +.5F;
-		currentAttackFactor = (int)newAttack;
-		float defense = currentDefenseFactor;
-		float newDefense = (defense/2) +.5F;
-		currentDefenseFactor = (int)newDefense;
-		if (currentDefenseFactor < 1){
-			currentDefenseFactor =1;
-		}
-		if (currentAttackFactor < 1){
-			currentAttackFactor =1;
-		}
-		if (atStartDefenseFactor < 1){
-			atStartDefenseFactor =1;
-		}
-		if (atStartAttackFactor < 1){
-			atStartAttackFactor =1;
-		}
-		getMapCounter().getCounterStack().setPoints();
-	}
 
 	public void setAtStartAttackFactor(int attack) {
 		atStartAttackFactor = attack;
 	}
 
-	public void setAtStartDefenseFactor(int defense) {
-		atStartDefenseFactor = defense;
-	}
 
 	public int getEntryX() {
 		return xSetup;
@@ -1299,7 +1027,32 @@ public class Unit {
 
 	public void resetAttack() {
 		currentAttackFactor = atStartAttackFactor;
-		currentDefenseFactor = atStartDefenseFactor;
+	}
+
+	public void setMovedThisTurn(int movedThisTurn) {
+		this.movedThisTurn = movedThisTurn;
+	}
+	int movedThisTurn =0;
+
+	public int getMovedThisTurn() {
+		return movedThisTurn;
+	}
+
+	public boolean isEliminated() {
+		return isEliminated;
+	}
+	private boolean isElimited = false;
+
+	public int getCurrentAttackFactor() {
+		return currentAttackFactor;
+	}
+
+	public int getCurrentMoveFactor() {
+		return currentMoveFactor;
+	}
+
+	public int getMovedLast() {
+		return turnMoved;
 	}
 }
 

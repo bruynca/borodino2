@@ -248,7 +248,7 @@ public class SplashScreen {
 
 
 //            Game game = new Game();
-            Screen screenGame = new Screen(Borodino.instance.mapStage);
+            Screen screen = new Screen(Borodino.instance.mapStage);
             CenterScreen centerScreen = new CenterScreen();
             Hex.loadHexes();
             Map map = new Map();
@@ -339,6 +339,7 @@ public class SplashScreen {
         soundsManager.load("sounds/stuka.mp3", Sound.class);
         soundsManager.load("sounds/mortar.mp3", Sound.class);
         soundsManager.load("sounds/tada.mp3", Sound.class);
+        unitsManager.load("counter/counter.txt", TextureAtlas.class);
         TextureLoader.TextureParameter param = new TextureLoader.TextureParameter();
         param.minFilter = Texture.TextureFilter.Linear;
 
@@ -358,6 +359,7 @@ public class SplashScreen {
         arrActorsMenu = stage.getActors();
         stage.clear();
         sound.stop();
+        Borodino.instance.setInSplash(false);
     }
     public void sounOff(){
         sound.stop();

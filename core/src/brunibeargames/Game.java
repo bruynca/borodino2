@@ -36,7 +36,7 @@ public class Game {
   //      Hex.LoadBridges();
         Unit.resetID();
         Unit.loadAllUnits();
-//        WinDebug winDebug = new WinDebug();
+        WinDebug winDebug = new WinDebug();
         nextPhase = new NextPhase();
         System.gc();
         WinModal winModal = new WinModal();
@@ -47,7 +47,7 @@ public class Game {
             ArrayList<Unit> arrAxis =Unit.getSetupUnits(false);
             Unit.loadUnits(arrAxis);
 //            nextPhase.nextPhase();
-            TopMenu topMenu = new TopMenu();
+            //TopMenu topMenu = new TopMenu();
             /**
              *
              */
@@ -55,7 +55,7 @@ public class Game {
                 TurnCounter.instance.updateText(i18NBundle.format("selectamerican"));
  //               WinCardsChoice winCardsChoice = new WinCardsChoice(true);
             }else if (GameSetup.instance.isRussianVersusAI()){
-                TurnCounter.instance.updateText(i18NBundle.format("selectgerman"));
+                //TurnCounter.instance.updateText(i18NBundle.format("selectgerman"));
  //               WinCardsChoice winCardsChoice = new WinCardsChoice(false);
             }else{
                 TurnCounter.instance.updateText(i18NBundle.format("selectamerican"));

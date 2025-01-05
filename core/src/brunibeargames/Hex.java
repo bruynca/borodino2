@@ -37,13 +37,13 @@ public class Hex {
 	public int xTable; // whete in hexTable this hex is
 	public int yTable; //
 	private ArrayList<Unit> arrUnitsInHex = new ArrayList<>();
-	boolean[] isAxisOccupied;
-	boolean[] isAlliedOccupied;
-	private boolean isAxisEntered;
+	boolean[] isAxisOccupied = new boolean[20];
+	boolean[] isAlliedOccupied = new boolean[20];
+	private boolean isRussianEntered;
 	private int[] calcMoveCost;
 	private int range;
-	boolean[] isAlliedZOC;
-	boolean[] isAxisZOC;
+	boolean[] isAlliedZOC = new boolean[20];
+	boolean[] isAxisZOC = new boolean[20];
 	private boolean hasBeenAttackedThisTurn;
 
 	public Hex(int xIn, int yIn) {
@@ -1029,14 +1029,14 @@ public class Hex {
 		 * Changes for Mobile Assualt
 		 */
 		//      Gdx.app.log("Hex","enterHex unit="+unit+" Hex= "+this+" id="+unit.getID());
-		if (unit.isAxis) {
-			isAxisEntered = true;
+		if (!unit.isAllies) {
+			isRussianEntered = true;
 		}
 		if (unit.isAllies) {
-			isAxisEntered = false;
+			isRussianEntered = false;
 		}
 		arrUnitsInHex.add(0, unit);
-		if (unit.isAxis && !checkAlliesInHex()) {
+		if (!unit.isAllies && !checkAlliesInHex()) {
 			isAxisOccupied[0] = true;
 			isAlliedOccupied[0] = false;
 		}
@@ -1239,7 +1239,7 @@ public class Hex {
 		if (unit.isAllies && checkAxisInHex()){
 			return false;
 		}
-		if (unit.isAxis && checkAlliesInHex()){
+		if (!unit.isAllies && checkAlliesInHex()){
 			return false;
 		}
 		int stackInHex =  0;

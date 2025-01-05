@@ -43,6 +43,7 @@ public class Screen
 
 	public static Screen instance;
 	Stage mapStage;
+	Stage hexStage;
 	boolean isMinZoom = false;
 	boolean isPanAllowed = true;
 	float screenWidth;
@@ -60,6 +61,7 @@ public class Screen
 		Gdx.app.log("Screen", "Constructor");
 
 		instance = this;
+		hexStage = Borodino.instance.hexStage;
 		mapStage = inStage;
 		texture = SplashScreen.instance.getMap();
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -100,7 +102,7 @@ public class Screen
 	 * Render the scene
 	 */
 
-	public void Render(SpriteBatch batch)
+	public void render(SpriteBatch batch)
 	{
 		batch.setProjectionMatrix(cameraBackGround.combined);
 		batch.begin();
@@ -187,6 +189,12 @@ public class Screen
 		((OrthographicCamera) mapStage.getCamera()).position.x = cameraBackGround.position.x;
 		((OrthographicCamera) mapStage.getCamera()).position.y = cameraBackGround.position.y;
 		((OrthographicCamera) mapStage.getCamera()).update();
+		((OrthographicCamera) hexStage.getCamera()).zoom = zoom;
+		((OrthographicCamera) hexStage.getCamera()).update();
+		((OrthographicCamera) hexStage.getCamera()).position.x = cameraBackGround.position.x;
+		((OrthographicCamera) hexStage.getCamera()).position.y = cameraBackGround.position.y;
+		((OrthographicCamera) hexStage.getCamera()).update();
+
 
 		scrollMaxX = (backGroundTextureWidth - (screenWidth * zoom)) / 2;
 		scrollMaxY = (backGroundTextureHeight - (screenHeight * zoom)) / 2;
@@ -252,6 +260,9 @@ public class Screen
 		((OrthographicCamera) mapStage.getCamera()).position.x = cameraBackGround.position.x;
 		((OrthographicCamera) mapStage.getCamera()).position.y = cameraBackGround.position.y;
 		((OrthographicCamera) mapStage.getCamera()).update();
+		((OrthographicCamera) hexStage.getCamera()).position.x = cameraBackGround.position.x;
+		((OrthographicCamera) hexStage.getCamera()).position.y = cameraBackGround.position.y;
+		((OrthographicCamera) hexStage.getCamera()).update();
 
 	}
 
@@ -352,6 +363,11 @@ public class Screen
 		((OrthographicCamera) mapStage.getCamera()).position.x = cameraBackGround.position.x;
 		((OrthographicCamera) mapStage.getCamera()).position.y = cameraBackGround.position.y;
 		((OrthographicCamera) mapStage.getCamera()).update();
+		((OrthographicCamera) hexStage.getCamera()).zoom = zoom;
+		((OrthographicCamera) hexStage.getCamera()).update();
+		((OrthographicCamera) hexStage.getCamera()).position.x = cameraBackGround.position.x;
+		((OrthographicCamera) hexStage.getCamera()).position.y = cameraBackGround.position.y;
+		((OrthographicCamera) hexStage.getCamera()).update();
 		scrollMaxX = (backGroundTextureWidth - (screenWidth * zoom)) / 2;
 		scrollMaxY = (backGroundTextureHeight - (screenHeight * zoom)) / 2;
 		CheckOverPan();

@@ -47,7 +47,7 @@ public class CounterDescription {
         Vector2 v2 = Map.ConvertToScreen(unit.getHexOccupy());
         int y = Gdx.graphics.getHeight();
         int x = Gdx.graphics.getWidth();
-        String str = unit.subDesignation + "\n";
+        String str = " ";
         winToolTip = new WinToolTip(str);
         if (v2.y > y - 50){
             v2.y -=100;

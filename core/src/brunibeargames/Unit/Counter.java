@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import brunibeargames.Borodino;
 import brunibeargames.Combat;
 import brunibeargames.Hex;
-import brunibeargames.HexSurround;
 import brunibeargames.HiliteHex;
 import brunibeargames.NextPhase;
 import brunibeargames.Phase;
@@ -96,12 +95,6 @@ public class Counter {
                             Combat.instance.refreahAttackCancel();
                         }
                     }
-                }else  if (event.getButton( ) == Input.Buttons.LEFT){
-                    if (unit.isArtillery && NextPhase.instance.isArtillery()){
-                        ArrayList<Hex> arrHex =  HexSurround.GetSurroundMapArr(unit.getHexOccupy(),unit.getRange());
-                        hiliteHexArtillery = new HiliteHex(arrHex, HiliteHex.TypeHilite.Range, null);
-                    }
-
                 }
                 return true;
             }

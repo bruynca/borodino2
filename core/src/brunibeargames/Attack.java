@@ -80,23 +80,16 @@ public class Attack extends Observable implements Observer  {
         this.isAI = isAI;
         this.isMobileAssualt = isMobileAssualt;
         for (Unit unit : hexTarget.getUnitsInHex()) {
-            if ((isAllies && unit.isAxis) || (!isAllies && unit.isAllies)) {
+            if ((isAllies && !!unit.isAllies) || (!isAllies && unit.isAllies)) {
                 arrDefenders.add(unit);
-                if (unit.isArtillery) {
-                    if (unit.isMobileArtillery){
-                        defenseStrength += 2;
-                    }else {
-                        defenseStrength += 1;
-                    }
-                } else {
  //                   if (unit.getInSupplyThisTurn()) {
-                        defenseStrength += unit.getCurrentDefenseFactor();
+                        defenseStrength += unit.getCurrentAttackFactor();
  //                   } else {
  //                       defenseStrength += unit.getCurrentDefenseFactor() / 2;
  //                   }
                 }
             }
-        }
+
         attackOdds = new AttackOdds(this);
         odds = attackOdds.oddactualString;
     }
@@ -148,7 +141,7 @@ public class Attack extends Observable implements Observer  {
             Hex hex;
 
             hex = unit.getHexOccupy();
-            float cntAttackStrength = unit.getCurrenAttackFactor();
+            float cntAttackStrength = unit.getCurrentAttackFactor();
 
   //          if (unit.inSupply()) {
  //           } else {
@@ -313,7 +306,7 @@ public class Attack extends Observable implements Observer  {
         if (isDefendHexVacant && attackerLosses != null && !attackerLosses.areAllEliminated){
             if (isMobileAssualt) {
                 for (Unit unit : arrAttackers) {
-                    if (!unit.isEliminated() && unit.getCurrentMovement() > 0){
+                    if (!unit.isEliminated() && unit.getCurrentMoveFactor() > 0){
                         CombatResults cb = new CombatResults(unit);
                         cb.setCanContinueMovement(true);
                     }

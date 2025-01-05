@@ -72,7 +72,7 @@ public class UnitMove {
 //		Gdx.app.log("UnitMove", "reDo");
 
 		Hex.loadCalcMoveCost(thread);
-		if (unit.getCurrenAttackFactor() < 1){
+		if (unit.getCurrentAttackFactor() < 1){
 			isAllowedMOA = false;
 		}
 		searchHexes(hexStart,moveLength,isAllowedMOA, checkTerrain,isFakeAI, thread);
@@ -193,15 +193,11 @@ public class UnitMove {
 		boolean isMOASpecial = false;
 		if (arrReference != null){
 			if (hexEnd.getUnitsInHex().size() > 0){
-				if (hexEnd.getUnitsInHex().get(0).isAllies && unit.isAxis||
-						hexEnd.getUnitsInHex().get(0).isAxis && unit.isAllies){
+				if (hexEnd.getUnitsInHex().get(0).isAllies && !unit.isAllies||
+						!hexEnd.getUnitsInHex().get(0).isAllies && unit.isAllies){
 					isMOASpecial = true;
 				}
 			}
-		}
-		if (unit.getID() == 43) {
-			int b=0;
-
 		}
 		if (isRedoCalc) {
 			Gdx.app.log("UnitMove","getLeastPath reDo");

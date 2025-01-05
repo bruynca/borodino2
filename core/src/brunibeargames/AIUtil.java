@@ -3,9 +3,7 @@ package brunibeargames;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -250,7 +248,7 @@ public class AIUtil {
         ArrayList<Hex>[] arrReturn = new ArrayList[arrUnitsin.size()];
         int ix=0;
         for (Unit unit:arrUnitsin){
-            int move = unit.getCurrentMoveNoBarrage();
+            int move = unit.getCurrentMoveFactor();
             UnitMove unitMove = new UnitMove(unit,move,true,true, thread);
             ArrayList<Hex> arrHexMove = new ArrayList<>();
             arrHexMove.addAll(unitMove.getMovePossible());
@@ -263,7 +261,7 @@ public class AIUtil {
         ArrayList<Hex>[] arrReturn = new ArrayList[arrUnitsin.size()];
         int ix=0;
         for (Unit unit:arrUnitsin){
-            int move = unit.getCurrentMovement();
+            int move = unit.getCurrentMoveFactor();
             UnitMove unitMove = new UnitMove(unit,move,isMOA,true, thread);
             ArrayList<Hex> arrHexMove = new ArrayList<>();
             arrHexMove.addAll(unitMove.getMovePossible());
@@ -433,7 +431,7 @@ public class AIUtil {
     public static ArrayList<Unit> cantReach(ArrayList<Unit> arrUnits, ArrayList<Hex> arrHexes) {
         ArrayList<Unit> arrReturn = new ArrayList<>();
         for (Unit unit:arrUnits){
-            int move = unit.getCurrentMovement();
+            int move = unit.getCurrentMoveFactor();
             UnitMove unitMove = new UnitMove(unit,move,true,true, 0);
             ArrayList<Hex> arrHexMove = new ArrayList<>();
             arrHexMove.addAll(unitMove.getMovePossible());
@@ -588,7 +586,7 @@ public class AIUtil {
         for (Unit unit:arrGermans){
 
             //          Gdx.app.log("AIFaker", "creatGermanMove="+unit);
-            UnitMove unitMove = new UnitMove(unit,unit.getCurrentMovement(),true,true,thread);
+            UnitMove unitMove = new UnitMove(unit,unit.getCurrentMoveFactor(),true,true,thread);
             arrArrHex[i] = unitMove.getMovePossible(thread);
  /*           if (arrArrHex[i].contains(Wiltz) || arrArrHex[i].contains(Hex.hexTable[8][11])) {
                 WinAIDisplay.instance.addSpecial(arrArrHex[i]);

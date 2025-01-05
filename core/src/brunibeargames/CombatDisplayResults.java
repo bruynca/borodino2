@@ -112,7 +112,7 @@ private Label alliedResults;
         if (combatResults.size() > 0) {
             for (int i = 0; i < combatResults.size(); i++) {
                 CombatResults combatResult = combatResults.get(i);
-                String str = combatResult.getUnit().designation + " " +combatResult.getUnit().subDesignation;
+                String str = " ";
                 if (combatResult.isDestroyed()) {
                     defender += i18NBundle.format("destroyed", str) + "\n";
                     //defender += combatResult.getUnitName() + " was destroyed" + "\n";
@@ -155,7 +155,7 @@ private Label alliedResults;
 
             for (int i = 0; i < combatResults.size(); i++) {
                 CombatResults combatResult = combatResults.get(i);
-                String str = combatResult.getUnit().designation + " " +combatResult.getUnit().subDesignation;
+                String str = " ";
                 if (combatResult.isDestroyed()) {
                     attacker += i18NBundle.format("destroyed", str  )+ "\n";
                     //attacker += combatResult.getUnitName() + " was destroyed" + "\n";
