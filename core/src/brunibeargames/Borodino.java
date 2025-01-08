@@ -31,12 +31,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Observable;
 
+import brunibeargames.Unit.Unit;
+
 
 public class Borodino extends Observable implements ApplicationListener, GestureListener, InputProcessor
  {
 	 SpriteBatch batch;
 	 Texture img;
-	 boolean isWriteTerrain = true;
+	 boolean isWriteTerrain = false;
+	 boolean isPlaceUnit = true;
 	 public Stage splashStage;
 
 	 public Stage guiStage;
@@ -387,10 +390,29 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 			
 			TerrainWriter(hex);
 		}
-		
+		if (isPlaceUnit){
+			if (unitPlace != null){
+				if (isFirstTime)
+				{
+					logger = Gdx.files.local("stream.dat");
+					logger.writeString("Path Data", false);
+					isFirstTime = false;
+				}
+				logger.writeString("{"+Integer.toString(unitPlace.ID)+","+Integer.toString(hex.xTable)+","+Integer.toString(hex.yTable)+"}",true);
+				Gdx.app.log("{"+Integer.toString(unitPlace.ID)+","+Integer.toString(hex.xTable)+","+Integer.toString(hex.yTable)+"}","");
+
+				unitPlace = null;
+			}
+
+		}
+
+
+
+
 		 
 		return true;
 	}
+	public Unit unitPlace= null;
 	boolean isFirstTime = true;
 	FileHandle logger;
 	StringBuffer logBuffer;

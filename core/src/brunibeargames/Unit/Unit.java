@@ -52,6 +52,7 @@ public class Unit {
 	public boolean isPolish;
 	public boolean isBavarian;
 	public boolean isWestphalian;
+	public boolean isWurttenburg;
 	public boolean isItalian;
 	public boolean isItalianGuard;
 	public boolean isGuard;
@@ -218,6 +219,8 @@ public class Unit {
 			setByXML(strList[0],xmlBrigade);
 		}
 		arrGameCombatUnits.add(this);
+		Gdx.app.log("Unit", "Constructor unit=" + this.brigade + "unitID=" + this.ID);
+
 
 
 
@@ -284,6 +287,10 @@ public class Unit {
 				break;
 			case "westphalian":
 				isWestphalian = true;
+				isFrench = false;
+				break;
+			case "wurtemburg":
+				isWurttenburg = true;
 				isFrench = false;
 				break;
 			case "polish":
@@ -511,8 +518,8 @@ public class Unit {
 		}
 		if (counter != null) {
 			Stack stack = counter.getCounterStack().stack;
-			counter.getCounterStack().setStep(stack);
 			counter.getCounterStack().setPoints();
+
 			final Image image = new Image(tStar);
 			image.setPosition(stack.getX()+10,stack.getY()+10);
 			image.addAction(Actions.fadeIn((.05f)));
@@ -734,11 +741,12 @@ public class Unit {
 		Corp corp;
 		for (Element xmlcorp: xmlCorpAll)
 		{
-			if (xmlcorp.getChildByName("name") == null){
-				int b=0;
-			}
 			String corpName = xmlcorp.getChildByName("name").getAttribute("value");
-			corp = new Corp(corpName, isAllies);
+			String corpNum = " ";
+			if (xmlcorp.hasChild("abname")) {
+				corpNum = xmlcorp.getChildByName("abname").getAttribute("value");
+			}
+			corp = new Corp(corpNum,corpName, isAllies);
 			Array<Element> xmlDiv = xmlcorp.getChildrenByName("division");
 			for (Element xmldivision: xmlDiv){
 				String divName = xmldivision.getChildByName("name").getAttribute("value");
@@ -1063,6 +1071,10 @@ public class Unit {
 
 	public int getMovedLast() {
 		return turnMoved;
+	}
+
+	public Corp getCorp() {
+		return corp;
 	}
 }
 

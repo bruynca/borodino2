@@ -11,6 +11,7 @@ public class FontFactory {
     public BitmapFont largeFontWhite;
     public BitmapFont jumboFont;
     public BitmapFont yellowFont;
+    public BitmapFont corpFont;
 
     //	BitmapFontData usWhiteData;
     FreeTypeFontGenerator.FreeTypeFontParameter parameter;
@@ -46,6 +47,16 @@ public class FontFactory {
         jumboFont =  generator.generateFont(parameter); // font size 10 pixels
 
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size =  30;
+        parameter.genMipMaps = true;
+
+        parameter.color = Color.YELLOW;
+        parameter.borderColor = new Color(0,0,0,.5f);
+        parameter.borderWidth = 3;
+
+        corpFont =  generator.generateFont(parameter); // font size 10 pixels
+
+        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 26;
         parameter.color = Color.YELLOW;
         parameter.borderColor = Color.RED;
@@ -78,6 +89,10 @@ public class FontFactory {
     public BitmapFont GetMediumFont()
     {
         return jumboFont;
+    }
+    public BitmapFont GetCoroFont()
+    {
+        return corpFont;
     }
 
 

@@ -20,6 +20,7 @@ public class CounterStack {
     Label labelName;
     Label labelSub;
     Image imgSil;
+    Label labelCorp;
     Stack stack;
     Label labelPoints;
     Image hilite;
@@ -30,8 +31,12 @@ public class CounterStack {
     static TextureRegion bavariancalvary;
     static TextureRegion bavarianline2;
     static TextureRegion     cannongame;
+    static TextureRegion     cannongamerussian;
     static TextureRegion    cossack;
     static TextureRegion    russiancalvary;
+    static TextureRegion    wurtenburgcavalry;
+    static TextureRegion    wurtenburgline;
+    static TextureRegion    counterwurtenburg;
     static TextureRegion    counterbavarian;
     static TextureRegion    counterwestphalian;
     static TextureRegion    counterfrenchguard;
@@ -63,6 +68,8 @@ public class CounterStack {
 
     static Label.LabelStyle labelStyleName2;
     static Label.LabelStyle labelStyleName3;
+    private static Label.LabelStyle labelStyleCorp;
+
     static ArrayList<CounterStack> arrHilited = new ArrayList<>();
     static ArrayList<CounterStack> arrShaded = new ArrayList<>();
 
@@ -91,6 +98,7 @@ public class CounterStack {
         bavarianline2 = textureAtlas.findRegion("bavarianline2");
 
         cannongame = textureAtlas.findRegion("cannongame");
+        cannongamerussian = textureAtlas.findRegion("cannongamerussian");
 
         cossack = textureAtlas.findRegion("cossack");
 
@@ -131,12 +139,17 @@ public class CounterStack {
 
         westphalianline = textureAtlas.findRegion("westphalianline");
         russiancalvary = textureAtlas.findRegion("russiancalvary");
+        wurtenburgcavalry = textureAtlas.findRegion("wurtemburgcavalry");
+        wurtenburgline = textureAtlas.findRegion("wurtemburgline");
+        counterwurtenburg = textureAtlas.findRegion("counterwurtemburg");
         movepic = textureAtlas.findRegion("moved");
         hilitePic = textureAtlas.findRegion("hilite");
+
         labelStyleName
                 = new Label.LabelStyle(FontFactory.instance.largeFont, Color.RED);
          labelStyleName2 = new Label.LabelStyle(FontFactory.instance.jumboFont, Color.WHITE);
         labelStyleName3 = new Label.LabelStyle(FontFactory.instance.largeFontWhite, Color.WHITE);
+        labelStyleCorp = new Label.LabelStyle(FontFactory.instance.corpFont, Color.YELLOW);
         arrHilited.clear();
         arrShaded.clear();
 
@@ -157,10 +170,14 @@ public class CounterStack {
         labelName= new Label(strBrigade,labelStyleName3);
         labelName.setTouchable(Touchable.disabled);
         labelName.setAlignment(Align.top);
+        labelName.setScale(Counter.scaleBrigade);
         stack.addActor(labelName);
         arrActors.add(imgSil);
+        setCorp();
+        stack.addActor(labelCorp);
+
         setPoints();
-        stack.setScale(stackScale);
+//        stack.setScale(stackScale);
         stack.addActor(labelPoints);
 
     }
@@ -168,7 +185,7 @@ public class CounterStack {
     public void setPoints(){
 
         String strPoints = null;
-        strPoints = " "+unit.getCurrentAttackFactor()+"      "+unit.getCurrentMoveFactor();
+        strPoints = " "+unit.getCurrentAttackFactor()+"    "+unit.getCurrentMoveFactor();
         if (labelPoints != null){
             stack.removeActor(labelPoints);
             labelPoints = null;
@@ -178,53 +195,21 @@ public class CounterStack {
         labelPoints.setAlignment(Align.bottom);
 
     }
-    public void setStep(Stack stack){
- /**       if (step != null){
-            stack.removeActor(step);
+    public void setCorp(){
+        if (labelCorp != null){
+            stack.removeActor(labelCorp);
         }
-        if (unit.getCurrentStep() == 3){
-            step = new Image(threestep);
-        }else if (unit.getCurrentStep() == 2) {
-            step = new Image(twostep);
+
+        labelCorp = new Label(unit.getCorp().number, labelStyleCorp);
+        if (unit.getCorp().number.length() > 1){
+            labelCorp.setFontScale(.6f);
         }else{
-            step = new Image(onestep);
+            labelCorp.setFontScale((.8f));
         }
-        step.setTouchable(Touchable.disabled);
-        stack.addActor(step); */
+        labelCorp.setTouchable(Touchable.disabled);
+        labelCorp.setAlignment(Align.left);
+ //       labelCorp.setFontScale(1.3f);
     }
-    /*
-    public void setSupplyAmmo(){
-        if (supplyAmmo != null){
-            stack.removeActor(supplyAmmo);
-        }
-        if (unit.supplyUnit.getAmmoStatus() == SupplyUnit.Status.None){
-            supplyAmmo = new Image(ammonone);
-        }else if (unit.supplyUnit.getAmmoStatus() == SupplyUnit.Status.Half) {
-            supplyAmmo = new Image(ammowarn);
-        }else{
-            supplyAmmo = new Image(ammoall);
-        }
-        supplyAmmo.setTouchable(Touchable.disabled);
-        stack.add(supplyAmmo);
-    }
-    public void setSupplyGas(){
-        if (unit.isAxis && !unit.isMechanized)
-        {
-            return;
-        }
-        if (supplyGas != null){
-            stack.removeActor(supplyGas);
-        }
-        if (unit.supplyUnit.getGasStatus() == SupplyUnit.Status.None){
-            supplyGas = new Image(gasnone);
-        }else if (unit.supplyUnit.getGasStatus() == SupplyUnit.Status.Half) {
-            supplyGas = new Image(gaswarn);
-        }else{
-            supplyGas = new Image(gasall);
-        }
-        supplyGas.setTouchable(Touchable.disabled);
-        stack.add(supplyGas);
-    }*/
     public void adjustFont(float adjust){
         labelPoints.setFontScale(adjust);
         if (labelName != null) { // allied
@@ -240,13 +225,17 @@ public class CounterStack {
         labelName= new Label(strBrigade,labelStyleName);
         labelName.setTouchable(Touchable.disabled);
         labelName.setAlignment(Align.top);
+        labelName.setScale(Counter.scaleBrigade);
+
         stack.addActor(labelName);
         //       arrActors.add(labelName);
         imgSil = getAlliedilhouttes();
         imgSil.setTouchable(Touchable.disabled);
         stack.addActor(imgSil);
         arrActors.add(imgSil);
-        setStep(stack);
+
+        setCorp();
+        stack.addActor(labelCorp);
         String str = String.valueOf(unit.getCurrentStep())+" ";
 //        labelSub= new Label(str,labelStyleName);
 //        labelSub.setTouchable(Touchable.disabled);
@@ -258,7 +247,7 @@ public class CounterStack {
 
 //        arrActors.add(labelName);
         setPoints();
-        stack.setScale(stackScale);
+ //       stack.setScale(stackScale);
 
         stack.addActor(labelPoints);
 
@@ -291,6 +280,10 @@ public class CounterStack {
             image = new Image(counterwestphalian);
             return image;
         }
+        if (unit.isWurttenburg){
+            image = new Image(counterwurtenburg);
+            return image;
+        }
 
         image = new Image(frenchline2);
         return image;
@@ -314,7 +307,7 @@ public class CounterStack {
             }
             return image;
         }
-        image = new Image(cannongame);
+        image = new Image(cannongamerussian);
         return image;
     }
 
@@ -352,15 +345,6 @@ public class CounterStack {
             }
             return image;
         }
-
-        if (unit.isFrench){
-            if (unit.isInfantry) {
-                image = new Image(frenchline2);
-            }else if(unit.isCalvary){
-                image = new Image(frenchcavalry);
-            }
-            return image;
-        }
         if (unit.isItalian){
             if (unit.isInfantry) {
                 image = new Image(italianline2);
@@ -390,6 +374,23 @@ public class CounterStack {
                 image = new Image(westphalianline);
             } else if (unit.isCalvary) {
                 image = new Image(westphaliancalvary);
+            }
+            return image;
+        }
+        if (unit.isWurttenburg) {
+            if (unit.isInfantry) {
+                image = new Image(wurtenburgline);
+            } else if (unit.isCalvary) {
+                image = new Image(wurtenburgcavalry);
+            }
+            return image;
+        }
+
+        if (unit.isFrench){
+            if (unit.isInfantry) {
+                image = new Image(frenchline2);
+            }else if(unit.isCalvary){
+                image = new Image(frenchcavalry);
             }
             return image;
         }

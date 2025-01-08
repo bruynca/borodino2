@@ -22,6 +22,7 @@ import brunibeargames.Phase;
 public class Counter {
     public static final int size =110;//130
     public static final int sizeOnMap = 100;
+    public static float scaleBrigade;
     TypeCounter type;
     Unit unit;
     public Stack stack;
@@ -42,6 +43,7 @@ public class Counter {
         this.type = type;
         stack = new Stack();
         counterStack = new CounterStack(unit,stack);
+        scaleBrigade = 130/size;
         if (type == TypeCounter.MapCounter)
         {
             addListnersStack(this);
@@ -84,6 +86,7 @@ public class Counter {
             }
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 Gdx.app.log("Counter","TouchDown unit="+unit);
+                Borodino.instance.unitPlace = unit;
                 if (event.getButton( ) == Input.Buttons.RIGHT)
                 {
                     Gdx.app.log("Counter","Right");

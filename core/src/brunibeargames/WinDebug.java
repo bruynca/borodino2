@@ -77,22 +77,24 @@ public class WinDebug {
 		int x=0;
 		int i=0;
 		for (Unit unit:arrUnits){
-			Hex hex= Hex.hexTable[x][y];
-			Gdx.app.log("Windebug", "Click Button unit="+unit.brigade+"i="+i);
-
-			arrUnits.get(i).placeOnBoard(hex);
-			x++;
-			i++;
-			if (x>40){
-				x=0;
-				y++;
+			if (unit.getCorp().getNumber().contains("4")) {
+				Hex hex = Hex.hexTable[x][y];
+				Gdx.app.log("Windebug", "Click Button unit=" + unit.brigade + "i=" + i);
+ 				unit.placeOnBoard(hex);
+//				arrUnits.get(i).placeOnBoard(hex);
+				x++;
+				i++;
+				if (x > 20) {
+					x = 0;
+					y++;
+				}
 			}
 //		if (i> 80){
 //				break;
 //		}
 
-		}
-		i=0;
+
+/*		i=0;
 		y++;
 		y++;
 		arrUnits.clear();
@@ -108,7 +110,7 @@ public class WinDebug {
 			if (x>40){
 				x=0;
 				y++;
-			}
+			} */
 
 
 		}
