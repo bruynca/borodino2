@@ -399,7 +399,9 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 					isFirstTime = false;
 				}
 				logger.writeString("{"+Integer.toString(unitPlace.ID)+","+Integer.toString(hex.xTable)+","+Integer.toString(hex.yTable)+"}",true);
-				Gdx.app.log("{"+Integer.toString(unitPlace.ID)+","+Integer.toString(hex.xTable)+","+Integer.toString(hex.yTable)+"}","");
+				Gdx.app.log("PLACE{"+Integer.toString(unitPlace.ID)+","+Integer.toString(hex.xTable)+","+Integer.toString(hex.yTable)+"}","");
+				unitPlace.getHexOccupy().leaveHex(unitPlace);
+				unitPlace.getMapCounter().place(hex);
 
 				unitPlace = null;
 			}

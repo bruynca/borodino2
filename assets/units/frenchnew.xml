@@ -409,7 +409,7 @@
 				<mf value="4"/>
 				<cf value="6"/>
 				<or value="italian"/>
-				<type value="artillery"/>
+				<type value="infantry"/>
 			</brigade>
 			<brigade value="Triare">
 				<mf value="6"/>
@@ -481,7 +481,13 @@
 				<mf value="4"/>
 				<cf value="2"/>
 				<or value="french"/>
-				<type value="infantry"/>
+				<type value="artillery"/>
+			</brigade>
+			<brigade value="Mongenet">
+				<mf value="4"/>
+				<cf value="3"/>
+				<or value="french"/>
+				<type value="artillery"/>
 			</brigade>
 		</division>
 		<division>
@@ -690,14 +696,20 @@
 		</division>
 	</corp>
 	<corp>
-	<name value="11th corp"/>
-	<abname value="11"/>
+	<name value="1Calvary corp"/>
+	<abname value="1C"/>
 
 		<division>
 			<name value="5th Heavy Calvary"/>
 			<brigade value="St Germai, 3,6,calvry"/>
 			<brigade value="Valence, 3,6,calvry"/>
 			<brigade value="Pons, 4,6,horseartillery"/>
+		</division>
+		<division>
+			<name value="2nd Light Calvary"/>
+			<brigade value="Jacquinot, 2,7,calvry"/>
+			<brigade value="Pire, 2,7,calvry"/>
+			<brigade value="Roussel, 2,7,calvry,polish"/>
 		</division>
 	</corp>
 	<corp>

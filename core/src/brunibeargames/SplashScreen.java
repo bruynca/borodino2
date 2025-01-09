@@ -21,6 +21,8 @@ import com.kotcrab.vis.ui.VisUI;
 
 import java.util.ArrayList;
 
+import brunibeargames.Unit.Unit;
+
 
 public class SplashScreen {
     static public SplashScreen instance;
@@ -255,6 +257,10 @@ public class SplashScreen {
             SoundsLoader soundsLoader = new SoundsLoader();
             map.InitializeHexSearch();
             UILoader.instance.assignAssets(UIManager);
+            Unit.loadAllUnits();
+
+            Scenarios.loadData();
+
             screenHeight= Gdx.graphics.getHeight();
             screenWidth = Gdx.graphics.getWidth();
  //           MainMenu mainMenu = new MainMenu(stage, sound,atlas,screenHeight, screenWidth);

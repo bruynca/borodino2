@@ -35,7 +35,6 @@ public class Game {
         Hex.initHex();
   //      Hex.LoadBridges();
         Unit.resetID();
-        Unit.loadAllUnits();
         WinDebug winDebug = new WinDebug();
         nextPhase = new NextPhase();
         System.gc();
