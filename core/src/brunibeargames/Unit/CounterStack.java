@@ -221,6 +221,8 @@ public class CounterStack {
 
         stack.add(backGround);
         stack.setSize(Counter.size,Counter.size);
+        stack.add(corpColor());
+
         String strBrigade = unit.brigade;
         labelName= new Label(strBrigade,labelStyleName);
         labelName.setTouchable(Touchable.disabled);
@@ -252,6 +254,11 @@ public class CounterStack {
         stack.addActor(labelPoints);
 
 //        arrActors.add(labelPoints);
+    }
+
+    private Image corpColor() {
+        Image corpImage = new Image(unit.getCorp().getCorpTtexture());
+        return corpImage;
     }
 
     private Image createBackAllied() {
