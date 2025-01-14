@@ -21,11 +21,15 @@ public class Corp {
             {200,172,133},{239,179,21},{218,255,127},{218,156,209},{255,127,127},
             {255,255,255},{255,28,127}};
     static int colorNum;
+    static ArrayList<Color> arrColor = new ArrayList<>();
     public Corp(String corpNumber, String corpName, boolean isAllies){
+        if (arrColor.size() == 0){
+            loadColorTable();
+        }
         name = corpName.toString();
         number = corpNumber.toString();
         this.isAllies = isAllies;
-        if (number.contains("4G")){
+        if (number.contains("1A")){
             int b =0;
         }
         if (isAllies){
@@ -35,13 +39,37 @@ public class Corp {
         }
 
 
-        Color color = new Color(clrArray[colorNum][0]/255f,clrArray[colorNum][1]/255f,clrArray[colorNum][2]/255f,255/255f );
+        Color color = arrColor.get(colorNum);
         colorNum++;
-        if (colorNum == clrArray.length){
+        if (colorNum == arrColor.size()){
             colorNum = 0;
         }
         corpTex = generateTexture(color);
     }
+
+    private static  void loadColorTable() {
+        arrColor.add(Color.CORAL);
+        arrColor.add(Color.LIME);
+        arrColor.add(Color.CHARTREUSE);
+        arrColor.add(Color.ORANGE);
+        arrColor.add(Color.CYAN);
+        arrColor.add(Color.SLATE);
+//        arrColor.add(Color.GOLD);
+        arrColor.add(Color.PINK);
+        for (int i=0; i <clrArray.length; i++){
+            Color color = new Color(clrArray[i][0]/255f,clrArray[i][1]/255f,clrArray[i][2]/255f,255/255f );
+            arrColor.add(color);
+        }
+        arrColor.add(Color.CORAL);
+        arrColor.add(Color.LIME);
+        arrColor.add(Color.CHARTREUSE);
+        arrColor.add(Color.ORANGE);
+        arrColor.add(Color.CYAN);
+        arrColor.add(Color.SLATE);
+//        arrColor.add(Color.GOLD);
+        arrColor.add(Color.PINK);
+    }
+
     public  Texture generateTexture(Color color){
         Pixmap pixmap = new Pixmap( 117, 118, Pixmap.Format.RGBA8888 );
         pixmap.setColor(color);

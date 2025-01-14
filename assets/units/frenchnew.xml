@@ -96,7 +96,7 @@
 				<mf value="4"/>
 				<cf value="2"/>
 				<or value="frenchguard"/>
-				<type value="infantry"/>
+				<type value="artillery"/>
 			</brigade>
 		</division>
 		<division>
@@ -111,13 +111,13 @@
 				<mf value="4"/>
 				<cf value="4"/>
 				<or value="frenchguardPolish"/>
-				<type value="artillery"/>
+				<type value="infantry"/>
 			</brigade>
 			<brigade value="Bronikwski">
 				<mf value="4"/>
 				<cf value="4"/>
 				<or value="frenchguardPolish"/>
-				<type value="artillery"/>
+				<type value="Infantry"/>
 			</brigade>
 		</division>
 		<division>
@@ -325,7 +325,7 @@
 				<or value="french"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade value="Morion">
+			<brigade value="Marion">
 				<mf value="4"/>
 				<cf value="3"/>
 				<or value="french"/>
@@ -392,6 +392,7 @@
 			<brigade value ="Hugel,2,4,wurtemburg"/>
 			<brigade value ="Koch,2,4,wurtemburg"/>
 			<brigade value ="Bruselle,3,4,wurtemburg"/>
+			<brigade value ="Scheeler,3,4,wurtemburg"/>
 		</division>
 		<division>
 		<name value="LC"/>
@@ -598,7 +599,7 @@
 				<or value="polish"/>
 				<type value="infantry"/>
 			</brigade>
-			<brigade value="Pazkowskiski">
+			<brigade value="Pazkowsksk">
 				<mf value="4"/>
 				<cf value="2"/>
 				<or value="polish"/>
@@ -669,6 +670,12 @@
 				<or value="polish"/>
 				<type value="horseartillery"/>
 			</brigade>
+			<brigade value="Gorski">
+				<mf value="4"/>
+				<cf value="1"/>
+				<or value="polish"/>
+				<type value="artillery"/>
+			</brigade>
 	</division>
 
 </corp>
@@ -696,7 +703,7 @@
 		</division>
 	</corp>
 	<corp>
-	<name value="1Calvary corp"/>
+	<name value="1st Calvary corp"/>
 	<abname value="1C"/>
 
 		<division>
@@ -713,8 +720,8 @@
 		</division>
 	</corp>
 	<corp>
-	<name value="12th corp"/>
-				<abname value="12"/>
+	<name value="2nd Calvary Corp"/>
+				<abname value="2C"/>
 
 		<division>
 			<name value="2nd Light Calvary"/>
@@ -724,14 +731,14 @@
 		</division>
 		<division>
 			<name value="2nd Heavy Calvary"/>
-			<brigade value="Wathier, 2,6,calvry"/>
+			<brigade value="Wathier, 3,6,calvry"/>
 			<brigade value="DeFrance, 2,6,calvry"/>
 			<brigade value="Parizet, 4,6,horseartillery"/>
 		</division>
 	</corp>
 	<corp>
-		<name value="13th corp"/>
-			<abname value="11"/>
+		<name value="3rd Calvary corp"/>
+			<abname value="3C"/>
 
 		<division>
 			<name value="3rd Light Calvary"/>
@@ -743,7 +750,7 @@
 		<division>
 			<name value="3rd Heavy Calvary"/>
 			<brigade value="Doumerc, 4,6,calvry"/>
-			<brigade value="LaHousav, 1,6,calvry"/>
+			<brigade value="LaHousav, 3,6,calvry"/>
 			<brigade value="Mouiller, 3,6,horseartillery"/>
 		</division>
 	</corp>

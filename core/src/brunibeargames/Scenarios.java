@@ -19,6 +19,67 @@ public class Scenarios {
                 {138,0,18},{137,0,18},{140,0,18},{141,0,18},{142,0,18},{143,0,18}};
     static  int[][] corp1Cs0Allies  ={{223,11,20},{221,13,16},{222,13,16},{220,11,16},
                          {219,12,15},{218,12,15}};
+
+    static int[][] corp5s0Allies = {{208,14,25},{196,14,25},{197,14,25},{198,12,26},{199,12,26},
+        {206,11,27},{203,8,27},{204,6,28},{205,5,28},{207,4,29}};
+
+    static int[][] corp2Cs0Allies = {{230,10,19},{228,10,19},{229,11,18}};
+
+    static int[][]corp3Cs01Allies = {{236,0,10},{231,0,10},{232,0,10},{238,0,18},{234,0,18}};
+
+    static int[][]corp3s01Allies = {{152,0,18},{153,0,18},{154,0,18},{155,0,18},{156,0,18},
+                                    {158,0,18},{159,0,18},{162,0,18},{166,0,18}};
+
+    static int[][] corpYGs01Allies = {{119,0,23},{118,0,23},{120,0,23},{122,0,23},{123,0,23},
+                                     {126,0,23},{124,1,22},{125,0,23},{117,0,23}};
+
+     static int[][] corpOGs01Allies = {{107,0,23},{108,0,23},{109,0,23},{110,0,23},
+                                     {111,0,23},{113,0,23},{112,0,23},{114,0,23}};
+
+
+     static int[][] corp2s01Russian = {{2,26,9},{6,26,9},{3,29,7},{1,30,7},
+                                       {0,29,7},{7,29,8},{4,28,8},{5,28,8}};
+
+    static int[][] corp3s01Russian = {{11,30,6},{10,30,6},{9,30,6},
+                                        {13,20,12},{14,20,12},{15,20,12}};
+
+    static int[][] corp4s01Russian = {{18,27,8},{19,27,8},{17,27,8},{16,27,8},
+                                     {20,27,9},{21,27,9},{22,27,9},{23,27,9}};
+
+    static int[][] corp5s01Russian = {{26,22,11},{27,27,11},{24,27,12},
+                                    {25,27,12},{29,27,12},{28,28,13},{33,28,12},
+                                    {32,28,12},{31,28,12},{30,28,12}};
+
+    static int[][] corp6s01Russian = {{34,23,11},{35,24,11},{41,24,10},{36,25,11},
+                                {38,24,12},{44,24,12},{42,26,11},{40,26,11},{39,26,11}};
+
+
+    static int[][] corp1Cs01Russian = {{45,34,9},{47,34,9},{48,34,9},{46,19,12}};
+
+    static int[][] corp2Cs01Russian = {{53,19,11},{51,19,11},{50,19,11},{49,19,11}};
+
+
+    static int[][] corp3Cs01Russian = {{54,18,9},{55,18,9},{56,27,10},{58,27,10}};
+
+    static int[][] corp1As01Russian = {{66,26,13},{67,26,13},{68,27,13},{69,27,13},{70,26,13}};
+
+    static int[][] corpCOs01Russian = {{59,19,12},{65,33,9},{62,33,9},{61,33,9},{60,33,9},{64,33,9}};
+
+
+    static int[][] corp7s01Russian = {{71,23,13},{77,24,13},{75,24,13},{74,24,13},
+                        {76,25,14},{73,16,21},{72,16,21}};
+
+    static int[][] corp8s01Russian = {{78,22,16},{80,22,16},{79,22,16},{83,22,15},
+            {81,19,15},{88,20,17},{85,20,17},{84,20,17},{86,17,22}};
+
+    static int[][] corp4Cs01Russian = {{89,21,16},{90,20,23},{91,19,17},
+                               {94,17,17},{92,24,16},{93,24,16}};
+
+    static int[][] corpKs01Russian = {{97,25,23},{96,25,23},{98,24,22},{95,24,22}};
+
+    static int[][] corp2As01Russian = {{99,25,14},{100,19,17},{101,24,15},{102,24,15}};
+
+    static int[][] corpMMs01Russian ={{103,29,17},{104,29,17},{105,29,17},{106,31,11}};
     static public ArrayList<Scenarios> arrScenarios = new ArrayList();
     ArrayList<Corp> alliedCorp = new ArrayList<>();
     ArrayList<Corp> russianCorp = new ArrayList<>();
@@ -43,6 +104,31 @@ public class Scenarios {
         loadCorpData("4",corp4s0Allies,sc);
         loadCorpData("1",corp1s0Allies,sc);
         loadCorpData("1C",corp1Cs0Allies,sc);
+        loadCorpData("5",corp5s0Allies,sc);
+        loadCorpData("2C",corp2Cs0Allies,sc);
+        loadCorpData("3C",corp3Cs01Allies,sc);
+        loadCorpData("3",corp3s01Allies,sc);
+        loadCorpData("YG", corpYGs01Allies,sc);
+        loadCorpData("OG", corpOGs01Allies,sc);
+
+        loadCorpDataRussian("2",corp2s01Russian,sc);
+        loadCorpDataRussian("3",corp3s01Russian,sc);
+        loadCorpDataRussian("4",corp4s01Russian,sc);
+        loadCorpDataRussian("5",corp5s01Russian,sc);
+        loadCorpDataRussian("6",corp6s01Russian,sc);
+        loadCorpDataRussian("1C",corp1Cs01Russian,sc);
+        loadCorpDataRussian("2C",corp2Cs01Russian,sc);
+        loadCorpDataRussian("3C",corp3Cs01Russian,sc);
+        loadCorpDataRussian("1A",corp1As01Russian,sc);
+        loadCorpDataRussian("CO",corpCOs01Russian,sc);
+        loadCorpDataRussian("7",corp7s01Russian,sc);
+        loadCorpDataRussian("8",corp8s01Russian,sc);
+        loadCorpDataRussian("4C",corp4Cs01Russian,sc);
+        loadCorpDataRussian("K",corpKs01Russian,sc);
+        loadCorpDataRussian("2A",corp2As01Russian,sc);
+        loadCorpDataRussian("MM",corpMMs01Russian,sc);
+
+
     }
 
     private static void loadCorpData(String intcorp, int[][] corpData, Scenarios sc) {
@@ -54,6 +140,19 @@ public class Scenarios {
             int y = corpData[i][2];
             Hex hex = Hex.hexTable[x][y];
             sc.alliedUnitHexs.add(new UnitHex(unit, hex));
+        }
+        arrScenarios.add(sc);
+
+    }
+    private static void loadCorpDataRussian(String intcorp, int[][] corpData, Scenarios sc) {
+        Corp corp =Corp.find(intcorp,false);
+        sc.russianCorp.add(corp);
+        for (int i = 0; i< corpData.length; i++) {
+            Unit unit = Unit.getUnitByID(corpData[i][0]);
+            int x = corpData[i][1];
+            int y = corpData[i][2];
+            Hex hex = Hex.hexTable[x][y];
+            sc.russianUnitsHex.add(new UnitHex(unit, hex));
         }
         arrScenarios.add(sc);
 

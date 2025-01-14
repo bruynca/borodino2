@@ -11,6 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import java.util.ArrayList;
 
+import brunibeargames.Unit.Unit;
+
 
 public class WinDebug {
 	TextButton textButton;
@@ -68,25 +70,26 @@ public class WinDebug {
 	boolean clicked = true;
 	public void ClickButton(InputEvent event, float xIn, float yIN) {
 		Gdx.app.log("Windebug", "Click Button");
+		Unit test = null;
 		Scenarios.loadUnitsOnBoard(0);
-/*
-		int y = 10;
+
+/*		int y = 8;
 		ArrayList<Unit> arrUnits = new ArrayList<>();
-		arrUnits.addAll(Unit.getAllAllied());
-		int x = 0;
+		arrUnits.addAll(Unit.getAllRussian());
+		int x = 25;
 		int i = 0;
 		for (Unit unit : arrUnits) {
 			if (unit.brigade.contains("Valen")){
 				int b=0;
 			}
-			if (unit.getCorp().getNumber().contains("1C")) {
+			if (unit.getCorp().getNumber().equals("MM")) {
 				Hex hex = Hex.hexTable[x][y];
 				Gdx.app.log("Windebug", "Click Button unit=" + unit.brigade + "i=" + i);
 				unit.placeOnBoard(hex);
 //				arrUnits.get(i).placeOnBoard(hex);
 				x++;
 				i++;
-				if (x > 20) {
+				if (x > 40) {
 					x = 0;
 					y++;
 				}

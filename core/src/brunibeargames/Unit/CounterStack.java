@@ -163,13 +163,18 @@ public class CounterStack {
         }
         stack.add(backGround);
         stack.setSize(Counter.size,Counter.size);
+        stack.add(corpColor());
+
         imgSil = getRussianSilhouttes();
         imgSil.setTouchable(Touchable.disabled);
         stack.addActor(imgSil);
+
         String strBrigade = unit.brigade;
-        labelName= new Label(strBrigade,labelStyleName3);
+        labelName= new Label(strBrigade,labelStyleName);
         labelName.setTouchable(Touchable.disabled);
         labelName.setAlignment(Align.top);
+        labelName.setScale(Counter.scaleBrigade);
+
         labelName.setScale(Counter.scaleBrigade);
         stack.addActor(labelName);
         arrActors.add(imgSil);
@@ -257,6 +262,9 @@ public class CounterStack {
     }
 
     private Image corpColor() {
+        if (unit.getCorp().number.equals("1A")){
+            int b=0;
+        }
         Image corpImage = new Image(unit.getCorp().getCorpTtexture());
         return corpImage;
     }
