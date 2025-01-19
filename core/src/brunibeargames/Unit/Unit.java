@@ -42,6 +42,9 @@ public class Unit {
 	static TextureAtlas textureAtlas;
 	static TextureRegion tStar;
 	static public Unit unitAirplane = null;
+	Officer officer;
+	public boolean isOfficer = false;
+	private  boolean isCommander;
 
 
 	/**
@@ -184,7 +187,7 @@ public class Unit {
 	 * Constructor
 	 * All units are loaded at start of the game
 	 */
-	public Unit(boolean isAllies, String  strBrigade, Corp corp, Division division, Element xmlBrigade)
+	public Unit(boolean isAllies, String  strBrigade, Corp corp, Division division, Element xmlBrigade,boolean isCommander, boolean isOfficer)
 	{
 		/**
 		 * update ID and increment so that each unit is unique
@@ -210,20 +213,29 @@ public class Unit {
 		if (isAllies){
 			isFrench = true;
 		}
-		isInfantry = true;
+		if (isOfficer){
+			this.isOfficer = true;
+			this.corp = corp;
+			this.currentMoveFactor = 6;
+			this.brigade = " ";
+			isInfantry = false;
+			String strList[] = strBrigade.split("\\s*,\\s*");
+			if (strList.length > 1) {
+				officer = new Officer(strList[0],corp,isAllies,strList[1], this);
+			}
 
-		String strList[] = strBrigade.split("\\s*,\\s*");
-		if (strList.length > 1) {
-			setByString(strList);
-		}else{
-			setByXML(strList[0],xmlBrigade);
+		}else {
+			isInfantry = true;
+			String strList[] = strBrigade.split("\\s*,\\s*");
+			if (strList.length > 1) {
+				setByString(strList);
+			}else{
+				setByXML(strList[0],xmlBrigade);
+			}
+
 		}
 		arrGameCombatUnits.add(this);
 		Gdx.app.log("Unit", "Constructor unit=" + this.brigade + "unitID=" + this.ID);
-
-
-
-
 	}
 
 	private void setByXML(String strBrigade, Element xmlBrigade) {
@@ -730,9 +742,47 @@ public class Unit {
 		loadNationUnits(fileHandle, false);
 		fileHandle = Gdx.files.internal("units/frenchnew.xml");
 		loadNationUnits(fileHandle, true);
-		int i=0;
-
+		fileHandle = Gdx.files.internal("units/leader.xml");
+		loadLeaderUnits(fileHandle, true);
 	}
+
+	private static void loadLeaderUnits(FileHandle fileHandle, boolean b) {
+		XmlReader reader = new XmlReader();
+		Element root = reader.parse(fileHandle);
+		Array<Element> xmlLeaderAll = root.getChildrenByName("officer");
+		for (Element xmlLeader : xmlLeaderAll) {
+			Array<Element> xmlAllStrings = xmlLeader.getChildrenByName("string");
+			for (Element xmlStrinf : xmlAllStrings) {
+				String strLeader = xmlStrinf.getAttribute("value");
+				String strList[] = strLeader.split(",");
+
+				boolean isAllies;
+				boolean isCommander = false;
+				boolean isOfficer = false;
+				if (strList[4].equals("false")) {
+					isAllies = false;
+				} else {
+					isAllies = true;
+				}
+				Corp corp = Corp.find(strList[3], isAllies);
+				if (corp == null) {
+					int i = 0;
+				}
+				if (strList[2].equals("officer")) {
+					isOfficer = true;
+				}
+
+				Unit unit = new Unit(isAllies, strLeader, corp, null, null, isCommander, isOfficer);
+				//					String strList[] = strBrigade.split(",");
+				//					this.isAllies = isAllies;
+				//					if (strList.length >= 1){
+
+				//};
+
+			}
+		}
+	}
+
 	private static  void loadNationUnits(FileHandle fileHandle,boolean isAllies)
 	{
 		XmlReader reader = new XmlReader();
@@ -747,6 +797,10 @@ public class Unit {
 				corpNum = xmlcorp.getChildByName("abname").getAttribute("value");
 			}
 			corp = new Corp(corpNum,corpName, isAllies);
+//			if (xmlcorp.hasChild("commander")){
+//				String strCommander = xmlcorp.getChildByName("commander").getAttribute("value");
+//				Unit unit = new Unit(isAllies, strCommander, corp, null, null, true, false);
+//			}
 			Array<Element> xmlDiv = xmlcorp.getChildrenByName("division");
 			for (Element xmldivision: xmlDiv){
 				String divName = xmldivision.getChildByName("name").getAttribute("value");
@@ -754,7 +808,7 @@ public class Unit {
 				Array<Element> xmlBrig = xmldivision.getChildrenByName("brigade");
 				for (Element xmlBrigade:xmlBrig){
 					String strBrigade= xmlBrigade.getAttribute("value");
-					Unit unit= new Unit(isAllies, strBrigade,corp,div,xmlBrigade);
+					Unit unit= new Unit(isAllies, strBrigade,corp,div,xmlBrigade, false, false);
 //					String strList[] = strBrigade.split(",");
 //					this.isAllies = isAllies;
 //					if (strList.length >= 1){

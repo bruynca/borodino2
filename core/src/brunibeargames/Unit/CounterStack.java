@@ -1,5 +1,6 @@
 package brunibeargames.Unit;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -157,6 +158,10 @@ public class CounterStack {
     }
 
     private void createRussianStack(Stack stack) {
+        if (unit.isOfficer) {
+            createRussianeOfficer(stack);
+            return;
+        }
         if (unit.isRussian){
             backGround  = new Image(counterrussian);
 
@@ -187,6 +192,37 @@ public class CounterStack {
 
     }
 
+    private void createRussianeOfficer(Stack stack) {
+        /**
+         *  load the texture regions
+         */
+        String mapName = unit.officer.map;
+        TextureRegion officer = textureAtlas.findRegion(mapName);
+        if (officer == null){
+            Gdx.app.log("createRussianOfficer", "cant find e="+mapName);
+
+        }
+        backGround  = new Image(officer);
+        stack.add(backGround);
+        stack.setSize(Counter.size,Counter.size);
+        stack.add(corpColor());
+
+
+        String strName = unit.officer.name;
+        labelName= new Label(strName,labelStyleName);
+        labelName.setTouchable(Touchable.disabled);
+        labelName.setAlignment(Align.top);
+        labelName.setScale(Counter.scaleBrigade);
+        stack.addActor(labelName);
+        arrActors.add(imgSil);
+        setCorp();
+        stack.addActor(labelCorp);
+
+        setPointsOfficer();
+//        stack.setScale(stackScale);
+        stack.addActor(labelPoints);
+    }
+
     public void setPoints(){
 
         String strPoints = null;
@@ -198,6 +234,19 @@ public class CounterStack {
         labelPoints = new Label(strPoints,labelStyleName2);
         labelPoints.setTouchable(Touchable.disabled);
         labelPoints.setAlignment(Align.bottom);
+
+    }
+    public void setPointsOfficer(){
+
+        String strPoints = null;
+        strPoints = " "+unit.getCurrentMoveFactor();
+        if (labelPoints != null){
+            stack.removeActor(labelPoints);
+            labelPoints = null;
+        }
+        labelPoints = new Label(strPoints,labelStyleName2);
+        labelPoints.setTouchable(Touchable.disabled);
+        labelPoints.setAlignment(Align.bottomLeft);
 
     }
     public void setCorp(){

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Corp {
     String name;
     public String number;
+    Color color;
     ArrayList<Unit> arrUnits = new ArrayList<>();
     Leader leader;
     boolean isAllies;
@@ -22,9 +23,11 @@ public class Corp {
             {255,255,255},{255,28,127}};
     static int colorNum;
     static ArrayList<Color> arrColor = new ArrayList<>();
+    static ArrayList<CorpColor> arrCorpColors =  new ArrayList();
     public Corp(String corpNumber, String corpName, boolean isAllies){
         if (arrColor.size() == 0){
             loadColorTable();
+            loadColorTable2();
         }
         name = corpName.toString();
         number = corpNumber.toString();
@@ -38,13 +41,72 @@ public class Corp {
             russianCorp.add(this);
         }
 
-
-        Color color = arrColor.get(colorNum);
+ //       for (CorpColor ccol:arrCorpColors){
+ //           if (number.equals(ccol.corpNumber)){
+ //               color = ccol.color;
+ //           }
+ //       }
+        color = arrColor.get(colorNum);
         colorNum++;
         if (colorNum == arrColor.size()){
             colorNum = 0;
         }
         corpTex = generateTexture(color);
+    }
+
+    private void loadColorTable2() {
+        CorpColor corpColor = new CorpColor(Color.valueOf("1EA88C"),"4");
+        arrCorpColors.add(corpColor);
+        corpColor = new CorpColor(Color.valueOf("A8A41E"),"1");
+        arrCorpColors.add(corpColor);
+        corpColor = new CorpColor(Color.valueOf("551EA9"),"1C");
+        arrCorpColors.add(corpColor);
+        corpColor = new CorpColor(Color.valueOf("A8431E"),"5");
+        arrCorpColors.add(corpColor);
+        corpColor = new CorpColor(Color.valueOf("3B2B53"),"2C");
+        arrCorpColors.add(corpColor);
+        corpColor = new CorpColor(Color.valueOf("19A895"),"3C");
+        arrCorpColors.add(corpColor);
+        corpColor = new CorpColor(Color.valueOf("A88A19"),"3");
+        arrCorpColors.add(corpColor);
+        corpColor = new CorpColor(Color.valueOf("77A689"),"YG");
+        arrCorpColors.add(corpColor);
+        corpColor = new CorpColor(Color.valueOf("A69477"),"OG");
+        arrCorpColors.add(corpColor);
+        corpColor = new CorpColor(Color.CHARTREUSE,"2",true);
+        arrCorpColors.add(corpColor);
+        corpColor = new CorpColor(Color.CORAL,"3",true);
+        arrCorpColors.add(corpColor);
+        corpColor = new CorpColor(Color.CYAN,"4",true);
+        arrCorpColors.add(corpColor);
+        corpColor = new CorpColor(Color.LIGHT_GRAY,"5",true);
+        arrCorpColors.add(corpColor);
+        corpColor = new CorpColor(Color.LIME,"6",true);
+        arrCorpColors.add(corpColor);
+        corpColor = new CorpColor(Color.MAGENTA,"1C",true);
+        arrCorpColors.add(corpColor);
+        corpColor = new CorpColor(Color.NAVY,"2C",true);
+        arrCorpColors.add(corpColor);
+        corpColor = new CorpColor(Color.FOREST,"3C",true);
+        arrCorpColors.add(corpColor);
+        corpColor = new CorpColor(Color.LIME,"1A",true);
+        arrCorpColors.add(corpColor);
+        corpColor = new CorpColor(Color.PINK,"CO",true);
+        arrCorpColors.add(corpColor);
+        corpColor = new CorpColor(Color.ORANGE,"7",true);
+        arrCorpColors.add(corpColor);
+        corpColor = new CorpColor(Color.OLIVE,"8",true);
+        arrCorpColors.add(corpColor);
+        corpColor = new CorpColor(Color.OLIVE,"4C",true);
+        arrCorpColors.add(corpColor);
+        corpColor = new CorpColor(Color.FIREBRICK,"K",true);
+        arrCorpColors.add(corpColor);
+        corpColor = new CorpColor(Color.TAN,"2A",true);
+        arrCorpColors.add(corpColor);
+        corpColor = new CorpColor(Color.YELLOW,"MM",true);
+        arrCorpColors.add(corpColor);
+
+
     }
 
     private static  void loadColorTable() {
@@ -98,5 +160,21 @@ public class Corp {
 
     public String getNumber() {
         return number;
+    }
+    class CorpColor{
+        Color color;
+        String corpNumber;
+        boolean isAllies;
+        CorpColor(Color colorin, String corpNumberIn){
+            color = colorin;
+            corpNumber = corpNumberIn.toString();
+            isAllies = true;
+        }
+        CorpColor(Color colorin, String corpNumberIn, boolean isRussian){
+            color = colorin;
+            corpNumber = corpNumberIn.toString();
+            isAllies = !isRussian;
+        }
+
     }
 }
