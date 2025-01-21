@@ -24,6 +24,7 @@ public class CounterStack {
     Label labelCorp;
     Stack stack;
     Label labelPoints;
+    Label labelPoint2;
     Image hilite;
     Image moved;
     Image backGround;
@@ -162,6 +163,10 @@ public class CounterStack {
             createRussianeOfficer(stack);
             return;
         }
+        if (unit.isCommander) {
+            createRussianeCommander(stack);
+            return;
+        }
         if (unit.isRussian){
             backGround  = new Image(counterrussian);
 
@@ -190,6 +195,36 @@ public class CounterStack {
 //        stack.setScale(stackScale);
         stack.addActor(labelPoints);
 
+    }
+    private void createFrenchOfficer(Stack stack) {
+        /**
+         *  load the texture regions
+         */
+        String mapName = unit.commander.map;
+        TextureRegion officer = textureAtlas.findRegion(mapName);
+        if (officer == null){
+            Gdx.app.log("createFrenchOfficer", "cant find e="+mapName);
+
+        }
+        backGround  = new Image(officer);
+        stack.add(backGround);
+        stack.setSize(Counter.size,Counter.size);
+        stack.add(corpColor());
+
+
+        String strName = unit.officer.name;
+        labelName= new Label(strName,labelStyleName);
+        labelName.setTouchable(Touchable.disabled);
+        labelName.setAlignment(Align.top);
+        labelName.setScale(Counter.scaleBrigade);
+        stack.addActor(labelName);
+        arrActors.add(imgSil);
+        setCorp();
+        stack.addActor(labelCorp);
+
+        setPointsOfficer();
+//        stack.setScale(stackScale);
+        stack.addActor(labelPoints);
     }
 
     private void createRussianeOfficer(Stack stack) {
@@ -222,6 +257,64 @@ public class CounterStack {
 //        stack.setScale(stackScale);
         stack.addActor(labelPoints);
     }
+    private void createRussianeCommander(Stack stack) {
+        /**
+         *  load the texture regions
+         */
+        String mapName = unit.commander.map;
+        TextureRegion officer = textureAtlas.findRegion(mapName);
+        if (officer == null){
+            Gdx.app.log("createRussianOfficer", "cant find e="+mapName);
+
+        }
+        backGround  = new Image(officer);
+        stack.add(backGround);
+        stack.setSize(Counter.size,Counter.size);
+//        stack.add(corpColor());
+
+
+        String strName = unit.commander.name;
+        labelName= new Label(strName,labelStyleName3);
+        labelName.setTouchable(Touchable.disabled);
+        labelName.setAlignment(Align.top);
+        labelName.setScale(Counter.scaleBrigade);
+        stack.addActor(labelName);
+        arrActors.add(backGround);
+        //setCorp();
+//        stack.addActor(labelCorp);
+
+        setPointsCommander();
+//        stack.setScale(stackScale);
+        stack.addActor(labelPoints);
+        stack.addActor(labelPoint2);
+    }
+
+    private void setPointsCommander() {
+
+        String strPoints = null;
+        String strPoint2 = null;
+        strPoints = " "+unit.getCurrentMoveFactor();
+        if (labelPoints != null){
+            stack.removeActor(labelPoints);
+            labelPoints = null;
+        }
+        labelPoints = new Label(strPoints,labelStyleName2);
+        labelPoints.setFontScale(.75f);
+        labelPoints.setTouchable(Touchable.disabled);
+        labelPoints.setAlignment(Align.bottomLeft);
+
+
+        strPoint2 = "["+unit.commander.canCommand+"]";
+        if (labelPoint2 != null){
+            stack.removeActor(labelPoint2);
+            labelPoint2 = null;
+        }
+        labelPoint2 = new Label(strPoint2,labelStyleName2);
+        labelPoint2.setFontScale(.65f);
+        labelPoint2.setTouchable(Touchable.disabled);
+        labelPoint2.setAlignment(Align.left);
+
+    }
 
     public void setPoints(){
 
@@ -253,8 +346,14 @@ public class CounterStack {
         if (labelCorp != null){
             stack.removeActor(labelCorp);
         }
+        String strCorp = unit.getCorp().number;
+        if (unit.isCommander){ // davout
+            strCorp = "["+unit.commander.canCommand+"]";
+            labelCorp = new Label(strCorp, labelStyleName2);
 
-        labelCorp = new Label(unit.getCorp().number, labelStyleCorp);
+        }else{
+            labelCorp = new Label(strCorp, labelStyleCorp);
+        }
         if (unit.getCorp().number.length() > 1){
             labelCorp.setFontScale(.6f);
         }else{
@@ -271,6 +370,15 @@ public class CounterStack {
         }
     }
     private void createAllied(Stack stack) {
+        if (unit.isOfficer) {
+            createFrenchOfficer(stack);
+            return;
+        }
+        if (unit.isCommander) {
+            createFrenchCommander(stack);
+            return;
+        }
+
         backGround = createBackAllied();
 
         stack.add(backGround);
@@ -310,7 +418,47 @@ public class CounterStack {
 //        arrActors.add(labelPoints);
     }
 
+    private void createFrenchCommander(Stack stack) {
+        /**
+         *  load the texture regions
+         */
+        String mapName = unit.commander.map;
+        if (unit.isOfficer){  // davout
+            return;
+        }
+        TextureRegion officer = textureAtlas.findRegion(mapName);
+        if (officer == null){
+            Gdx.app.log("createRussianOfficer", "cant find e="+mapName);
+
+        }
+        backGround  = new Image(officer);
+        stack.add(backGround);
+        stack.setSize(Counter.size,Counter.size);
+//        stack.add(corpColor());
+
+
+        String strName = unit.commander.name;
+        labelName= new Label(strName,labelStyleName3);
+        labelName.setTouchable(Touchable.disabled);
+        labelName.setAlignment(Align.top);
+        labelName.setScale(Counter.scaleBrigade);
+        stack.addActor(labelName);
+        arrActors.add(backGround);
+//        setCorp();
+//        stack.addActor(labelCorp);
+
+        setPointsCommander();
+//        stack.setScale(stackScale);
+        stack.addActor(labelPoints);
+        stack.addActor(labelPoint2);
+
+    }
+
     private Image corpColor() {
+        if (unit.getCorp() == null && unit.isOfficer){
+            Gdx.app.log("corpColor", "cant find corp for="+unit.officer.name);
+
+        }
         if (unit.getCorp().number.equals("1A")){
             int b=0;
         }

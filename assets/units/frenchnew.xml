@@ -3,7 +3,7 @@
 		<name value="Old Guard"/>
 		<abname value="OG"/>
 		<division>
-			<name value="3rd Old Guard"/>
+			<name value="OG"/>
 			<brigade value="Boyer">
 				<mf value="4"/>
 				<cf value="8"/>
@@ -22,6 +22,13 @@
 				<or value="frenchguard"/>
 				<type value="artillery"/>
 			</brigade>
+		</division>
+	</corp>
+	<corp>
+		<name value="Guard Calvary"/>
+		<abname value="GC"/>
+		<division>
+			<name value="GC"/>
 			<brigade value="St Sulpice">
 				<mf value="6"/>
 				<cf value="4"/>
@@ -58,7 +65,7 @@
 		<name value="Young Guard"/>
 				<abname value="YG"/>
 		<division>
-			<name value="1st Young Guard"/>
+			<name value="YG1"/>
 			<brigade value="Berthzne">
 				<mf value="4"/>
 				<cf value="4"/>
@@ -79,7 +86,7 @@
 			</brigade>
 		</division>
 		<division>
-			<name value="2nd Young Guard"/>
+			<name value="YG2"/>
 			<brigade value="Lanabere">
 				<mf value="4"/>
 				<cf value="4"/>
@@ -100,7 +107,7 @@
 			</brigade>
 		</division>
 		<division>
-			<name value="Vistula"/>
+			<name value="VIS"/>
 			<brigade value="Vistula Art">
 				<mf value="4"/>
 				<cf value="2"/>

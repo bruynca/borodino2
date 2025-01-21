@@ -76,13 +76,14 @@ public class WinDebug {
 		int y = 8;
 		ArrayList<Unit> arrUnits = new ArrayList<>();
 		arrUnits.addAll(Unit.getAllRussian());
+		arrUnits.addAll(Unit.getAllAllied());
 		int x = 25;
 		int i = 0;
 		for (Unit unit : arrUnits) {
 			if (unit.brigade.contains("Valen")){
 				int b=0;
 			}
-			if (unit.isOfficer) {
+			if (unit.isCommander) {
 				Hex hex = Hex.hexTable[x][y];
 				Gdx.app.log("Windebug", "Click Button unit=" + unit.brigade + "i=" + i);
 				unit.placeOnBoard(hex);

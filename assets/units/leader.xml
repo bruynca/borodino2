@@ -1,0 +1,37 @@
+<leaders>
+	<officer>
+	<!--   name, counter in map, type(officer or commander) Corp number, isallies,   Watch out for leading spaces                                 -->
+		<string value="Rostopchin,countermm,officer,MM,false,0"/>
+		<string value="Baggovut,counterr2,officer,2,false,0"/>
+		<string value="Tuchkov,counterr3,officer,3,false,0"/>
+		<string value="Osterman,counterr4,officer,4,false,0"/>
+		<string value="Konstatine,counterr5,officer,5,false,0"/>
+		<string value="Dokhturov,counter6,officer,6,false,0"/>
+		<string value="Uvarov,counterr1c,officer,1C,false,0"/>
+		<string value="Korff,counterrc2,officer,2C,false,0"/>
+		<string value="Kreutz,counterrc3,officer,3C,false,0"/>
+		<string value="Platov,counterrco,officer,CO,false,0"/>
+		<string value="Kutaissov,counterr1a,officer,1A,false,0"/>
+		<string value="Raevsky,counterr7,officer,7,false,0"/>
+		<string value="Borozdin,counterr8,officer,8,false,0"/>
+		<string value="Sievers,counterrc4,officer,4C,false,0"/>
+		<string value="Karpov,counterrk,officer,K,false,0"/>
+		<string value="Lowenstern,counterr2a,officer,2A,false,0"/>
+		<string value="Davout,counterf1,both,1,true,1"/>
+		<string value="Ney,counterf3,officer,3,true,0"/>
+		<string value="Eugene,counterf4,officer,4,true,0"/>
+		<string value="Poniatowski,counterf5,officer,5,true,0"/>
+		<string value="Nansouty,counterfc1,officer,1C,true,0"/>
+		<string value="Montbrun,counterfc2,officer,2C,true,0"/>
+		<string value="Grouchy,counterfc3,officer,3C,true,0"/>
+		<string value="Mortier,counterfyg,officer,YG,true,0"/>
+		<string value="Levebvre,counterfog,officer,OG,true,0"/>
+		<string value="Bessieres,counterfgc,officer,GC,true,0"/>
+		<string value="Junot,counterf8,officer,8,true,0"/>
+		<string value="Kutuzov,counterkutuzov,commander,3,false,1"/>
+		<string value="Bagration,counterbagration,commander,10,false,1"/>
+		<string value="Barclay,counterbarclay,commander,10,false,1"/>
+		<string value="Napoleon,counternapoleon,commander,10,true,3"/>
+		<string value="Murat,countermurat,commander,10,true,1"/>
+	</officer>
+</leaders>

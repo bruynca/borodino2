@@ -43,8 +43,9 @@ public class Unit {
 	static TextureRegion tStar;
 	static public Unit unitAirplane = null;
 	Officer officer;
+	Commander commander;
 	public boolean isOfficer = false;
-	private  boolean isCommander;
+	public boolean isCommander;
 
 
 	/**
@@ -213,7 +214,7 @@ public class Unit {
 		if (isAllies){
 			isFrench = true;
 		}
-		if (isOfficer){
+		if (isOfficer||(isOfficer && isCommander)) {
 			this.isOfficer = true;
 			this.corp = corp;
 			this.currentMoveFactor = 6;
@@ -221,12 +222,26 @@ public class Unit {
 			isInfantry = false;
 			String strList[] = strBrigade.split("\\s*,\\s*");
 			if (strList.length > 1) {
-				officer = new Officer(strList[0],corp,isAllies,strList[1], this);
+				officer = new Officer(strList[0], corp, isAllies, strList[1], this);
 			}
-
-		}else {
-			isInfantry = true;
+		}
+		if (isCommander) {
+			this.isCommander = true;
+			this.currentMoveFactor = 10;
+			this.brigade = " ";
+			isInfantry = false;
 			String strList[] = strBrigade.split("\\s*,\\s*");
+			if (strList[0].equals("Kutuzov")) {
+				currentMoveFactor = 3;
+			}
+			if (strList.length > 1) {
+				commander = new Commander(strList[0], isAllies, strList[1], this,strList[5]);
+			}
+		}
+		if (!isCommander && !isOfficer){
+				isInfantry = true;
+
+				String strList[] = strBrigade.split("\\s*,\\s*");
 			if (strList.length > 1) {
 				setByString(strList);
 			}else{
@@ -764,13 +779,20 @@ public class Unit {
 				} else {
 					isAllies = true;
 				}
-				Corp corp = Corp.find(strList[3], isAllies);
-				if (corp == null) {
-					int i = 0;
-				}
+				Corp corp = null;
 				if (strList[2].equals("officer")) {
 					isOfficer = true;
+					corp = Corp.find(strList[3], isAllies);
 				}
+				if (strList[2].equals("both")) {
+					isOfficer = true;
+					isCommander = true;
+					corp = Corp.find(strList[3], isAllies);
+				}
+				if (strList[2].equals("commander")) {
+					isCommander = true;
+				}
+
 
 				Unit unit = new Unit(isAllies, strLeader, corp, null, null, isCommander, isOfficer);
 				//					String strList[] = strBrigade.split(",");
