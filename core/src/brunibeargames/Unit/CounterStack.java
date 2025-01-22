@@ -200,7 +200,7 @@ public class CounterStack {
         /**
          *  load the texture regions
          */
-        String mapName = unit.commander.map;
+        String mapName = unit.officer.map;
         TextureRegion officer = textureAtlas.findRegion(mapName);
         if (officer == null){
             Gdx.app.log("createFrenchOfficer", "cant find e="+mapName);

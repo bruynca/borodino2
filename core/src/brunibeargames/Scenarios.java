@@ -80,6 +80,19 @@ public class Scenarios {
     static int[][] corp2As01Russian = {{99,25,14},{100,19,17},{101,24,15},{102,24,15}};
 
     static int[][] corpMMs01Russian ={{103,29,17},{104,29,17},{105,29,17},{106,31,11}};
+    static int[][] commanders= {{269,16,14},{268,27,10},{267,23,15},{266,32,12},
+                               {270,10,18},{255,4,17}};
+
+    static int[][] frenchOfficers = {{257,14,12},{259,12,15},
+                        {260,8,17},{258,14,25},
+                    {261,0,10}, {256,0,18},{262,0,18},{263,0,18},
+                    {264,0,18},{265,0,18}};
+
+    static int[][] russianofficers = {{240,30,7},{239,30,17},{241,31,5},
+            {242,29,7},{243,29,12},
+    {244,26,11},{245,35,7},{247,27,11},{246,19,11},{249,31,13},
+    {248,34,9},{250,23,15},{251,19,17},{252,24,16},
+    {253,24,21},{254,25,14}};
     static public ArrayList<Scenarios> arrScenarios = new ArrayList();
     ArrayList<Corp> alliedCorp = new ArrayList<>();
     ArrayList<Corp> russianCorp = new ArrayList<>();
@@ -128,6 +141,46 @@ public class Scenarios {
         loadCorpDataRussian("2A",corp2As01Russian,sc);
         loadCorpDataRussian("MM",corpMMs01Russian,sc);
 
+        loadCommanders(sc);
+        loadFrenchOfficers(sc);
+        loadRusssianOfficers(sc);
+
+    }
+
+    private static void loadRusssianOfficers(Scenarios sc) {
+        for (int i = 0; i< russianofficers.length; i++) {
+            Unit unit = Unit.getUnitByID(russianofficers[i][0]);
+            int x = russianofficers[i][1];
+            int y = russianofficers[i][2];
+            Hex hex = Hex.hexTable[x][y];
+            sc.alliedUnitHexs.add(new UnitHex(unit, hex));
+        }
+        arrScenarios.add(sc);
+
+
+    }
+
+    private static void loadFrenchOfficers(Scenarios sc) {
+        for (int i = 0; i< frenchOfficers.length; i++) {
+            Unit unit = Unit.getUnitByID(frenchOfficers[i][0]);
+            int x = frenchOfficers[i][1];
+            int y = frenchOfficers[i][2];
+            Hex hex = Hex.hexTable[x][y];
+            sc.alliedUnitHexs.add(new UnitHex(unit, hex));
+        }
+        arrScenarios.add(sc);
+
+    }
+
+    private static void loadCommanders(Scenarios sc) {
+        for (int i = 0; i< commanders.length; i++) {
+            Unit unit = Unit.getUnitByID(commanders[i][0]);
+            int x = commanders[i][1];
+            int y = commanders[i][2];
+            Hex hex = Hex.hexTable[x][y];
+            sc.alliedUnitHexs.add(new UnitHex(unit, hex));
+        }
+        arrScenarios.add(sc);
 
     }
 

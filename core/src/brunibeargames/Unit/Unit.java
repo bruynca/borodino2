@@ -218,9 +218,9 @@ public class Unit {
 			this.isOfficer = true;
 			this.corp = corp;
 			this.currentMoveFactor = 6;
-			this.brigade = " ";
 			isInfantry = false;
 			String strList[] = strBrigade.split("\\s*,\\s*");
+			this.brigade = strList[0];
 			if (strList.length > 1) {
 				officer = new Officer(strList[0], corp, isAllies, strList[1], this);
 			}
@@ -234,6 +234,7 @@ public class Unit {
 			if (strList[0].equals("Kutuzov")) {
 				currentMoveFactor = 3;
 			}
+			this.brigade = strList[0];
 			if (strList.length > 1) {
 				commander = new Commander(strList[0], isAllies, strList[1], this,strList[5]);
 			}
@@ -381,7 +382,7 @@ public class Unit {
 	public void placeOnBoard(Hex hex) {
 		if (isOnBoard)
 		{
-			Gdx.app.log("Unit", "placeOnBoard on board already unit="+this.toString());
+			Gdx.app.log("Unit", "placeOnBoard on board already unit="+this.brigade+" id="+this.ID);
 			int fail = 9/0;
 		}
 		placeLogic(hex);

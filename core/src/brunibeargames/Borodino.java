@@ -376,8 +376,13 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 
 	@Override
 	public boolean touchDown(float x, float y, int pointer, int button) {
-		Gdx.app.log("Mouse Event", "Click at " + x+ " y-"+y); 
-		Hex hex = Hex.GetHexFromScreenPosition(x, y); 
+		Gdx.app.log("Mouse Event", "Click at " + x+ " y-"+y);
+		Hex hex = null;
+		if (Screen.instance != null) {
+			hex = Hex.GetHexFromScreenPosition(x, y);
+		}else{
+			return true;
+		}
 		Gdx.app.log("Mouse Event", "Hex clicked= x-" + hex.xTable+ " y-"+hex.yTable);
 //		Image image = new Image(texHex);
 //		Vector2 v2 =  hex.GetDisplayCoord();

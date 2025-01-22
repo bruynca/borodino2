@@ -71,7 +71,7 @@ public class WinDebug {
 	public void ClickButton(InputEvent event, float xIn, float yIN) {
 		Gdx.app.log("Windebug", "Click Button");
 		Unit test = null;
-//		Scenarios.loadUnitsOnBoard(0);
+		Scenarios.loadUnitsOnBoard(0);
 
 		int y = 8;
 		ArrayList<Unit> arrUnits = new ArrayList<>();
@@ -83,7 +83,7 @@ public class WinDebug {
 			if (unit.brigade.contains("Valen")){
 				int b=0;
 			}
-			if (unit.isCommander) {
+			if (unit.isOfficer && !unit.isAllies && unit.getHexOccupy() == null) {
 				Hex hex = Hex.hexTable[x][y];
 				Gdx.app.log("Windebug", "Click Button unit=" + unit.brigade + "i=" + i);
 				unit.placeOnBoard(hex);
