@@ -185,10 +185,6 @@ public class Attack extends Observable implements Observer  {
         for (Unit unit : arrDefenders) {
             unit.setHasbeenAttackedThisTurn();
         }
-        if (NextPhase.instance.getPhase() == Phase.GERMAN_COMBAT.ordinal() ||
-                NextPhase.instance.getPhase() == Phase.ALLIED_COMBAT.ordinal()) {
-            hexTarget.setHasBeenAttackedThisTurn(true);
-        }
 
         CombatResults.init();
         attackOdds.update();

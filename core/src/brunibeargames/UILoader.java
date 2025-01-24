@@ -119,8 +119,8 @@ public class UILoader {
         public TopMenu(TextureAtlas atlas) {
 
             asset.put("background", atlas.findRegion("background"));
-            asset.put("german", atlas.findRegion("german"));
-            asset.put("usa", atlas.findRegion("usa"));
+            asset.put("frencheagle", atlas.findRegion("frencheagle"));
+            asset.put("russianeagle", atlas.findRegion("russianeagle"));
 
         }
     }

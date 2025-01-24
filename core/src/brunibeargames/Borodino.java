@@ -458,8 +458,8 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 
 	@Override
 	public boolean pan(float x, float y, float deltaX, float deltaY) {
-		Gdx.app.log("Borodino","Pan"); 
-
+		Gdx.app.log("Borodino","Pan");
+		Gdx.graphics.setTitle("Borodino Phase");
 		screen.instance.PanCamera(deltaX, deltaY);
 		return true;
 	}

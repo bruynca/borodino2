@@ -45,6 +45,7 @@ public class Game {
             Unit.loadUnits(arrAllies);
             ArrayList<Unit> arrAxis =Unit.getSetupUnits(false);
             Unit.loadUnits(arrAxis);
+            TurnCounter turnCounter = new TurnCounter();
 //            nextPhase.nextPhase();
             //TopMenu topMenu = new TopMenu();
             /**

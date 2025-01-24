@@ -1,4 +1,4 @@
-package brunibeargames;
+package brunibeargames.UI;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
@@ -17,6 +17,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
 
+import brunibeargames.Borodino;
+import brunibeargames.Fonts;
+import brunibeargames.GameMenuLoader;
+import brunibeargames.UILoader;
 
 public class TurnCounter {
     private Label phaseLabel;
@@ -63,8 +67,8 @@ public class TurnCounter {
         phaseLabel.setAlignment(Align.center);
         group.addActor(phaseLabel);
 
- //       String stAd = i18NBundle.get("advance2");
-        String stAd = "nex a";
+      //  String stAd = i18NBundle.get("advance2");
+        String stAd = "next phase";
         advanceLabel = new Label(stAd, style);
         advanceLabel.setHeight(40);
         advanceLabel.setWidth(260);
@@ -108,29 +112,8 @@ public class TurnCounter {
     public void updateText(String text){
         phaseLabel.setText(text);
     }
-    public void updateTurn(int turn, Weather.Type wetherType){
+    public void updateTurn(int turn){
         String wether="";
-        if (wetherType == Weather.Type.Soup) {
-            wether = i18NBundle.get("soup");
-        }else if(wetherType== Weather.Type.Clear){
-            wether = i18NBundle.get("clear");
-
-        }else if(wetherType== Weather.Type.Overcast){
-            wether = i18NBundle.get("overcast");
-
-        }else if(wetherType== Weather.Type.Cloudy){
-            wether = i18NBundle.get("cloudy");
-
-        }else if(wetherType== Weather.Type.Mist){
-            wether = i18NBundle.get("mist");
-
-        }else if(wetherType== Weather.Type.Variable){
-            wether = i18NBundle.get("variable");
-
-        }else if(wetherType== Weather.Type.Bright){
-            wether = i18NBundle.get("bright");
-
-        }
 
         String str = i18NBundle.get("december")+" "+Integer.toString(turn+15)+" "+
 //                i18NBundle.get("turn")+" "+turn+" "+ wether;
