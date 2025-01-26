@@ -1,18 +1,18 @@
 counter.png
-size: 936, 1774
+size: 1005, 1716
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 bagration
   rotate: false
-  xy: 600, 1357
+  xy: 600, 1299
   size: 330, 386
   orig: 330, 386
   offset: 0, 0
   index: -1
 barclay
   rotate: false
-  xy: 205, 1004
+  xy: 405, 946
   size: 300, 330
   orig: 300, 330
   offset: 0, 0
@@ -369,14 +369,14 @@ hilite
   index: -1
 hilitehex
   rotate: false
-  xy: 0, 1004
+  xy: 200, 946
   size: 205, 178
   orig: 205, 178
   offset: 0, 0
   index: -1
 hilitehexmove3
   rotate: false
-  xy: 705, 826
+  xy: 0, 946
   size: 200, 178
   orig: 200, 178
   offset: 0, 0
@@ -397,9 +397,16 @@ italianline2
   index: -1
 kutuzov
   rotate: false
-  xy: 505, 1004
+  xy: 705, 946
   size: 300, 353
   orig: 300, 353
+  offset: 0, 0
+  index: -1
+loading
+  rotate: false
+  xy: 705, 826
+  size: 144, 40
+  orig: 144, 40
   offset: 0, 0
   index: -1
 moved
@@ -411,14 +418,14 @@ moved
   index: -1
 murat
   rotate: false
-  xy: 0, 1357
+  xy: 0, 1299
   size: 300, 365
   orig: 300, 365
   offset: 0, 0
   index: -1
 napoleon
   rotate: false
-  xy: 300, 1357
+  xy: 300, 1299
   size: 300, 417
   orig: 300, 417
   offset: 0, 0
