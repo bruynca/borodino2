@@ -202,7 +202,7 @@ public class HexHelper {
     public static void removeAxis(ArrayList<Hex> arrHexIn) {
         ArrayList<Hex> arrRemove = new ArrayList<>();
         for (Hex hex:arrHexIn){
-            if (hex.checkAxisInHex()){
+            if (hex.checkRussianInHex()){
                 arrRemove.add(hex);
             }
         }

@@ -23,13 +23,6 @@ public class HelpPage {
             int b=0;
         }
         phase = Phase.values()[iPhase];
-        if (phase.isHelp()) {
-            if (GamePreferences.getPhaseInfo(phase.toString())) {
-                return;  // if its there we dont want to do a thing
-            }
-            String str = i18NBundle.format(phase.toString());
-            EventPopUp.instance.showHelp(str);
-        }
         isOther = false;
 
     }

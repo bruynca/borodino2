@@ -31,12 +31,6 @@ public class SaveGame {
 //			return false;
 //		}
 
-		if (NextPhase.instance.isInBarrage()){
-			return false;
-		}
-		if (NextPhase.instance.isAIControl){
-			return false;
-		}
 		return true;
 	}
 

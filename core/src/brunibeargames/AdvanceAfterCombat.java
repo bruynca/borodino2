@@ -151,7 +151,7 @@ public class AdvanceAfterCombat implements Observer {
                 if (hex.getUnitsInHex().size() == 0){
                     arrReturn.add(hex);
                 }else{
-                    if ((hex.checkAlliesInHex() && !attack.isAllies) ||(hex.checkAxisInHex() && attack.isAllies)){
+                    if ((hex.checkAlliesInHex() && !attack.isAllies) ||(hex.checkRussianInHex() && attack.isAllies)){
                         // do nothing
                     }else{
                         if (arrHexAttackers.contains(hex)){

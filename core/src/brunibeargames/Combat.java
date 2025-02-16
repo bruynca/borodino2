@@ -106,7 +106,7 @@ public class Combat implements Observer {
                 ArrayList<Hex> arrHexWork = hexUnit.getSurround();
                 for (Hex hex : arrHexWork) {
                         if (hex.getUnitsInHex().size() > 0) {
-                            if (isAllies && hex.checkAxisInHex()|| !isAllies && hex.checkAlliesInHex()) {
+                            if (isAllies && hex.checkRussianInHex()|| !isAllies && hex.checkAlliesInHex()) {
                                 if (!hex.isHasBeenAttackedThisTurn()) {
                                     arrHexDefender.add(hex);
                                 }
@@ -190,8 +190,7 @@ public class Combat implements Observer {
         Timer.schedule(new Timer.Task() {
                            @Override
                            public void run() {
-                               if (NextPhase.instance.getPhase() == Phase.ALLIED_COMBAT.ordinal() ||
-                                   NextPhase.instance.getPhase() == Phase.GERMAN_COMBAT.ordinal()) {
+                               if (NextPhase.instance.getPhase() == Phase.COMBAT.ordinal()) {
                                    SoundsLoader.instance.playLimber();
                                    createCombatImage(hex, true);
                                }
@@ -272,7 +271,7 @@ public class Combat implements Observer {
         arrTempAttackers = new ArrayList<>();
         arrHexAttackers = new ArrayList<>();
         for (Hex hexCheck : arrHexSurround) {
-            if (isAllies && hexCheck.checkAlliesInHex() || !isAllies && hexCheck.checkAxisInHex()) {
+            if (isAllies && hexCheck.checkAlliesInHex() || !isAllies && hexCheck.checkRussianInHex()) {
                 for (Unit unit : hexCheck.getUnitsInHex()) {
                     if (unit.canAttackThisTurn && !unit.isArtillery && !unit.isEliminated()&& unit.getCurrentAttackFactor() > 0) {
                         arrTempAttackers.add(unit);
@@ -329,7 +328,7 @@ public class Combat implements Observer {
                 ArrayList<Hex> arrHexWork = hexUnit.getSurround();
                 for (Hex hex : arrHexWork) {
                     if (hex.getUnitsInHex().size() > 0) {
-                        if (isAllies && hex.checkAxisInHex() || !isAllies && hex.checkAlliesInHex()) {
+                        if (isAllies && hex.checkRussianInHex() || !isAllies && hex.checkAlliesInHex()) {
                             if (!hex.isHasBeenAttackedThisTurn()) {
                                 arrHexReturn.add(hex);
                             }
@@ -344,7 +343,7 @@ public class Combat implements Observer {
         ArrayList<Hex> arrHexSurround = hex.getSurround();
         ArrayList<Unit> arrReturn = new ArrayList<>();
         for (Hex hexCheck : arrHexSurround) {
-            if (isAllies && hexCheck.checkAlliesInHex() || !isAllies && hexCheck.checkAxisInHex()) {
+            if (isAllies && hexCheck.checkAlliesInHex() || !isAllies && hexCheck.checkRussianInHex()) {
                 for (Unit unit : hexCheck.getUnitsInHex()) {
                     if (unit.canAttackThisTurn && !unit.isArtillery && !unit.isEliminated()&& unit.getCurrentAttackFactor() > 0) {
                         arrReturn.add(unit);
@@ -481,7 +480,7 @@ public class Combat implements Observer {
                 ArrayList<Hex> arrHexWork = hexUnit.getSurround();
                 for (Hex hex : arrHexWork) {
                     if (hex.getUnitsInHex().size() > 0) {
-                        if (isAllies && hex.checkAxisInHex() || !isAllies && hex.checkAlliesInHex()) {
+                        if (isAllies && hex.checkRussianInHex() || !isAllies && hex.checkAlliesInHex()) {
                             if (!arrHexReturn.contains(hex)) {
                                 arrHexReturn.add(hex);
                             }

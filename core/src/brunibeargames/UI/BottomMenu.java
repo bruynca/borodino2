@@ -94,7 +94,7 @@ public class BottomMenu {
                     nextPhase.setChecked(false);
                     Gdx.app.log("BottomMenu", "NextPhase Pressed");
 
-                    NextPhase.instance.endPhase(NextPhase.instance.getPhase());
+                    NextPhase.instance.endPhase();
                 }else if (!enablePhaseChange){
                     nextPhase.setChecked(false);
  //                   EventManager.instance.errorMessage(cantChangePhaseMessage);

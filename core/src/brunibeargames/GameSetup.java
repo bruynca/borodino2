@@ -12,6 +12,7 @@ public class GameSetup {
     private boolean easyFrench;
 
     private boolean balanced;
+    private int commandMethod = CommandMethod.StandardNAW.ordinal();
 
     private Scenario scenario = Scenario.Sept5;
    static public GameSetup instance;
@@ -75,6 +76,9 @@ public class GameSetup {
     public boolean isFrenchVersusAI() {
         return frenchVersusAI;
     }
+    public int getCommandMethod(){
+        return commandMethod;
+    }
 
 
 
@@ -88,7 +92,10 @@ public class GameSetup {
             public int getLength(){
                 return length;
             }
-        }
+    }
+    public enum CommandMethod{StandardNAW}{
+
+    }
 
 
 

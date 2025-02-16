@@ -1,8 +1,6 @@
 package brunibeargames;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.Timer;
 
@@ -23,18 +21,20 @@ public class NextPhase {
     private boolean isDebug = false;
     boolean isFirstTime = true;
     boolean isLocked =  false;
+    Cards cards;
     Hex hexNull;
     int turn = 1;
   //  TurnCounter turnCounter;
 //    public Weather weather;
 //    WinCRT winCRT = new WinCRT();
     private I18NBundle i18NBundle;
-    boolean isAIControl = false;
-    boolean isInBarrage = false;
 
     String programUID = "";
+    Initiative initiative;
+    DetermineCommand determineCommand;
+    DoCommand doCommand;
 
-   // DiceEffect diceEffect = new DiceEffect();
+    // DiceEffect diceEffect = new DiceEffect();
   //  Explosions explosions = new Explosions();
 
 
@@ -42,14 +42,18 @@ public class NextPhase {
 
     public NextPhase() {
         Gdx.app.log("NextPhase", "Constructor");
-
+        /**
+         *  initialize OBJECTS
+         */
 
         instance = this;
         Phases =  Phase.values();
         i18NBundle= GameMenuLoader.instance.localization;
+        Cards cards = new Cards();
+        determineCommand = new DetermineCommand();
+        doCommand = new DoCommand();
+
         System.gc();
-
-
 
     }
     public void nextPhase() {
@@ -79,9 +83,10 @@ public class NextPhase {
             /**
              *  warning for exitted units
              */
-//        setPhase();
 
         }
+        setPhase();
+
     }
 
     private void createProgramUID() {
@@ -122,19 +127,51 @@ public class NextPhase {
         }
 
 
-        isAIControl = true;
-        isInBarrage = false;
         ClickAction.unLock();
         ClickAction.clearClickListeners();
         Hex.initOccupied(); // bug somewhere
 
         {
-            isAIControl = false;
             Gdx.app.log("nextPhase","next  ="+Phases[phase].toString());
             BottomMenu.instance.setEnablePhaseChange(true);
 
             switch (Phases[phase]) {
                 case NEXT_TURN:
+                    break;
+                case CARD_CLEANUP:
+                   endPhase();
+                    break;
+                case DETERMINE_INITIATIVE:
+                    initiative = new Initiative();
+                    break;
+                case PLAYER1_CARD:
+                    if (initiative.getIsAllies()) {
+                        Cards.instance.doAllies();
+                    }else{
+                        Cards.instance.doRussians();
+
+                         }
+                   break;
+
+                case PLAYER2_CARD:
+                    if (!initiative.getIsAllies()) {
+                        Cards.instance.doRussians();
+                    }else{
+                        Cards.instance.doAllies();
+
+                    }
+                    break;
+                case DETERMINE_COMMAND:
+                    /*
+                        doGetCommandArray will determine which player to get
+                     */
+                    DetermineCommand.instance.doGetCommandArray(initiative);
+                    break;
+                case DO_COMMAND:
+                    /*
+                        Command based on arrays from DtermineCommand
+                     */
+                    doCommand.instance.start();
                     break;
                 default:
                     Gdx.app.log("NexPhase", "Invalid Phase");
@@ -144,12 +181,9 @@ public class NextPhase {
         }
 
     }
-    public void endPhase(int phaseToEnd){
+    public void endPhase(){
         Gdx.app.log("NexPhase", "endPhase"+Phases[getPhase()].toString());
 
-        if (phaseToEnd != getPhase()){
-            ErrorGame errorGame = new ErrorGame("EndPhase and current Phase do not Match",this);
-        }
 
         CounterStack.removeAllHilites();
         CounterStack.removeAllShaded();
@@ -179,21 +213,11 @@ public class NextPhase {
     int cntDebug = 0;
 
     public boolean isArtillery() {
-        if (phase == Phase.GERMAN_PRE_MOVEMENT.ordinal() ||  phase ==Phase.ALLIED_PRE_MOVEMENT.ordinal()){
-            return true;
-        }
         return false;
     }
     public boolean isAlliedPlayer(){
         return isAlliedPlayer;
     }
-    public boolean isAIControl(){
-        return isAIControl;
-    }
-    public boolean isInBarrage(){
-        return isInBarrage;
-    }
-
     public void continuePhaseFirstTime() {
     }
 }

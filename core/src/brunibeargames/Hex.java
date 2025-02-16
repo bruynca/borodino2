@@ -37,14 +37,26 @@ public class Hex {
 	public int xTable; // whete in hexTable this hex is
 	public int yTable; //
 	private ArrayList<Unit> arrUnitsInHex = new ArrayList<>();
-	boolean[] isAxisOccupied = new boolean[20];
+	/**
+     * This array tracks whether each of the 20 potential axis positions is currently occupied.
+     * An axis position is considered occupied if a game object (e.g., a block, a unit) is currently
+     * residing on that axis.
+     *
+     * - `isAxisOccupied[i] == true` indicates that the axis position `i` is occupied.
+     * - `isAxisOccupied[i] == false` indicates that the axis position `i` is free.
+     *
+     * The index `i` ranges from 0 to 19, representing the 20 possible axis positions.
+     */
+    boolean[] isRussianOccupied = new boolean[20];
 	boolean[] isAlliedOccupied = new boolean[20];
 	private boolean isRussianEntered;
-	private int[] calcMoveCost;
+	private int[] calcMoveCost = new int[20];
 	private int range;
 	boolean[] isAlliedZOC = new boolean[20];
-	boolean[] isAxisZOC = new boolean[20];
+	boolean[] isRussianZOC = new boolean[20];
 	private boolean hasBeenAttackedThisTurn;
+	private boolean isRussianZOCOccupied;
+	private boolean isAlliedZOCOccupied;
 
 	public Hex(int xIn, int yIn) {
 		xTable = xIn;
@@ -990,11 +1002,22 @@ public class Hex {
 
 
 	public boolean checkAlliesInHex() {
-		return true;
+		for (Unit unit : arrUnitsInHex) {
+			if (unit.isAllies){
+				return true;
+			}
+		}
+		return false;
 	}
 
-	public boolean checkAxisInHex() {
-		return true;
+	public boolean checkRussianInHex() {
+		for (Unit unit : arrUnitsInHex) {
+			if (unit.isRussian){
+				return true;
+			}
+		}
+		return false;
+
 	}
 
 	public boolean leaveHex(Unit unit) {
@@ -1016,9 +1039,60 @@ public class Hex {
 	}
 
 	public void setZOCs() {
+		ArrayList<Hex> arrHexCheck = getSurround();
+		arrHexCheck.add(this);
+		for (Hex hexCheck:arrHexCheck){
+			ArrayList<Hex> arrSurround = hexCheck.getSurround();
+			hexCheck.isAlliedZOC[0] = false;
+			hexCheck.isRussianZOC[0] = false;
+			hexCheck.isRussianZOCOccupied = false;
+			hexCheck.isAlliedZOCOccupied = false;
+
+			for (Hex hex:arrSurround){
+				if ((hexCheck.isStreamBank() && hex.isStreamBank()) &&
+						!Bridge.isBridge(hexCheck,hex) && Hex.isStreamAcross(hex,hexCheck)){
+					// do nothing
+				}else{
+					for (Unit unit:hex.getUnitsInHex()) {
+						if (unit.isAllies && unit.isExertZOC()) {
+							hexCheck.isAlliedZOC[0] = true;
+						}
+						if (unit.isRussian && unit.isExertZOC()) {
+							hexCheck.isRussianZOC[0] = true;
+						}
+					}
+				}
+			}
+		}
+		for (Unit unit:arrUnitsInHex){
+			if (unit.isRussian && isAlliedZOC[0]){
+				isAlliedZOCOccupied = true;
+			}else if(unit.isAllies && isRussianZOC[0]){
+				isRussianZOCOccupied = true;
+			}
+		}
+
+	}
+
+	private boolean isStreamBank() {
+		return isStreamBank;
 	}
 
 	private void establishOccupied() {
+		/**
+		 *  No default
+		 */
+		isRussianOccupied[0] = false;
+		isAlliedOccupied[0] = false;
+		if (checkRussianInHex()){
+			isRussianOccupied[0] = true;
+			isAlliedOccupied[0] = false;
+		}
+		if (checkAlliesInHex()){
+			isAlliedOccupied[0] = true;
+			isRussianOccupied[0] = false;
+		}
+
 
 	}
 
@@ -1037,12 +1111,12 @@ public class Hex {
 		}
 		arrUnitsInHex.add(0, unit);
 		if (!unit.isAllies && !checkAlliesInHex()) {
-			isAxisOccupied[0] = true;
+			isRussianOccupied[0] = true;
 			isAlliedOccupied[0] = false;
 		}
-		if (unit.isAllies && !checkAxisInHex()) {
+		if (unit.isAllies && !checkRussianInHex()) {
 			isAlliedOccupied[0] = true;
-			isAxisOccupied[0] = false;
+			isRussianOccupied[0] = false;
 		}
 		moveUnitToBack(unit);
 		if (xTable == 40 && yTable == 22) {
@@ -1197,7 +1271,7 @@ public class Hex {
 		return isAlliedZOC[thread];
 	}
 	public boolean getAxisZoc(int thread){
-		return isAxisZOC[thread];
+		return isRussianZOC[thread];
 	}
 
 
@@ -1236,7 +1310,7 @@ public class Hex {
 		return isHasBeenAttackedThisTurn();
 	}
 	public boolean canOccupy(Unit unit) {
-		if (unit.isAllies && checkAxisInHex()){
+		if (unit.isAllies && checkRussianInHex()){
 			return false;
 		}
 		if (!unit.isAllies && checkAlliesInHex()){
@@ -1280,8 +1354,8 @@ public class Hex {
 		for (Hex hex:arrHexMap){
 			hex.arrUnitsInHex = new ArrayList<>();
 			hex.isAlliedOccupied[0] = false;
-			hex.isAxisOccupied[0] = false;
-			hex.isAxisZOC[0] = false;
+			hex.isRussianOccupied[0] = false;
+			hex.isRussianZOC[0] = false;
 			hex.isAlliedZOC[0] = false;
 		}
 	}

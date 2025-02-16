@@ -36,7 +36,8 @@ public class ObserverPackage {
     public enum Type {DiceRollFinished,MouseMoved, TouchUp,TouchUpMiddle,
         TouchUpShift, ESC,Moved,Stack,ConfirmYes,ConfirmNo,OK
         ,ScreenCentered,MoveFinished,CombatDisplayResults,AfterAttackDisplay,Advance,CardPlayed,
-        FakeDone, EVENTPOPUPHIDE, SupplyDone,BastogneReinScored,EttleBruckRein,FakeScenario1Done,FakerDone
+        FakeDone, EVENTPOPUPHIDE, SupplyDone,BastogneReinScored,EttleBruckRein,FakeScenario1Done,FakerDone,
+        EventPopupDone
     }
 
     }

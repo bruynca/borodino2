@@ -15,7 +15,7 @@ public class UnitMove {
 
 	public Unit unit;
 	int moveLength;
-	boolean isAllowedMOA;
+	boolean checkCommand;
 	boolean checkTerrain;
 	boolean checkAdjacent = false;
 	ArrayList<Hex>[] arrHexSolution = new ArrayList[11];
@@ -26,11 +26,11 @@ public class UnitMove {
 	boolean isFakeAI = false;
 	int thread;
 
-	public UnitMove(Unit unit, int moveLength, boolean isAllowedMOA, boolean checkTerrain, int thread) {
+	public UnitMove(Unit unit, int moveLength, boolean checkCommand, boolean checkTerrain, int thread) {
 //		Gdx.app.log("UnitMove","Constructor unit="+unit+" Lenght= "+moveLength+" isAllowedMOA="+isAllowedMOA+" checkTerrain="+checkTerrain);
 		this.unit = unit;
 		this.moveLength = moveLength;
-		this.isAllowedMOA = isAllowedMOA;
+		this.checkCommand = checkCommand;
 		this.checkTerrain = checkTerrain;
 		this.thread = thread;
 		hexStart = unit.getHexOccupy();
@@ -45,11 +45,11 @@ public class UnitMove {
 	}
 
 
-	public UnitMove(Unit unit, int moveLength, boolean isAllowedMOA, boolean checkTerrain, Hex hexStart, int thread) {
+	public UnitMove(Unit unit, int moveLength, boolean checkCommand, boolean checkTerrain, Hex hexStart, int thread) {
 //		Gdx.app.log("UnitMove","Constructor unit="+unit+" Lenght= "+moveLength+" isAllowedMOA="+isAllowedMOA+" checkTerrain="+checkTerrain+" Hex Start="+hexStart);
 		this.unit = unit;
 		this.moveLength = moveLength;
-		this.isAllowedMOA = isAllowedMOA;
+		this.checkCommand = checkCommand;
 		this.checkTerrain = checkTerrain;
 		this.hexStart = hexStart;
 		this.thread = thread;
@@ -72,10 +72,8 @@ public class UnitMove {
 //		Gdx.app.log("UnitMove", "reDo");
 
 		Hex.loadCalcMoveCost(thread);
-		if (unit.getCurrentAttackFactor() < 1){
-			isAllowedMOA = false;
-		}
-		searchHexes(hexStart,moveLength,isAllowedMOA, checkTerrain,isFakeAI, thread);
+
+		searchHexes(hexStart,moveLength, checkCommand, checkTerrain,isFakeAI, thread);
 
 		if (checkAdjacent) {
 			arrHexSolution[thread].addAll(arrHexAdjacentEnemy[thread]);
@@ -93,7 +91,7 @@ public class UnitMove {
 		 * remove hexes that will overstack except for supply
 		 */
 		ArrayList<Hex> arrRemove = new ArrayList<>();
-		for (Hex hex:arrHexSolution[threadUse]) {
+/*		for (Hex hex:arrHexSolution[threadUse]) {
 			int stackPossible = hex.getStacksIn();
 			if (unit.isTransport){
 				stackPossible = 0;
@@ -103,7 +101,7 @@ public class UnitMove {
 			if (stackPossible > Hex.stackMax){
 				arrRemove.add(hex);
 			}
-		}
+		} */
 		arrReturn.addAll(arrHexSolution[threadUse]);
 		arrReturn.removeAll(arrRemove);
 		HexHelper.removeDupes(arrReturn);
@@ -112,7 +110,7 @@ public class UnitMove {
 
 
 
-	private void searchHexes(Hex hexSearch, float moveCostLeft, boolean isMobileAssualt, boolean checkTerrain, boolean isFakeAI, int thread)
+	private void searchHexes(Hex hexSearch, float moveCostLeft, boolean checkCommand, boolean checkTerrain, boolean isFakeAI, int thread)
 	{
 		if (moveCostLeft == 0)
 		{
@@ -138,18 +136,13 @@ public class UnitMove {
 				int j=0;
 			}
 			if (hex.xTable >= 0 && hex.xTable < Hex.xEnd && hex.yTable >= 0 && hex.yTable < Hex.yEnd){
-				float flt = Move.instance.cost(unit, hexSearch, hex, isMobileAssualt, checkTerrain, thread);
+				float flt = Move.instance.cost(unit, hexSearch, hex,  checkTerrain, checkCommand, thread);
 				float k = flt;
 				if (checkAdjacent && k == 777) {
 					if (!arrHexAdjacentEnemy[thread].contains(hex)) {
 						arrHexAdjacentEnemy[thread].add(hex);
 					}
 
-				}
-				if (Move.isMOAEncountered){
-					if (moveCostLeft >= k) {
-						k = moveCostLeft;
-					}
 				}
 				if (moveCostLeft >= k)
 				{
@@ -166,7 +159,7 @@ public class UnitMove {
 
 								arrBestScore[thread].set(ix, moveCost);
 							}
-							searchHexes(hex, moveCost, isMobileAssualt, checkTerrain,isFakeAI,thread);
+							searchHexes(hex, moveCost, checkCommand, checkTerrain,isFakeAI,thread);
 						}
 					}
 					else
@@ -175,7 +168,7 @@ public class UnitMove {
 						arrBestScore[thread].add(moveCost);
 						hex.setCalcMoveCost(moveCost, thread);
 						arrHexCost[thread].add(hex.getCalcMoveCost(thread));
-						searchHexes(hex, moveCost, isMobileAssualt, checkTerrain, isFakeAI, thread);
+						searchHexes(hex, moveCost, checkCommand, checkTerrain, isFakeAI, thread);
 					}
 				}
 			}
@@ -209,7 +202,7 @@ public class UnitMove {
 			if (hexEnd == null) {
 				Gdx.app.log("UnitMove", "Has something changed ");
 				Gdx.app.log("UnitMove", "Hex =" + hexEnd + "Is no longer in Solution");
-				Gdx.app.log("UnitMove", "unit=" + unit + " Length= " + moveLength + " isAllowedMOA=" + isAllowedMOA + " checkTerrain=" + checkTerrain + " isFakeAI" + isFakeAI + " hexSolution length=" + arrHexSolution[thread].size() + " hexEnd=" + hexEnd);
+				Gdx.app.log("UnitMove", "unit=" + unit + " Length= " + moveLength + " isAllowedMOA=" + checkCommand + " checkTerrain=" + checkTerrain + " isFakeAI" + isFakeAI + " hexSolution length=" + arrHexSolution[thread].size() + " hexEnd=" + hexEnd);
 				ErrorGame errorGame = new ErrorGame("Trying to  find Route but hex not in solution",this);
 			}
 		}

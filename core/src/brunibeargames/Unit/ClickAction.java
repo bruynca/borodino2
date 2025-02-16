@@ -1,7 +1,6 @@
 package brunibeargames.Unit;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.utils.I18NBundle;
 
 import java.util.ArrayList;
@@ -14,7 +13,6 @@ import brunibeargames.ObserverPackage;
 import brunibeargames.UI.EventConfirm;
 
 import static com.badlogic.gdx.Gdx.app;
-import static com.badlogic.gdx.Gdx.input;
 
 public class ClickAction implements Observer {
     Unit unit;
@@ -197,6 +195,7 @@ public class ClickAction implements Observer {
         }
     }
 
-    public enum TypeAction {Move, Limber, CombatClick, Supply, Advance,SelectDelete};
+    public enum TypeAction {Move, Limber, CombatClick,
+        Command, Supply, Advance,SelectDelete};
 
 }

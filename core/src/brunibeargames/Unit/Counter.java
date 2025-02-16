@@ -13,11 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import java.util.ArrayList;
 
 import brunibeargames.Borodino;
-import brunibeargames.Combat;
 import brunibeargames.Hex;
 import brunibeargames.HiliteHex;
 import brunibeargames.NextPhase;
-import brunibeargames.Phase;
 
 public class Counter {
     public static final int size =110;//130
@@ -92,12 +90,6 @@ public class Counter {
                     Gdx.app.log("Counter","Right");
                     cycleUnits();
 
-                    if (NextPhase.instance.getPhase() == Phase.ALLIED_COMBAT.ordinal() ||
-                        NextPhase.instance.getPhase() == Phase.GERMAN_COMBAT.ordinal()){
-                        if (Combat.instance.isAttackArrows()) {
-                            Combat.instance.refreahAttackCancel();
-                        }
-                    }
                 }
                 return true;
             }

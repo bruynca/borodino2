@@ -319,10 +319,9 @@ public class Move extends Observable {
 
 
 
-    static public boolean isMOAEncountered = false;
     static public boolean isRiverCrossed = false;
 
-    public static float cost(Unit unit, Hex startHex, Hex endHex, boolean isMobileAssault, boolean checkTerrain, int thread) {
+    public static float cost(Unit unit, Hex startHex, Hex endHex,  boolean checkTerrain,boolean checkCommand, int thread) {
         /**
          *  start with a cost of 1 for clear
          *  anything else we will add to this cost unless hex is prohibited
@@ -332,12 +331,17 @@ public class Move extends Observable {
         if (startHex.xTable ==20 && startHex.yTable == 14 && endHex.xTable == 20 && endHex.yTable == 15){
             int bt=0;
         }
-        isMOAEncountered = false;
         isRiverCrossed = false;
 //        if (endHex.xTable == 16 && endHex.yTable == 10) {
 //              int bg = 0;
 //         }
         float cost = 0; // assume clear
+        if (checkCommand){
+            cost = 1;
+        }else{
+            int bt=0;
+        }
+
 
 //        if (!startHex.getSurround().contains(endHex)) { // should not happen
 //            return 999;
@@ -353,33 +357,19 @@ public class Move extends Observable {
          *
          */
         boolean isEnemyInHex = false;
-        if ((unit.isAllies && endHex.isAxisOccupied[thread] || (!unit.isAllies && endHex.isAlliedOccupied[thread]))) {
-            if (isMobileAssault) {
-                    isEnemyInHex = true;
-            } else {
+        if ((unit.isAllies && endHex.isRussianOccupied[thread] || (!unit.isAllies && endHex.isAlliedOccupied[thread]))) {
                 return 888;
-            }
         }
-
-/*        if (checkAdjacent) { // for supply
-            for (Hex hex : endHex.getSurround()) {
-                if (unit.isAllies && hex.checkAxisInHex() || unit.isAxis && hex.checkAlliesInHex()) {
-                    return 777;
-                }
-            }
-        }*/
-        if (unit == null){
-            int bg =0;
-        }
-        if ((unit.isAllies && endHex.isAxisZOC[thread]) || !unit.isAllies && endHex.isAlliedZOC[thread] ) {
-            if (unit.isTransport) {
-                if ((endHex.getAxisZoc(thread) && endHex.isAlliedOccupied[thread]) || endHex.getAlliedZoc(thread) && endHex.isAxisOccupied[thread]){
-                    // OK
-                }else{
-                    cost=999;
-                }
+        /**
+         *  add case for check command range and ezoc is covered by same side unit
+         */
+        if ((unit.isAllies && endHex.isRussianZOC[thread]) || !unit.isAllies && endHex.isAlliedZOC[thread] ) {
+            if (checkCommand){
+              if ((unit.isRussian && endHex.isRussianOccupied[thread]) ||(unit.isAllies && endHex.isAlliedOccupied[thread])){
+                  cost=0;
+              }
             }else {
-                cost += 2;
+                cost = 999;
             }
         }
         boolean isRoad =false;
@@ -388,42 +378,13 @@ public class Move extends Observable {
             isRoad = true;
             cost += .5F;
         }else if (startHex.isPath() && endHex.isPath() && Hex.isPathConnection(startHex,endHex)){
-            isPath = true;
-            if (unit.isTransport){
-                cost +=1;
-            }else {
+
                 cost += .5F;
-            }
-        }else if (endHex.isCity() || endHex.isTown() || endHex.isForest()){
-            // do nothing keep looking atcost
-        }else if (unit.isMechanized){
-                cost +=2; // for clear
-            }else{
-                cost +=1; // for clear
-            }
+        }
+
         int steps =endHex.getStacksIn();
 
-        if (isPath ){
-            if (steps > 4){
-                cost +=3;
-            }else if (steps > 2){
-                cost +=2;
-            }else if (steps >1 ){
-                cost += .5f;
-            }
-        }
-        /**
-         *  make it easier on Road
-         */
-        if (isRoad){
-            if (steps > 4){
-                cost +=3;
-            }else if (steps > 2){
-                cost +=1;
-            }else if (steps >0 ){
-                cost += 0;
-            }
-        }
+
   /*      if (startHex.isStreamBank() && endHex.isStreamBank() && checkTerrain) {
             if (Bridge.isBridge(startHex, endHex)){
               // nothing
@@ -480,7 +441,6 @@ public class Move extends Observable {
  //       if (endHex.xTable == 24 && endHex.yTable == 8){
  //           int bg =0;
  //       }
-
         return cost;
 
     }
