@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.ArrayList;
 
 import brunibeargames.Hex;
-import brunibeargames.HiliteHex;
 import brunibeargames.SplashScreen;
 
 public class Commander {
@@ -49,7 +48,17 @@ public class Commander {
         ArrayList<Officer> arrOfficer = new ArrayList<>();
         UnitMove unitMove = new UnitMove(unit, commanderRange, true, false,0);
         ArrayList<Hex> arrHex = unitMove.getMovePossible();
-        HiliteHex hiliteHex = new HiliteHex(arrHex, HiliteHex.TypeHilite.AI,null);
+        for (Hex hex:arrHex) {
+              if (!hex.getUnitsInHex().isEmpty()){
+                  for (Unit unit:hex.getUnitsInHex()){
+                      if (unit.isOfficer && unit.isAllies == isAllied){
+                          arrOfficer.add(unit.officer);
+                      }
+                  }
+
+              }
+        }
+  //      HiliteHex hiliteHex = new HiliteHex(arrHex, HiliteHex.TypeHilite.AI,null);
         return arrOfficer;
 
     }
