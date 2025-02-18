@@ -171,6 +171,7 @@ public class CounterStack {
             backGround  = new Image(counterrussian);
 
         }
+
         stack.add(backGround);
         stack.setSize(Counter.size,Counter.size);
         stack.add(corpColor());

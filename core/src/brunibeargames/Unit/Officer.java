@@ -22,4 +22,8 @@ public class Officer {
         arrOfficers.add(this);
 
     }
+
+    public Unit getUnit() {
+        return unit;
+    }
 }

@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
@@ -53,8 +54,7 @@ public class WinCommand {
     Commander commander;
     ArrayList<Officer> arrOfficerAvailable = new ArrayList<>();
     ArrayList<Officer> arrOfficerSelected = new ArrayList<>();
-
-
+    ArrayList<Counter> arrCounters = new ArrayList<>();
     public WinCommand(Commander commander){
         this.commander = commander;
         i18NBundle = GameMenuLoader.instance.localization;
@@ -69,10 +69,10 @@ public class WinCommand {
         Window.WindowStyle windowStyle = new Window.WindowStyle(Fonts.getFont24(), Color.WHITE, new NinePatchDrawable(np));
         String title = commander.name;
         arrOfficerAvailable.clear();
-        if (commander.name.contains("urat")){
+  //      if (commander.name.contains("urat")){
 
-        arrOfficerAvailable.addAll(commander.getOfficerAvailable());
-         }
+            arrOfficerAvailable.addAll(commander.getOfficerAvailable());
+      //   }
 
         window = new Window(title, windowStyle);
         /**
@@ -121,7 +121,7 @@ public class WinCommand {
 
         }
         winWidth = 400;
-        winHeight = 400;
+        winHeight = 500;
 /*        Label.LabelStyle labelStyle = new Label.LabelStyle(Fonts.getFont24(), Color.WHITE);
         String str = i18NBundle.format("secondexit");
         label = new Label(str, labelStyle);
@@ -144,6 +144,7 @@ public class WinCommand {
 
     private void loadWindow() {
         window.setDebug(true);
+        arrCounters.clear();
      //   window.padTop(0);
         Label.LabelStyle labelStyle = new Label.LabelStyle(Fonts.getFont24(), Color.WHITE);
      //   String str = i18NBundle.format("secondexit");
@@ -159,6 +160,12 @@ public class WinCommand {
         label = new Label(str, labelStyle);
         window.add(label).colspan(2);
         window.row();
+        for (Officer officer:arrOfficerAvailable){
+            Counter counter = new Counter(officer.getUnit(), Counter.TypeCounter.MapCounter);
+            Stack stack = counter.getCounterStack().getStack();
+            window.add(counter.getCounterStack().getStack());
+
+        }
         window.row();
         str = "Selected";
         label = new Label(str, labelStyle);

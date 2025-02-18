@@ -713,6 +713,7 @@ public class Hex {
 		ArrayList<Hex> arrReturn = new ArrayList<>();
 		if (!hex.isRiverBank){
 			return arrReturn;
+
 		}
 		ArrayList<Hex> arrWork = new ArrayList<>();
 		arrWork.addAll(hex.getSurround());
