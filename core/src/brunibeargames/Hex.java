@@ -110,7 +110,7 @@ public class Hex {
 
 	public Vector2 getCounterPosition() {
 		Vector2 pos = GetDisplayCoord();
-		pos.x += 14;
+		pos.x +=33;
 		pos.y += 14;
 		return pos;
 	}

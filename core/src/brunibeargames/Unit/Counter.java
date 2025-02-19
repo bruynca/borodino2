@@ -41,7 +41,7 @@ public class Counter {
         this.type = type;
         stack = new Stack();
         counterStack = new CounterStack(unit,stack);
-        scaleBrigade = 130/size;
+        scaleBrigade = (float) 130 /size;
         if (type == TypeCounter.MapCounter)
         {
             addListnersStack(this);

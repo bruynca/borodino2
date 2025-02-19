@@ -76,8 +76,6 @@ public class CounterStack {
     static ArrayList<CounterStack> arrShaded = new ArrayList<>();
 
     ArrayList<Actor> arrActors = new ArrayList<>();
-    static boolean isFirstCall = true;
-    private float stackScale = 1.0f;
 
     CounterStack(Unit unit, Stack stack){
 
@@ -193,7 +191,7 @@ public class CounterStack {
         stack.addActor(labelCorp);
 
         setPoints();
-//        stack.setScale(stackScale);
+        stack.setScale(.95f);
         stack.addActor(labelPoints);
 
     }

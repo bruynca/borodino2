@@ -1,25 +1,32 @@
 topmenu.png
-size: 600, 836
+size: 800, 1099
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 background
   rotate: false
-  xy: 200, 0
+  xy: 0, 0
   size: 400, 80
   orig: 400, 80
   offset: 0, 0
   index: -1
+commandwindow
+  rotate: false
+  xy: 400, 0
+  size: 400, 500
+  orig: 400, 500
+  offset: 0, 0
+  index: -1
 frencheagle
   rotate: false
-  xy: 0, 237
+  xy: 0, 500
   size: 515, 599
   orig: 515, 599
   offset: 0, 0
   index: -1
 russianeagle
   rotate: false
-  xy: 0, 0
+  xy: 515, 500
   size: 200, 237
   orig: 200, 237
   offset: 0, 0

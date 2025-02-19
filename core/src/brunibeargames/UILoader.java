@@ -121,6 +121,7 @@ public class UILoader {
             asset.put("background", atlas.findRegion("background"));
             asset.put("frencheagle", atlas.findRegion("frencheagle"));
             asset.put("russianeagle", atlas.findRegion("russianeagle"));
+            asset.put("commandwindow", atlas.findRegion("commandwindow"));
 
         }
     }

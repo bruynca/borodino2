@@ -62,7 +62,8 @@ public class WinCommand {
         tooltipStyle.label = new Label.LabelStyle(Fonts.getFont24(), Color.WHITE);
         NinePatch np = new NinePatch(GameMenuLoader.instance.gameMenu.asset.get("tooltip"), 2, 2, 2, 2);
         tooltipStyle.background = new NinePatchDrawable(np);
-        np = new NinePatch(UILoader.instance.unitSelection.asset.get("window"), 10, 10, 33, 6);
+
+        np = new NinePatch(UILoader.instance.topMenu.asset.get("commandwindow"), 10, 10, 33, 6);
         /**
          * window format
          */
@@ -143,23 +144,26 @@ public class WinCommand {
     }
 
     private void loadWindow() {
-        window.setDebug(true);
+       // window.setDebug(true);
         arrCounters.clear();
      //   window.padTop(0);
         Label.LabelStyle labelStyle = new Label.LabelStyle(Fonts.getFont24(), Color.WHITE);
-     //   String str = i18NBundle.format("secondexit");
+        Label.LabelStyle labelStyle2 = new Label.LabelStyle(Fonts.getFont24(), Color.YELLOW);
+        //   String str = i18NBundle.format("secondexit");
         String str = "At Borodino, Murat,\n Napoleon's\n flamboyant brother-in-law and\n cavalry commander.\nCan Activate 1 Corp\nor\nCan Acetc";
         label = new Label(str, labelStyle);
 
         Image image = new Image(commander.getTextureRegion());
         image.setScaling(Scaling.fit);
-        window.add(image);
-        window.add(label);
-        window.row();
-        str = "Available";
+        image.setPosition(3,329);
+        window.addActor(image);
+
+        String key = commander.name+"command";
+        str  = i18NBundle.get(key);
         label = new Label(str, labelStyle);
-        window.add(label).colspan(2);
-        window.row();
+        label.setPosition(image.getX()+image.getWidth() +3 ,image.getY());
+        window.addActor(label);
+ //       window.row();
         for (Officer officer:arrOfficerAvailable){
             Counter counter = new Counter(officer.getUnit(), Counter.TypeCounter.MapCounter);
             Stack stack = counter.getCounterStack().getStack();
@@ -168,8 +172,15 @@ public class WinCommand {
         }
         window.row();
         str = "Selected";
-        label = new Label(str, labelStyle);
-        window.add(label).colspan(2);
+  //      label = new Label(str, labelStyle);
+  //      window.add(label).colspan(2);
+        window.row();
+        for (Officer officer:arrOfficerAvailable){
+            Counter counter = new Counter(officer.getUnit(), Counter.TypeCounter.MapCounter);
+            Stack stack = counter.getCounterStack().getStack();
+ //          window.add(counter.getCounterStack().getStack());
+
+        }
 
 
 
