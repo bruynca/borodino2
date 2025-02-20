@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.Scaling;
 import java.util.ArrayList;
 
 import brunibeargames.Borodino;
+import brunibeargames.FontFactory;
 import brunibeargames.Fonts;
 import brunibeargames.GameMenuLoader;
 import brunibeargames.GamePreferences;
@@ -55,11 +56,14 @@ public class WinCommand {
     ArrayList<Officer> arrOfficerAvailable = new ArrayList<>();
     ArrayList<Officer> arrOfficerSelected = new ArrayList<>();
     ArrayList<Counter> arrCounters = new ArrayList<>();
+    float ySelected;
+    float yAvailable;
+
     public WinCommand(Commander commander){
         this.commander = commander;
         i18NBundle = GameMenuLoader.instance.localization;
         tooltipStyle = new TextTooltip.TextTooltipStyle();
-        tooltipStyle.label = new Label.LabelStyle(Fonts.getFont24(), Color.WHITE);
+        tooltipStyle.label = new Label.LabelStyle(FontFactory.instance.titleFont, Color.WHITE);
         NinePatch np = new NinePatch(GameMenuLoader.instance.gameMenu.asset.get("tooltip"), 2, 2, 2, 2);
         tooltipStyle.background = new NinePatchDrawable(np);
 
@@ -67,21 +71,19 @@ public class WinCommand {
         /**
          * window format
          */
-        Window.WindowStyle windowStyle = new Window.WindowStyle(Fonts.getFont24(), Color.WHITE, new NinePatchDrawable(np));
-        String title = commander.name;
+        Window.WindowStyle windowStyle = new Window.WindowStyle(FontFactory.instance.titleFont, Color.WHITE, new NinePatchDrawable(np));
+        String title = commander.name;//+" - "+i18NBundle.format("command");
         arrOfficerAvailable.clear();
-  //      if (commander.name.contains("urat")){
-
-            arrOfficerAvailable.addAll(commander.getOfficerAvailable());
-      //   }
+        arrOfficerAvailable.addAll(commander.getOfficerPossibleAvailable());
 
         window = new Window(title, windowStyle);
+
         /**
          * close button
          */
-     /*   Label lab = window.getTitleLabel();
-        lab.setAlignment(Align.center);
-        Image image = new Image(close);
+//        Label lab = window.getTitleLabel();
+//        lab.setAlignment(Align.center);
+/*        Image image = new Image(close);
         image.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -96,13 +98,6 @@ public class WinCommand {
 
         window.setModal(false);
         window.setTransform(true);
-
-        int heightWindow = (Counter.sizeOnMap + 100);
-        if (winWidth < 120) {
-            winWidth = 120;
-        }
-        window.setSize(winWidth, heightWindow);
-        window.setPosition(100, 100);
    //     WinModal.instance.set();
         loadWindow();
         showWindow();
@@ -123,21 +118,6 @@ public class WinCommand {
         }
         winWidth = 400;
         winHeight = 500;
-/*        Label.LabelStyle labelStyle = new Label.LabelStyle(Fonts.getFont24(), Color.WHITE);
-        String str = i18NBundle.format("secondexit");
-        label = new Label(str, labelStyle);
-        window.add(label).colspan(maxRows).align(Align.left);
-        window.row();
-        window.add(table).width(450);
-        window.row();
-        if (arrUnits2nth.size() > 0) {
-            table = loadTable(arrUnits2nth);
-            winHeight += (counterSize + 50);
-            window.add(table);
-            window.row();
-
-        }
-*/
         window.setSize(winWidth,winHeight);
         Borodino.instance.guiStage.addActor(window);
 
@@ -149,40 +129,89 @@ public class WinCommand {
      //   window.padTop(0);
         Label.LabelStyle labelStyle = new Label.LabelStyle(Fonts.getFont24(), Color.WHITE);
         Label.LabelStyle labelStyle2 = new Label.LabelStyle(Fonts.getFont24(), Color.YELLOW);
-        //   String str = i18NBundle.format("secondexit");
-        String str = "At Borodino, Murat,\n Napoleon's\n flamboyant brother-in-law and\n cavalry commander.\nCan Activate 1 Corp\nor\nCan Acetc";
-        label = new Label(str, labelStyle);
 
         Image image = new Image(commander.getTextureRegion());
         image.setScaling(Scaling.fit);
         image.setPosition(3,329);
+        /**
+         *  image
+         */
         window.addActor(image);
-
+        /**
+         *  commander narrative
+         */
         String key = commander.name+"command";
-        str  = i18NBundle.get(key);
+        String str  = i18NBundle.format(key);
+
         label = new Label(str, labelStyle);
+        label.setPosition(image.getX()+image.getWidth() +3 ,image.getY()+48);
+        window.addActor(label);
+
+        str = i18NBundle.format("activate",commander.getCanCommand());
+        if (commander.name.contains("urat")){
+            str += "\n"+i18NBundle.format("activatehorse",commander.getCanCommand()+1);
+        }
+        if (commander.name.contains("avout")){
+            str += "\n"+i18NBundle.format("activatedavout");
+        }
+        label = new Label(str, labelStyle2);
         label.setPosition(image.getX()+image.getWidth() +3 ,image.getY());
         window.addActor(label);
- //       window.row();
-        for (Officer officer:arrOfficerAvailable){
-            Counter counter = new Counter(officer.getUnit(), Counter.TypeCounter.MapCounter);
-            Stack stack = counter.getCounterStack().getStack();
-            window.add(counter.getCounterStack().getStack());
 
-        }
+        /**
+         *  line for available
+         */
+        Label.LabelStyle labelStyleTitle = new Label.LabelStyle(FontFactory.instance.littleTitleFont, Color.LIGHT_GRAY);
+        String str2 = i18NBundle.format("available");
+        label = new Label(str2, labelStyleTitle);
+
+        label.setPosition(image.getX()+image.getWidth() +3 ,image.getY()-20);
+        yAvailable = image.getY()-20;
+        window.addActor(label);
+
+        /**
+         *  line for selectede
+         */
+        str2 = i18NBundle.format("selected");
+        label = new Label(str2, labelStyleTitle);
+        label.setPosition(image.getX()+image.getWidth() +3 ,image.getY()-109);
+        ySelected = image.getY()-109;
+        window.addActor(label);
+
+
+        createOfficersAvailable();
+
+        //       window.row();
         window.row();
         str = "Selected";
-  //      label = new Label(str, labelStyle);
-  //      window.add(label).colspan(2);
         window.row();
+        float x =3;
         for (Officer officer:arrOfficerAvailable){
             Counter counter = new Counter(officer.getUnit(), Counter.TypeCounter.MapCounter);
             Stack stack = counter.getCounterStack().getStack();
- //          window.add(counter.getCounterStack().getStack());
+            stack.setPosition(x,yAvailable-stack.getHeight()+2);
+            stack.setScale(.5f);
+            window.addActor(stack);
+            x+=stack.getWidth()+3;
+            arrCounters.add(counter);
 
         }
 
 
 
+    }
+
+    private void createOfficersAvailable() {
+        for (Officer officer:arrOfficerAvailable){
+            Counter counter = new Counter(officer.getUnit(), Counter.TypeCounter.MapCounter);
+            Stack stack = counter.getCounterStack().getStack();
+ //           window.add(counter.getCounterStack().getStack());
+       }
+    }
+
+    public void deleteOfficer(Officer officer) {
+    }
+
+    public void addOfficer(Officer officer) {
     }
 }

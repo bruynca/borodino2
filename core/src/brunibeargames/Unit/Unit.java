@@ -113,12 +113,7 @@ public class Unit {
 	 * artillery
 	 */
 	private int range;
-//	private int attackFactorLimbered;
-//	private int attackFactorUnLimbered;
-//	private int moveAtStartUnLimbered;
-//	private int moveAtStartLimbered;
-
-//	private boolean isAirplane = false;
+	private boolean isActivated =false;
 
 
 	public static void loadTexture() {
@@ -163,6 +158,12 @@ public class Unit {
 			}
 		}
 		return null;
+	}
+
+	public static void initCommand() {
+			for (Unit unit:arrGameCombatUnits){
+				unit.isActivated = false;
+			}
 	}
 
 	public int getArtAmmo() {

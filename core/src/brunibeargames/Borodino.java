@@ -350,10 +350,12 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 		 if (isMainMenu) {
 			 return false;
 		 }
-		 if (amountY < 0) {
-			 Screen.instance.ZoomBigger();
-		 } else if (amountY > 0) {
-			 Screen.instance.ZoomSmaller();
+		 if (screen.instance != null) {
+			 if (amountY < 0) {
+				 Screen.instance.ZoomBigger();
+			 } else if (amountY > 0) {
+				 Screen.instance.ZoomSmaller();
+			 }
 		 }
 		 return false;
 	 }
@@ -460,7 +462,9 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 	public boolean pan(float x, float y, float deltaX, float deltaY) {
 		Gdx.app.log("Borodino","Pan");
 		Gdx.graphics.setTitle("Borodino Phase");
-		screen.instance.PanCamera(deltaX, deltaY);
+		if (screen.instance != null) {
+			screen.instance.PanCamera(deltaX, deltaY);
+		}
 		return true;
 	}
 

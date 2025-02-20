@@ -9,6 +9,8 @@ import java.util.UUID;
 import brunibeargames.UI.BottomMenu;
 import brunibeargames.Unit.ClickAction;
 import brunibeargames.Unit.CounterStack;
+import brunibeargames.Unit.Officer;
+import brunibeargames.Unit.Unit;
 
 public class NextPhase {
 
@@ -137,6 +139,8 @@ public class NextPhase {
 
             switch (Phases[phase]) {
                 case NEXT_TURN:
+                    Gdx.app.log("NextPhase", "NEXT_TURN");
+                    initTurn();
                     break;
                 case CARD_CLEANUP:
                    endPhase();
@@ -181,6 +185,13 @@ public class NextPhase {
         }
 
     }
+
+    private void initTurn() {
+        Officer.initCommand();
+        Unit.initCommand();
+
+    }
+
     public void endPhase(){
         Gdx.app.log("NexPhase", "endPhase"+Phases[getPhase()].toString());
 

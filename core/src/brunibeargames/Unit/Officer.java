@@ -8,6 +8,7 @@ public class Officer {
     public boolean isAllied;
     public String map;
     int movement;
+    boolean isActivated = false;
 
     Unit unit;
     static ArrayList<Officer> arrOfficers = new ArrayList<>();
@@ -21,6 +22,12 @@ public class Officer {
         movement= 6;
         arrOfficers.add(this);
 
+    }
+
+    public static void initCommand() {
+        for (Officer officer : arrOfficers) {
+            officer.isActivated = false;
+        }
     }
 
     public Unit getUnit() {

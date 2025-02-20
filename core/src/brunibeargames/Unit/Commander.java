@@ -44,14 +44,14 @@ public class Commander {
          return textureRegion;
     }
 
-    public ArrayList<Officer> getOfficerAvailable() {
+    public ArrayList<Officer> getOfficerPossibleAvailable() {
         ArrayList<Officer> arrOfficer = new ArrayList<>();
         UnitMove unitMove = new UnitMove(unit, commanderRange, true, false,0);
         ArrayList<Hex> arrHex = unitMove.getMovePossible();
         for (Hex hex:arrHex) {
               if (!hex.getUnitsInHex().isEmpty()){
                   for (Unit unit:hex.getUnitsInHex()){
-                      if (unit.isOfficer && unit.isAllies == isAllied){
+                      if (unit.isOfficer && unit.isAllies == isAllied && !unit.officer.isActivated){
                           arrOfficer.add(unit.officer);
                       }
                   }
@@ -61,5 +61,9 @@ public class Commander {
   //      HiliteHex hiliteHex = new HiliteHex(arrHex, HiliteHex.TypeHilite.AI,null);
         return arrOfficer;
 
+    }
+
+    public int getCanCommand() {
+        return canCommand;
     }
 }
