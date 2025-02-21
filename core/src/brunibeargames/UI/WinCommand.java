@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
@@ -178,35 +177,63 @@ public class WinCommand {
         ySelected = image.getY()-109;
         window.addActor(label);
 
+//        Table table = addOfficersAvailableTable();
+//        table.setPosition(100,yAvailable-30);
+        float x=10;
+        //window.addActor(table);
+        for (final Officer officer:arrOfficerAvailable) {
+            final Counter counter = new Counter(officer.getUnit(), Counter.TypeCounter.GUICounter);
+ //           counter.stack.setSize(60,60);
+            counter.stack.setScale(.60f);
+            counter.stack.setTransform(true);
+            counter.stack.setPosition(x,yAvailable-67); //90
+            //          counter.getCounterStack().getStack().setSize(counterSize/.8f, counterSize/.8f);
+            window.addActor(counter.stack);
+            x +=70;
+        }
 
-        createOfficersAvailable();
+
+
+
 
         //       window.row();
-        window.row();
+/*        window.row();
         str = "Selected";
         window.row();
         float x =3;
         for (Officer officer:arrOfficerAvailable){
-            Counter counter = new Counter(officer.getUnit(), Counter.TypeCounter.MapCounter);
-            Stack stack = counter.getCounterStack().getStack();
-            stack.setPosition(x,yAvailable-stack.getHeight()+2);
-            stack.setScale(.5f);
-            window.addActor(stack);
-            x+=stack.getWidth()+3;
+            final Counter counter = new Counter(officer.getUnit(), Counter.TypeCounter.GUICounter);
+    //        arrCounterSave.add(counter);
+            counter.stack.setTransform(true);
+            float ratio =(float) 100f/Counter.size;
+            counter.stack.setScale(ratio);
+            counter.getCounterStack().adjustFont(.8f);
+            counter.getCounterStack().getStack().setSize(counterSize, counterSize);
+            window.addActor(counter.stack);
+            x+=counterSize+3;
             arrCounters.add(counter);
 
-        }
+        }*/
 
 
 
     }
 
-    private void createOfficersAvailable() {
-        for (Officer officer:arrOfficerAvailable){
-            Counter counter = new Counter(officer.getUnit(), Counter.TypeCounter.MapCounter);
-            Stack stack = counter.getCounterStack().getStack();
- //           window.add(counter.getCounterStack().getStack());
-       }
+
+    private Table addOfficersAvailableTable() {
+        Table table = new Table();
+        final int size =100;
+        int i = 0;
+        for (final Officer officer:arrOfficerAvailable) {
+            final Counter counter = new Counter(officer.getUnit(), Counter.TypeCounter.GUICounter);
+            counter.stack.setTransform(true);
+            float ratio =(float) size/Counter.size;
+  //          counter.stack.setScale(ratio);
+            counter.getCounterStack().adjustFont(.64f);
+  //          counter.getCounterStack().getStack().setSize(counterSize/.8f, counterSize/.8f);
+            table.add(counter.stack).width(Counter.sizeOnMap/1.5f).height(Counter.sizeOnMap/1.5f);
+        }
+        return table;
     }
 
     public void deleteOfficer(Officer officer) {
