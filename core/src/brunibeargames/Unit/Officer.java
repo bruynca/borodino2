@@ -33,4 +33,14 @@ public class Officer {
     public Unit getUnit() {
         return unit;
     }
+    public static  Officer getOfficer(String name) {
+        for (Officer officer : arrOfficers) {
+            if (officer.name.contains(name)) {
+                return officer;
+            }
+        }
+        return null;
+
+
+    }
 }

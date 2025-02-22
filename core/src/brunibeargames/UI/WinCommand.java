@@ -44,8 +44,8 @@ public class WinCommand {
     Label label;
     Table table;
 
-    float winWidth = 500; // 900 original
-    float winHeight = 200; // 650 original
+    float winWidth = 400; // 900 original
+    float winHeight = 500; // 650 original
     final float counterSize = 70f;
     private I18NBundle i18NBundle;
     TextTooltip.TextTooltipStyle tooltipStyle;
@@ -57,9 +57,11 @@ public class WinCommand {
     ArrayList<Counter> arrCounters = new ArrayList<>();
     float ySelected;
     float yAvailable;
+    Officer officerDavout;
 
     public WinCommand(Commander commander){
         this.commander = commander;
+        officerDavout = Officer.getOfficer("Davout");
         i18NBundle = GameMenuLoader.instance.localization;
         tooltipStyle = new TextTooltip.TextTooltipStyle();
         tooltipStyle.label = new Label.LabelStyle(FontFactory.instance.titleFont, Color.WHITE);
@@ -72,8 +74,16 @@ public class WinCommand {
          */
         Window.WindowStyle windowStyle = new Window.WindowStyle(FontFactory.instance.titleFont, Color.WHITE, new NinePatchDrawable(np));
         String title = commander.name;//+" - "+i18NBundle.format("command");
+
         arrOfficerAvailable.clear();
         arrOfficerAvailable.addAll(commander.getOfficerPossibleAvailable());
+        arrOfficerSelected.clear();
+        if (commander.isAllied){
+            arrOfficerAvailable.remove(officerDavout);
+            if (commander.name.contains("avout")){
+                arrOfficerSelected.add(officerDavout);
+            }
+        }
 
         window = new Window(title, windowStyle);
 
@@ -115,8 +125,6 @@ public class WinCommand {
             window.setPosition(v2.x, v2.y);
 
         }
-        winWidth = 400;
-        winHeight = 500;
         window.setSize(winWidth,winHeight);
         Borodino.instance.guiStage.addActor(window);
 
@@ -164,7 +172,7 @@ public class WinCommand {
         String str2 = i18NBundle.format("available");
         label = new Label(str2, labelStyleTitle);
 
-        label.setPosition(image.getX()+image.getWidth() +3 ,image.getY()-20);
+        label.setPosition(image.getX()+image.getWidth() -60 ,image.getY()-20);
         yAvailable = image.getY()-20;
         window.addActor(label);
 
@@ -177,20 +185,9 @@ public class WinCommand {
         ySelected = image.getY()-109;
         window.addActor(label);
 
-//        Table table = addOfficersAvailableTable();
-//        table.setPosition(100,yAvailable-30);
         float x=10;
-        //window.addActor(table);
-        for (final Officer officer:arrOfficerAvailable) {
-            final Counter counter = new Counter(officer.getUnit(), Counter.TypeCounter.GUICounter);
- //           counter.stack.setSize(60,60);
-            counter.stack.setScale(.60f);
-            counter.stack.setTransform(true);
-            counter.stack.setPosition(x,yAvailable-67); //90
-            //          counter.getCounterStack().getStack().setSize(counterSize/.8f, counterSize/.8f);
-            window.addActor(counter.stack);
-            x +=70;
-        }
+        addInRange();
+        addSelected();
 
 
 
@@ -219,22 +216,54 @@ public class WinCommand {
 
     }
 
+    private void addSelected() {
+        float x = 10;
+        /**
+         *  how many officers can we fit
+         */
+        float offsett = 70;
+        for (final Officer officer:arrOfficerSelected) {
+            final Counter counter = new Counter(officer.getUnit(), Counter.TypeCounter.GUICounter);
+            //           counter.stack.setSize(60,60);
+            counter.stack.setScale(.60f);
+            counter.stack.setTransform(true);
+            counter.stack.setPosition(x,ySelected-60); //90
+            //          counter.getCounterStack().getStack().setSize(counterSize/.8f, counterSize/.8f);
+            window.addActor(counter.stack);
+            x +=offsett;
+        }
 
-    private Table addOfficersAvailableTable() {
-        Table table = new Table();
-        final int size =100;
-        int i = 0;
+    }
+
+    /**
+     *  add officers available to this commander
+     */
+    public void addInRange() {
+        float x = 10;
+        /**
+         *  how many officers can we fit
+         */
+        float availableLength = winWidth;
+        float counterLength = 60;
+        float offsett = availableLength/arrOfficerAvailable.size();
+        if (offsett > 70){
+            offsett = 70;
+        }else{
+            offsett -=5;
+        }
         for (final Officer officer:arrOfficerAvailable) {
             final Counter counter = new Counter(officer.getUnit(), Counter.TypeCounter.GUICounter);
+            //           counter.stack.setSize(60,60);
+            counter.stack.setScale(.60f);
             counter.stack.setTransform(true);
-            float ratio =(float) size/Counter.size;
-  //          counter.stack.setScale(ratio);
-            counter.getCounterStack().adjustFont(.64f);
-  //          counter.getCounterStack().getStack().setSize(counterSize/.8f, counterSize/.8f);
-            table.add(counter.stack).width(Counter.sizeOnMap/1.5f).height(Counter.sizeOnMap/1.5f);
+            counter.stack.setPosition(x,yAvailable-67); //90
+            //          counter.getCounterStack().getStack().setSize(counterSize/.8f, counterSize/.8f);
+            window.addActor(counter.stack);
+            x +=offsett;
         }
-        return table;
+
     }
+
 
     public void deleteOfficer(Officer officer) {
     }
