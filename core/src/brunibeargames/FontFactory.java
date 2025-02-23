@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 public class FontFactory {
     static public FontFactory instance;
     public final BitmapFont littleTitleFont;
+    public BitmapFont titleFontRussian;
     public BitmapFont largeFont;
     public BitmapFont largeFontWhite;
     public BitmapFont jumboFont;
@@ -92,6 +93,14 @@ public class FontFactory {
 //        parameter.borderColor = Color.WHITE;
 //        parameter.borderWidth = ;
         littleTitleFont= generator.generateFont(parameter); // font size 11 pixelslargeFontWhite= generator.generateFont(parameter); // font size 11 pixels
+
+        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 24;
+        parameter.color = Color.LIGHT_GRAY;
+        parameter.genMipMaps = true;
+        parameter.borderColor = Color.FOREST;
+        parameter.borderWidth = 3;
+        titleFontRussian= generator.generateFont(parameter); // font size 11 pixelslargeFontWhite= generator.generateFont(parameter); // font size 11 pixels
 
         generator.dispose();
     }

@@ -90,7 +90,12 @@ public class WinCommand {
         /**
          * window format
          */
-        Window.WindowStyle windowStyle = new Window.WindowStyle(FontFactory.instance.titleFont, Color.WHITE, new NinePatchDrawable(np));
+        Window.WindowStyle windowStyle;
+        if (commander.isAllied) {
+            windowStyle = new Window.WindowStyle(FontFactory.instance.titleFont, Color.WHITE, new NinePatchDrawable(np));
+        }else{
+            windowStyle = new Window.WindowStyle(FontFactory.instance.titleFontRussian, Color.WHITE, new NinePatchDrawable(np));
+        }
         String title = commander.name;//+" - "+i18NBundle.format("command");
 
         arrOfficerAvailable.clear();
@@ -189,6 +194,7 @@ public class WinCommand {
         /**
          *  line for available
          */
+
         Label.LabelStyle labelStyleTitle = new Label.LabelStyle(FontFactory.instance.littleTitleFont, Color.LIGHT_GRAY);
         String str2 = i18NBundle.format("available");
         label = new Label(str2, labelStyleTitle);
@@ -341,17 +347,6 @@ public class WinCommand {
                         displayInRange();
                         DoCommand.instance.takeOfficer(counter.getUnit().getOfficer());
                     }
-                }
-                if (event.getButton( ) == Input.Buttons.RIGHT)
-                {
-                        Gdx.app.log("Counter", "Right TouchUp unit=" + counter.getUnit().brigade);
-                        ArrayList<Unit> arrUnits = new ArrayList<Unit>();
-                        arrUnits.addAll(counter.getUnit().getOfficer().getUnitsAvailable());
-                        ArrayList<Hex> arrHex = new ArrayList<Hex>();
-                        for (Unit unit:arrUnits) {
-                            arrHex.add(unit.getHexOccupy());
-                        }
-                        HiliteHex hiliteHex = new HiliteHex(arrHex, HiliteHex.TypeHilite.AI, null);;
                 }
             }
        });
