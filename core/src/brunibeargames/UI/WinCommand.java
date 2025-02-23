@@ -1,17 +1,22 @@
 package brunibeargames.UI;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.Scaling;
@@ -19,14 +24,18 @@ import com.badlogic.gdx.utils.Scaling;
 import java.util.ArrayList;
 
 import brunibeargames.Borodino;
+import brunibeargames.DoCommand;
 import brunibeargames.FontFactory;
 import brunibeargames.Fonts;
 import brunibeargames.GameMenuLoader;
 import brunibeargames.GamePreferences;
+import brunibeargames.Hex;
+import brunibeargames.HiliteHex;
 import brunibeargames.UILoader;
 import brunibeargames.Unit.Commander;
 import brunibeargames.Unit.Counter;
 import brunibeargames.Unit.Officer;
+import brunibeargames.Unit.Unit;
 import brunibeargames.WinModal;
 
 /**
@@ -53,15 +62,24 @@ public class WinCommand {
     WinModal winModal;
     Commander commander;
     ArrayList<Officer> arrOfficerAvailable = new ArrayList<>();
+    ArrayList<Officer> arrOfficerAvailableOriginal = new ArrayList<>();
     ArrayList<Officer> arrOfficerSelected = new ArrayList<>();
     ArrayList<Counter> arrCounters = new ArrayList<>();
     float ySelected;
     float yAvailable;
     Officer officerDavout;
+    boolean isMurat = false;
+    boolean isDavout = false;
 
     public WinCommand(Commander commander){
         this.commander = commander;
         officerDavout = Officer.getOfficer("Davout");
+        if (commander.name.contains("urat")){
+            isMurat = true;
+        }
+        if (commander.name.contains("avout")){
+            isDavout = true;
+        }
         i18NBundle = GameMenuLoader.instance.localization;
         tooltipStyle = new TextTooltip.TextTooltipStyle();
         tooltipStyle.label = new Label.LabelStyle(FontFactory.instance.titleFont, Color.WHITE);
@@ -77,6 +95,8 @@ public class WinCommand {
 
         arrOfficerAvailable.clear();
         arrOfficerAvailable.addAll(commander.getOfficerPossibleAvailable());
+        arrOfficerAvailableOriginal.clear();
+        arrOfficerAvailableOriginal.addAll(arrOfficerAvailable);
         arrOfficerSelected.clear();
         if (commander.isAllied){
             arrOfficerAvailable.remove(officerDavout);
@@ -86,6 +106,7 @@ public class WinCommand {
         }
 
         window = new Window(title, windowStyle);
+        window.setTouchable(Touchable.enabled);
 
         /**
          * close button
@@ -186,63 +207,52 @@ public class WinCommand {
         window.addActor(label);
 
         float x=10;
-        addInRange();
-        addSelected();
-
-
-
-
-
-        //       window.row();
-/*        window.row();
-        str = "Selected";
-        window.row();
-        float x =3;
-        for (Officer officer:arrOfficerAvailable){
-            final Counter counter = new Counter(officer.getUnit(), Counter.TypeCounter.GUICounter);
-    //        arrCounterSave.add(counter);
-            counter.stack.setTransform(true);
-            float ratio =(float) 100f/Counter.size;
-            counter.stack.setScale(ratio);
-            counter.getCounterStack().adjustFont(.8f);
-            counter.getCounterStack().getStack().setSize(counterSize, counterSize);
-            window.addActor(counter.stack);
-            x+=counterSize+3;
-            arrCounters.add(counter);
-
-        }*/
-
+        displayInRange();
+        displaySelected();
 
 
     }
-
-    private void addSelected() {
+    ArrayList<Stack> arrSelectedStacks = new ArrayList<Stack>();
+    private void displaySelected() {
         float x = 10;
         /**
          *  how many officers can we fit
          */
         float offsett = 70;
+        for (Stack stack:arrSelectedStacks){
+            stack.remove();
+        }
+        arrSelectedStacks.clear();
         for (final Officer officer:arrOfficerSelected) {
             final Counter counter = new Counter(officer.getUnit(), Counter.TypeCounter.GUICounter);
             //           counter.stack.setSize(60,60);
             counter.stack.setScale(.60f);
             counter.stack.setTransform(true);
-            counter.stack.setPosition(x,ySelected-60); //90
+            counter.stack.setPosition(x,ySelected-65); //90
             //          counter.getCounterStack().getStack().setSize(counterSize/.8f, counterSize/.8f);
+            arrSelectedStacks.add(counter.stack);
             window.addActor(counter.stack);
             x +=offsett;
+            addListnerForRemove(counter);
         }
 
     }
 
+
     /**
      *  add officers available to this commander
      */
-    public void addInRange() {
+    ArrayList<Stack> arrAvailableStacks = new ArrayList<Stack>();
+    public void displayInRange() {
+        for (Stack stack:arrAvailableStacks){
+            stack.remove();
+        }
+        arrAvailableStacks.clear();
         float x = 10;
         /**
          *  how many officers can we fit
          */
+
         float availableLength = winWidth;
         float counterLength = 60;
         float offsett = availableLength/arrOfficerAvailable.size();
@@ -259,15 +269,181 @@ public class WinCommand {
             counter.stack.setPosition(x,yAvailable-67); //90
             //          counter.getCounterStack().getStack().setSize(counterSize/.8f, counterSize/.8f);
             window.addActor(counter.stack);
+            arrAvailableStacks.add(counter.stack);
             x +=offsett;
+            addListnerForAdd(counter);
         }
+
+    }
+    HiliteHex hiliteHex;
+    private void addListnerForAdd(Counter counter) {
+        counter.stack.addListener(new ClickListener() {
+/*
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                Gdx.app.log("Counter ", "enter unit="+unit);
+                checkExplode(counter);
+                checkDesc(counter);
+            }
+            public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                Gdx.app.log("Counter", "exit unit="+unit);
+                checkImplode();
+                checkDescGone();
+            }*/
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.log("Counter","TouchDown unit="+counter.getUnit());
+                if (event.getButton( ) == Input.Buttons.RIGHT)
+                {
+                    Gdx.app.log("Counter","Right");
+                    ArrayList<Unit> arrUnits = new ArrayList<Unit>();
+                    arrUnits.addAll(counter.getUnit().getOfficer().getUnitsAvailable());
+                    ArrayList<Hex> arrHex = new ArrayList<Hex>();
+                    for (Unit unit:arrUnits) {
+                        arrHex.add(unit.getHexOccupy());
+                    }
+                    hiliteHex = new HiliteHex(arrHex, HiliteHex.TypeHilite.AI, null);;
+                }
+                return true;
+            }
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                //             Gdx.app.log("Counter","TouchUp");
+                /**
+                 *  must have room for commands
+                 *  in caseof marat allowed 2 Calvary
+                 *
+                 */
+                if (hiliteHex != null){
+                    hiliteHex.remove();
+                }
+
+                boolean canCommand = false;
+                if (commander.getCanCommand() > arrOfficerSelected.size()){
+                    canCommand = true;
+                }else{
+                    if ((isMurat && arrOfficerSelected.get(0).corp.number.contains("C") &&
+                       (arrOfficerSelected.size() == 1) &&
+                      counter.getUnit().getOfficer().corp.number.contains("C"))){
+                        canCommand = true;
+                    }else{
+                        if (isDavout && arrOfficerSelected.size() == 1){
+                            canCommand =true;
+                        }
+                    }
+
+                }
+
+                if (event.getButton( ) == Input.Buttons.LEFT)
+                {
+                    if (canCommand){
+                        Gdx.app.log("Counter", "Left TouchUp unit=" + counter.getUnit().brigade);
+                        arrOfficerAvailable.remove(counter.getUnit().getOfficer());
+                        arrOfficerSelected.add(counter.getUnit().getOfficer());
+                        displaySelected();
+                        displayInRange();
+                        DoCommand.instance.takeOfficer(counter.getUnit().getOfficer());
+                    }
+                }
+                if (event.getButton( ) == Input.Buttons.RIGHT)
+                {
+                        Gdx.app.log("Counter", "Right TouchUp unit=" + counter.getUnit().brigade);
+                        ArrayList<Unit> arrUnits = new ArrayList<Unit>();
+                        arrUnits.addAll(counter.getUnit().getOfficer().getUnitsAvailable());
+                        ArrayList<Hex> arrHex = new ArrayList<Hex>();
+                        for (Unit unit:arrUnits) {
+                            arrHex.add(unit.getHexOccupy());
+                        }
+                        HiliteHex hiliteHex = new HiliteHex(arrHex, HiliteHex.TypeHilite.AI, null);;
+                }
+            }
+       });
+
+    }
+    private void addListnerForRemove(Counter counter) {
+        counter.stack.addListener(new ClickListener() {
+            /*
+                        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                            Gdx.app.log("Counter ", "enter unit="+unit);
+                            checkExplode(counter);
+                            checkDesc(counter);
+                        }
+                        public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                            Gdx.app.log("Counter", "exit unit="+unit);
+                            checkImplode();
+                            checkDescGone();
+                        }
+                        public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                            Gdx.app.log("Counter","TouchDown unit="+unit);
+                            Borodino.instance.unitPlace = unit;
+                            if (event.getButton( ) == Input.Buttons.RIGHT)
+                            {
+                                Gdx.app.log("Counter","Right");
+                                cycleUnits();
+
+                            }
+                            return true;
+                        }*/
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.log("Counter","TouchDown unit="+counter.getUnit());
+                if (event.getButton( ) == Input.Buttons.RIGHT)
+                {
+                    Gdx.app.log("Counter","Right");
+                    ArrayList<Unit> arrUnits = new ArrayList<Unit>();
+                    arrUnits.addAll(counter.getUnit().getOfficer().getUnitsAvailable());
+                    ArrayList<Hex> arrHex = new ArrayList<Hex>();
+                    for (Unit unit:arrUnits) {
+                        arrHex.add(unit.getHexOccupy());
+                    }
+                    hiliteHex = new HiliteHex(arrHex, HiliteHex.TypeHilite.AI, null);;
+                }
+                return true;
+            }
+
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                //             Gdx.app.log("Counter","TouchUp");
+                /**
+                 *  must have room for commands
+                 *  in caseof marat allowed 2 Calvary
+                 *
+                 */
+                if (hiliteHex != null){
+                    hiliteHex.remove();
+                }
+
+                boolean canCommand = false;
+                if (isDavout && counter.getUnit().getOfficer().name.contains("avout")){
+
+                }else{
+                    canCommand= true;
+                }
+                if (event.getButton( ) == Input.Buttons.LEFT)
+                {
+                    if (canCommand){
+                        Gdx.app.log("Counter", "Left TouchUp unit=" + counter.getUnit().brigade);
+                        arrOfficerSelected.remove(counter.getUnit().getOfficer());
+                        arrOfficerAvailable.add(counter.getUnit().getOfficer());
+                        displaySelected();
+                        displayInRange();
+                        DoCommand.instance.addOfficer(counter.getUnit().getOfficer());
+                    }
+                }
+            }
+
+        });
 
     }
 
 
     public void deleteOfficer(Officer officer) {
+        arrOfficerAvailable.remove(officer);
+        displayInRange();
     }
 
     public void addOfficer(Officer officer) {
+        if (!arrOfficerAvailableOriginal.contains(officer)){
+            return;
+        }
+        if (!arrOfficerAvailable.contains(officer)) {
+            arrOfficerAvailable.add(officer);
+        }
+        displayInRange();
     }
 }

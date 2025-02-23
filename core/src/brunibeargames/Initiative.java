@@ -10,7 +10,7 @@ import brunibeargames.UI.EventPopUp;
 public class Initiative implements Observer {
     ObserverPackage op;
     private I18NBundle i18NBundle;
-    private boolean isAllies = true;
+    private boolean isAllies = false;
 
     public Initiative(){
         i18NBundle= GameMenuLoader.instance.localization;

@@ -2,6 +2,8 @@ package brunibeargames.Unit;
 
 import java.util.ArrayList;
 
+import brunibeargames.Hex;
+
 public class Officer {
     public String name;
     public Corp corp;
@@ -33,6 +35,25 @@ public class Officer {
     public Unit getUnit() {
         return unit;
     }
+    public ArrayList<Unit> getUnitsAvailable() {
+        ArrayList<Unit> arrUnits = new ArrayList<>();
+        UnitMove unitMove = new UnitMove(unit, officerRange, true, false, 0);
+        ArrayList<Hex> arrHex = unitMove.getMovePossible();
+        for (Hex hex : arrHex) {
+            if (!hex.getUnitsInHex().isEmpty()) {
+                for (Unit unit : hex.getUnitsInHex()) {
+                    if (!unit.isOfficer && unit.isAllies == isAllied && !unit.isCommander){
+                        if (unit.getCorp() == corp) {
+                            arrUnits.add(unit);
+                        }
+                    }
+                }
+
+            }
+        }
+        return arrUnits;
+    }
+
     public static  Officer getOfficer(String name) {
         for (Officer officer : arrOfficers) {
             if (officer.name.contains(name)) {
@@ -40,7 +61,5 @@ public class Officer {
             }
         }
         return null;
-
-
     }
 }

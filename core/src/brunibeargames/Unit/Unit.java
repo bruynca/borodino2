@@ -1155,6 +1155,10 @@ public class Unit {
 		return corp;
 	}
 
+	public Officer getOfficer() {
+		return officer;
+	}
+
 	public boolean isExertZOC() {
 		if (isCommander || isOfficer){
 			return false;

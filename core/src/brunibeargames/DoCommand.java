@@ -45,6 +45,11 @@ public class DoCommand {
             arrWinCommand.add(winCommand);
         }
     }
+
+    /**
+     *  Take an Officers from the pool
+     * @param officer
+     */
     public void takeOfficer(Officer officer){
         for (WinCommand winCommand:arrWinCommand){
             winCommand.deleteOfficer(officer);
