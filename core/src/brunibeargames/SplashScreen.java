@@ -196,7 +196,7 @@ public class SplashScreen {
 
     boolean isLoaded = false;
     public void checkLoad(Batch batch) {
-        batch.begin();
+         batch.begin();
         float progress = (mapsManager.getProgress() + effectsManager.getProgress() + unitsManager.getProgress() + UIManager.getProgress() + soundsManager.getProgress()+cardManager.getProgress())/5;
         if (!beenHere) {
  /*           Gdx.app.log("SplashScreen", "Progress ="+progress);

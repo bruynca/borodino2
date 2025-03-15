@@ -9,11 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -27,6 +27,7 @@ import brunibeargames.Borodino;
 import brunibeargames.DoCommand;
 import brunibeargames.FontFactory;
 import brunibeargames.Fonts;
+import brunibeargames.GameMenu;
 import brunibeargames.GameMenuLoader;
 import brunibeargames.GamePreferences;
 import brunibeargames.Hex;
@@ -46,7 +47,8 @@ import brunibeargames.WinModal;
 
 public class WinCommand {
 
-//    TextureAtlas textureAtlas = SplashScreen.instance.unitsManager.get("units/germancounteratlas.txt");
+    private final TextButton.TextButtonStyle textButtonStyle;
+    //    TextureAtlas textureAtlas = SplashScreen.instance.unitsManager.get("units/germancounteratlas.txt");
   //  TextureRegion close = textureAtlas.findRegion("close");
     Window window;
     Stage stage;
@@ -60,7 +62,7 @@ public class WinCommand {
     TextTooltip.TextTooltipStyle tooltipStyle;
     private EventListener hitOK;
     WinModal winModal;
-    Commander commander;
+    public Commander commander;
     ArrayList<Officer> arrOfficerAvailable = new ArrayList<>();
     ArrayList<Officer> arrOfficerAvailableOriginal = new ArrayList<>();
     ArrayList<Officer> arrOfficerSelected = new ArrayList<>();
@@ -70,8 +72,13 @@ public class WinCommand {
     Officer officerDavout;
     boolean isMurat = false;
     boolean isDavout = false;
+    Vector2 v2Position;
+    TextButton textButtonOK;
 
-    public WinCommand(Commander commander){
+    public WinCommand(Commander commander, float width, float height, Vector2 initPos){
+        winWidth = width;
+        winHeight = height;
+        v2Position = initPos;
         this.commander = commander;
         officerDavout = Officer.getOfficer("Davout");
         if (commander.name.contains("urat")){
@@ -113,6 +120,8 @@ public class WinCommand {
         window = new Window(title, windowStyle);
         window.setTouchable(Touchable.enabled);
 
+        textButtonStyle = GameMenu.instance.textButtonStyle;
+
         /**
          * close button
          */
@@ -143,15 +152,13 @@ public class WinCommand {
     private void showWindow() {
         Vector2 v2 = GamePreferences.getWindowLocation(commander.name);
         if (v2.x == 0 && v2.y == 0) {
-            window.setPosition(Gdx.graphics.getWidth() / 2 - window.getWidth() / 2, Gdx.graphics.getHeight() / 2 - window.getHeight() / 2);
-            v2.x  = Gdx.graphics.getWidth() - window.getWidth();
-            float xMove = Gdx.graphics.getWidth() - window.getWidth();
-            window.addAction(Actions.moveTo(xMove, 0, .3F));
+            window.setPosition(v2Position.x, v2Position.y);
         }else{
             window.setPosition(v2.x, v2.y);
 
         }
         window.setSize(winWidth,winHeight);
+
         Borodino.instance.guiStage.addActor(window);
 
     }
@@ -346,6 +353,7 @@ public class WinCommand {
                         displaySelected();
                         displayInRange();
                         DoCommand.instance.takeOfficer(counter.getUnit().getOfficer());
+                        addButtonOK();
                     }
                 }
             }
@@ -418,6 +426,10 @@ public class WinCommand {
                         displaySelected();
                         displayInRange();
                         DoCommand.instance.addOfficer(counter.getUnit().getOfficer());
+                        if (textButtonOK != null){
+                            textButtonOK.remove();
+                        }
+
                     }
                 }
             }
@@ -439,6 +451,35 @@ public class WinCommand {
         if (!arrOfficerAvailable.contains(officer)) {
             arrOfficerAvailable.add(officer);
         }
+
         displayInRange();
+    }
+    public void addButtonOK() {
+        textButtonOK = new TextButton(i18NBundle.format("ok"), textButtonStyle);
+        textButtonOK.setSize(100, 60);
+        textButtonOK.setPosition((window.getWidth() - textButtonOK.getWidth()) / 2, 30);
+        textButtonOK.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (!event.getType().equals("touchUp")) {
+                    DoCommand.instance.allocate(commander,arrOfficerSelected);
+                    GamePreferences.setWindowLocation(commander.name, (int) window.getX(), (int) window.getY());
+                    end();
+
+                }
+
+            }
+        });
+        window.addActor(textButtonOK);
+    }
+    void end(){
+        if (textButtonOK != null){
+            textButtonOK.remove();
+        }
+        if (hiliteHex != null) {
+            hiliteHex.remove();
+        }
+        window.remove();
+
     }
 }

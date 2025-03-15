@@ -58,7 +58,7 @@ public class GameMenu extends Observable {
     private float screenHeight;
     private LoadGamePopUp loadGamePopUp;
     private I18NBundle i18NBundle;
-    private TextButton.TextButtonStyle textButtonStyle;
+    public TextButton.TextButtonStyle textButtonStyle;
     private CheckBox.CheckBoxStyle checkBoxStyle;
     private GameSelection gameSelection;
     private final int backGroundHeight = 500;
