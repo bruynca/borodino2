@@ -28,26 +28,30 @@ import brunibeargames.UILoader;
 public class BottomMenu {
 
     private Button nextPhase;
+    private Button backOut;
     private final TextTooltip.TextTooltipStyle tooltipStyle;
     private boolean menuVisible = true;
     private EventListener nextPhaseEventListener;
+    private EventListener backOutEventListener;
     private boolean enablePhaseChange = true;
     public static BottomMenu instance;
     private I18NBundle i18NBundle;
     private Group group;
     private String cantChangePhaseMessage = "";
+    Stage stage;
 
     public BottomMenu() {
-        Stage stage = Borodino.instance.guiStage;
+        stage = Borodino.instance.guiStage;
         instance = this;
         i18NBundle = GameMenuLoader.instance.localization;
-        group = new Group();
+     //   group = new Group();
         tooltipStyle = new TextTooltip.TextTooltipStyle();
         tooltipStyle.label = new Label.LabelStyle(Fonts.getFont24(), Color.WHITE);
         NinePatch np = new NinePatch(GameMenuLoader.instance.gameMenu.asset.get("tooltip"), 2, 2, 2, 2);
         tooltipStyle.background = new NinePatchDrawable(np);
         initializeNextPhaseButton();
-        stage.addActor(group);
+        initializeGoBackPhaseButton();
+       // stage.addActor(group);
 
     }
 
@@ -85,7 +89,7 @@ public class BottomMenu {
         nextPhase = new Button(style);
         nextPhase.setHeight(100 / (1));
         nextPhase.setWidth(100 / (1));
-        nextPhase.setVisible(false);
+        nextPhase.setVisible(true);
 
         nextPhase.addListener(new ClickListener() {
             @Override
@@ -102,13 +106,51 @@ public class BottomMenu {
             }
         });
 
- /*       nextPhaseEventListener = new TextTooltip(
-                i18NBundle.format("nextphasetooltip", i18NBundle.get("combat")),
+        nextPhaseEventListener = new TextTooltip(
+                i18NBundle.get("nextphasetooltip"),
                 tooltipStyle);
 
-        nextPhase.addListener(nextPhaseEventListener); */
+        nextPhase.addListener(nextPhaseEventListener);
+        nextPhase.setPosition(Gdx.graphics.getWidth() - 110, 10);
 
-        group.addActor(nextPhase);
+        stage.addActor(nextPhase);
+    }
+    private void initializeGoBackPhaseButton() {
+
+        Button.ButtonStyle style = new Button.ButtonStyle();
+        style.up = new TextureRegionDrawable(new TextureRegion(UILoader.instance.bottomMenu.button.get("hidemenu")));
+        style.down = new TextureRegionDrawable(new TextureRegion(UILoader.instance.bottomMenu.button.get("hidemenupressed")));
+        style.checked = new TextureRegionDrawable(new TextureRegion(UILoader.instance.bottomMenu.button.get("hidemenupressed")));
+        backOut = new Button(style);
+        backOut.setHeight(100 / (1));
+        backOut.setWidth(100 / (1));
+        backOut.setVisible(true);
+        backOut.setTransform(true);
+
+        backOut.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (enablePhaseChange) {
+                    nextPhase.setChecked(false);
+                    Gdx.app.log("BottomMenu", "NextPhase Pressed");
+
+                    NextPhase.instance.endPhase();
+                }else if (!enablePhaseChange){
+                    nextPhase.setChecked(false);
+                    //                   EventManager.instance.errorMessage(cantChangePhaseMessage);
+                }
+            }
+        });
+
+        backOutEventListener = new TextTooltip(
+                i18NBundle.get("nextphasetooltip"),
+                tooltipStyle);
+        backOut.rotateBy(270F);
+
+        backOut.addListener(nextPhaseEventListener);
+        float x = nextPhase.getX() - (backOut.getWidth()+ 20);
+        backOut.setPosition(x,10+backOut.getHeight());
+        stage.addActor(backOut);
     }
 
     public void changeNextPhaseTooltipText(String text) {

@@ -114,6 +114,7 @@ public class Unit {
 	 */
 	private int range;
 	private boolean isActivated =false;
+	private boolean hasBeensActivatedThisTurn =false;
 
 
 	public static void loadTexture() {
@@ -163,6 +164,7 @@ public class Unit {
 	public static void initCommand() {
 			for (Unit unit:arrGameCombatUnits){
 				unit.isActivated = false;
+				unit.hasBeensActivatedThisTurn = false;
 			}
 	}
 
@@ -1165,6 +1167,22 @@ public class Unit {
 		}
 		return true;
 	}
+
+    public boolean isHasBeensActivatedThisTurn() {
+        return hasBeensActivatedThisTurn;
+    }
+
+    public void setHasBeensActivatedThisTurn(boolean hasBeensActivatedThisTurn) {
+        this.hasBeensActivatedThisTurn = hasBeensActivatedThisTurn;
+    }
+
+    public boolean isActivated() {
+        return isActivated;
+    }
+
+    public void setActivated(boolean activated) {
+        isActivated = activated;
+    }
 }
 
 

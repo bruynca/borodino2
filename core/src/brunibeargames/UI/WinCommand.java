@@ -391,6 +391,17 @@ public class WinCommand {
                     Gdx.app.log("Counter","Right");
                     ArrayList<Unit> arrUnits = new ArrayList<Unit>();
                     arrUnits.addAll(counter.getUnit().getOfficer().getUnitsAvailable());
+                    /**
+                     *  drop all that have been activated
+                     *
+                     */
+                    ArrayList<Unit> arrRemove = new ArrayList<Unit>();
+                    for (Unit unit:arrUnits){
+                        if (unit.isHasBeensActivatedThisTurn()){
+                            arrRemove.add(unit);
+                        }
+                    }
+                    arrUnits.removeAll(arrRemove);
                     ArrayList<Hex> arrHex = new ArrayList<Hex>();
                     for (Unit unit:arrUnits) {
                         arrHex.add(unit.getHexOccupy());

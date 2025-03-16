@@ -21,7 +21,13 @@ public class DoCommand {
     }
 
     /**
-     *
+     * Command can be
+     * input is the array of Commander set by the previous step DETERMINE
+     * if there are multiple commanders then
+     * * 1. display all commanders and choose the officers to allocate command use wincommand
+     *   2. display all divisions that can be activated and process
+     *   3. display number of officers and see if we can throw dice to activate
+     *  If there is only one commander then just activate IF THERE IS ONLY
      */
     public void start() {
         arrCommanders.clear();
@@ -36,6 +42,11 @@ public class DoCommand {
          */
         if (arrCommanders.size() > 1) {
             setupCommandChoose();
+            return;
+        }
+        if (arrCommanders.size() == 1) {
+            Commander commander = arrCommanders.get(0);
+            //setupCommand(commander);
             return;
         }
     }
@@ -97,6 +108,7 @@ public class DoCommand {
     }
 
     void end() {
+        Gdx.app.log("DoCommand", "end");
 
     }
 }

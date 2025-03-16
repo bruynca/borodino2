@@ -177,6 +177,9 @@ public class NextPhase {
                      */
                     doCommand.instance.start();
                     break;
+                case MOVEMENT:
+
+                     break;
                 default:
                     Gdx.app.log("NexPhase", "Invalid Phase");
                     ErrorGame errorGame = new ErrorGame("invalid Phase", this);
