@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
@@ -19,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.I18NBundle;
+import com.kotcrab.vis.ui.widget.VisWindow;
 
 import brunibeargames.Borodino;
 import brunibeargames.Fonts;
@@ -41,13 +41,19 @@ public class BottomMenu {
     private EventListener backOutEventListener;
     private EventListener inquiryEventListener;
 
-    private boolean enablePhaseChange = true;
+    private boolean enablePhaseChange = false;
+    private boolean warningPhaseChange = false;
+    private boolean isWarned=false;
+
     public static BottomMenu instance;
     private I18NBundle i18NBundle;
     private Group group;
-    private String cantChangePhaseMessage = "";
     Stage stage;
     static TextureAtlas textureAtlas;
+    private String phaseKey;
+    private String inquiryKey;
+    private String backKey;
+
 
 
     public BottomMenu() {
@@ -67,29 +73,20 @@ public class BottomMenu {
 
     }
 
-    public void show() {
-        if (group.getY() <= 50 && !menuVisible) {
-            menuVisible = true;
-            group.addAction(Actions.moveBy(0, 150, 0.5f));
-        }
-    }
 
-
-    public void hide() {
-        if (group.getY() > -1 && menuVisible) {
-            menuVisible = false;
-            group.addAction(Actions.moveBy(0, -150, 0.5f));
-        }
-    }
-
-    public void enablePhaseChange() {
-    	enablePhaseChange = true;
-    }
-
-    public void showBottomMenu() {
-
+    public void showNextPhase() {
         nextPhase.setVisible(true);
-        nextPhase.setPosition(Gdx.graphics.getWidth() - 110, 10);
+        //nextPhase.setPosition(Gdx.graphics.getWidth() - 110, 10);
+    }
+    public void showInquirNextPhase() {
+
+        inquiry.setVisible(true);
+        //nextPhase.setPosition(Gdx.graphics.getWidth() - 110, 10);
+    }
+    public void showBackOut() {
+
+        backOut.setVisible(true);
+        //nextPhase.setPosition(Gdx.graphics.getWidth() - 110, 10);
     }
 
     private void initializeNextPhaseButton() {
@@ -101,19 +98,24 @@ public class BottomMenu {
         nextPhase = new Button(style);
         nextPhase.setHeight(100 / (1));
         nextPhase.setWidth(100 / (1));
-        nextPhase.setVisible(true);
+        nextPhase.setVisible(false);
 
         nextPhase.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (enablePhaseChange) {
-                    nextPhase.setChecked(false);
-                    Gdx.app.log("BottomMenu", "NextPhase Pressed");
 
-                    NextPhase.instance.endPhase();
-                }else if (!enablePhaseChange){
-                    nextPhase.setChecked(false);
- //                   EventManager.instance.errorMessage(cantChangePhaseMessage);
+                if (!enablePhaseChange) {
+                    return;
+                }
+                if (warningPhaseChange) {
+                    if (isWarned) {
+                        NextPhase.instance.endPhase();
+                        return;
+                    }else{
+                        isWarned = true;
+                        VisWindow vis = new VisWindow("Warning");
+                        return;
+                    }
                 }
             }
         });
@@ -136,7 +138,7 @@ public class BottomMenu {
         backOut = new Button(style);
         backOut.setHeight(100 / (1));
         backOut.setWidth(100 / (1));
-        backOut.setVisible(true);
+        backOut.setVisible(false);
         backOut.setTransform(true);
 
         backOut.addListener(new ClickListener() {
@@ -177,7 +179,7 @@ public class BottomMenu {
         inquiry = new Button(style);
         inquiry.setHeight(100 / (1));
         inquiry.setWidth(100 / (1));
-        inquiry.setVisible(true);
+        inquiry.setVisible(false);
 
         inquiry.addListener(new ClickListener() {
             @Override
@@ -221,12 +223,28 @@ public class BottomMenu {
         return nextPhase;
     }
 
+    /**
+     * used by processing to limit phase change
+     * @param enablePhaseChange
+     */
     public void setEnablePhaseChange(boolean enablePhaseChange) {
         this.enablePhaseChange = enablePhaseChange;
     }
 
-    public void setCantChangePhaseMessage(String cantChangePhaseMessage) {
-        this.cantChangePhaseMessage = cantChangePhaseMessage;
+    public void setInquiryKey(String inquiryKey) {
+        this.inquiryKey = inquiryKey;
+    }
+
+    public void setBackKey(String backKey) {
+        this.backKey = backKey;
+    }
+
+    public void setPhaseKey(String phaseKey) {
+        this.phaseKey = phaseKey;
+    }
+
+    public void setWarningPhaseChange(boolean warningPhaseChange) {
+        this.warningPhaseChange = warningPhaseChange;
     }
 }
 

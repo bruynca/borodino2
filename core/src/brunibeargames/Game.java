@@ -47,7 +47,7 @@ public class Game {
             Unit.loadUnits(arrAxis);
             TurnCounter turnCounter = new TurnCounter();
             BottomMenu bottomMenu = new BottomMenu();
-            BottomMenu.instance.showBottomMenu();
+            BottomMenu.instance.showNextPhase();
             Scenarios.loadUnitsOnBoard(0);
 
 
@@ -68,7 +68,7 @@ public class Game {
             }
         }else{
             LoadGame loadGame = new LoadGame(str, isResume);
-            BottomMenu.instance.showBottomMenu();
+            BottomMenu.instance.showNextPhase();
             TopMenu topMenu = new TopMenu();
         }
     }
