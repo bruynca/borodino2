@@ -1,410 +1,431 @@
 counter.png
-size: 1010, 1147
+size: 936, 1283
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 bagration
   rotate: false
-  xy: 822, 826
+  xy: 120, 944
   size: 121, 143
   orig: 121, 143
   offset: 0, 0
   index: -1
 barclay
   rotate: false
-  xy: 0, 969
+  xy: 241, 944
   size: 121, 143
   orig: 121, 143
   offset: 0, 0
   index: -1
 bavariancalvary
   rotate: false
-  xy: 259, 0
+  xy: 459, 0
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 bavarianline2
   rotate: false
-  xy: 376, 0
+  xy: 576, 0
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 cannongame
   rotate: false
-  xy: 493, 0
+  xy: 693, 0
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 cannongamerussian
   rotate: false
-  xy: 610, 0
+  xy: 810, 0
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 cossack
   rotate: false
-  xy: 727, 0
+  xy: 0, 118
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counter6
   rotate: false
-  xy: 844, 0
+  xy: 117, 118
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterbagration
   rotate: false
-  xy: 0, 118
+  xy: 234, 118
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterbarclay
   rotate: false
-  xy: 117, 118
+  xy: 351, 118
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterbavarian
   rotate: false
-  xy: 234, 118
+  xy: 468, 118
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterf1
   rotate: false
-  xy: 351, 118
+  xy: 585, 118
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterf3
   rotate: false
-  xy: 468, 118
+  xy: 702, 118
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterf4
   rotate: false
-  xy: 585, 118
+  xy: 819, 118
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterf5
   rotate: false
-  xy: 702, 118
+  xy: 0, 236
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterf8
   rotate: false
-  xy: 819, 118
+  xy: 117, 236
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterfc1
   rotate: false
-  xy: 0, 236
+  xy: 234, 236
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterfc2
   rotate: false
-  xy: 117, 236
+  xy: 351, 236
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterfc3
   rotate: false
-  xy: 234, 236
+  xy: 468, 236
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterfgc
   rotate: false
-  xy: 351, 236
+  xy: 585, 236
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterfog
   rotate: false
-  xy: 468, 236
+  xy: 702, 236
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterfrenchguard
   rotate: false
-  xy: 585, 236
+  xy: 819, 236
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterfrenchline
   rotate: false
-  xy: 702, 236
+  xy: 0, 354
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterfyg
   rotate: false
-  xy: 819, 236
+  xy: 117, 354
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counteritalian
   rotate: false
-  xy: 0, 354
+  xy: 234, 354
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterkutuzov
   rotate: false
-  xy: 117, 354
+  xy: 351, 354
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 countermm
   rotate: false
-  xy: 234, 354
+  xy: 468, 354
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 countermurat
   rotate: false
-  xy: 351, 354
+  xy: 585, 354
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counternapoleon
   rotate: false
-  xy: 468, 354
+  xy: 702, 354
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterpolish
   rotate: false
-  xy: 585, 354
+  xy: 819, 354
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterr1a
   rotate: false
-  xy: 702, 354
+  xy: 0, 472
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterr1c
   rotate: false
-  xy: 819, 354
+  xy: 117, 472
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterr2
   rotate: false
-  xy: 0, 472
+  xy: 234, 472
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterr2a
   rotate: false
-  xy: 117, 472
+  xy: 351, 472
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterr3
   rotate: false
-  xy: 234, 472
+  xy: 468, 472
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterr4
   rotate: false
-  xy: 351, 472
+  xy: 585, 472
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterr5
   rotate: false
-  xy: 468, 472
+  xy: 702, 472
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterr7
   rotate: false
-  xy: 585, 472
+  xy: 819, 472
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterr8
   rotate: false
-  xy: 702, 472
+  xy: 0, 590
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterrc2
   rotate: false
-  xy: 819, 472
+  xy: 117, 590
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterrc3
   rotate: false
-  xy: 0, 590
+  xy: 234, 590
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterrc4
   rotate: false
-  xy: 117, 590
+  xy: 351, 590
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterrco
   rotate: false
-  xy: 234, 590
+  xy: 468, 590
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterrk
   rotate: false
-  xy: 351, 590
+  xy: 585, 590
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterrussian
   rotate: false
-  xy: 468, 590
+  xy: 702, 590
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterwestphalian
   rotate: false
-  xy: 585, 590
+  xy: 819, 590
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 counterwurtemburg
   rotate: false
-  xy: 702, 590
+  xy: 0, 708
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 davout
   rotate: false
-  xy: 121, 969
+  xy: 362, 944
   size: 121, 143
   orig: 121, 143
   offset: 0, 0
   index: -1
 frechcalvaryguard
   rotate: false
-  xy: 819, 590
+  xy: 117, 708
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 frenchcavalry
   rotate: false
-  xy: 0, 708
+  xy: 234, 708
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 frenchgrenadier2
   rotate: false
-  xy: 117, 708
+  xy: 351, 708
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 frenchline2
   rotate: false
-  xy: 234, 708
+  xy: 468, 708
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 hilite
   rotate: false
-  xy: 702, 826
+  xy: 0, 944
   size: 120, 120
   orig: 120, 120
   offset: 0, 0
   index: -1
 hilitehex
   rotate: false
-  xy: 605, 969
+  xy: 0, 1087
   size: 205, 178
   orig: 205, 178
   offset: 0, 0
   index: -1
 hilitehexmove3
   rotate: false
-  xy: 810, 969
+  xy: 205, 1087
   size: 200, 178
   orig: 200, 178
   offset: 0, 0
   index: -1
+info
+  rotate: false
+  xy: 144, 0
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+infodown
+  rotate: false
+  xy: 244, 0
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+infoover
+  rotate: false
+  xy: 405, 1087
+  size: 112, 196
+  orig: 112, 196
+  offset: 0, 0
+  index: -1
 italiancalvary
   rotate: false
-  xy: 351, 708
+  xy: 585, 708
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 italianline2
   rotate: false
-  xy: 468, 708
+  xy: 702, 708
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 kutuzov
   rotate: false
-  xy: 242, 969
+  xy: 483, 944
   size: 121, 143
   orig: 121, 143
   offset: 0, 0
@@ -418,84 +439,84 @@ loading
   index: -1
 moved
   rotate: false
-  xy: 144, 0
+  xy: 344, 0
   size: 115, 115
   orig: 115, 115
   offset: 0, 0
   index: -1
 murat
   rotate: false
-  xy: 363, 969
+  xy: 604, 944
   size: 121, 143
   orig: 121, 143
   offset: 0, 0
   index: -1
 napoleon
   rotate: false
-  xy: 484, 969
+  xy: 725, 944
   size: 121, 143
   orig: 121, 143
   offset: 0, 0
   index: -1
 polishcalvary
   rotate: false
-  xy: 585, 708
+  xy: 819, 708
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 polishline2
   rotate: false
-  xy: 702, 708
+  xy: 0, 826
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 russiancalvary
   rotate: false
-  xy: 819, 708
+  xy: 117, 826
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 russianguard2
   rotate: false
-  xy: 0, 826
+  xy: 234, 826
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 russianline2
   rotate: false
-  xy: 117, 826
+  xy: 351, 826
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 westphaliancalvary
   rotate: false
-  xy: 234, 826
+  xy: 468, 826
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 westphalianline
   rotate: false
-  xy: 351, 826
+  xy: 585, 826
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 wurtemburgcavalry
   rotate: false
-  xy: 468, 826
+  xy: 702, 826
   size: 117, 118
   orig: 117, 118
   offset: 0, 0
   index: -1
 wurtemburgline
   rotate: false
-  xy: 585, 826
+  xy: 819, 826
   size: 117, 118
   orig: 117, 118
   offset: 0, 0

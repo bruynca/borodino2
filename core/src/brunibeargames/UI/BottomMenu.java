@@ -3,6 +3,7 @@ package brunibeargames.UI;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -23,26 +24,36 @@ import brunibeargames.Borodino;
 import brunibeargames.Fonts;
 import brunibeargames.GameMenuLoader;
 import brunibeargames.NextPhase;
+import brunibeargames.SplashScreen;
 import brunibeargames.UILoader;
 
 public class BottomMenu {
 
+    private TextureAtlas.AtlasRegion inquirytexNormal;
+    private TextureAtlas.AtlasRegion inquirytextOver;
+    private TextureAtlas.AtlasRegion inquirytexDown;
     private Button nextPhase;
     private Button backOut;
+    private Button inquiry;
     private final TextTooltip.TextTooltipStyle tooltipStyle;
     private boolean menuVisible = true;
     private EventListener nextPhaseEventListener;
     private EventListener backOutEventListener;
+    private EventListener inquiryEventListener;
+
     private boolean enablePhaseChange = true;
     public static BottomMenu instance;
     private I18NBundle i18NBundle;
     private Group group;
     private String cantChangePhaseMessage = "";
     Stage stage;
+    static TextureAtlas textureAtlas;
+
 
     public BottomMenu() {
         stage = Borodino.instance.guiStage;
         instance = this;
+        textureAtlas = SplashScreen.instance.unitsManager.get("counter/counter.txt");
         i18NBundle = GameMenuLoader.instance.localization;
      //   group = new Group();
         tooltipStyle = new TextTooltip.TextTooltipStyle();
@@ -51,7 +62,8 @@ public class BottomMenu {
         tooltipStyle.background = new NinePatchDrawable(np);
         initializeNextPhaseButton();
         initializeGoBackPhaseButton();
-       // stage.addActor(group);
+        initializeInquiryButton();
+        // stage.addActor(group);
 
     }
 
@@ -147,10 +159,49 @@ public class BottomMenu {
                 tooltipStyle);
         backOut.rotateBy(270F);
 
-        backOut.addListener(nextPhaseEventListener);
+        backOut.addListener(backOutEventListener);
         float x = nextPhase.getX() - (backOut.getWidth()+ 20);
         backOut.setPosition(x,10+backOut.getHeight());
         stage.addActor(backOut);
+    }
+    private void initializeInquiryButton() {
+        inquirytexNormal = textureAtlas.findRegion("info");
+        //inquirytextOver = textureAtlas.findRegion("infoover");
+        inquirytexDown = textureAtlas.findRegion("infodown");
+
+
+        Button.ButtonStyle style = new Button.ButtonStyle();
+        style.up = new TextureRegionDrawable(inquirytexNormal);
+        style.down = new TextureRegionDrawable(inquirytexDown);
+        style.checked = new TextureRegionDrawable(inquirytexNormal);
+        inquiry = new Button(style);
+        inquiry.setHeight(100 / (1));
+        inquiry.setWidth(100 / (1));
+        inquiry.setVisible(true);
+
+        inquiry.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (enablePhaseChange) {
+                    nextPhase.setChecked(false);
+                    Gdx.app.log("BottomMenu", "NextPhase Pressed");
+
+                    NextPhase.instance.endPhase();
+                }else if (!enablePhaseChange){
+                    nextPhase.setChecked(false);
+                    //                   EventManager.instance.errorMessage(cantChangePhaseMessage);
+                }
+            }
+        });
+
+        inquiryEventListener = new TextTooltip(
+                i18NBundle.get("nextphasetooltip"),
+                tooltipStyle);
+
+        inquiry.addListener(inquiryEventListener);
+        float x = backOut.getX() - (inquiry.getWidth()+ 20);
+        inquiry.setPosition(x,nextPhase.getY());
+        stage.addActor(inquiry);
     }
 
     public void changeNextPhaseTooltipText(String text) {
