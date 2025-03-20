@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 
+import brunibeargames.UI.BottomMenu;
 import brunibeargames.UI.WinCommand;
 import brunibeargames.Unit.Commander;
 import brunibeargames.Unit.Officer;
@@ -30,6 +31,12 @@ public class DoCommand {
      *  If there is only one commander then just activate IF THERE IS ONLY
      */
     public void start() {
+        BottomMenu.instance.showNextPhase();
+        BottomMenu.instance.setEnablePhaseChange(true);
+        BottomMenu.instance.showInquirNextPhase();
+        BottomMenu.instance.showBackOut();
+        BottomMenu.instance.setWarningPhaseChange(false);
+
         arrCommanders.clear();
         arrCommanderOfficers.clear();
         /**
@@ -42,6 +49,8 @@ public class DoCommand {
          */
         if (arrCommanders.size() > 1) {
             setupCommandChoose();
+            BottomMenu.instance.setWarningPhaseChange(true);
+            BottomMenu.instance.setPhaseKey("choosenocommand");
             return;
         }
         if (arrCommanders.size() == 1) {

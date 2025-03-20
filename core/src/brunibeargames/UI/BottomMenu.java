@@ -18,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.I18NBundle;
-import com.kotcrab.vis.ui.widget.VisWindow;
 
 import brunibeargames.Borodino;
 import brunibeargames.Fonts;
@@ -110,10 +109,11 @@ public class BottomMenu {
                 if (warningPhaseChange) {
                     if (isWarned) {
                         NextPhase.instance.endPhase();
+                        isWarned = false;
                         return;
                     }else{
                         isWarned = true;
-                        VisWindow vis = new VisWindow("Warning");
+                        WinText.instance.show(phaseKey);
                         return;
                     }
                 }
