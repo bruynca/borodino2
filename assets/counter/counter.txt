@@ -5,14 +5,14 @@ filter: Linear,Linear
 repeat: none
 bagration
   rotate: false
-  xy: 120, 944
+  xy: 241, 944
   size: 121, 143
   orig: 121, 143
   offset: 0, 0
   index: -1
 barclay
   rotate: false
-  xy: 241, 944
+  xy: 362, 944
   size: 121, 143
   orig: 121, 143
   offset: 0, 0
@@ -334,7 +334,7 @@ counterwurtemburg
   index: -1
 davout
   rotate: false
-  xy: 362, 944
+  xy: 483, 944
   size: 121, 143
   orig: 121, 143
   offset: 0, 0
@@ -425,9 +425,9 @@ italianline2
   index: -1
 kutuzov
   rotate: false
-  xy: 483, 944
-  size: 121, 143
-  orig: 121, 143
+  xy: 120, 944
+  size: 121, 142
+  orig: 121, 142
   offset: 0, 0
   index: -1
 loading

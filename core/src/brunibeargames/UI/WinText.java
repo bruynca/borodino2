@@ -1,6 +1,7 @@
 package brunibeargames.UI;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
@@ -21,18 +22,21 @@ public class WinText {
     Cell cell;
     float height = Gdx.graphics.getHeight();
     float width = Gdx.graphics.getWidth();
+    Label labelTitle;
 
     public WinText(){
         instance = this;
         i18NBundle = GameMenuLoader.instance.localization;
-        window = new VisWindow("");
+        window = new VisWindow("Warning");
         window.setVisible(false);
+        labelTitle = window.getTitleLabel();
+        labelTitle.getStyle().font.setColor(Color.YELLOW);
         float height = Gdx.graphics.getHeight();
         float width = Gdx.graphics.getWidth();
 //        window.setHeight(height -40);
 //        window.setWidth(height - 40);
-        window.setHeight(600);
-        window.setWidth(600);
+      //  window.setHeight(600);
+      //  window.setWidth(600);
         window.centerWindow();
         window.addListener(new ClickListener() {
             @Override
@@ -57,16 +61,21 @@ public class WinText {
         });
         Label.LabelStyle lab = new Label.LabelStyle();
         lab.font = Fonts.getFont24();
+        lab.fontColor = Color.YELLOW;
         label = new Label("", lab);
         Borodino.instance.guiStage.addActor(window);
 
     }
-    public void show(String keyText){
+    public void show(String title,String message){
         window.setModal(true);
         window.setVisible(true);
         window.toFront();
-        label.setText(i18NBundle.format(keyText));
+        labelTitle.setText(title);
+        labelTitle.getStyle().font.setColor(Color.YELLOW);
+        label.setText(message);
         window.add(label);
+        window.pack();
+        window.centerWindow();
     }
     public void hide(){
         window.setVisible(false);

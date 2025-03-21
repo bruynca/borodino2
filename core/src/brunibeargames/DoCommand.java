@@ -2,6 +2,7 @@ package brunibeargames;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.I18NBundle;
 
 import java.util.ArrayList;
 
@@ -15,10 +16,15 @@ public class DoCommand {
     ArrayList<Commander> arrCommanders = new ArrayList<Commander>();
     ArrayList<WinCommand> arrWinCommand = new ArrayList<WinCommand>();
     ArrayList<CommanderOfficers> arrCommanderOfficers = new ArrayList<CommanderOfficers>();
+    boolean needDivisions = false;
+    boolean needRandom= false;
+    I18NBundle i18NBundle;
 
 
     DoCommand() {
         instance = this;
+        i18NBundle = GameMenuLoader.instance.localization;
+
     }
 
     /**
@@ -28,7 +34,11 @@ public class DoCommand {
      * * 1. display all commanders and choose the officers to allocate command use wincommand
      *   2. display all divisions that can be activated and process
      *   3. display number of officers and see if we can throw dice to activate
-     *  If there is only one commander then just activate IF THERE IS ONLY
+     *
+     *  If there is only one commander then
+     *   1. display all commanders and choose the officers to allocate command use winc
+     *   2. display all divisions that can be activated and process
+     *
      */
     public void start() {
         BottomMenu.instance.showNextPhase();
@@ -50,7 +60,11 @@ public class DoCommand {
         if (arrCommanders.size() > 1) {
             setupCommandChoose();
             BottomMenu.instance.setWarningPhaseChange(true);
-            BottomMenu.instance.setPhaseKey("choosenocommand");
+            String message= i18NBundle.get("choosenocommand");
+            String title = i18NBundle.get("nextphasebutton");
+            BottomMenu.instance.setPhaseData(title, message);
+            needDivisions = true;
+            needRandom = true;
             return;
         }
         if (arrCommanders.size() == 1) {

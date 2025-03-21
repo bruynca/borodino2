@@ -49,10 +49,10 @@ public class BottomMenu {
     private Group group;
     Stage stage;
     static TextureAtlas textureAtlas;
-    private String phaseKey;
+    private String phaseMessage;
     private String inquiryKey;
     private String backKey;
-
+    private String phaseTitle;
 
 
     public BottomMenu() {
@@ -113,7 +113,7 @@ public class BottomMenu {
                         return;
                     }else{
                         isWarned = true;
-                        WinText.instance.show(phaseKey);
+                        WinText.instance.show(phaseTitle,phaseMessage);
                         return;
                     }
                 }
@@ -239,8 +239,9 @@ public class BottomMenu {
         this.backKey = backKey;
     }
 
-    public void setPhaseKey(String phaseKey) {
-        this.phaseKey = phaseKey;
+    public void setPhaseData(String title, String message) {
+        this.phaseMessage = message;
+        this.phaseTitle= title;
     }
 
     public void setWarningPhaseChange(boolean warningPhaseChange) {

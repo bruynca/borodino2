@@ -239,9 +239,9 @@ public class SplashScreen {
                 img.addAction(Actions.fadeOut(.4f));
             }
             //          VisUI.load();            //	VisUI.load(VisUI.SkinScale.X2);
-            VisUI.load();
-            //       VisUI.load(VisUI.SkinScale.X2);
-            VisUI.setDefaultTitleAlign(Align.left);
+            //VisUI.load();
+            VisUI.load(VisUI.SkinScale.X2);
+            VisUI.setDefaultTitleAlign(Align.center);
 
 
 
