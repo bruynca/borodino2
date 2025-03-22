@@ -5,13 +5,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.I18NBundle;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import brunibeargames.UI.BottomMenu;
 import brunibeargames.UI.WinCommand;
 import brunibeargames.Unit.Commander;
 import brunibeargames.Unit.Officer;
 
-public class DoCommand {
+public class DoCommand implements Observer {
     static public DoCommand instance;
     ArrayList<Commander> arrCommandersThisPhase = new ArrayList<Commander>();
     ArrayList<WinCommand> arrWinCommand = new ArrayList<WinCommand>();
@@ -48,6 +50,7 @@ public class DoCommand {
         BottomMenu.instance.showInquirNextPhase();
         BottomMenu.instance.showBackOut();
         BottomMenu.instance.setWarningPhaseChange(false);
+        BottomMenu.instance.addObserver(this);
 
         arrCommandersThisPhase.clear();
         arrCommanderOfficersThisPhase.clear();
@@ -142,6 +145,22 @@ public class DoCommand {
     void end() {
         Gdx.app.log("DoCommand", "end");
 
+    }
+
+    public void goBack() {
+        start();
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+        ObserverPackage oB = (ObserverPackage) o;
+        /**
+         *  Hex touched
+         */
+        if (oB.type != ObserverPackage.Type.GoBack) {
+            return;
+        }
+        goBack();
     }
 }
     class CommanderOfficers{

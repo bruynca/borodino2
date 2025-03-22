@@ -19,14 +19,17 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.I18NBundle;
 
+import java.util.Observable;
+
 import brunibeargames.Borodino;
 import brunibeargames.Fonts;
 import brunibeargames.GameMenuLoader;
 import brunibeargames.NextPhase;
+import brunibeargames.ObserverPackage;
 import brunibeargames.SplashScreen;
 import brunibeargames.UILoader;
 
-public class BottomMenu {
+public class BottomMenu extends Observable {
 
     private TextureAtlas.AtlasRegion inquirytexNormal;
     private TextureAtlas.AtlasRegion inquirytextOver;
@@ -55,6 +58,7 @@ public class BottomMenu {
     private String phaseTitle;
     private String helpMessage;
     private String helpTitle;
+    private Object objectGoBack;
 
 
     public BottomMenu() {
@@ -146,20 +150,13 @@ public class BottomMenu {
         backOut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (enablePhaseChange) {
-                    nextPhase.setChecked(false);
-                    Gdx.app.log("BottomMenu", "NextPhase Pressed");
-
-                    NextPhase.instance.endPhase();
-                }else if (!enablePhaseChange){
-                    nextPhase.setChecked(false);
-                    //                   EventManager.instance.errorMessage(cantChangePhaseMessage);
-                }
+                setChanged();
+                notifyObservers(new ObserverPackage(ObserverPackage.Type.GoBack,null,0,0));
             }
         });
 
         backOutEventListener = new TextTooltip(
-                i18NBundle.get("nextphasetooltip"),
+                i18NBundle.get("goback"),
                 tooltipStyle);
         backOut.rotateBy(270F);
 
@@ -191,7 +188,7 @@ public class BottomMenu {
         });
 
         inquiryEventListener = new TextTooltip(
-                i18NBundle.get("nextphasetooltip"),
+                i18NBundle.get("help"),
                 tooltipStyle);
 
         inquiry.addListener(inquiryEventListener);
@@ -246,6 +243,7 @@ public class BottomMenu {
         this.helpMessage = message;
         this.helpTitle= title;
     }
+
 }
 
 
