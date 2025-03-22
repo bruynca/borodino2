@@ -53,6 +53,8 @@ public class BottomMenu {
     private String inquiryKey;
     private String backKey;
     private String phaseTitle;
+    private String helpMessage;
+    private String helpTitle;
 
 
     public BottomMenu() {
@@ -184,15 +186,7 @@ public class BottomMenu {
         inquiry.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (enablePhaseChange) {
-                    nextPhase.setChecked(false);
-                    Gdx.app.log("BottomMenu", "NextPhase Pressed");
-
-                    NextPhase.instance.endPhase();
-                }else if (!enablePhaseChange){
-                    nextPhase.setChecked(false);
-                    //                   EventManager.instance.errorMessage(cantChangePhaseMessage);
-                }
+                WinText.instance.show(helpTitle,helpMessage);
             }
         });
 
@@ -246,6 +240,11 @@ public class BottomMenu {
 
     public void setWarningPhaseChange(boolean warningPhaseChange) {
         this.warningPhaseChange = warningPhaseChange;
+    }
+
+    public void setHelpData(String title, String message) {
+        this.helpMessage = message;
+        this.helpTitle= title;
     }
 }
 

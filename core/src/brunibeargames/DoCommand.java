@@ -13,11 +13,13 @@ import brunibeargames.Unit.Officer;
 
 public class DoCommand {
     static public DoCommand instance;
-    ArrayList<Commander> arrCommanders = new ArrayList<Commander>();
+    ArrayList<Commander> arrCommandersThisPhase = new ArrayList<Commander>();
     ArrayList<WinCommand> arrWinCommand = new ArrayList<WinCommand>();
-    ArrayList<CommanderOfficers> arrCommanderOfficers = new ArrayList<CommanderOfficers>();
+    ArrayList<CommanderOfficers> arrCommanderOfficersThisPhase = new ArrayList<CommanderOfficers>();
     boolean needDivisions = false;
     boolean needRandom= false;
+    ArrayList<Commander> arrCommanderProcessed = new ArrayList<>();
+    ArrayList<CommanderOfficers> arrCommandOfficersProcessed = new ArrayList<>();
     I18NBundle i18NBundle;
 
 
@@ -47,28 +49,33 @@ public class DoCommand {
         BottomMenu.instance.showBackOut();
         BottomMenu.instance.setWarningPhaseChange(false);
 
-        arrCommanders.clear();
-        arrCommanderOfficers.clear();
+        arrCommandersThisPhase.clear();
+        arrCommanderOfficersThisPhase.clear();
+        arrCommanderProcessed.clear();
+        arrCommanderOfficersThisPhase.clear();
         /**
          *  load all the Commanders for this part of Command after the commander set up by
          *  Determine Command
          */
-        arrCommanders.addAll(DetermineCommand.instance.getArrCommand());
+        arrCommandersThisPhase.addAll(DetermineCommand.instance.getArrCommand());
         /*
          *  more than 1 then we need to choose
          */
-        if (arrCommanders.size() > 1) {
+        if (arrCommandersThisPhase.size() > 1) {
             setupCommandChoose();
             BottomMenu.instance.setWarningPhaseChange(true);
             String message= i18NBundle.get("choosenocommand");
             String title = i18NBundle.get("nextphasebutton");
             BottomMenu.instance.setPhaseData(title, message);
+            message=i18NBundle.get("commandphasehelp");
+            title=i18NBundle.get("help");
+            BottomMenu.instance.setHelpData(title, message);
             needDivisions = true;
             needRandom = true;
             return;
         }
-        if (arrCommanders.size() == 1) {
-            Commander commander = arrCommanders.get(0);
+        if (arrCommandersThisPhase.size() == 1) {
+            Commander commander = arrCommandersThisPhase.get(0);
             //setupCommand(commander);
             return;
         }
@@ -76,10 +83,10 @@ public class DoCommand {
 
     private void setupCommandChoose() {
         float offsett = 50;
-        offsett = calculateInitialWindow(arrCommanders.size());
+        offsett = calculateInitialWindow(arrCommandersThisPhase.size());
         float y = (Gdx.graphics.getHeight() - 500f) / 2f;
         float x = offsett;
-        for (Commander commander : arrCommanders) {
+        for (Commander commander : arrCommandersThisPhase) {
             //           Unit unit = commander.getUnit();
             //           unit.getMapCounter().getCounterStack().removeShade();
             //           unit.getMapCounter().getCounterStack().hilite();
@@ -122,9 +129,11 @@ public class DoCommand {
 
     public void allocate(Commander commander, ArrayList<Officer> arrOfficerSelected) {
         CommanderOfficers commanderOfficers = new CommanderOfficers(commander, arrOfficerSelected);
-        arrCommanderOfficers.add(commanderOfficers);
-        arrCommanders.remove(commander);
-        if (arrCommanders.isEmpty()) {
+        arrCommanderOfficersThisPhase.add(commanderOfficers);
+        arrCommanderProcessed.add(commander);
+        arrCommandersThisPhase.remove(commander);
+        arrCommanderOfficersThisPhase.add(commanderOfficers);
+        if (arrCommandersThisPhase.isEmpty()) {
             end();
         }
 
