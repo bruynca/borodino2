@@ -211,7 +211,7 @@ public class Scenarios {
 
     }
 
-    public static void loadUnitsOnBoard(int scenarioNumber){
+    public static void loadUnits(int scenarioNumber){
         Scenarios workScenario=null;
         for (Scenarios sc:arrScenarios){
             if (sc.numScenario == scenarioNumber)

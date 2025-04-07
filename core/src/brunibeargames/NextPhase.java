@@ -35,6 +35,7 @@ public class NextPhase {
     Initiative initiative;
     DetermineCommand determineCommand;
     DoCommand doCommand;
+    DoCommandDivision   doCommandDivision;
 
     // DiceEffect diceEffect = new DiceEffect();
   //  Explosions explosions = new Explosions();
@@ -54,7 +55,7 @@ public class NextPhase {
         Cards cards = new Cards();
         determineCommand = new DetermineCommand();
         doCommand = new DoCommand();
-
+        doCommandDivision = new DoCommandDivision();
         System.gc();
 
     }
@@ -176,6 +177,12 @@ public class NextPhase {
                         Command based on arrays from DtermineCommand
                      */
                     doCommand.instance.start();
+                    break;
+                case DO_COMMAND_DIVISION:
+                    /*
+                        Command based on arrays from DtermineCommand
+                     */
+                    doCommandDivision.instance.start();
                     break;
                 case MOVEMENT:
 

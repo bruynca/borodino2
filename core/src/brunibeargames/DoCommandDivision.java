@@ -10,25 +10,22 @@ import java.util.Observer;
 
 import brunibeargames.UI.BottomMenu;
 import brunibeargames.UI.WinCommand;
-import brunibeargames.UI.WinWarning;
 import brunibeargames.Unit.Commander;
+import brunibeargames.Unit.Division;
 import brunibeargames.Unit.Officer;
 import brunibeargames.Unit.Unit;
 
-public class DoCommand implements Observer {
-    static public DoCommand instance;
+public class DoCommandDivision implements Observer {
+    static public DoCommandDivision instance;
     ArrayList<Commander> arrCommandersThisPhase = new ArrayList<Commander>();
     ArrayList<WinCommand> arrWinCommand = new ArrayList<WinCommand>();
-    ArrayList<CommanderOfficers> arrCommanderOfficersThisPhase = new ArrayList<CommanderOfficers>();
-    boolean needDivisions = false;
-    boolean needRandom= false;
+    ArrayList<Division> arrCommanderDivisions = new ArrayList<Division>();
     ArrayList<Commander> arrCommanderProcessed = new ArrayList<>();
-    ArrayList<CommanderOfficers> arrCommandOfficersProcessed = new ArrayList<>();
+    ArrayList<Division> arrDivisionProcessed = new ArrayList<>();
     I18NBundle i18NBundle;
-    private WinWarning winWarning;
 
 
-    DoCommand() {
+    DoCommandDivision() {
         instance = this;
         i18NBundle = GameMenuLoader.instance.localization;
 
@@ -48,65 +45,40 @@ public class DoCommand implements Observer {
      *
      */
     public void start() {
+        Gdx.app.log("DoCommandDivision", "Start");
         BottomMenu.instance.showNextPhase();
         BottomMenu.instance.setEnablePhaseChange(true);
         BottomMenu.instance.showInquirNextPhase();
         BottomMenu.instance.showBackOut();
         BottomMenu.instance.setWarningPhaseChange(false);
         BottomMenu.instance.addObserver(this);
-        TurnCounter.instance.updateText(i18NBundle.get("commandphase"));
+        TurnCounter.instance.updateText(i18NBundle.get("commanddivisionphase"));
 
         arrCommandersThisPhase.clear();
-        arrCommanderOfficersThisPhase.clear();
+        arrCommanderDivisions.clear();
         arrCommanderProcessed.clear();
-        arrCommanderOfficersThisPhase.clear();
+        arrDivisionProcessed.clear();
         /**
          *  load all the Commanders for this part of Command after the commander set up by
          *  Determine Command
          */
         arrCommandersThisPhase.addAll(DetermineCommand.instance.getArrCommand());
-        /**
-         *  no Commander by determine
-         */
-        if (arrCommandersThisPhase.isEmpty()) {
-            end();
-        }
-        ArrayList<Commander> arrRemove = new ArrayList<Commander>();
-        for (Commander commander:arrCommandersThisPhase) {
-            if (commander.getOfficerPossibleAvailable().isEmpty()) {
-                arrRemove.add(commander);
-            }
-        }
-        arrCommandersThisPhase.removeAll(arrRemove);
-        /**
-         *  no officers in range
-         */
-        arrCommandersThisPhase.clear();
-        if (arrCommandersThisPhase.isEmpty()) {
-
-            winWarning = new WinWarning(i18NBundle.get("commandphase"), i18NBundle.get("commandphasenoommander"));
-            winWarning.addObserver(this);
-            //end();
-        }
         /*
          *  more than 1 then we need to choose
          */
         if (arrCommandersThisPhase.size() > 1) {
             setupCommandChoose();
             BottomMenu.instance.setWarningPhaseChange(true);
-            String message= i18NBundle.get("choosenocommand");
+            String message= i18NBundle.get("choosenocommanddivision");
             String title = i18NBundle.get("nextphasebutton");
             BottomMenu.instance.setPhaseData(title, message);
-            message=i18NBundle.get("commandphasehelp");
-            title=i18NBundle.get("commandphasehelptitle");
+            message=i18NBundle.get("commanddivisionphasehelp");
+            title=i18NBundle.get("commanddivisionphasehelptitle");
             BottomMenu.instance.setHelpData(title, message);
-            needDivisions = true;
-            needRandom = true;
             return;
         }
         if (arrCommandersThisPhase.size() == 1) {
             Commander commander = arrCommandersThisPhase.get(0);
-            //setupCommand(commander);
             return;
         }
     }
@@ -169,9 +141,9 @@ public class DoCommand implements Observer {
         }
     }
 
-    public void allocate(Commander commander, ArrayList<Officer> arrOfficerSelected) {
-        CommanderOfficers commanderOfficers = new CommanderOfficers(commander, arrOfficerSelected);
-        arrCommanderOfficersThisPhase.add(commanderOfficers);
+    public void allocate(Commander commander, ArrayList<Division> arrDivisionsSelected) {
+        CommanderDivision commanderDivision = new CommanderDivision(commander, arrDivisionsSelected);
+        arrCommanderDivisions.addAll(arrDivisionsSelected);
         arrCommanderProcessed.add(commander);
         arrCommandersThisPhase.remove(commander);
         if (arrCommandersThisPhase.isEmpty()) {
@@ -183,7 +155,7 @@ public class DoCommand implements Observer {
     }
 
     void end() {
-        Gdx.app.log("DoCommand", "end");
+        Gdx.app.log("DoCommandDivision", "end");
         NextPhase.instance.endPhase();
 
     }
@@ -198,23 +170,18 @@ public class DoCommand implements Observer {
         /**
          *  Hex touched
          */
-        if (oB.type == ObserverPackage.Type.GoBack) {
-            BottomMenu.instance.deleteObserver(this);
-            goBack();
-        }else{
-            if (oB.type == ObserverPackage.Type.OK){
-                winWarning.deleteObserver(this);
-                end();
-            }
+        if (oB.type != ObserverPackage.Type.GoBack) {
+            return;
         }
-        return;
+        goBack();
     }
-}
-    class CommanderOfficers{
+    class CommanderDivision {
         Commander commander;
-        ArrayList<Officer> arrOfficer;
-        public CommanderOfficers(Commander commander, ArrayList<Officer> arrOfficer){
+        ArrayList<Division> arrDivision = new ArrayList<Division>();
+
+        public CommanderDivision(Commander commander, ArrayList<Division> arrDivision) {
             this.commander = commander;
-            this.arrOfficer = arrOfficer;
+            this.arrDivision.addAll(arrDivision);
+        }
     }
 }

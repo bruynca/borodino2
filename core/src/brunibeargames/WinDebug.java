@@ -11,6 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import java.util.ArrayList;
 
+import brunibeargames.Unit.Corp;
+import brunibeargames.Unit.Division;
 import brunibeargames.Unit.Unit;
 
 
@@ -71,7 +73,18 @@ public class WinDebug {
 	public void ClickButton(InputEvent event, float xIn, float yIN) {
 		Gdx.app.log("Windebug", "Click Button");
 		Unit test = null;
-		Scenarios.loadUnitsOnBoard(0);
+		for (Corp corp:Corp.alliedCorp) {
+			Gdx.app.log("Corp Display", "Corp="+corp.name);
+			for (Division div:Division.arrDivisions){
+				if (div.corp.equals(corp)) {
+					Gdx.app.log("Division Display=", "DivisionCorp=" + div.name);
+				}
+			}
+
+
+		}
+
+	/*	Scenarios.loadUnitsOnBoard(0);
 
 		int y = 8;
 		ArrayList<Unit> arrUnits = new ArrayList<>();

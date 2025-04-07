@@ -51,7 +51,7 @@ public class Commander {
         for (Hex hex:arrHex) {
               if (!hex.getUnitsInHex().isEmpty()){
                   for (Unit unit:hex.getUnitsInHex()){
-                      if (unit.isOfficer && unit.isAllies == isAllied && !unit.officer.isActivated){
+                      if (unit.isOfficer && unit.isAllies == isAllied && !unit.officer.getisActivated()){
                           arrOfficer.add(unit.officer);
                       }
                   }
@@ -62,8 +62,56 @@ public class Commander {
         return arrOfficer;
 
     }
+    public ArrayList<UnitsInDivision> getDivisionPossibleAvailable() {
+        ArrayList<UnitsInDivision> arrDivision = new ArrayList<>();
+        UnitMove unitMove = new UnitMove(unit, commanderRange, true, false,0);
+        ArrayList<Hex> arrHex = unitMove.getMovePossible();
+        for (Hex hex:arrHex) {
+            if (!hex.getUnitsInHex().isEmpty()){
+                ArrayList<UnitsInDivision> arrIn = new ArrayList<>();
+                for (Unit unit:hex.getUnitsInHex()){
+                    if (!unit.isOfficer &&
+                        unit.isAllies == isAllied &&
+                        !unit.isActivated()){
+                        //Check if already have a unit in this division
+                        for (UnitsInDivision ud:arrIn){
+                            if (ud.getDivision() == unit.division){
+                                ud.addUnit(unit);
+                                break;
+                            }
+                        }
+                        UnitsInDivision ud=new UnitsInDivision(unit,hex);
+                    }
+                }
+
+            }
+        }
+        return arrDivision;
+
+    }
 
     public int getCanCommand() {
         return canCommand;
+    }
+    class UnitsInDivision{
+        ArrayList<Unit> arrUnit = new ArrayList<>();
+        Division division;
+        Hex hex;
+        public UnitsInDivision (Unit unit, Hex hex){
+            arrUnit.add(unit);
+            this.hex = hex;
+        }
+        public UnitsInDivision (Unit unit){
+            division = unit.division;
+        }
+        Division getDivision() {
+            return division;
+        }
+        public void addUnit(Unit unit){
+            arrUnit.add(unit);
+        }
+
+
+
     }
 }

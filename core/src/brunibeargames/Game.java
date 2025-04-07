@@ -6,7 +6,6 @@ import com.badlogic.gdx.utils.I18NBundle;
 import java.util.ArrayList;
 
 import brunibeargames.UI.BottomMenu;
-import brunibeargames.UI.WinText;
 import brunibeargames.Unit.CounterStack;
 import brunibeargames.Unit.Unit;
 
@@ -40,7 +39,7 @@ public class Game {
         nextPhase = new NextPhase();
         System.gc();
         WinModal winModal = new WinModal();
-        WinText winText = new WinText();
+        //WinText winText = new WinText();
 
         if (str.length() == 0) {
             ArrayList<Unit> arrAllies =Unit.getSetupUnits(true);
@@ -51,7 +50,7 @@ public class Game {
             TurnCounter turnCounter = new TurnCounter();
             BottomMenu bottomMenu = new BottomMenu();
            // BottomMenu.instance.showNextPhase();
-            Scenarios.loadUnitsOnBoard(0);
+            Scenarios.loadUnits(0);
 
 
             nextPhase.nextPhase();

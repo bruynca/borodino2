@@ -68,7 +68,7 @@ public class Unit {
 	 */
 	public String brigade;
 	private Corp corp;
-	private Division division;
+	Division division;
 
 	public boolean isBrigade= false;
 	public boolean isVedette= false;

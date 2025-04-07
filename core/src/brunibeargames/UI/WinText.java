@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -15,7 +16,6 @@ import brunibeargames.Fonts;
 import brunibeargames.GameMenuLoader;
 
 public class WinText {
-    public static WinText instance;
     private final Label label;
     VisWindow window;
     I18NBundle i18NBundle;
@@ -24,8 +24,7 @@ public class WinText {
     float width = Gdx.graphics.getWidth();
     Label labelTitle;
 
-    public WinText(){
-        instance = this;
+    public WinText(String title,String message){
         i18NBundle = GameMenuLoader.instance.localization;
         window = new VisWindow("Warning");
         window.setVisible(false);
@@ -41,7 +40,11 @@ public class WinText {
         window.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                hide();
+                window.addAction(Actions.sequence(
+                        Actions.fadeOut( 0.3f), // Shrink over 0.3 seconds
+                        Actions.run(() -> window.setVisible(false)), // Set invisible
+                        Actions.run(() -> window.remove()) // Reset size to packed size.
+                ));
             }
 
             @Override
@@ -63,10 +66,6 @@ public class WinText {
         lab.font = Fonts.getFont24();
         lab.fontColor = Color.YELLOW;
         label = new Label("", lab);
-        Borodino.instance.guiStage.addActor(window);
-
-    }
-    public void show(String title,String message){
         window.setModal(true);
         window.setVisible(true);
         window.toFront();
@@ -76,11 +75,7 @@ public class WinText {
         window.add(label);
         window.pack();
         window.centerWindow();
-    }
-    public void hide(){
-        window.setVisible(false);
-        window.setModal(false);
-        window.clearChildren();
+        Borodino.instance.guiStage.addActor(window);
 
     }
 

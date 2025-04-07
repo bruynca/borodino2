@@ -47,7 +47,7 @@ import brunibeargames.WinModal;
 
 public class WinCommand {
 
-    private final TextButton.TextButtonStyle textButtonStyle;
+    private  TextButton.TextButtonStyle textButtonStyle;
     //    TextureAtlas textureAtlas = SplashScreen.instance.unitsManager.get("units/germancounteratlas.txt");
   //  TextureRegion close = textureAtlas.findRegion("close");
     Window window;
@@ -352,7 +352,7 @@ public class WinCommand {
                         arrOfficerSelected.add(counter.getUnit().getOfficer());
                         displaySelected();
                         displayInRange();
-                        DoCommand.instance.takeOfficer(counter.getUnit().getOfficer());
+                        DoCommand.instance.activateOfficer(counter.getUnit().getOfficer());
                         addButtonOK();
                     }
                 }
@@ -436,7 +436,7 @@ public class WinCommand {
                         arrOfficerAvailable.add(counter.getUnit().getOfficer());
                         displaySelected();
                         displayInRange();
-                        DoCommand.instance.addOfficer(counter.getUnit().getOfficer());
+                        DoCommand.instance.toPoolOfficer(counter.getUnit().getOfficer());
                         if (textButtonOK != null){
                             textButtonOK.remove();
                         }

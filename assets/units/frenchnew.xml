@@ -3,7 +3,7 @@
 		<name value="Old Guard"/>
 		<abname value="OG"/>
 		<division>
-			<name value="OG"/>
+			<name value="OG 3rd"/>
 			<brigade value="Boyer">
 				<mf value="4"/>
 				<cf value="8"/>
@@ -28,7 +28,7 @@
 		<name value="Guard Calvary"/>
 		<abname value="GC"/>
 		<division>
-			<name value="GC"/>
+			<name value="Guard Calvary"/>
 			<brigade value="St Sulpice">
 				<mf value="6"/>
 				<cf value="4"/>
@@ -65,7 +65,7 @@
 		<name value="Young Guard"/>
 				<abname value="YG"/>
 		<division>
-			<name value="YG1"/>
+			<name value="YG 1st"/>
 			<brigade value="Berthzne">
 				<mf value="4"/>
 				<cf value="4"/>
@@ -86,7 +86,7 @@
 			</brigade>
 		</division>
 		<division>
-			<name value="YG2"/>
+			<name value="YG 2nd"/>
 			<brigade value="Lanabere">
 				<mf value="4"/>
 				<cf value="4"/>
@@ -107,7 +107,7 @@
 			</brigade>
 		</division>
 		<division>
-			<name value="VIS"/>
+			<name value="Vistula"/>
 			<brigade value="Vistula Art">
 				<mf value="4"/>
 				<cf value="2"/>
@@ -325,7 +325,7 @@
 		<name value="3rd corp"/>
 				<abname value="3"/>
 		<division>
-			<name value="Ledru"/>
+			<name value="10th"/>
 			<brigade value="Gengoult">
 				<mf value="4"/>
 				<cf value="2"/>
@@ -352,7 +352,7 @@
 			</brigade>
 		</division>
 		<division>
-			<name value="Razout"/>
+			<name value="11th"/>
 			<brigade value="Joubert">
 				<mf value="4"/>
 				<cf value="5"/>
@@ -412,7 +412,7 @@
 	<name value="4th corp"/>
 	<abname value="4"/>
 		<division>
-			<name value="lechi"/>
+			<name value="lechi 4th Grenadier"/>
 			<brigade value="Lechi">
 				<mf value="4"/>
 				<cf value="6"/>
@@ -433,7 +433,8 @@
 			</brigade>
 	</division>
 	<division>
-			<name value="Delzons"/>
+			<name value="Delzons 13th"/>
+			<entry value ="0105"/>
 			<brigade value="Huard">
 				<mf value="4"/>
 				<cf value="9"/>
@@ -714,13 +715,13 @@
 	<abname value="1C"/>
 
 		<division>
-			<name value="5th Heavy Calvary"/>
+			<name value="1st Heavy Calvary"/>
 			<brigade value="St Germai, 3,6,calvry"/>
 			<brigade value="Valence, 3,6,calvry"/>
 			<brigade value="Pons, 4,6,horseartillery"/>
 		</division>
 		<division>
-			<name value="2nd Light Calvary"/>
+			<name value="5th Heavy Calvary"/>
 			<brigade value="Jacquinot, 2,7,calvry"/>
 			<brigade value="Pire, 2,7,calvry"/>
 			<brigade value="Roussel, 2,7,calvry,polish"/>
@@ -731,13 +732,13 @@
 				<abname value="2C"/>
 
 		<division>
-			<name value="2nd Light Calvary"/>
+			<name value="2nd Heavy Calvary"/>
 			<brigade value="Burthe, 2,7,calvry"/>
 			<brigade value="St Geniez, 2,7,calvry"/>
 			<brigade value="Hussars, 1,7,calvry"/>
 		</division>
 		<division>
-			<name value="2nd Heavy Calvary"/>
+			<name value="4th Heavy Calvary"/>
 			<brigade value="Wathier, 3,6,calvry"/>
 			<brigade value="DeFrance, 2,6,calvry"/>
 			<brigade value="Parizet, 4,6,horseartillery"/>

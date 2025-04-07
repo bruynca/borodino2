@@ -7,13 +7,13 @@ import com.badlogic.gdx.graphics.Texture;
 import java.util.ArrayList;
 
 public class Corp {
-    String name;
+    public String name;
     public String number;
     Color color;
     ArrayList<Unit> arrUnits = new ArrayList<>();
     Leader leader;
     boolean isAllies;
-    static ArrayList<Corp> alliedCorp  = new ArrayList<>();
+    static public ArrayList<Corp> alliedCorp  = new ArrayList<>();
     static ArrayList<Corp> russianCorp  = new ArrayList<>();
     Texture corpTex;
 

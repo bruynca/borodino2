@@ -404,7 +404,7 @@ infodown
   index: -1
 infoover
   rotate: false
-  xy: 405, 1087
+  xy: 597, 1087
   size: 112, 196
   orig: 112, 196
   offset: 0, 0
@@ -491,6 +491,13 @@ russianline2
   xy: 351, 826
   size: 117, 118
   orig: 117, 118
+  offset: 0, 0
+  index: -1
+warning
+  rotate: false
+  xy: 405, 1087
+  size: 192, 192
+  orig: 192, 192
   offset: 0, 0
   index: -1
 westphaliancalvary

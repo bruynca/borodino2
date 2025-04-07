@@ -10,7 +10,8 @@ public class Officer {
     public boolean isAllied;
     public String map;
     int movement;
-    boolean isActivated = false;
+    private boolean isActivated = false;
+    private boolean hasBeenActivatedThisTurn =false;
 
     Unit unit;
     static ArrayList<Officer> arrOfficers = new ArrayList<>();
@@ -62,4 +63,12 @@ public class Officer {
         }
         return null;
     }
+
+    public void setActivated(boolean activated) {
+        isActivated = activated;
+    }
+    public boolean getisActivated() {
+        return isActivated;
+    }
+
 }

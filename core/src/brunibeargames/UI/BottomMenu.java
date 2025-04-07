@@ -119,7 +119,7 @@ public class BottomMenu extends Observable {
                         return;
                     }else{
                         isWarned = true;
-                        WinText.instance.show(phaseTitle,phaseMessage);
+                        WinText winText = new WinText(phaseTitle,phaseMessage);
                         return;
                     }
                 }
@@ -183,7 +183,7 @@ public class BottomMenu extends Observable {
         inquiry.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                WinText.instance.show(helpTitle,helpMessage);
+                WinText winText = new WinText(helpTitle,helpMessage);
             }
         });
 
