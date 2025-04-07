@@ -9,8 +9,11 @@ public class Division {
     public Corp corp;
     boolean isAllies;
     private boolean isGuard;
+    int entryDay=0;
+    int entryTurn=0;
+    int entrArea=0;
     static public ArrayList<Division> arrDivisions = new ArrayList<>();
-    public Division(String divName, Corp corp, boolean isAllies) {
+    public Division(String divName, Corp corp, boolean isAllies, String entry) {
         name = divName;
         this.isAllies = isAllies;
         this.corp =corp;
@@ -18,7 +21,12 @@ public class Division {
             isGuard = true;
         }
         Gdx.app.log("Division", "name=" + name+" isAllies="+isAllies);
-
+        if (!entry.isEmpty()) {
+            String[] work = entry.split(" ");
+            entryDay = Integer.parseInt(work[0]);
+            entryTurn = Integer.parseInt(work[1]);
+            entrArea = Integer.parseInt(work[2]);
+        }
         arrDivisions.add(this);
     }
 

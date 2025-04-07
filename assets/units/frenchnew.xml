@@ -4,6 +4,8 @@
 		<abname value="OG"/>
 		<division>
 			<name value="OG 3rd"/>
+			<entry value ="02 05 02"/>
+
 			<brigade value="Boyer">
 				<mf value="4"/>
 				<cf value="8"/>
@@ -29,6 +31,8 @@
 		<abname value="GC"/>
 		<division>
 			<name value="Guard Calvary"/>
+			<entry value ="02 06 02"/>
+
 			<brigade value="St Sulpice">
 				<mf value="6"/>
 				<cf value="4"/>
@@ -66,6 +70,8 @@
 				<abname value="YG"/>
 		<division>
 			<name value="YG 1st"/>
+			<entry value ="02 05 02"/>
+
 			<brigade value="Berthzne">
 				<mf value="4"/>
 				<cf value="4"/>
@@ -87,6 +93,7 @@
 		</division>
 		<division>
 			<name value="YG 2nd"/>
+			<entry value ="02 04 02"/>
 			<brigade value="Lanabere">
 				<mf value="4"/>
 				<cf value="4"/>
@@ -108,6 +115,7 @@
 		</division>
 		<division>
 			<name value="Vistula"/>
+			<entry value ="02 04 02"/>
 			<brigade value="Vistula Art">
 				<mf value="4"/>
 				<cf value="2"/>
@@ -160,6 +168,7 @@
 		<abname value="1"/>
 	    <division>
 			<name value="Morand 1st"/>
+			<entry value ="01 08 02"/>
 			<brigade value="d'Alton">
 				<mf value="4"/>
 				<cf value="5"/>
@@ -187,6 +196,7 @@
 		</division>
 		<division>
 			<name value="Friant 2nd"/>
+			<entry value ="01 09 02"/>
 			<brigade value="Dufour">
 				<mf value="4"/>
 				<cf value="5"/>
@@ -214,6 +224,8 @@
 		</division>
 		<division>
 			<name value="Gerard 3rd"/>
+			<entry value ="01 10 02"/>
+
 			<brigade value="Desailly">
 				<mf value="4"/>
 				<cf value="5"/>
@@ -241,6 +253,8 @@
 		</division>
 		<division>
 			<name value="Dessaix 4th"/>
+			<entry value ="01 11 02"/>
+
 			<brigade value="Barbanegre">
 				<mf value="4"/>
 				<cf value="3"/>
@@ -268,6 +282,7 @@
 		</division>
 		<division>
 			<name value="Compans 5th"/>
+			<entry value ="01 06 02"/>
 			<brigade value="Duppelin">
 				<mf value="4"/>
 				<cf value="4"/>
@@ -300,7 +315,9 @@
 			</brigade>
 		</division>
 		<division>
-			<name value="corp Calvary and Artillery"/>
+			<name value="1st Corp Calvary and Artillery"/>
+			<entry value ="01 05 02"/>
+
 			<brigade value="Girandin">
 				<mf value="7"/>
 				<cf value="3"/>
@@ -326,6 +343,8 @@
 				<abname value="3"/>
 		<division>
 			<name value="10th"/>
+			<entry value ="01 12 02"/>
+
 			<brigade value="Gengoult">
 				<mf value="4"/>
 				<cf value="2"/>
@@ -353,6 +372,8 @@
 		</division>
 		<division>
 			<name value="11th"/>
+			<entry value ="01 13 02"/>
+
 			<brigade value="Joubert">
 				<mf value="4"/>
 				<cf value="5"/>
@@ -379,7 +400,9 @@
 			</brigade>
 		</division>
 		<division>
-			<name value="Calvary and Artilery"/>
+			<name value="3rd Corp Calvary and Artillery"/>
+			<entry value ="01 14 02"/>
+
 			<brigade value="Mouriez">
 				<mf value="7"/>
 				<cf value="3"/>
@@ -395,6 +418,7 @@
 		</division>
 		<division>
 		<name value="25th"/>
+		<entry value ="01 14 02"/>
 			<brigade value ="Brandt,2,4,artillery,wurtemburg"/>
 			<brigade value ="Hugel,2,4,wurtemburg"/>
 			<brigade value ="Koch,2,4,wurtemburg"/>
@@ -403,6 +427,7 @@
 		</division>
 		<division>
 		<name value="LC"/>
+		<entry value ="01 14 02"/>
 			<brigade value ="Beurmann,3,7,calvry,wurtemburg"/>
 			<brigade value ="first,1,6,artillery,wurtemburg"/>
 			<brigade value ="JgdPfd,0,7,vedette,wurtemburg"/>
@@ -412,7 +437,9 @@
 	<name value="4th corp"/>
 	<abname value="4"/>
 		<division>
+
 			<name value="lechi 4th Grenadier"/>
+			<entry value ="01 05 01"/>
 			<brigade value="Lechi">
 				<mf value="4"/>
 				<cf value="6"/>
@@ -434,7 +461,7 @@
 	</division>
 	<division>
 			<name value="Delzons 13th"/>
-			<entry value ="0105"/>
+			<entry value ="01 05 01"/>
 			<brigade value="Huard">
 				<mf value="4"/>
 				<cf value="9"/>
@@ -468,7 +495,9 @@
     </division>
 	<division>
 			<name value="Broussier 14th"/>
-			<brigade value="De Sivray">
+			<entry value ="01 06 01"/>
+
+		<brigade value="De Sivray">
 				<mf value="4"/>
 				<cf value="4"/>
 				<or value="french"/>
@@ -527,8 +556,10 @@
 			</brigade>
     </division>
 	<division>
-		<name value="Cavalry and Artillery"/>
-			<brigade value="Villata">
+		<name value="4th Corp Cavalry and Artillery"/>
+		<entry value ="01 06 01"/>
+
+		<brigade value="Villata">
 				<mf value="7"/>
 				<cf value="1"/>
 				<or value="italian"/>
@@ -703,7 +734,7 @@
 			<brigade value="Lemaire, 1,4,westphalian,artillery"/>
 		</division>
 		<division>
-			<name value="Calvary and Artillery"/>
+			<name value="8th Corp Calvary and Artillery"/>
 			<brigade value="Hammerstein, 2,7,westphalian,calvry"/>
 			<brigade value="Wolf, 1,7,westphalian,calvry"/>
 			<brigade value="Schultz, 1,6,westphalian,horseartillery"/>

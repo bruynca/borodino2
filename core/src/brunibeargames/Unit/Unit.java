@@ -830,7 +830,11 @@ public class Unit {
 			Array<Element> xmlDiv = xmlcorp.getChildrenByName("division");
 			for (Element xmldivision: xmlDiv){
 				String divName = xmldivision.getChildByName("name").getAttribute("value");
-				Division div = new Division(divName,corp,isAllies);
+				String entry="";
+				if (xmldivision.hasChild("entry")){
+					entry = xmldivision.getChildByName("entry").getAttribute("value");
+				}
+				Division div = new Division(divName,corp,isAllies,entry);
 				Array<Element> xmlBrig = xmldivision.getChildrenByName("brigade");
 				for (Element xmlBrigade:xmlBrig){
 					String strBrigade= xmlBrigade.getAttribute("value");

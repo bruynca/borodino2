@@ -81,6 +81,7 @@ public class DoCommand implements Observer {
         /**
          *  no officers in range
          */
+        //test setup
         arrCommandersThisPhase.clear();
         if (arrCommandersThisPhase.isEmpty()) {
 

@@ -63,7 +63,7 @@ public class Commander {
 
     }
     public ArrayList<UnitsInDivision> getDivisionPossibleAvailable() {
-        ArrayList<UnitsInDivision> arrDivision = new ArrayList<>();
+        ArrayList<UnitsInDivision> arrUDivision = new ArrayList<>();
         UnitMove unitMove = new UnitMove(unit, commanderRange, true, false,0);
         ArrayList<Hex> arrHex = unitMove.getMovePossible();
         for (Hex hex:arrHex) {
@@ -81,12 +81,14 @@ public class Commander {
                             }
                         }
                         UnitsInDivision ud=new UnitsInDivision(unit,hex);
+                        arrIn.add(ud);
                     }
+                    arrUDivision.addAll(arrIn);
                 }
 
             }
         }
-        return arrDivision;
+        return arrUDivision;
 
     }
 
@@ -100,10 +102,9 @@ public class Commander {
         public UnitsInDivision (Unit unit, Hex hex){
             arrUnit.add(unit);
             this.hex = hex;
-        }
-        public UnitsInDivision (Unit unit){
             division = unit.division;
         }
+
         Division getDivision() {
             return division;
         }

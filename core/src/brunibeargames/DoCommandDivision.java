@@ -10,6 +10,7 @@ import java.util.Observer;
 
 import brunibeargames.UI.BottomMenu;
 import brunibeargames.UI.WinCommand;
+import brunibeargames.UI.WinWarning;
 import brunibeargames.Unit.Commander;
 import brunibeargames.Unit.Division;
 import brunibeargames.Unit.Officer;
@@ -23,6 +24,7 @@ public class DoCommandDivision implements Observer {
     ArrayList<Commander> arrCommanderProcessed = new ArrayList<>();
     ArrayList<Division> arrDivisionProcessed = new ArrayList<>();
     I18NBundle i18NBundle;
+    private WinWarning winWarning;
 
 
     DoCommandDivision() {
@@ -63,6 +65,26 @@ public class DoCommandDivision implements Observer {
          *  Determine Command
          */
         arrCommandersThisPhase.addAll(DetermineCommand.instance.getArrCommand());
+        if (arrCommandersThisPhase.isEmpty()) {
+            end();
+        }
+        ArrayList<Commander> arrRemove = new ArrayList<Commander>();
+        for (Commander commander:arrCommandersThisPhase) {
+            if (commander.getDivisionPossibleAvailable().isEmpty()) {
+                arrRemove.add(commander);
+            }
+        }
+        arrCommandersThisPhase.removeAll(arrRemove);
+
+        if (arrCommandersThisPhase.isEmpty()) {
+
+            winWarning = new WinWarning(i18NBundle.get("commanddivisionphase"), i18NBundle.get("commanddivisionphasenoommander"));
+            winWarning.addObserver(this);
+            //end();
+        }
+
+
+
         /*
          *  more than 1 then we need to choose
          */
@@ -170,10 +192,20 @@ public class DoCommandDivision implements Observer {
         /**
          *  Hex touched
          */
-        if (oB.type != ObserverPackage.Type.GoBack) {
-            return;
+        /**
+         *  Hex touched
+         */
+        if (oB.type == ObserverPackage.Type.GoBack) {
+            BottomMenu.instance.deleteObserver(this);
+            goBack();
+        }else{
+            if (oB.type == ObserverPackage.Type.OK){
+                winWarning.deleteObserver(this);
+                end();
+            }
         }
-        goBack();
+        return;
+
     }
     class CommanderDivision {
         Commander commander;
