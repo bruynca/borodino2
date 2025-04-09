@@ -42,8 +42,8 @@ public class Unit {
 	static TextureAtlas textureAtlas;
 	static TextureRegion tStar;
 	static public Unit unitAirplane = null;
-	Officer officer;
-	Commander commander;
+	public Officer officer;
+	public Commander commander;
 	public boolean isOfficer = false;
 	public boolean isCommander;
 
@@ -68,7 +68,7 @@ public class Unit {
 	 */
 	public String brigade;
 	private Corp corp;
-	Division division;
+	public Division division;
 
 	public boolean isBrigade= false;
 	public boolean isVedette= false;
@@ -224,8 +224,12 @@ public class Unit {
 			isInfantry = false;
 			String strList[] = strBrigade.split("\\s*,\\s*");
 			this.brigade = strList[0];
+			String entry="";
+			if (strList.length > 6){
+				entry = strList[6];
+			}
 			if (strList.length > 1) {
-				officer = new Officer(strList[0], corp, isAllies, strList[1], this);
+				officer = new Officer(strList[0], corp, isAllies, strList[1], this,entry);
 			}
 		}
 		if (isCommander) {
@@ -238,8 +242,12 @@ public class Unit {
 				currentMoveFactor = 3;
 			}
 			this.brigade = strList[0];
+			String entry="";
+			if (strList.length > 6){
+				entry = strList[6];
+			}
 			if (strList.length > 1) {
-				commander = new Commander(strList[0], isAllies, strList[1], this,strList[5]);
+				commander = new Commander(strList[0], isAllies, strList[1], this,strList[5],entry);
 			}
 		}
 		if (!isCommander && !isOfficer){

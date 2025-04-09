@@ -1,5 +1,7 @@
 package brunibeargames;
 
+import com.badlogic.gdx.Gdx;
+
 import java.util.ArrayList;
 
 import brunibeargames.Unit.Corp;
@@ -7,9 +9,9 @@ import brunibeargames.Unit.Unit;
 import brunibeargames.Unit.UnitHex;
 
 public class Scenarios {
-    static  int[][] corp4s0Allies = {{193, 15, 13}, {192, 15, 13}, {191, 15, 13}, {176, 15, 12},
-            {172, 15, 12}, {174, 13, 11}, {178, 11, 10}, {179, 10, 9}, {177, 8, 8}, {185, 9, 7},
-            {180, 6, 9}, {169, 4, 10}, {170, 2, 9}, {171, 1, 9}};
+    static  int[][] corp4s0Allies = {{193, 16, 12},{194,16,12},{195,16,12},{196,16,12}, {192, 15, 13}, {191, 15, 13}, {176, 15, 12},
+            {172, 15, 12}, {174, 13, 11}, {178, 11, 10}, {179, 10, 9}, {177, 14, 12}, {185, 9, 7},
+            {180, 6, 9}, {169, 4, 10}, {170, 2, 9}, {171, 1, 9},{173,14,12}};
 
 
 
@@ -20,7 +22,7 @@ public class Scenarios {
     static  int[][] corp1Cs0Allies  ={{223,11,20},{221,13,16},{222,13,16},{220,11,16},
                          {219,12,15},{218,12,15}};
 
-    static int[][] corp5s0Allies = {{208,14,25},{196,14,25},{197,14,25},{198,12,26},{199,12,26},
+    static int[][] corp5s0Allies = {{208,14,25},{197,14,25},{198,12,26},{199,12,26},
         {206,11,27},{203,8,27},{204,6,28},{205,5,28},{207,4,29}};
 
     static int[][] corp2Cs0Allies = {{230,10,19},{228,10,19},{229,11,18}};
@@ -99,6 +101,8 @@ public class Scenarios {
     ArrayList<UnitHex> alliedUnitHexs = new ArrayList<>();
     ArrayList<UnitHex> russianUnitsHex = new ArrayList<>();
     int numScenario; // 0 is Shevardino DOB
+    int startTurn=0;
+    int startDay=0;
 
 
 
@@ -114,6 +118,9 @@ public class Scenarios {
         // 4th Corp
         Scenarios sc = new Scenarios();
         sc.numScenario = 0;
+        sc.startDay= 1;
+        sc.startTurn = 11;
+
         loadCorpData("4",corp4s0Allies,sc);
         loadCorpData("1",corp1s0Allies,sc);
         loadCorpData("1C",corp1Cs0Allies,sc);
@@ -192,6 +199,8 @@ public class Scenarios {
             int x = corpData[i][1];
             int y = corpData[i][2];
             Hex hex = Hex.hexTable[x][y];
+            Gdx.app.log("LoadCorpData", "Corp="+intcorp+" Unit="+unit.brigade+" Hex="+hex.toString() );
+
             sc.alliedUnitHexs.add(new UnitHex(unit, hex));
         }
         arrScenarios.add(sc);
@@ -219,7 +228,29 @@ public class Scenarios {
         }
         for (int i=0 ; i<workScenario.alliedUnitHexs.size();i++){;
             UnitHex uh = workScenario.alliedUnitHexs.get(i);
-            uh.unit.placeOnBoard(uh.hex);
+            Gdx.app.log("LoadUnits", "Unit="+ uh.unit.brigade+" ID="+uh.unit.ID);
+
+            if (uh.unit.ID == 269){
+                int b=0;
+            }
+
+            if (uh.unit.isCommander  && uh.unit.commander.entryTurn < workScenario.startTurn &&
+                    uh.unit.commander.entryDay == workScenario.startDay&& !uh.unit.brigade.contains("avout")){
+                uh.unit.placeOnBoard(uh.hex);
+                break;
+            }
+            if (uh.unit.isOfficer  && uh.unit.officer.entryTurn < workScenario.startTurn &&
+                    uh.unit.officer.entryDay == workScenario.startDay) {
+                uh.unit.placeOnBoard(uh.hex);
+                break;
+            }
+            if (uh.unit.division.entryTurn < workScenario.startTurn &&
+                        uh.unit.division.entryDay == workScenario.startDay){
+
+                    uh.unit.placeOnBoard(uh.hex);
+            }
+            //uh.unit.placeOnBoard(uh.hex);
+
         }
         for (int i=0 ; i<workScenario.russianUnitsHex.size();i++){;
             UnitHex uh = workScenario.russianUnitsHex.get(i);

@@ -77,7 +77,7 @@ public class WinDebug {
 			Gdx.app.log("Corp Display", "Corp="+corp.name);
 			for (Division div:Division.arrDivisions){
 				if (div.corp.equals(corp)) {
-					Gdx.app.log("Division Display=", "DivisionCorp=" + div.name);
+					Gdx.app.log("Division Display=", "Division=" + div.name+" Entry Day="+div.entryDay+" Entry Turn="+div.entryTurn+" Entry Area="+div.entryArea);
 				}
 			}
 

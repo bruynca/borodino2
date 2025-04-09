@@ -137,6 +137,8 @@
 		</division>
 		<division>
 			<name value="Old Guard"/>
+			<entry value ="02 06 02"/>
+
 			<brigade value="Chasscurs">
 				<mf value="7"/>
 				<cf value="1"/>
@@ -530,6 +532,7 @@
 		</division>
 		<division>
 			<name value="15th"/>
+			<entry value ="01 06 01"/>
 			<brigade value="Millo">
 				<mf value="4"/>
 				<cf value="2"/>
@@ -626,7 +629,9 @@
 	<abname value="5"/>
 	<division>
 		<name value="16th"/>
-			<brigade value="Mielsynski">
+		<entry value ="01 09 01"/>
+
+		<brigade value="Mielsynski">
 				<mf value="4"/>
 				<cf value="6"/>
 				<or value="polish"/>
@@ -654,7 +659,10 @@
 	</division>
 	<division>
 		<name value="17th"/>
-			<brigade value="Zoltowski">
+		<entry value ="01 09 01"/>
+
+
+		<brigade value="Zoltowski">
 				<mf value="4"/>
 				<cf value="7"/>
 				<or value="polish"/>
@@ -675,7 +683,9 @@
 	</division>
 	<division>
 			<name value="18th"/>
-			<brigade value="Grabowski">
+			<entry value ="01 06 03"/>
+
+		<brigade value="Grabowski">
 				<mf value="4"/>
 				<cf value="4"/>
 				<or value="polish"/>
@@ -697,7 +707,9 @@
 	</division>
 	<division>
 			<name value="Cavalry"/>
-			<brigade value="Kamiensi">
+			<entry value ="01 06 03"/>
+
+		<brigade value="Kamiensi">
 				<mf value="7"/>
 				<cf value="3"/>
 				<or value="polish"/>
@@ -722,19 +734,24 @@
 	<name value="8th corp"/>
 	<abname value="8"/>
 		<division>
+
 			<name value="23rd"/>
+			<entry value ="02 09 02"/>
+
 			<brigade value="Damas, 4,4,westphalian"/>
 			<brigade value="Wicknberg, 4,4,westphalian"/>
 			<brigade value="Frode, 1,4,westphalian,artillery"/>
 		</division>
 		<division>
 			<name value="24th"/>
+			<entry value ="02 08 02"/>
 			<brigade value="Legras, 4,4,westphalian"/>
 			<brigade value="Burstel, 3,4,westphalian"/>
 			<brigade value="Lemaire, 1,4,westphalian,artillery"/>
 		</division>
 		<division>
 			<name value="8th Corp Calvary and Artillery"/>
+			<entry value ="02 08 02"/>
 			<brigade value="Hammerstein, 2,7,westphalian,calvry"/>
 			<brigade value="Wolf, 1,7,westphalian,calvry"/>
 			<brigade value="Schultz, 1,6,westphalian,horseartillery"/>
@@ -747,12 +764,15 @@
 
 		<division>
 			<name value="1st Heavy Calvary"/>
+			<entry value ="01 05 02"/>
+
 			<brigade value="St Germai, 3,6,calvry"/>
 			<brigade value="Valence, 3,6,calvry"/>
 			<brigade value="Pons, 4,6,horseartillery"/>
 		</division>
 		<division>
 			<name value="5th Heavy Calvary"/>
+			<entry value ="01 05 02"/>
 			<brigade value="Jacquinot, 2,7,calvry"/>
 			<brigade value="Pire, 2,7,calvry"/>
 			<brigade value="Roussel, 2,7,calvry,polish"/>
@@ -764,11 +784,15 @@
 
 		<division>
 			<name value="2nd Heavy Calvary"/>
+			<entry value ="01 05 02"/>
+
 			<brigade value="Burthe, 2,7,calvry"/>
 			<brigade value="St Geniez, 2,7,calvry"/>
 			<brigade value="Hussars, 1,7,calvry"/>
 		</division>
 		<division>
+			<entry value ="01 05 02"/>
+
 			<name value="4th Heavy Calvary"/>
 			<brigade value="Wathier, 3,6,calvry"/>
 			<brigade value="DeFrance, 2,6,calvry"/>
@@ -781,6 +805,8 @@
 
 		<division>
 			<name value="3rd Light Calvary"/>
+			<entry value ="01 11 01"/>
+
 			<brigade value="Guathrin, 2,7,calvry"/>
 			<brigade value="Gerard, 2,7,calvry"/>
 			<brigade value="Dommnget, 2,7,bavarian,calvry"/>
@@ -788,6 +814,7 @@
 		</division>
 		<division>
 			<name value="3rd Heavy Calvary"/>
+			<entry value ="01 11 01"/>
 			<brigade value="Doumerc, 4,6,calvry"/>
 			<brigade value="LaHousav, 3,6,calvry"/>
 			<brigade value="Mouiller, 3,6,horseartillery"/>

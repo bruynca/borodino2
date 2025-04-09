@@ -14,9 +14,12 @@ public class Officer {
     private boolean hasBeenActivatedThisTurn =false;
 
     Unit unit;
+    public int entryDay=0;
+    public int entryTurn=0;
+    public int entryArea=0;
     static ArrayList<Officer> arrOfficers = new ArrayList<>();
     static int officerRange = 3;
-    public Officer(String name,Corp corp, boolean isAllied, String map, Unit unit){
+    public Officer(String name,Corp corp, boolean isAllied, String map, Unit unit, String entry){
         this.name = name;
         this.corp = corp;
         this.isAllied = isAllied;
@@ -24,6 +27,12 @@ public class Officer {
         this.unit = unit;
         movement= 6;
         arrOfficers.add(this);
+        if (!entry.isEmpty()) {
+            String[] work = entry.split(" ");
+            entryDay = Integer.parseInt(work[0]);
+            entryTurn = Integer.parseInt(work[1]);
+            entryArea = Integer.parseInt(work[2]);
+        }
 
     }
 

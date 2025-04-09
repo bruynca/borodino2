@@ -9,9 +9,9 @@ public class Division {
     public Corp corp;
     boolean isAllies;
     private boolean isGuard;
-    int entryDay=0;
-    int entryTurn=0;
-    int entrArea=0;
+    public int entryDay=0;
+    public int entryTurn=0;
+    public int entryArea=0;
     static public ArrayList<Division> arrDivisions = new ArrayList<>();
     public Division(String divName, Corp corp, boolean isAllies, String entry) {
         name = divName;
@@ -25,7 +25,7 @@ public class Division {
             String[] work = entry.split(" ");
             entryDay = Integer.parseInt(work[0]);
             entryTurn = Integer.parseInt(work[1]);
-            entrArea = Integer.parseInt(work[2]);
+            entryArea = Integer.parseInt(work[2]);
         }
         arrDivisions.add(this);
     }

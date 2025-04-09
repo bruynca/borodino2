@@ -19,8 +19,12 @@ public class Commander {
     Unit unit;
     int movement;
     TextureRegion textureRegion;
+    public int entryDay=0;
+    public int entryTurn=0;
+    public int entryArea=0;
+
     static public ArrayList<Commander> arrCommander = new ArrayList<>();
-    public Commander(String name, boolean isAllied, String map, Unit unit, String  canCommand){
+    public Commander(String name, boolean isAllied, String map, Unit unit, String  canCommand, String entry){
         this.name = name;
         this.isAllied = isAllied;
         this.map = map;
@@ -33,6 +37,13 @@ public class Commander {
         String strName = name.toLowerCase();
         this.canCommand = Integer.valueOf(canCommand);
         textureRegion = textureAtlas.findRegion(strName);
+        if (!entry.isEmpty()) {
+            String[] work = entry.split(" ");
+            entryDay = Integer.parseInt(work[0]);
+            entryTurn = Integer.parseInt(work[1]);
+            entryArea = Integer.parseInt(work[2]);
+        }
+
         arrCommander.add(this);
     }
 

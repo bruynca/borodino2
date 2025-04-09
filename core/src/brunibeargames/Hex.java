@@ -731,23 +731,23 @@ public class Hex {
 	 * @return
 	 */
 	public static boolean isStreamAcross(Hex hexfrom, Hex hexTo){
-		Gdx.app.log("Hex isstreamaccros", "From=" + hexfrom + " To="+hexTo);
+		//Gdx.app.log("Hex isstreamaccros", "From=" + hexfrom + " To="+hexTo);
 
 
 		if (hexfrom.isStreamBank && hexTo.isStreamBank ){
 			//return false;
 		}else{
-			Gdx.app.log("Hex isstreamaccros", "Return no Bank");
+		//	Gdx.app.log("Hex isstreamaccros", "Return no Bank");
 
 			return false;
 		}
 		ArrayList<Hex> arrToTest = new ArrayList<>();
 		arrToTest.addAll(getStreamBanksToCheck(hexfrom));
-		Gdx.app.log("Hex isStreamaccross", "Array=" + arrToTest);
+		//Gdx.app.log("Hex isStreamaccross", "Array=" + arrToTest);
 
 		if (hexfrom.isMultipleStreamBank){
 			arrToTest.addAll(getMultiStreamBanksToCheck(hexfrom));
-			Gdx.app.log("Hex isStreamaccross", "Multipl Array=" + arrToTest);
+		//	Gdx.app.log("Hex isStreamaccross", "Multipl Array=" + arrToTest);
 
 		}
 		if (arrToTest == null){
@@ -834,10 +834,10 @@ public class Hex {
 	}
 
 	private static ArrayList<Hex> getStreamBanksToCheck(Hex hexfrom) {
-		Gdx.app.log("Hex getStreamBankToCheck", "Hex=" + hexfrom);
+		//Gdx.app.log("Hex getStreamBankToCheck", "Hex=" + hexfrom);
 
 		ArrayList<Hex> arrWork = new ArrayList<>();
-		Gdx.app.log("Hit", "on ="+ hexfrom.streamBank);
+		//Gdx.app.log("Hit", "on ="+ hexfrom.streamBank);
 
 		switch (hexfrom.streamBank){
 			case 10:
