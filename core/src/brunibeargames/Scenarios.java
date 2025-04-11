@@ -19,7 +19,7 @@ public class Scenarios {
                 {146,14,16},{130,10,16},{129,8,17},{128,6,16},{131,5,16},{132,4,17},
                 {134,2,18},{135,0,18},{150,16,14},{149,16,14},{136,0,18},
                 {138,0,18},{137,0,18},{140,0,18},{141,0,18},{142,0,18},{143,0,18}};
-    static  int[][] corp1Cs0Allies  ={{223,11,20},{221,13,16},{222,13,16},{220,11,16},
+    static  int[][] corp1Cs0Allies  ={{223,11,20},{221,12,15},{220,12,15},
                          {219,12,15},{218,12,15}};
 
     static int[][] corp5s0Allies = {{208,14,25},{197,14,25},{198,12,26},{199,12,26},
@@ -199,7 +199,7 @@ public class Scenarios {
             int x = corpData[i][1];
             int y = corpData[i][2];
             Hex hex = Hex.hexTable[x][y];
-            Gdx.app.log("LoadCorpData", "Corp="+intcorp+" Unit="+unit.brigade+" Hex="+hex.toString() );
+            Gdx.app.log("LoadCorpData", "Corp="+intcorp+" Unit="+unit.brigade+" ID="+unit.ID+" Hex="+hex.toString() );
 
             sc.alliedUnitHexs.add(new UnitHex(unit, hex));
         }
@@ -229,20 +229,27 @@ public class Scenarios {
         for (int i=0 ; i<workScenario.alliedUnitHexs.size();i++){;
             UnitHex uh = workScenario.alliedUnitHexs.get(i);
             Gdx.app.log("LoadUnits", "Unit="+ uh.unit.brigade+" ID="+uh.unit.ID);
-
-            if (uh.unit.ID == 269){
+            if (i==261)
+            {
+                int b=0;
+            }
+            if (uh.unit.ID == 255){
                 int b=0;
             }
 
-            if (uh.unit.isCommander  && uh.unit.commander.entryTurn < workScenario.startTurn &&
-                    uh.unit.commander.entryDay == workScenario.startDay&& !uh.unit.brigade.contains("avout")){
-                uh.unit.placeOnBoard(uh.hex);
-                break;
+            if (uh.unit.isCommander) {
+                if (!uh.unit.isAllies || uh.unit.commander.entryTurn < workScenario.startTurn &&
+                        uh.unit.commander.entryDay == workScenario.startDay ) {
+                    uh.unit.placeOnBoard(uh.hex);
+                }
+                continue;
             }
-            if (uh.unit.isOfficer  && uh.unit.officer.entryTurn < workScenario.startTurn &&
-                    uh.unit.officer.entryDay == workScenario.startDay) {
-                uh.unit.placeOnBoard(uh.hex);
-                break;
+            if (uh.unit.isOfficer) {
+                if (!uh.unit.isAllies || (uh.unit.officer.entryTurn < workScenario.startTurn &&
+                        uh.unit.officer.entryDay == workScenario.startDay)) {
+                    uh.unit.placeOnBoard(uh.hex);
+                }
+                continue;
             }
             if (uh.unit.division.entryTurn < workScenario.startTurn &&
                         uh.unit.division.entryDay == workScenario.startDay){

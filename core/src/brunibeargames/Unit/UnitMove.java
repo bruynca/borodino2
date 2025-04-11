@@ -125,6 +125,9 @@ public class UnitMove {
 		if (hexSearch == null){
 			int bk=0;
 		}
+		if (hexSearch.arrSurroundHex == null){
+			int bk=0;
+		}
 		for (Hex hex: hexSearch.arrSurroundHex)
 
 		{
