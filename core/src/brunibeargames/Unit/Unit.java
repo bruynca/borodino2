@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import brunibeargames.Borodino;
 import brunibeargames.ErrorGame;
+import brunibeargames.Game;
 import brunibeargames.Hex;
 import brunibeargames.SplashScreen;
 
@@ -37,7 +38,7 @@ public class Unit {
 	/**
 	 *  STATIC ARRAY Fields
 	 */
-	private static ArrayList<Unit> arrGameCombatUnits = new ArrayList<>();
+	public static ArrayList<Unit> arrGameCombatUnits = new ArrayList<>();
 	private static ArrayList<Unit> arrGameOtherUnits = new ArrayList<>();
 	static TextureAtlas textureAtlas;
 	static TextureRegion tStar;
@@ -396,6 +397,7 @@ public class Unit {
 			Gdx.app.log("Unit", "placeOnBoard on board already unit="+this.brigade+" id="+this.ID);
 			int fail = 9/0;
 		}
+		Game.instance.addUnit(this);
 		placeLogic(hex);
 		// log this for saved game
 

@@ -21,3 +21,6 @@ Turn 	0=AM Night
 	14=08PM
 	15=Night 1
 	16=Night 2
+
+Rules for March Mode - way has to be clear for moving the unit. Must stop before moving next to
+an enemy or allied unit.

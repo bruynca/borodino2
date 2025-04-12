@@ -9,9 +9,9 @@ import brunibeargames.Unit.Unit;
 import brunibeargames.Unit.UnitHex;
 
 public class Scenarios {
-    static  int[][] corp4s0Allies = {{193, 16, 12},{194,16,12},{195,16,12},{196,16,12}, {192, 15, 13}, {191, 15, 13}, {176, 15, 12},
-            {172, 15, 12}, {174, 13, 11}, {178, 11, 10}, {179, 10, 9}, {177, 14, 12}, {185, 9, 7},
-            {180, 6, 9}, {169, 4, 10}, {170, 2, 9}, {171, 1, 9},{173,14,12}};
+    static  int[][] corp4s0Allies = {{193, 16, 11},{194,16,11},{195,16,11},{191, 15, 13},
+            {172, 3, 9}, {178, 8,8},  {177, 14, 12}, {181,7,8},{182,6,9},
+            {180, 9,8}, {169, 4, 10}, {170, 5, 9}, {171, 4, 10},{173,14,12}, {175,12,11}, {179,11,9},{187,11,7}};
 
 
 
@@ -262,6 +262,15 @@ public class Scenarios {
         for (int i=0 ; i<workScenario.russianUnitsHex.size();i++){;
             UnitHex uh = workScenario.russianUnitsHex.get(i);
             uh.unit.placeOnBoard(uh.hex);
+        }
+        for (Unit unit:Game.instance.arrOnUnitBoard){
+            if (unit.isOfficer){
+                unit.getHexOccupy().bringOfficersToTop();
+            }
+            if (unit.isCommander){
+                unit.getHexOccupy().bringCommanderToTop();
+            }
+
         }
 
     }

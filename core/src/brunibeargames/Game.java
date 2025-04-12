@@ -17,6 +17,7 @@ public class Game {
 
 
     static public Game instance;
+    ArrayList<Unit> arrOnUnitBoard = new ArrayList<>();
     Game(String str, boolean isResume) {
         Gdx.app.log("Game", "COnstructor");
 
@@ -31,10 +32,12 @@ public class Game {
         HexHiliteDisplay.textTureLoad();
 
 
+
         //       Counter.clearStack();
         Hex.initHex();
   //      Hex.LoadBridges();
         Unit.resetID();
+        arrOnUnitBoard.clear();
         WinDebug winDebug = new WinDebug();
         nextPhase = new NextPhase();
         System.gc();
@@ -73,6 +76,9 @@ public class Game {
           //  BottomMenu.instance.showNextPhase();
             TopMenu topMenu = new TopMenu();
         }
+    }
+    public void addUnit(Unit unit) {
+            arrOnUnitBoard.add(unit);
     }
 
     public Scenario getScenario() {

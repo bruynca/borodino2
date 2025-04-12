@@ -1351,6 +1351,41 @@ public class Hex {
 		Counter.rePlace(this);
 
 	}
+	public void bringOfficersToTop(){
+		if (arrUnitsInHex.size() <= 1) {
+			return;
+		}
+		Unit unitOfficer = null;
+		for (Unit unit:arrUnitsInHex) {
+			if (unit.isOfficer) {
+			   unitOfficer = unit;
+			   break;
+			}
+		}
+		if (unitOfficer != null) {
+			arrUnitsInHex.remove(unitOfficer);
+			arrUnitsInHex.add(0, unitOfficer);
+			Counter.rePlace(this);
+		}
+	}
+	public void bringCommanderToTop(){
+		if (arrUnitsInHex.size() <= 1) {
+			return;
+		}
+		Unit unitCommander = null;
+		for (Unit unit:arrUnitsInHex) {
+			if (unit.isCommander) {
+				unitCommander = unit;
+				break;
+			}
+		}
+
+		if (unitCommander != null) {
+			arrUnitsInHex.remove(unitCommander);
+			arrUnitsInHex.add(0, unitCommander);
+			Counter.rePlace(this);
+		}
+	}
 	public static void initHex(){
 		for (Hex hex:arrHexMap){
 			hex.arrUnitsInHex = new ArrayList<>();
