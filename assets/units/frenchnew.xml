@@ -210,6 +210,7 @@
 				<cf value="5"/>
 				<or value="french"/>
 				<type value="infantry"/>
+				<delete value="true"/>
 			</brigade>
 			<brigade value="Grandeau">
 				<mf value="4"/>
@@ -387,6 +388,8 @@
 				<cf value="1"/>
 				<or value="polish"/>
 				<type value="infantry"/>
+				<delete value="true"/>
+
 			</brigade>
 			<brigade value="d'Henin">
 				<mf value="4"/>
@@ -410,29 +413,34 @@
 				<cf value="3"/>
 				<or value="french"/>
 				<type value="calvry"/>
+				<delete value="true"/>
+
 			</brigade>
 			<brigade value="Foucher">
 				<mf value="4"/>
 				<cf value="2"/>
 				<or value="french"/>
 				<type value="artillery"/>
+				<delete value="true"/>
+
 			</brigade>
 		</division>
 		<division>
 		<name value="25th"/>
 		<entry value ="01 14 02"/>
 			<brigade value ="Brandt,2,4,artillery,wurtemburg"/>
-			<brigade value ="Hugel,2,4,wurtemburg"/>
-			<brigade value ="Koch,2,4,wurtemburg"/>
-			<brigade value ="Bruselle,3,4,wurtemburg"/>
+			<brigade value ="Hugel,2,4,wurtemburg,D"/>
+
+			<brigade value ="Koch,2,4,wurtemburg,D"/>
+			<brigade value ="Bruselle,3,4,wurtemburg,D"/>
 			<brigade value ="Scheeler,3,4,wurtemburg"/>
 		</division>
 		<division>
 		<name value="LC"/>
 		<entry value ="01 14 02"/>
 			<brigade value ="Beurmann,3,7,calvry,wurtemburg"/>
-			<brigade value ="first,1,6,artillery,wurtemburg"/>
-			<brigade value ="JgdPfd,0,7,vedette,wurtemburg"/>
+			<brigade value ="first,1,6,artillery,wurtemburg,D"/>
+			<brigade value ="JgdPfd,0,7,vedette,wurtemburg,D"/>
 		</division>
 	</corp>
 	<corp>
@@ -642,6 +650,8 @@
 				<cf value="2"/>
 				<or value="westphalian"/>
 				<type value="calvry"/>
+				<delete value="true"/>
+
 			</brigade>
 	</division>
  </corp>
@@ -688,18 +698,24 @@
 				<cf value="7"/>
 				<or value="polish"/>
 				<type value="infantry"/>
-			</brigade>
+			<delete value="true"/>
+
+		</brigade>
 			<brigade value="Krazinski">
 				<mf value="4"/>
 				<cf value="4"/>
 				<or value="polish"/>
 				<type value="infantry"/>
+				<delete value="true"/>
+
 			</brigade>
 			<brigade value="Gugenmus">
 				<mf value="4"/>
 				<cf value="2"/>
 				<or value="polish"/>
 				<type value="artillery"/>
+				<delete value="true"/>
+
 			</brigade>
 	</division>
 	<division>
@@ -807,9 +823,9 @@
 			<name value="2nd Heavy Calvary"/>
 			<entry value ="01 05 02"/>
 
-			<brigade value="Burthe, 2,7,calvry"/>
-			<brigade value="St Geniez, 2,7,calvry"/>
-			<brigade value="Hussars, 1,7,calvry"/>
+			<brigade value="Burthe, 2,7,calvry,D"/>
+			<brigade value="St Geniez, 2,7,calvry,D"/>
+			<brigade value="Hussars, 1,7,calvry,D"/>
 		</division>
 		<division>
 			<entry value ="01 05 02"/>
@@ -836,7 +852,7 @@
 		<division>
 			<name value="3rd Heavy Calvary"/>
 			<entry value ="01 11 01"/>
-			<brigade value="Doumerc, 4,6,calvry"/>
+			<brigade value="Doumerc, 4,6,calvry,D"/>
 			<brigade value="LaHousav, 3,6,calvry"/>
 			<brigade value="Mouiller, 3,6,horseartillery"/>
 		</division>

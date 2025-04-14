@@ -116,6 +116,7 @@ public class Unit {
 	private int range;
 	private boolean isActivated =false;
 	private boolean hasBeensActivatedThisTurn =false;
+	public boolean isDelete = false;
 
 
 	public static void loadTexture() {
@@ -276,6 +277,9 @@ public class Unit {
 		setByValueOfString(str);
 		str = xmlBrigade.getChildByName("type").getAttribute("value");
 		setByValueOfString(str);
+		if (xmlBrigade.getChildByName("delete") != null){
+			isDelete = true;
+		}
 	}
 
 	private void setByString(String[] strList) {
@@ -357,6 +361,9 @@ public class Unit {
 			case "bavarian":
 				isBavarian = true;
 				isFrench = false;
+				break;
+			case "D":
+				isDelete = true;
 				break;
 			default:
 				Gdx.app.log("Unit", "Select By Value Of String invalid=" + str);
