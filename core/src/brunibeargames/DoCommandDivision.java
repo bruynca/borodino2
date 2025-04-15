@@ -9,18 +9,16 @@ import java.util.Observable;
 import java.util.Observer;
 
 import brunibeargames.UI.BottomMenu;
-import brunibeargames.UI.WinCommand;
+import brunibeargames.UI.WinCommandDivision;
 import brunibeargames.UI.WinWarning;
 import brunibeargames.Unit.Commander;
 import brunibeargames.Unit.Division;
-import brunibeargames.Unit.Officer;
-import brunibeargames.Unit.Unit;
 
 public class DoCommandDivision implements Observer {
     static public DoCommandDivision instance;
     ArrayList<Commander> arrCommandersThisPhase = new ArrayList<Commander>();
-    ArrayList<WinCommand> arrWinCommand = new ArrayList<WinCommand>();
-    ArrayList<Division> arrCommanderDivisions = new ArrayList<Division>();
+    ArrayList<WinCommandDivision> arrWinCommand = new ArrayList<WinCommandDivision>();
+    ArrayList<Commander.UnitsInDivision> arrCommanderDivisions = new ArrayList<Commander.UnitsInDivision>();
     ArrayList<Commander> arrCommanderProcessed = new ArrayList<>();
     ArrayList<Division> arrDivisionProcessed = new ArrayList<>();
     I18NBundle i18NBundle;
@@ -117,8 +115,8 @@ public class DoCommandDivision implements Observer {
             //           ClickAction clickAction = new ClickAction(unit, ClickAction.TypeAction.Command);
 
             Vector2 pos = new Vector2(x, y);
-            WinCommand winCommand = new WinCommand(commander, 400, 500, pos);
-            arrWinCommand.add(winCommand);
+            WinCommandDivision winCommandDivision = new WinCommandDivision(commander, 400, 500, pos);
+            arrWinCommand.add(winCommandDivision);
             x += 400f + offsett;
         }
     }
@@ -136,34 +134,34 @@ public class DoCommandDivision implements Observer {
     /**
      * Take an Officers from the pool
      *
-     * @param officer
+     * @param
      */
-    public void activateOfficer(Officer officer) {
-        for (WinCommand winCommand : arrWinCommand) {
-            winCommand.deleteOfficer(officer);
-            ArrayList<Unit> arrUnits = new ArrayList<Unit>();
+    public void activateDivision(Commander.UnitsInDivision uID) {
+        for (WinCommandDivision winCommand : arrWinCommand) {
+            winCommand.deleteDivision(uID);
+          /*  ArrayList<Unit> arrUnits = new ArrayList<Unit>();
             arrUnits.addAll(officer.getUnitsAvailable());
             for (Unit unit : arrUnits) {
                 unit.getMapCounter().getCounterStack().hilite();
-            }
+            } */
 
         }
     }
 
-    public void toPoolOfficer(Officer officer) {
-        for (WinCommand winCommand : arrWinCommand) {
-            winCommand.addOfficer(officer);
-            ArrayList<Unit> arrUnits = new ArrayList<Unit>();
+    public void toPoolOfficer(Commander.UnitsInDivision uiD) {
+        for (WinCommandDivision winCommand : arrWinCommand) {
+            winCommand.addDivision(uiD);
+           /* ArrayList<Unit> arrUnits = new ArrayList<Unit>();
             arrUnits.addAll(officer.getUnitsAvailable());
             for (Unit unit : arrUnits) {
                 unit.getMapCounter().getCounterStack().removeHilite();
-            }
+            } */
 
 
         }
     }
 
-    public void allocate(Commander commander, ArrayList<Division> arrDivisionsSelected) {
+    public void allocate(Commander commander, ArrayList<Commander.UnitsInDivision> arrDivisionsSelected) {
         CommanderDivision commanderDivision = new CommanderDivision(commander, arrDivisionsSelected);
         arrCommanderDivisions.addAll(arrDivisionsSelected);
         arrCommanderProcessed.add(commander);
@@ -207,11 +205,11 @@ public class DoCommandDivision implements Observer {
         return;
 
     }
-    class CommanderDivision {
+    public class CommanderDivision {
         Commander commander;
-        ArrayList<Division> arrDivision = new ArrayList<Division>();
+        ArrayList<Commander.UnitsInDivision> arrDivision = new ArrayList<Commander.UnitsInDivision>();
 
-        public CommanderDivision(Commander commander, ArrayList<Division> arrDivision) {
+        public CommanderDivision(Commander commander, ArrayList<Commander.UnitsInDivision> arrDivision) {
             this.commander = commander;
             this.arrDivision.addAll(arrDivision);
         }

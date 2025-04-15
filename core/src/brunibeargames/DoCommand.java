@@ -24,6 +24,7 @@ public class DoCommand implements Observer {
     boolean needRandom= false;
     ArrayList<Commander> arrCommanderProcessed = new ArrayList<>();
     ArrayList<CommanderOfficers> arrCommandOfficersProcessed = new ArrayList<>();
+    ArrayList<Officer> arrOfficerActivated = new ArrayList<>();
     I18NBundle i18NBundle;
     private WinWarning winWarning;
 
@@ -60,6 +61,7 @@ public class DoCommand implements Observer {
         arrCommanderOfficersThisPhase.clear();
         arrCommanderProcessed.clear();
         arrCommanderOfficersThisPhase.clear();
+        arrOfficerActivated.clear();
         /**
          *  load all the Commanders for this part of Command after the commander set up by
          *  Determine Command
@@ -147,6 +149,7 @@ public class DoCommand implements Observer {
      */
     public void activateOfficer(Officer officer) {
         for (WinCommand winCommand : arrWinCommand) {
+            arrOfficerActivated.add(officer);
             winCommand.deleteOfficer(officer);
             ArrayList<Unit> arrUnits = new ArrayList<Unit>();
             arrUnits.addAll(officer.getUnitsAvailable());
@@ -159,6 +162,7 @@ public class DoCommand implements Observer {
 
     public void toPoolOfficer(Officer officer) {
         for (WinCommand winCommand : arrWinCommand) {
+            arrOfficerActivated.remove(officer);
             winCommand.addOfficer(officer);
             ArrayList<Unit> arrUnits = new ArrayList<Unit>();
             arrUnits.addAll(officer.getUnitsAvailable());
@@ -185,6 +189,14 @@ public class DoCommand implements Observer {
 
     void end() {
         Gdx.app.log("DoCommand", "end");
+        ArrayList<Unit> arrUnits = new ArrayList<Unit>();
+        for (Officer officer : arrOfficerActivated) {
+            arrUnits.addAll(officer.getUnitsAvailable());
+            officer.setActivated(true);
+        }
+        for (Unit unit : arrUnits) {
+            unit.setActivated(true);
+        }
         NextPhase.instance.endPhase();
 
     }

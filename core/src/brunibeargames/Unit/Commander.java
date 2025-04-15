@@ -106,10 +106,10 @@ public class Commander {
     public int getCanCommand() {
         return canCommand;
     }
-    class UnitsInDivision{
-        ArrayList<Unit> arrUnit = new ArrayList<>();
-        Division division;
-        Hex hex;
+    public class UnitsInDivision{
+        public ArrayList<Unit> arrUnit = new ArrayList<>();
+        public Division division;
+        public Hex hex;
         public UnitsInDivision (Unit unit, Hex hex){
             arrUnit.add(unit);
             this.hex = hex;

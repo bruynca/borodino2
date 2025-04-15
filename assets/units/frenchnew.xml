@@ -406,14 +406,13 @@
 		</division>
 		<division>
 			<name value="3rd Corp Calvary and Artillery"/>
-			<entry value ="01 14 02"/>
+			<entry value ="01 05 01"/>
 
 			<brigade value="Mouriez">
 				<mf value="7"/>
 				<cf value="3"/>
 				<or value="french"/>
 				<type value="calvry"/>
-				<delete value="true"/>
 
 			</brigade>
 			<brigade value="Foucher">
@@ -421,7 +420,6 @@
 				<cf value="2"/>
 				<or value="french"/>
 				<type value="artillery"/>
-				<delete value="true"/>
 
 			</brigade>
 		</division>
@@ -437,9 +435,9 @@
 		</division>
 		<division>
 		<name value="LC"/>
-		<entry value ="01 14 02"/>
+		<entry value ="01 05 02"/>
 			<brigade value ="Beurmann,3,7,calvry,wurtemburg"/>
-			<brigade value ="first,1,6,artillery,wurtemburg,D"/>
+			<brigade value ="First,1,6,artillery,wurtemburg"/>
 			<brigade value ="JgdPfd,0,7,vedette,wurtemburg,D"/>
 		</division>
 	</corp>

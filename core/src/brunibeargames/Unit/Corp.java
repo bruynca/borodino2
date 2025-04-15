@@ -14,7 +14,7 @@ public class Corp {
     Leader leader;
     boolean isAllies;
     static public ArrayList<Corp> alliedCorp  = new ArrayList<>();
-    static ArrayList<Corp> russianCorp  = new ArrayList<>();
+    static public ArrayList<Corp> russianCorp  = new ArrayList<>();
     Texture corpTex;
 
     static int[][] clrArray={{113,297,133}, {240,160,72}, {139,84,48},{ 113,207,122},
