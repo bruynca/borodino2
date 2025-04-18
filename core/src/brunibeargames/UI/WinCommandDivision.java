@@ -67,6 +67,7 @@ public class WinCommandDivision {
     boolean isDavout = false;
     Vector2 v2Position;
     TextButton textButtonOK;
+    private Image imageCommander;
 
     public WinCommandDivision(Commander commander, float width, float height, Vector2 initPos){
         winWidth = width;
@@ -101,6 +102,7 @@ public class WinCommandDivision {
         arrDivisionsAvailable.clear();
         arrDivisionsAvailable.addAll(commander.getDivisionPossibleAvailable());;
         arrDivionsAvailableOriginal.clear();
+        arrDivionsAvailableOriginal.addAll(arrDivisionsAvailable);
         arrDivisionsSelected.clear();
       /*  if (commander.isAllied){
             arrOfficerAvailable.remove(officerDavout);
@@ -162,56 +164,64 @@ public class WinCommandDivision {
         Label.LabelStyle labelStyle = new Label.LabelStyle(Fonts.getFont24(), Color.WHITE);
         Label.LabelStyle labelStyle2 = new Label.LabelStyle(Fonts.getFont24(), Color.YELLOW);
 
-        Image image = new Image(commander.getTextureRegion());
-        image.setScaling(Scaling.fit);
-        image.setPosition(3,329);
+        imageCommander = new Image(commander.getTextureRegion());
+        imageCommander.setScaling(Scaling.fit);
+        imageCommander.setPosition(3,329);
         /**
          *  image
          */
-        window.addActor(image);
+        window.addActor(imageCommander);
         /**
          *  commander narrative
          */
-        String key = commander.name+"command";
+        /*String key = commander.name+"command";
         String str  = i18NBundle.format(key);
-
-        label = new Label(str, labelStyle);
-        label.setPosition(image.getX()+image.getWidth() +3 ,image.getY()+48);
-        window.addActor(label);
-
-        str = i18NBundle.format("activate",commander.getCanCommand());
-        if (commander.name.contains("urat")){
+        /**
+         * Allowed to command
+         */
+        /*label = new Label(str, labelStyle);
+        float x = image.getX()+image.getWidth() +3;
+        float y = image.getY()+140;
+        label.setPosition(x,y);
+        window.addActor(label); */
+        //
+        /*if (commander.name.contains("urat")){
             str += "\n"+i18NBundle.format("activatehorse",commander.getCanCommand()+1);
         }
         if (commander.name.contains("avout")){
             str += "\n"+i18NBundle.format("activatedavout");
-        }
+        }*/
+        String str = i18NBundle.format("activatedivisions",commander.getCanCommand());
         label = new Label(str, labelStyle2);
-        label.setPosition(image.getX()+image.getWidth() +3 ,image.getY());
+        float x = imageCommander.getX()+imageCommander.getWidth() +3;
+        float y = imageCommander.getY()+120;
+        label.setPosition(x+ 30,y);
+        window.addActor(label);
+        y -=label.getHeight();
+
+        /**
+         *  line for selectede
+         */
+        Label.LabelStyle labelStyleTitle = new Label.LabelStyle(FontFactory.instance.littleTitleFont, Color.LIGHT_GRAY);
+        String str2 = i18NBundle.format("selected");
+        label = new Label(str2, labelStyleTitle);
+        label.setPosition(x+54,y);
+        ySelected = y + 4;
         window.addActor(label);
 
         /**
          *  line for available
          */
 
-        Label.LabelStyle labelStyleTitle = new Label.LabelStyle(FontFactory.instance.littleTitleFont, Color.LIGHT_GRAY);
-        String str2 = i18NBundle.format("available");
+        str2 = i18NBundle.format("available");
         label = new Label(str2, labelStyleTitle);
 
-        label.setPosition(image.getX()+image.getWidth() -60 ,image.getY()-20);
-        yAvailable = image.getY()-20;
+        label.setPosition(imageCommander.getX()+imageCommander.getWidth() -60 ,imageCommander.getY()-20);
+        yAvailable = imageCommander.getY()-20;
         window.addActor(label);
 
-        /**
-         *  line for selectede
-         */
-        str2 = i18NBundle.format("selected");
-        label = new Label(str2, labelStyleTitle);
-        label.setPosition(image.getX()+image.getWidth() +3 ,image.getY()-109);
-        ySelected = image.getY()-109;
-        window.addActor(label);
 
-        float x=10;
+        x=10;
         displayInRange();
         displaySelected();
 
@@ -219,7 +229,7 @@ public class WinCommandDivision {
     }
     ArrayList<Stack> arrSelectedStacks = new ArrayList<Stack>();
     private void displaySelected() {
-        float x = 10;
+        float x = imageCommander.getX()+imageCommander.getWidth() +15;
         /**
          *  how many officers can we fit
          */
@@ -235,7 +245,7 @@ public class WinCommandDivision {
                 //           counter.stack.setSize(60,60);
                 counter.stack.setScale(.60f);
                 counter.stack.setTransform(true);
-                counter.stack.setPosition(x,ySelected-65); //90
+                counter.stack.setPosition(x,ySelected-75); //90
                 //          counter.getCounterStack().getStack().setSize(counterSize/.8f, counterSize/.8f);
                 arrSelectedStacks.add(counter.stack);
                 window.addActor(counter.stack);
@@ -258,35 +268,50 @@ public class WinCommandDivision {
         }
         arrAvailableStacks.clear();
         float x = 10;
-        float offsettDiv = 10;
+        float xInit = x;
+        float offsettDiv = 15;
         /**
          *  how many officers can we fit
          */
 
         float availableLength = winWidth;
-        float counterLength = 60;
+        float counterLength = 66;
+        float windowLength = winWidth - 6;
+        float maxCounter = availableLength/counterLength;
+        float counterXount=0;
         float offsett = availableLength/arrDivisionsAvailable.size();
         if (offsett > 70){
             offsett = 70;
         }else{
             offsett -=5;
         }
+
+        float y = yAvailable-70;
         for (final Commander.UnitsInDivision uIDr:arrDivisionsAvailable) {
             for (Unit unit:uIDr.arrUnit){
-                final Counter counter = new Counter(unit, Counter.TypeCounter.GUICounter);
-                //           counter.stack.setSize(60,60);
-                counter.stack.setScale(.60f);
-                counter.stack.setTransform(true);
-                counter.stack.setPosition(x,ySelected-65); //90
-                //          counter.getCounterStack().getStack().setSize(counterSize/.8f, counterSize/.8f);
-                arrSelectedStacks.add(counter.stack);
-                window.addActor(counter.stack);
+                Counter counter = cycleUnits(unit, x,y);
                 x +=offsettDiv;
                 addListnerForAdd(counter);
+                arrAvailableStacks.add(counter.stack);
             }
-            x +=offsett;
+            x+=counterLength-6;
+            if (x > windowLength - 40){
+                y -=72;
+                x=xInit;
+            }
         }
 
+    }
+    Counter  cycleUnits(Unit unit, float x, float y) {
+        //Unit unit = Game.instance.arrOnUnitBoard.get(0);
+        final Counter counter = new Counter(unit, Counter.TypeCounter.GUICounter);
+        //           counter.stack.setSize(60,60);
+        counter.stack.setTransform(true);
+        counter.stack.setScale(.6f);
+        counter.stack.setPosition(x,y); //90
+        //          counter.getCounterStack().getStack().setSize(counterSize/.8f, counterSize/.8f);
+        window.addActor(counter.stack);
+        return counter;
     }
     HiliteHex hiliteHex;
     private void addListnerForAdd(Counter counter) {
@@ -318,6 +343,9 @@ public class WinCommandDivision {
                 if (event.getButton( ) == Input.Buttons.LEFT)
                 {
                     Commander.UnitsInDivision uiDSelected = null;
+                    if (arrDivisionsSelected.size() == commander.getCanCommand()){
+                        return;
+                    }
                     for (Commander.UnitsInDivision uID:arrDivisionsAvailable) {
                         if (uID.arrUnit.contains(counter.getUnit())){
                             uiDSelected = uID;
@@ -328,7 +356,7 @@ public class WinCommandDivision {
                     arrDivisionsSelected.add(uiDSelected);
                     displaySelected();
                     displayInRange();
-                    DoCommandDivision.instance.toPoolOfficer(uiDSelected);
+                    DoCommandDivision.instance.activateDivision(uiDSelected);
                     if (textButtonOK != null){
                         textButtonOK.remove();
                     }
@@ -431,6 +459,10 @@ public class WinCommandDivision {
 
     }
 
+    /**
+     *  Remove division from pool
+     * @param uID
+     */
     public void deleteDivision(Commander.UnitsInDivision uID) {
         ArrayList<Commander.UnitsInDivision> arrREmove = new ArrayList<Commander.UnitsInDivision>();
         for (Unit unit:uID.arrUnit){
@@ -445,17 +477,21 @@ public class WinCommandDivision {
         displayInRange();
     }
 
+    /**
+     * Back to pool of available
+     * Make sure it was in original
+     * @param uiD
+     */
     public void addDivision(Commander.UnitsInDivision uiD) {
-        ArrayList<Commander.UnitsInDivision> arrREmove = new ArrayList<Commander.UnitsInDivision>();
         for (Unit unit:uiD.arrUnit){
-            for (Commander.UnitsInDivision uidr:arrDivisionsAvailable) {
+            for (Commander.UnitsInDivision uidr:arrDivionsAvailableOriginal) {
                 if (uidr.arrUnit.contains(unit)){
-                    return;
+                    if (!arrDivisionsAvailable.contains(uiD)){
+                        arrDivisionsAvailable.add(uiD);
+                    }
                 }
-
             }
         }
-        arrDivisionsAvailable.add(uiD);
         displayInRange();
     }
 

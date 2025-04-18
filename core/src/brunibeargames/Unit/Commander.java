@@ -81,21 +81,26 @@ public class Commander {
             if (!hex.getUnitsInHex().isEmpty()){
                 ArrayList<UnitsInDivision> arrIn = new ArrayList<>();
                 for (Unit unit:hex.getUnitsInHex()){
-                    if (!unit.isOfficer &&
+                    if (!unit.isOfficer && !unit.isCommander &&
                         unit.isAllies == isAllied &&
                         !unit.isActivated()){
                         //Check if already have a unit in this division
+
+                        boolean isAdded=false;
                         for (UnitsInDivision ud:arrIn){
                             if (ud.getDivision() == unit.division){
                                 ud.addUnit(unit);
-                                break;
+                                isAdded=true;
+                                continue;
                             }
                         }
-                        UnitsInDivision ud=new UnitsInDivision(unit,hex);
-                        arrIn.add(ud);
+                        if (!isAdded) {
+                            UnitsInDivision ud = new UnitsInDivision(unit, hex);
+                            arrIn.add(ud);
+                        }
                     }
-                    arrUDivision.addAll(arrIn);
                 }
+                arrUDivision.addAll(arrIn);
 
             }
         }

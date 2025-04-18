@@ -17,7 +17,7 @@ public class Game {
 
 
     static public Game instance;
-    ArrayList<Unit> arrOnUnitBoard = new ArrayList<>();
+    public ArrayList<Unit> arrOnUnitBoard = new ArrayList<>();
     Game(String str, boolean isResume) {
         Gdx.app.log("Game", "COnstructor");
 
