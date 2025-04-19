@@ -37,7 +37,7 @@ public class ObserverPackage {
         TouchUpShift, ESC,Moved,Stack,ConfirmYes,ConfirmNo,OK
         ,ScreenCentered,MoveFinished,CombatDisplayResults,AfterAttackDisplay,Advance,CardPlayed,
         FakeDone, EVENTPOPUPHIDE, SupplyDone,BastogneReinScored,EttleBruckRein,FakeScenario1Done,FakerDone,
-        EventPopupDone, GoBack
+        EventPopupDone, GoBack,NextPhase
     }
 
     }

@@ -73,14 +73,18 @@ public class Counter {
         stack.addListener(new ClickListener() {
 
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                Gdx.app.log("Counter ", "enter unit="+unit);
-                checkExplode(counter);
-                checkDesc(counter);
+                if (!Borodino.instance.isInHover()) {
+                   // Gdx.app.log("Counter ", "enter unit=" + unit);
+                    checkExplode(counter);
+                    checkDesc(counter);
+                }
             }
             public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                Gdx.app.log("Counter", "exit unit="+unit);
-                checkImplode();
-                checkDescGone();
+                if (!Borodino.instance.isInHover()) {
+                  //  Gdx.app.log("Counter", "exit unit=" + unit);
+                    checkImplode();
+                    checkDescGone();
+                }
             }
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 Gdx.app.log("Counter","TouchDown unit="+unit);

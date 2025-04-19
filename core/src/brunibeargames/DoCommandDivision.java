@@ -58,6 +58,11 @@ public class DoCommandDivision implements Observer {
         arrCommanderDivisions.clear();
         arrCommanderProcessed.clear();
         arrDivisionProcessed.clear();
+        for (WinCommandDivision winCommand : arrWinCommand) {
+            winCommand.window.remove();
+        }
+        arrWinCommand.clear();
+
         /**
          *  load all the Commanders for this part of Command after the commander set up by
          *  Determine Command
@@ -176,6 +181,7 @@ public class DoCommandDivision implements Observer {
 
     void end() {
         Gdx.app.log("DoCommandDivision", "end");
+        BottomMenu.instance.deleteObserver(this);
         NextPhase.instance.endPhase();
 
     }
@@ -186,10 +192,13 @@ public class DoCommandDivision implements Observer {
 
     @Override
     public void update(Observable observable, Object o) {
+
         ObserverPackage oB = (ObserverPackage) o;
-        /**
-         *  Hex touched
-         */
+        Gdx.app.log("DoCommandDivision", "update type=" + oB.type.toString());
+
+                /**
+                 *  Hex touched
+                 */
         /**
          *  Hex touched
          */
@@ -197,14 +206,19 @@ public class DoCommandDivision implements Observer {
             BottomMenu.instance.deleteObserver(this);
             goBack();
         }else{
-            if (oB.type == ObserverPackage.Type.OK){
-                winWarning.deleteObserver(this);
+            if (oB.type == ObserverPackage.Type.OK || oB.type == ObserverPackage.Type.NextPhase){
+                if (winWarning != null) {
+                    winWarning.deleteObserver(this);
+                }
+                BottomMenu.instance.deleteObserver(this);
                 end();
             }
         }
         return;
-
     }
+
+
+
     public class CommanderDivision {
         Commander commander;
         ArrayList<Commander.UnitsInDivision> arrDivision = new ArrayList<Commander.UnitsInDivision>();

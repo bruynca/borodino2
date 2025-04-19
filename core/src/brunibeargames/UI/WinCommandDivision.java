@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -43,7 +44,7 @@ public class WinCommandDivision {
     private  TextButton.TextButtonStyle textButtonStyle;
     //    TextureAtlas textureAtlas = SplashScreen.instance.unitsManager.get("units/germancounteratlas.txt");
     //  TextureRegion close = textureAtlas.findRegion("close");
-    Window window;
+    public Window window;
     Stage stage;
     Label label;
     Table table;
@@ -113,6 +114,7 @@ public class WinCommandDivision {
 
         window = new Window(title, windowStyle);
         window.setTouchable(Touchable.enabled);
+        cancelHover();
 
         textButtonStyle = GameMenu.instance.textButtonStyle;
 
@@ -357,8 +359,9 @@ public class WinCommandDivision {
                     displaySelected();
                     displayInRange();
                     DoCommandDivision.instance.activateDivision(uiDSelected);
-                    if (textButtonOK != null){
-                        textButtonOK.remove();
+                    if (arrDivisionsSelected.size() == commander.getCanCommand()){
+                        addButtonOK();
+                        return;
                     }
 
                 }
@@ -433,7 +436,7 @@ public class WinCommandDivision {
     public void addButtonOK() {
         textButtonOK = new TextButton(i18NBundle.format("ok"), textButtonStyle);
         textButtonOK.setSize(100, 60);
-        textButtonOK.setPosition((window.getWidth() - textButtonOK.getWidth()) / 2, 30);
+        textButtonOK.setPosition((window.getWidth() - textButtonOK.getWidth()) / 2, 20);
         textButtonOK.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -441,7 +444,6 @@ public class WinCommandDivision {
                     DoCommandDivision.instance.allocate(commander,arrDivisionsSelected);
                     GamePreferences.setWindowLocation(commander.name, (int) window.getX(), (int) window.getY());
                     end();
-
                 }
 
             }
@@ -493,6 +495,21 @@ public class WinCommandDivision {
             }
         }
         displayInRange();
+    }
+    void cancelHover(){
+        window.addListener(new ClickListener() {
+
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                // Gdx.app.log("Counter ", "enter unit="+unit);
+                Borodino.instance.setInHover(true);
+            }
+            public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                //  Gdx.app.log("Counter", "exit unit="+unit);
+                Borodino.instance.setInHover(false);
+
+            }
+
+        });
     }
 
 }

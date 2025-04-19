@@ -4,6 +4,10 @@ package brunibeargames;
 public class GameSetup {
 
     private boolean hotSeatGame;
+    private int randomCommandersRussian = 3;
+    private int randomCommandersFrench = 3;
+    private int dicerollsAboveRussian = 4;
+    private int dicerollsAboveFrench = 3;
 
 
     private boolean russianVersusAI;
@@ -97,7 +101,18 @@ public class GameSetup {
 
     }
 
-
+    public int getDicerollsAboveFrench() {
+        return dicerollsAboveFrench;
+    }
+    public int getDicerollsAboveRussian() {
+        return dicerollsAboveRussian;
+    }
+    public int getRandomCommandersFrench() {
+        return randomCommandersFrench;
+    }
+    public int getRandomCommandersRussian() {
+        return randomCommandersRussian;
+    }
 
 
 }

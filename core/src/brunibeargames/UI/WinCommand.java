@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -50,7 +51,7 @@ public class WinCommand {
     private  TextButton.TextButtonStyle textButtonStyle;
     //    TextureAtlas textureAtlas = SplashScreen.instance.unitsManager.get("units/germancounteratlas.txt");
   //  TextureRegion close = textureAtlas.findRegion("close");
-    Window window;
+    public Window window;
     Stage stage;
     Label label;
     Table table;
@@ -74,6 +75,7 @@ public class WinCommand {
     boolean isDavout = false;
     Vector2 v2Position;
     TextButton textButtonOK;
+    private Image imageCommander;
 
     public WinCommand(Commander commander, float width, float height, Vector2 initPos){
         winWidth = width;
@@ -118,6 +120,7 @@ public class WinCommand {
         }
 
         window = new Window(title, windowStyle);
+        cancelHover();
         window.setTouchable(Touchable.enabled);
 
         textButtonStyle = GameMenu.instance.textButtonStyle;
@@ -170,56 +173,60 @@ public class WinCommand {
         Label.LabelStyle labelStyle = new Label.LabelStyle(Fonts.getFont24(), Color.WHITE);
         Label.LabelStyle labelStyle2 = new Label.LabelStyle(Fonts.getFont24(), Color.YELLOW);
 
-        Image image = new Image(commander.getTextureRegion());
-        image.setScaling(Scaling.fit);
-        image.setPosition(3,329);
+        imageCommander = new Image(commander.getTextureRegion());
+        imageCommander.setScaling(Scaling.fit);
+        imageCommander.setPosition(3,329);
         /**
-         *  image
+         *  imageCommander
          */
-        window.addActor(image);
+        window.addActor(imageCommander);
         /**
          *  commander narrative
          */
-        String key = commander.name+"command";
-        String str  = i18NBundle.format(key);
+ //       String key = commander.name+"command";
+ //       String str  = i18NBundle.format(key);
 
-        label = new Label(str, labelStyle);
-        label.setPosition(image.getX()+image.getWidth() +3 ,image.getY()+48);
-        window.addActor(label);
+    //    label.setPosition(imageCommander.getX()+imageCommander.getWidth() +3 ,imageCommander.getY()+48);
+    //    window.addActor(label);
 
-        str = i18NBundle.format("activate",commander.getCanCommand());
-        if (commander.name.contains("urat")){
+        String str = i18NBundle.format("activate",commander.getCanCommand());
+      /*  if (commander.name.contains("urat")){
             str += "\n"+i18NBundle.format("activatehorse",commander.getCanCommand()+1);
         }
         if (commander.name.contains("avout")){
             str += "\n"+i18NBundle.format("activatedavout");
-        }
+        }*/
         label = new Label(str, labelStyle2);
-        label.setPosition(image.getX()+image.getWidth() +3 ,image.getY());
-        window.addActor(label);
 
+        float x = imageCommander.getX()+imageCommander.getWidth() +3;
+        float y = imageCommander.getY()+120;
+        label.setPosition(x+ 30,y);
+        window.addActor(label);
+        y -=label.getHeight();
         /**
          *  line for available
          */
-
-        Label.LabelStyle labelStyleTitle = new Label.LabelStyle(FontFactory.instance.littleTitleFont, Color.LIGHT_GRAY);
-        String str2 = i18NBundle.format("available");
-        label = new Label(str2, labelStyleTitle);
-
-        label.setPosition(image.getX()+image.getWidth() -60 ,image.getY()-20);
-        yAvailable = image.getY()-20;
-        window.addActor(label);
-
         /**
          *  line for selectede
          */
-        str2 = i18NBundle.format("selected");
+        Label.LabelStyle labelStyleTitle = new Label.LabelStyle(FontFactory.instance.littleTitleFont, Color.LIGHT_GRAY);
+        String str2 = i18NBundle.format("selected");
         label = new Label(str2, labelStyleTitle);
-        label.setPosition(image.getX()+image.getWidth() +3 ,image.getY()-109);
-        ySelected = image.getY()-109;
+        label.setPosition(x+54,y);
+        ySelected = y + 4;
         window.addActor(label);
 
-        float x=10;
+
+
+        str2 = i18NBundle.format("available");
+        label = new Label(str2, labelStyleTitle);
+
+        label.setPosition(imageCommander.getX()+imageCommander.getWidth() -60 ,imageCommander.getY()-20);
+        yAvailable = imageCommander.getY()-20;
+        window.addActor(label);
+
+
+         x=10;
         displayInRange();
         displaySelected();
 
@@ -227,7 +234,7 @@ public class WinCommand {
     }
     ArrayList<Stack> arrSelectedStacks = new ArrayList<Stack>();
     private void displaySelected() {
-        float x = 10;
+        float x = imageCommander.getX()+imageCommander.getWidth() +15;
         /**
          *  how many officers can we fit
          */
@@ -241,7 +248,7 @@ public class WinCommand {
             //           counter.stack.setSize(60,60);
             counter.stack.setScale(.60f);
             counter.stack.setTransform(true);
-            counter.stack.setPosition(x,ySelected-65); //90
+            counter.stack.setPosition(x,ySelected-75); //90
             //          counter.getCounterStack().getStack().setSize(counterSize/.8f, counterSize/.8f);
             arrSelectedStacks.add(counter.stack);
             window.addActor(counter.stack);
@@ -483,7 +490,7 @@ public class WinCommand {
         });
         window.addActor(textButtonOK);
     }
-    void end(){
+    public void end(){
         if (textButtonOK != null){
             textButtonOK.remove();
         }
@@ -492,5 +499,20 @@ public class WinCommand {
         }
         window.remove();
 
+    }
+    void cancelHover(){
+        window.addListener(new ClickListener() {
+
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+               // Gdx.app.log("Counter ", "enter unit="+unit);
+                Borodino.instance.setInHover(true);
+            }
+            public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+              //  Gdx.app.log("Counter", "exit unit="+unit);
+                Borodino.instance.setInHover(false);
+
+            }
+
+        });
     }
 }

@@ -62,6 +62,10 @@ public class DoCommand implements Observer {
         arrCommanderProcessed.clear();
         arrCommanderOfficersThisPhase.clear();
         arrOfficerActivated.clear();
+        for (WinCommand winCommand : arrWinCommand) {
+            winCommand.window.remove();
+        }
+        arrWinCommand.clear();
         /**
          *  load all the Commanders for this part of Command after the commander set up by
          *  Determine Command
@@ -83,13 +87,13 @@ public class DoCommand implements Observer {
         /**
          *  no officers in range
          */
-        //test setup
-        arrCommandersThisPhase.clear();
+        //TEST SETUP TEST TEST
+        //arrCommandersThisPhase.clear();
         if (arrCommandersThisPhase.isEmpty()) {
 
             winWarning = new WinWarning(i18NBundle.get("commandphase"), i18NBundle.get("commandphasenoommander"));
             winWarning.addObserver(this);
-            //end();
+            return;
         }
         /*
          *  more than 1 then we need to choose
@@ -105,6 +109,7 @@ public class DoCommand implements Observer {
             BottomMenu.instance.setHelpData(title, message);
             needDivisions = true;
             needRandom = true;
+            BottomMenu.instance.addObserver(this);
             return;
         }
         if (arrCommandersThisPhase.size() == 1) {
@@ -190,6 +195,9 @@ public class DoCommand implements Observer {
     void end() {
         Gdx.app.log("DoCommand", "end");
         ArrayList<Unit> arrUnits = new ArrayList<Unit>();
+        for (WinCommand winCommand : arrWinCommand) {
+            winCommand.end();
+        }
         for (Officer officer : arrOfficerActivated) {
             arrUnits.addAll(officer.getUnitsAvailable());
             officer.setActivated(true);
@@ -197,6 +205,7 @@ public class DoCommand implements Observer {
         for (Unit unit : arrUnits) {
             unit.setActivated(true);
         }
+        BottomMenu.instance.deleteObserver(this);
         NextPhase.instance.endPhase();
 
     }
@@ -208,6 +217,8 @@ public class DoCommand implements Observer {
     @Override
     public void update(Observable observable, Object o) {
         ObserverPackage oB = (ObserverPackage) o;
+        Gdx.app.log("DoCommand", "update type=" + oB.type.toString());
+
         /**
          *  Hex touched
          */
@@ -215,8 +226,11 @@ public class DoCommand implements Observer {
             BottomMenu.instance.deleteObserver(this);
             goBack();
         }else{
-            if (oB.type == ObserverPackage.Type.OK){
-                winWarning.deleteObserver(this);
+            if (oB.type == ObserverPackage.Type.OK || oB.type == ObserverPackage.Type.NextPhase){
+                if (winWarning != null) {
+                    winWarning.deleteObserver(this);
+                }
+                BottomMenu.instance.deleteObserver(this);
                 end();
             }
         }

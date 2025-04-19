@@ -1,18 +1,25 @@
 counter.png
-size: 936, 1283
+size: 951, 1283
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-bagration
+alliedrandom
   rotate: false
   xy: 241, 944
   size: 121, 143
   orig: 121, 143
   offset: 0, 0
   index: -1
-barclay
+bagration
   rotate: false
   xy: 362, 944
+  size: 121, 143
+  orig: 121, 143
+  offset: 0, 0
+  index: -1
+barclay
+  rotate: false
+  xy: 483, 944
   size: 121, 143
   orig: 121, 143
   offset: 0, 0
@@ -334,7 +341,7 @@ counterwurtemburg
   index: -1
 davout
   rotate: false
-  xy: 483, 944
+  xy: 604, 944
   size: 121, 143
   orig: 121, 143
   offset: 0, 0
@@ -376,14 +383,14 @@ hilite
   index: -1
 hilitehex
   rotate: false
-  xy: 0, 1087
+  xy: 242, 1087
   size: 205, 178
   orig: 205, 178
   offset: 0, 0
   index: -1
 hilitehexmove3
   rotate: false
-  xy: 205, 1087
+  xy: 447, 1087
   size: 200, 178
   orig: 200, 178
   offset: 0, 0
@@ -404,7 +411,7 @@ infodown
   index: -1
 infoover
   rotate: false
-  xy: 597, 1087
+  xy: 839, 1087
   size: 112, 196
   orig: 112, 196
   offset: 0, 0
@@ -446,14 +453,14 @@ moved
   index: -1
 murat
   rotate: false
-  xy: 604, 944
+  xy: 725, 944
   size: 121, 143
   orig: 121, 143
   offset: 0, 0
   index: -1
 napoleon
   rotate: false
-  xy: 725, 944
+  xy: 0, 1087
   size: 121, 143
   orig: 121, 143
   offset: 0, 0
@@ -470,6 +477,13 @@ polishline2
   xy: 0, 826
   size: 117, 118
   orig: 117, 118
+  offset: 0, 0
+  index: -1
+randomrussian
+  rotate: false
+  xy: 121, 1087
+  size: 121, 143
+  orig: 121, 143
   offset: 0, 0
   index: -1
 russiancalvary
@@ -495,7 +509,7 @@ russianline2
   index: -1
 warning
   rotate: false
-  xy: 405, 1087
+  xy: 647, 1087
   size: 192, 192
   orig: 192, 192
   offset: 0, 0

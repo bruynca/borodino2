@@ -521,4 +521,11 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 	 public void setInSplash(boolean inSplash) {
 		 this.inSplash = inSplash;
 	 }
+	boolean isInHover= false;
+	 public void setInHover(boolean set) {
+		 isInHover = set;
+	 }
+	 public boolean isInHover() {
+		 return isInHover;
+	 }
  }

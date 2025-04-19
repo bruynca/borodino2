@@ -24,7 +24,6 @@ import java.util.Observable;
 import brunibeargames.Borodino;
 import brunibeargames.Fonts;
 import brunibeargames.GameMenuLoader;
-import brunibeargames.NextPhase;
 import brunibeargames.ObserverPackage;
 import brunibeargames.SplashScreen;
 import brunibeargames.UILoader;
@@ -114,7 +113,10 @@ public class BottomMenu extends Observable {
                 }
                 if (warningPhaseChange) {
                     if (isWarned) {
-                        NextPhase.instance.endPhase();
+                        setChanged();
+                        notifyObservers(new ObserverPackage(ObserverPackage.Type.NextPhase,null,0,0));
+                        // let update set the next phase
+                        //NextPhase.instance.endPhase();
                         isWarned = false;
                         return;
                     }else{

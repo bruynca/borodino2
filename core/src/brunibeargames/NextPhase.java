@@ -36,6 +36,7 @@ public class NextPhase {
     DetermineCommand determineCommand;
     DoCommand doCommand;
     DoCommandDivision   doCommandDivision;
+    DoCommandRandom   doCommandRandom;
 
     // DiceEffect diceEffect = new DiceEffect();
   //  Explosions explosions = new Explosions();
@@ -56,6 +57,7 @@ public class NextPhase {
         determineCommand = new DetermineCommand();
         doCommand = new DoCommand();
         doCommandDivision = new DoCommandDivision();
+        doCommandRandom = new DoCommandRandom();
         System.gc();
 
     }
@@ -178,6 +180,11 @@ public class NextPhase {
                      */
                     doCommand.instance.start();
                     break;
+                case DO_COMMAND_RANDOM:
+                    doCommandRandom.instance.start(initiative.getIsAllies());
+                    break;
+
+
                 case DO_COMMAND_DIVISION:
                     /*
                         Command based on arrays from DtermineCommand
@@ -217,7 +224,7 @@ public class NextPhase {
                 nextPhase();
             }
 
-        }, .065F);
+        }, .0065F);
    }
 
 
