@@ -22,7 +22,7 @@ public class CounterExplode {
 
     boolean isCancel = false;
     CounterExplode(Counter counter){
-        Gdx.app.log("CounterExplode ", "enter for All");
+      //  Gdx.app.log("CounterExplode ", "enter for All");
 
         this.counter = counter;
 

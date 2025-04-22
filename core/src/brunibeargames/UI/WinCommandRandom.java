@@ -68,7 +68,6 @@ public class WinCommandRandom {
    ArrayList<Stack> arrSelectedStacks = new ArrayList<Stack>();
    ArrayList<Stack> arrAvailableStacks = new ArrayList<Stack>();
    ArrayList<Officer> arrOfficerSelected = new ArrayList<>();
-   ArrayList<Officer> arrOfficerAvailable = new ArrayList<>();
    boolean isAllied = false;
    TextureAtlas textureAtlas;
    int maxOfficers;
@@ -80,6 +79,13 @@ public class WinCommandRandom {
         winHeight = height;
         v2Position = initPos;
         arrOfficers.addAll(arrOfficersIn);
+        ArrayList<Officer> arrRemove = new ArrayList<>();
+        for (Officer officer:arrOfficers) {
+            if (officer.getUnit().brigade.contains("avout")){
+                arrRemove.add(officer);
+            }
+        }
+        arrOfficers.removeAll(arrRemove);
         i18NBundle = GameMenuLoader.instance.localization;
         tooltipStyle = new TextTooltip.TextTooltipStyle();
         tooltipStyle.label = new Label.LabelStyle(FontFactory.instance.titleFont, Color.WHITE);
@@ -216,13 +222,13 @@ public class WinCommandRandom {
 
         float availableLength = winWidth;
         float counterLength = 60;
-        float offsett = availableLength/arrOfficerAvailable.size();
+        float offsett = availableLength/arrOfficers.size();
         if (offsett > 70){
             offsett = 70;
         }else{
             offsett -=5;
         }
-        for (final Officer officer:arrOfficerAvailable) {
+        for (final Officer officer:arrOfficers) {
             final Counter counter = new Counter(officer.getUnit(), Counter.TypeCounter.GUICounter);
             //           counter.stack.setSize(60,60);
             counter.stack.setScale(.60f);
@@ -266,7 +272,7 @@ public class WinCommandRandom {
                 }
 
                 boolean canCommand = false;
-                if (arrOfficerSelected.size() == maxOfficers){
+                if (arrOfficerSelected.size() < maxOfficers){
                     canCommand = true;
                 }
 
@@ -274,12 +280,14 @@ public class WinCommandRandom {
                 {
                     if (canCommand){
                         Gdx.app.log("Counter", "Left TouchUp unit=" + counter.getUnit().brigade);
-                        arrOfficerAvailable.remove(counter.getUnit().getOfficer());
+                        arrOfficers.remove(counter.getUnit().getOfficer());
                         arrOfficerSelected.add(counter.getUnit().getOfficer());
                         displaySelected();
                         displayInRange();
                         //DoCommand.instance.activateOfficer(counter.getUnit().getOfficer());
-                        addButtonOK();
+                        if (arrOfficerSelected.size() == maxOfficers) {
+                            addButtonOK();
+                        }
                     }
                 }
             }
@@ -338,30 +346,18 @@ public class WinCommandRandom {
                     }
                     //hiliteHex = new HiliteHex(arrHex, HiliteHex.TypeHilite.AI, null);
 
+                }else{
+                    arrOfficerSelected.remove(counter.getUnit().getOfficer());
+                    arrOfficers.add(counter.getUnit().getOfficer());
+                    displaySelected();
+                    displayInRange();
                 }
                 return true;
 
             }
 
-            private void displayInRange() {
-            }
 
-            void cancelHover() {
-                window.addListener(new ClickListener() {
 
-                    public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                        // Gdx.app.log("Counter ", "enter unit="+unit);
-                        Borodino.instance.setInHover(true);
-                    }
-
-                    public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                        //  Gdx.app.log("Counter", "exit unit="+unit);
-                        Borodino.instance.setInHover(false);
-
-                    }
-
-                });
-            }
         });
     }
     void cancelHover(){
@@ -405,6 +401,7 @@ public class WinCommandRandom {
             hiliteHex.remove();
         }
         window.remove();
+        Borodino.instance.setInHover(false);
 
     }
 
