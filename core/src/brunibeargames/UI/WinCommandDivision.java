@@ -450,7 +450,7 @@ public class WinCommandDivision {
         });
         window.addActor(textButtonOK);
     }
-    void end(){
+    public void end(){
         if (textButtonOK != null){
             textButtonOK.remove();
         }

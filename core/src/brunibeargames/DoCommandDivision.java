@@ -13,6 +13,7 @@ import brunibeargames.UI.WinCommandDivision;
 import brunibeargames.UI.WinWarning;
 import brunibeargames.Unit.Commander;
 import brunibeargames.Unit.Division;
+import brunibeargames.Unit.Unit;
 
 public class DoCommandDivision implements Observer {
     static public DoCommandDivision instance;
@@ -166,6 +167,11 @@ public class DoCommandDivision implements Observer {
         }
     }
 
+    /**
+     *  Allocate the units to the commander
+     * @param commander
+     * @param arrDivisionsSelected
+     */
     public void allocate(Commander commander, ArrayList<Commander.UnitsInDivision> arrDivisionsSelected) {
         CommanderDivision commanderDivision = new CommanderDivision(commander, arrDivisionsSelected);
         arrCommanderDivisions.addAll(arrDivisionsSelected);
@@ -181,10 +187,20 @@ public class DoCommandDivision implements Observer {
 
     void end() {
         Gdx.app.log("DoCommandDivision", "end");
+        for (WinCommandDivision winCommand : arrWinCommand) {
+            winCommand.end();
+        }
+
+        for (Commander.UnitsInDivision uID : arrCommanderDivisions) {
+            for (Unit unit:uID.arrUnit) {
+                unit.setActivated(true);
+            }
+        }
         BottomMenu.instance.deleteObserver(this);
         NextPhase.instance.endPhase();
 
     }
+
 
     public void goBack() {
         start();

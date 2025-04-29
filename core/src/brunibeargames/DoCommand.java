@@ -211,6 +211,9 @@ public class DoCommand implements Observer {
     }
 
     public void goBack() {
+        for (WinCommand winCommand : arrWinCommand) {
+            winCommand.end();
+        }
         start();
     }
 

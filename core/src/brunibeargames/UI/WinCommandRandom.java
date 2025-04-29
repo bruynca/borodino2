@@ -41,7 +41,7 @@ import brunibeargames.Unit.Officer;
 import brunibeargames.Unit.Unit;
 import brunibeargames.WinModal;
 
-public class WinCommandRandom {
+public class WinCommandRandom{
     private  TextButton.TextButtonStyle textButtonStyle;
     //    TextureAtlas textureAtlas = SplashScreen.instance.unitsManager.get("units/germancounteratlas.txt");
     //  TextureRegion close = textureAtlas.findRegion("close");
@@ -404,6 +404,7 @@ public class WinCommandRandom {
         Borodino.instance.setInHover(false);
 
     }
+
 
 
 }
