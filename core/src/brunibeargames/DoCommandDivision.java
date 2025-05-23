@@ -174,6 +174,7 @@ public class DoCommandDivision implements Observer {
      */
     public void allocate(Commander commander, ArrayList<Commander.UnitsInDivision> arrDivisionsSelected) {
         CommanderDivision commanderDivision = new CommanderDivision(commander, arrDivisionsSelected);
+        removeWindow(commander);
         arrCommanderDivisions.addAll(arrDivisionsSelected);
         arrCommanderProcessed.add(commander);
         arrCommandersThisPhase.remove(commander);
@@ -181,8 +182,41 @@ public class DoCommandDivision implements Observer {
             BottomMenu.instance.setWarningPhaseChange(false);
             BottomMenu.instance.setEnablePhaseChange(true);
             end();
+            return;
+        }
+        /**
+         *  check if we have more divisions to be selected for commanders this phase
+         * wait for a test case
+         */
+        boolean hasMoreDivisions = false;
+        for (WinCommandDivision win:arrWinCommand){
+            if (!win.commander.getDivisionPossibleAvailable().isEmpty()){
+                hasMoreDivisions = true;
+                break;
+            }
+        }
+        if (!hasMoreDivisions){
+            BottomMenu.instance.setWarningPhaseChange(false);
+            BottomMenu.instance.setEnablePhaseChange(true);
+            end();
+            return;
         }
 
+
+    }
+
+    private void removeWindow(Commander commander) {
+        Gdx.app.log("DoCommandDivision", "removeWindow");
+        WinCommandDivision winRemove = null;
+        for (WinCommandDivision winCommand : arrWinCommand) {
+            if (winCommand.commander == commander) {
+                winRemove = winCommand;
+                break;
+            }
+        }
+        if (winRemove != null) {
+            arrWinCommand.remove(winRemove);
+        }
     }
 
     void end() {

@@ -165,6 +165,10 @@ public class DoCommand implements Observer {
         }
     }
 
+    /**
+     *  add an Officer back to available pool
+     * @param officer
+     */
     public void toPoolOfficer(Officer officer) {
         for (WinCommand winCommand : arrWinCommand) {
             arrOfficerActivated.remove(officer);
@@ -184,10 +188,31 @@ public class DoCommand implements Observer {
         arrCommanderOfficersThisPhase.add(commanderOfficers);
         arrCommanderProcessed.add(commander);
         arrCommandersThisPhase.remove(commander);
+        /**
+         *
+         */
         if (arrCommandersThisPhase.isEmpty()) {
             BottomMenu.instance.setWarningPhaseChange(false);
             BottomMenu.instance.setEnablePhaseChange(true);
             end();
+            return;
+        }
+        /**
+         *  Commander to process but the dont have any officers
+         *
+         */
+        boolean noMoreOfficers = true;
+        for (WinCommand winCommand : arrWinCommand) {
+            if (!winCommand.arrOfficerAvailable.isEmpty()) {
+                noMoreOfficers = false;
+                break;
+            }
+        }
+        if (noMoreOfficers){
+            BottomMenu.instance.setWarningPhaseChange(false);
+            BottomMenu.instance.setEnablePhaseChange(true);
+            end();
+            return;
         }
 
     }
@@ -196,7 +221,10 @@ public class DoCommand implements Observer {
         Gdx.app.log("DoCommand", "end");
         ArrayList<Unit> arrUnits = new ArrayList<Unit>();
         for (WinCommand winCommand : arrWinCommand) {
-            winCommand.end();
+            /**
+             *  casusing update array exceptio
+             */
+            winCommand.endNoRemove();
         }
         for (Officer officer : arrOfficerActivated) {
             arrUnits.addAll(officer.getUnitsAvailable());
@@ -238,6 +266,11 @@ public class DoCommand implements Observer {
             }
         }
         return;
+    }
+
+    public void removeMe(WinCommand winCommand) {
+        Gdx.app.log("DoCommand", "removeMe="+winCommand.commander);
+        arrWinCommand.remove(winCommand);
     }
 }
     class CommanderOfficers{

@@ -64,7 +64,7 @@ public class WinCommand {
     private EventListener hitOK;
     WinModal winModal;
     public Commander commander;
-    ArrayList<Officer> arrOfficerAvailable = new ArrayList<>();
+    public ArrayList<Officer> arrOfficerAvailable = new ArrayList<>();
     ArrayList<Officer> arrOfficerAvailableOriginal = new ArrayList<>();
     ArrayList<Officer> arrOfficerSelected = new ArrayList<>();
     ArrayList<Counter> arrCounters = new ArrayList<>();
@@ -360,7 +360,11 @@ public class WinCommand {
                         displaySelected();
                         displayInRange();
                         DoCommand.instance.activateOfficer(counter.getUnit().getOfficer());
-                        addButtonOK();
+                        if (arrOfficerSelected.size() == commander.getCanCommand()||
+                                commander.name.contains("avout")||
+                                arrOfficerAvailable.isEmpty()){
+                            addButtonOK();
+                        }
                     }
                 }
             }
@@ -498,8 +502,23 @@ public class WinCommand {
             hiliteHex.remove();
         }
         window.remove();
+        DoCommand.instance.removeMe(this);
 
     }
+
+    /**
+     * Noremove so we dont get update to array while we are in a for loop
+     */
+    public void endNoRemove() {
+        if (textButtonOK != null){
+            textButtonOK.remove();
+        }
+        if (hiliteHex != null) {
+            hiliteHex.remove();
+        }
+        window.remove();
+    }
+
     void cancelHover(){
         window.addListener(new ClickListener() {
 
@@ -515,4 +534,5 @@ public class WinCommand {
 
         });
     }
-}
+
+ }

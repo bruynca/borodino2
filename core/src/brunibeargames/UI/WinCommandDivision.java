@@ -359,7 +359,8 @@ public class WinCommandDivision {
                     displaySelected();
                     displayInRange();
                     DoCommandDivision.instance.activateDivision(uiDSelected);
-                    if (arrDivisionsSelected.size() == commander.getCanCommand()){
+                    if (arrDivisionsSelected.size() == commander.getCanCommand()||
+                         commander.name.contains("avout")){
                         addButtonOK();
                         return;
                     }
@@ -458,6 +459,7 @@ public class WinCommandDivision {
             hiliteHex.remove();
         }
         window.remove();
+
 
     }
 
