@@ -37,6 +37,7 @@ public class NextPhase {
     DoCommand doCommand;
     DoCommandDivision   doCommandDivision;
     DoCommandRandom   doCommandRandom;
+    DiceEffect diceEffect;
 
     // DiceEffect diceEffect = new DiceEffect();
   //  Explosions explosions = new Explosions();
@@ -58,6 +59,7 @@ public class NextPhase {
         doCommand = new DoCommand();
         doCommandDivision = new DoCommandDivision();
         doCommandRandom = new DoCommandRandom();
+        diceEffect = new DiceEffect();
         System.gc();
 
     }

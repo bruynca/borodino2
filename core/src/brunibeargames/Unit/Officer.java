@@ -75,9 +75,17 @@ public class Officer {
 
     public void setActivated(boolean activated) {
         isActivated = activated;
+        if (isActivated) {
+            unit.getMapCounter().getCounterStack().activate();
+        }else{
+            unit.getMapCounter().getCounterStack().removeActivate();
+        }
     }
     public boolean getisActivated() {
         return isActivated;
     }
 
+    public String getName() {
+        return unit.brigade;
+    }
 }

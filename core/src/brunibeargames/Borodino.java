@@ -225,15 +225,15 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 			}
 		} */
 		checkKeyPress();
-		if (ScreenGame.instance != null) {
+		if (Screen.instance != null) {
 			if (isUpdateExplosion || isScroll || isUpdateDice || isBridgeExplosion || isUpdateShell) {
-				batch.setProjectionMatrix(ScreenGame.instance.cameraBackGround.combined);
+				batch.setProjectionMatrix(Screen.instance.cameraBackGround.combined);
 				batch.begin();
 				if (isUpdateExplosion) {
 //					Explosions.instance.update(batch);
 				}
 				if (isUpdateDice) { // changes viewpoint
-//					DiceEffect.instance.update(batch);
+					DiceEffect.instance.update(batch);
 				}
 				if (isBridgeExplosion) {
 //					BridgeExplosion.instance.update(batch);

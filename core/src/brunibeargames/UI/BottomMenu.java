@@ -61,6 +61,8 @@ public class BottomMenu extends Observable {
 
 
     public BottomMenu() {
+        Gdx.app.log("BottomMenuDoCommandRandom", "end -start");
+
         stage = Borodino.instance.guiStage;
         instance = this;
         textureAtlas = SplashScreen.instance.unitsManager.get("counter/counter.txt");
@@ -107,6 +109,7 @@ public class BottomMenu extends Observable {
         nextPhase.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.log("BottomMenue", "Next Phase Clicked");
 
                 if (!enablePhaseChange) {
                     return;

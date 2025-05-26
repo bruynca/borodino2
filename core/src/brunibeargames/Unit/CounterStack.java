@@ -27,6 +27,7 @@ public class CounterStack {
     Label labelPoint2;
     Image hilite;
     Image moved;
+    Image activated;
     Image backGround;
     Image corp;
     Image step;
@@ -59,8 +60,8 @@ public class CounterStack {
     static TextureRegion    westphaliancalvary;
     static TextureRegion    westphalianline;
     static TextureRegion movepic;
-    static TextureRegion hilitePic
-            ;
+    static TextureRegion hilitePic;
+    static TextureRegion activatepic;
 
 
     boolean isHilited;
@@ -144,6 +145,7 @@ public class CounterStack {
         counterwurtenburg = textureAtlas.findRegion("counterwurtemburg");
         movepic = textureAtlas.findRegion("moved");
         hilitePic = textureAtlas.findRegion("hilite");
+        activatepic = textureAtlas.findRegion("activated");
 
         labelStyleName
                 = new Label.LabelStyle(FontFactory.instance.largeFont, Color.RED);
@@ -646,6 +648,18 @@ public class CounterStack {
         arrShaded.add(this);
         removeHilite(); // just in case
         isShaded = true;
+    }
+    public void activate(){
+        if (activated == null) {
+            activated = new Image(activatepic);
+        }
+        stack.add(activated);
+    }
+    public void removeActivate(){
+        if (activated == null) {
+            activated = new Image(activatepic);
+        }
+        stack.removeActor(activated);
     }
 
     /**

@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
@@ -26,6 +27,7 @@ import com.badlogic.gdx.utils.Scaling;
 import java.util.ArrayList;
 
 import brunibeargames.Borodino;
+import brunibeargames.DoCommandRandom;
 import brunibeargames.FontFactory;
 import brunibeargames.Fonts;
 import brunibeargames.GameMenu;
@@ -64,9 +66,10 @@ public class WinCommandRandom{
     private Image imageRandom;
     ArrayList<Counter> arrCounters = new ArrayList<>();
 
-   ArrayList<Officer> arrOfficers = new ArrayList<>();
+   ArrayList<Officer> arrAvailableOfficers = new ArrayList<>();
    ArrayList<Stack> arrSelectedStacks = new ArrayList<Stack>();
-   ArrayList<Stack> arrAvailableStacks = new ArrayList<Stack>();
+    ArrayList<Counter> arrSelectedCounters = new ArrayList<Counter>();
+    ArrayList<Stack> arrAvailableStacks = new ArrayList<Stack>();
    ArrayList<Officer> arrOfficerSelected = new ArrayList<>();
    boolean isAllied = false;
    TextureAtlas textureAtlas;
@@ -78,14 +81,14 @@ public class WinCommandRandom{
         winWidth = width;
         winHeight = height;
         v2Position = initPos;
-        arrOfficers.addAll(arrOfficersIn);
+        arrAvailableOfficers.addAll(arrOfficersIn);
         ArrayList<Officer> arrRemove = new ArrayList<>();
-        for (Officer officer:arrOfficers) {
+        for (Officer officer: arrAvailableOfficers) {
             if (officer.getUnit().brigade.contains("avout")){
                 arrRemove.add(officer);
             }
         }
-        arrOfficers.removeAll(arrRemove);
+        arrAvailableOfficers.removeAll(arrRemove);
         i18NBundle = GameMenuLoader.instance.localization;
         tooltipStyle = new TextTooltip.TextTooltipStyle();
         tooltipStyle.label = new Label.LabelStyle(FontFactory.instance.titleFont, Color.WHITE);
@@ -99,7 +102,7 @@ public class WinCommandRandom{
          * window format
          */
         Window.WindowStyle windowStyle;
-        if (arrOfficers.get(0).isAllied) {
+        if (arrAvailableOfficers.get(0).isAllied) {
             isAllied = true;
             windowStyle = new Window.WindowStyle(FontFactory.instance.titleFont, Color.WHITE, new NinePatchDrawable(np));
             maxOfficers = GameSetup.instance.getRandomCommandersFrench();
@@ -167,20 +170,20 @@ public class WinCommandRandom{
         //    label.setPosition(imageCommander.getX()+imageCommander.getWidth() +3 ,imageCommander.getY()+48);
         //    window.addActor(label);
 
-        String str = i18NBundle.format("activaterandom");
+//        String str = i18NBundle.format("activaterandom");
       /*  if (commander.name.contains("urat")){
             str += "\n"+i18NBundle.format("activatehorse",commander.getCanCommand()+1);
         }
         if (commander.name.contains("avout")){
             str += "\n"+i18NBundle.format("activatedavout");
         }*/
-        label = new Label(str, labelStyle2);
+        //label = new Label(str, labelStyle2);
 
         float x = imageRandom.getX()+imageRandom.getWidth() +3;
         float y = imageRandom.getY()+120;
-        label.setPosition(x+ 30,y);
-        window.addActor(label);
-        y -=label.getHeight();
+        //label.setPosition(x+ 30,y);
+        //window.addActor(label);
+        //y -=label.getHeight();
         /**
          *  line for available
          */
@@ -188,7 +191,7 @@ public class WinCommandRandom{
          *  line for selectede
          */
         Label.LabelStyle labelStyleTitle = new Label.LabelStyle(FontFactory.instance.littleTitleFont, Color.LIGHT_GRAY);
-        String str2 = i18NBundle.format("selected");
+        String str2 = i18NBundle.format("inpool");
         label = new Label(str2, labelStyleTitle);
         label.setPosition(x+54,y);
         ySelected = y + 4;
@@ -196,7 +199,7 @@ public class WinCommandRandom{
 
 
 
-        str2 = i18NBundle.format("available");
+        str2 = i18NBundle.format("eligible");
         label = new Label(str2, labelStyleTitle);
 
         label.setPosition(imageRandom.getX()+imageRandom.getWidth() -60 ,imageRandom.getY()-20);
@@ -222,13 +225,13 @@ public class WinCommandRandom{
 
         float availableLength = winWidth;
         float counterLength = 60;
-        float offsett = availableLength/arrOfficers.size();
+        float offsett = availableLength/ arrAvailableOfficers.size();
         if (offsett > 70){
             offsett = 70;
         }else{
             offsett -=5;
         }
-        for (final Officer officer:arrOfficers) {
+        for (final Officer officer: arrAvailableOfficers) {
             final Counter counter = new Counter(officer.getUnit(), Counter.TypeCounter.GUICounter);
             //           counter.stack.setSize(60,60);
             counter.stack.setScale(.60f);
@@ -280,12 +283,13 @@ public class WinCommandRandom{
                 {
                     if (canCommand){
                         Gdx.app.log("Counter", "Left TouchUp unit=" + counter.getUnit().brigade);
-                        arrOfficers.remove(counter.getUnit().getOfficer());
+                        arrAvailableOfficers.remove(counter.getUnit().getOfficer());
                         arrOfficerSelected.add(counter.getUnit().getOfficer());
                         displaySelected();
                         displayInRange();
                         //DoCommand.instance.activateOfficer(counter.getUnit().getOfficer());
-                        if (arrOfficerSelected.size() == maxOfficers) {
+                        if (arrOfficerSelected.size() == maxOfficers ||
+                        arrAvailableOfficers.isEmpty()) {
                             addButtonOK();
                         }
                     }
@@ -306,6 +310,7 @@ public class WinCommandRandom{
             stack.remove();
         }
         arrSelectedStacks.clear();
+        arrSelectedCounters.clear();
         for (final Officer officer:arrOfficerSelected) {
             final Counter counter = new Counter(officer.getUnit(), Counter.TypeCounter.GUICounter);
             //           counter.stack.setSize(60,60);
@@ -314,6 +319,7 @@ public class WinCommandRandom{
             counter.stack.setPosition(x,ySelected-75); //90
             //          counter.getCounterStack().getStack().setSize(counterSize/.8f, counterSize/.8f);
             arrSelectedStacks.add(counter.stack);
+            arrSelectedCounters.add(counter);
             window.addActor(counter.stack);
             x +=offsett;
             addListnerForRemove(counter);
@@ -348,7 +354,7 @@ public class WinCommandRandom{
 
                 }else{
                     arrOfficerSelected.remove(counter.getUnit().getOfficer());
-                    arrOfficers.add(counter.getUnit().getOfficer());
+                    arrAvailableOfficers.add(counter.getUnit().getOfficer());
                     displaySelected();
                     displayInRange();
                 }
@@ -376,7 +382,7 @@ public class WinCommandRandom{
         });
     }
     public void addButtonOK() {
-        textButtonOK = new TextButton(i18NBundle.format("ok"), textButtonStyle);
+        textButtonOK = new TextButton(i18NBundle.format("toactivate"), textButtonStyle);
         textButtonOK.setSize(100, 60);
         textButtonOK.setPosition((window.getWidth() - textButtonOK.getWidth()) / 2, 30);
         textButtonOK.addListener(new ClickListener() {
@@ -384,16 +390,19 @@ public class WinCommandRandom{
             public void clicked(InputEvent event, float x, float y) {
                 if (!event.getType().equals("touchUp")) {
                     //DoCommand.instance.allocate(commander,arrOfficerSelected);
+                    BottomMenu.instance.setEnablePhaseChange(false);
                     GamePreferences.setWindowLocation("WinRandom"+isAllied, (int) window.getX(), (int) window.getY());
-                    end();
-
+                    DoCommandRandom.instance.doRandom(arrOfficerSelected);
                 }
 
             }
         });
         window.addActor(textButtonOK);
     }
-    void end(){
+
+
+
+    public void end(){
         if (textButtonOK != null){
             textButtonOK.remove();
         }
@@ -401,12 +410,53 @@ public class WinCommandRandom{
             hiliteHex.remove();
         }
         window.remove();
+        DoCommandRandom.instance.end();
         Borodino.instance.setInHover(false);
 
     }
 
+    /**
+     * depending on isActivated hilite or disappear
+     *
+     * @param officer
+     */
+    public void displayEffect(Officer officer) {
+        Counter counter1 = null;
+        for (Counter counter:arrSelectedCounters) {
+            if (counter.getUnit().getOfficer() == officer) {
+                counter1 = counter;
+            }
+        }
+        if (counter1 != null) {
+            if (!officer.getisActivated()){
+                Counter finalCounter = counter1;
+                counter1.stack.addAction(Actions.sequence(
+                        Actions.scaleTo(0, 0, 0.5f), // Shrink to 0 scale in 0.5 seconds
+                        Actions.run(new Runnable() { // Here's the key: Actions.run()
+                            @Override
+                            public void run() {
+                                removeConter(finalCounter, officer); // Call our defined method
+                            }
+                        })));
+            } else {
+                counter1.getCounterStack().hilite();
+                return;
+                //   hiliteHex = new HiliteHex(officer.getUnit().getHexOccupy(), HiliteHex.TypeHilite.AI, null);
+            }
+        }
+    }
 
+    private void removeConter(Counter counter1, Officer officer) {
+        arrOfficerSelected.remove(counter1.getUnit().getOfficer());
+        arrSelectedCounters.remove(counter1);
+        displaySelected();
+        displayInRange();
 
+    }
+
+    public void removeButton() {
+        textButtonOK.remove();
+    }
 }
 
 

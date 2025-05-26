@@ -24,3 +24,9 @@ Turn 	0=AM Night
 
 Rules for March Mode - way has to be clear for moving the unit. Must stop before moving next to
 an enemy or allied unit.
+
+Assume that Reinforcements are in Command
+
+
+Check that we can add update of the window position On MOve
+

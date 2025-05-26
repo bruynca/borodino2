@@ -24,14 +24,20 @@ public class WinText {
     float width = Gdx.graphics.getWidth();
     Label labelTitle;
 
+    /**
+     * Wintext will fit to largest string
+     * @param title
+     * @param message
+     */
     public WinText(String title,String message){
+
         i18NBundle = GameMenuLoader.instance.localization;
         window = new VisWindow("Warning");
         window.setVisible(false);
         labelTitle = window.getTitleLabel();
         labelTitle.getStyle().font.setColor(Color.YELLOW);
-        float height = Gdx.graphics.getHeight();
-        float width = Gdx.graphics.getWidth();
+//        float height = Gdx.graphics.getHeight();
+//        float width = Gdx.graphics.getWidth();
 //        window.setHeight(height -40);
 //        window.setWidth(height - 40);
       //  window.setHeight(600);

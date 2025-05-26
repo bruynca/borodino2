@@ -1203,6 +1203,11 @@ public class Unit {
 
     public void setActivated(boolean activated) {
         isActivated = activated;
+		if (isActivated) {
+			counter.getCounterStack().activate();
+		}else{
+			counter.getCounterStack().removeActivate();
+		}
     }
 }
 
