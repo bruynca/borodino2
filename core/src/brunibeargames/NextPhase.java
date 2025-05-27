@@ -38,6 +38,7 @@ public class NextPhase {
     DoCommandDivision   doCommandDivision;
     DoCommandRandom   doCommandRandom;
     DiceEffect diceEffect;
+    Move move;
 
     // DiceEffect diceEffect = new DiceEffect();
   //  Explosions explosions = new Explosions();
@@ -60,6 +61,7 @@ public class NextPhase {
         doCommandDivision = new DoCommandDivision();
         doCommandRandom = new DoCommandRandom();
         diceEffect = new DiceEffect();
+        move = new Move();
         System.gc();
 
     }
@@ -194,7 +196,7 @@ public class NextPhase {
                     doCommandDivision.instance.start();
                     break;
                 case MOVEMENT:
-
+                    move.doMovePhase(initiative.getIsAllies());
                      break;
                 default:
                     Gdx.app.log("NexPhase", "Invalid Phase");

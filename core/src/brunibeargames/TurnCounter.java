@@ -44,7 +44,7 @@ public class TurnCounter {
         NinePatch np = new NinePatch(UILoader.instance.topMenu.asset.get("background"), 12, 12, 12, 12);
         Image backgroundImage = new Image();
         backgroundImage.setDrawable(new NinePatchDrawable(np));
-        backgroundImage.setSize(400, 80);
+        backgroundImage.setSize(450, 80);
         backgroundImage.setPosition(Gdx.graphics.getWidth()/2 - backgroundImage.getWidth() / 2, Gdx.graphics.getHeight() - backgroundImage.getHeight());
         v2Position = new Vector2((Gdx.graphics.getWidth()/2 - backgroundImage.getWidth() / 2) + backgroundImage.getWidth(),Gdx.graphics.getHeight() - backgroundImage.getHeight());
         group.addActor(backgroundImage);
@@ -89,7 +89,7 @@ public class TurnCounter {
 
         Image logo2 = new Image();
         logo2.setDrawable(new TextureRegionDrawable(new TextureRegion(UILoader.instance.topMenu.asset.get("russianeagle"))));
-        logo2.setPosition(backgroundImage.getX() + 400 - 10 - 60 , backgroundImage.getY() + 10);
+        logo2.setPosition(backgroundImage.getX() + 450 - 10 - 60 , backgroundImage.getY() + 10);
         logo2.setSize(60, 60);
         group.addActor(logo2);
 

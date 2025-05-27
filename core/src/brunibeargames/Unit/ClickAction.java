@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import brunibeargames.AIUtil;
 import brunibeargames.Hex;
 import brunibeargames.HiliteHex;
 import brunibeargames.ObserverPackage;
@@ -103,6 +104,8 @@ public class ClickAction implements Observer {
         switch(typeAction){
 
             case Move:
+                Gdx.app.log("ClickAction", "Move on unit" + unit);
+                moveSetup(unit);
             case Limber:
             case CombatClick:
               break;
@@ -168,9 +171,6 @@ public class ClickAction implements Observer {
     private void moveUnit(Unit unit, Hex hex, boolean isAI){
 
     }
-    public void moveSetup(Unit unit){
-        unit.getMapCounter().counterStack.hilite();
-    }
     public static int getClickActionsLeft(){
         return arrClickAction.size();
     }
@@ -193,6 +193,21 @@ public class ClickAction implements Observer {
             EventConfirm.instance.deleteObserver(this);
             return;
         }
+    }
+    public void moveSetup(Unit unit){
+        unit.getMapCounter().counterStack.hilite();
+
+        UnitMove unitMove;
+        unitMove = new UnitMove(unit,unit.getCurrentMovement(),true,true,0);
+
+        ArrayList<Hex> arrHexMove = new ArrayList<>();
+        arrHexMove.addAll(unitMove.getMovePossible());
+        AIUtil.RemoveDuplicateHex(arrHexMove);
+
+        HiliteHex.TypeHilite type = HiliteHex.TypeHilite.Move;
+
+        hiliteHex = new HiliteHex(arrHexMove, type, this);
+
     }
 
     public enum TypeAction {Move, Limber, CombatClick,

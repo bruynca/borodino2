@@ -1209,6 +1209,11 @@ public class Unit {
 			counter.getCounterStack().removeActivate();
 		}
     }
+
+	public int getCurrentMovement() {
+		return currentMoveFactor;
+
+	}
 }
 
 

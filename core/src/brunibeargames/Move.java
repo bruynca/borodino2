@@ -25,14 +25,6 @@ public class Move extends Observable {
     public Move(){
         instance = this;
         i18NBundle= GameMenuLoader.instance.localization;
-        for (Unit unit:Unit.getAllAllied()){
-            Hex hex = Hex.hexTable[unit.getEntryX()][unit.getEntryY()];
-            if (unit.entryNum > 1){
-                arrEntryPoints.add(hex);
-            }
-
-        }
-        AIUtil.RemoveDuplicateHex(arrEntryPoints);
 
     }
 
@@ -46,18 +38,16 @@ public class Move extends Observable {
         this.isAllies = isAllies;
         this.isAI = isAI;
 
-        doMovePhase(isAllies, isAI, isExplotation);
+        doMovePhase(isAllies);
     }
     /**
      * Set all on boards unit counters to receive move requests
      *
      * @param isAllies
-     * @param isAI
-     */
-    public void doMovePhase(boolean isAllies, boolean isAI, boolean isExplotation) {
+     * */
+    public void doMovePhase(boolean isAllies) {
         Gdx.app.log("Move", "doMovePhase allies=" + isAllies);
         this.isAllies = isAllies;
-        arrUnitsInMoa.clear();
         ArrayList<Unit> arrUnitToMoveWork;
         if (isAllies) {
             arrUnitToMoveWork = Unit.getOnBoardAllied();
@@ -68,42 +58,17 @@ public class Move extends Observable {
          * Check Turn last shade
          */
         int turn = NextPhase.instance.getTurn();
-        int phase =NextPhase.instance.getPhase();
-  /*      if (phase == Phase.GERMAN_EXPLOTATION.ordinal() || phase == Phase.ALLIED_EXPLOTATION.ordinal()){
-            isExplotation = true;
-        }*/
-        if (!isAllies) {
-            if (isExplotation) {
-                TurnCounter.instance.updateText(i18NBundle.get("gexploit"));
-            } else {
-                TurnCounter.instance.updateText(i18NBundle.get("gmovephase"));
+        TurnCounter.instance.updateText(i18NBundle.get("move"));
 
-            }
-        }else {
-            if (isExplotation) {
-                TurnCounter.instance.updateText(i18NBundle.get("aexploit"));
-            } else {
-                TurnCounter.instance.updateText(i18NBundle.get("amovephase"));
-
-            }
-        }
-        ArrayList<Unit> arrUnitToDisplay = new ArrayList<>()  ;
+        ArrayList<Unit> arrUnitToDisplay = new ArrayList<>();
+        /**
+         *  for restarted games logic   not much at present
+         */
         for (Unit unit : arrUnitToMoveWork) {
+            arrUnitToDisplay.add(unit);
 
-            if (unit.getMovedLast() < turn) { // on load only units that have not shade
-               if (((isExplotation && unit.getCurrentMoveFactor() >= 8 && !unit.hasAttackedThisTurn && !unit.hasBeenAttackedThisTurn)) || !isExplotation) {
-                   unit.getMapCounter().getCounterStack().removeShade();
-                   if (!isAI) {
-                       arrUnitToDisplay.add(unit) ;
-                   }
-               }else{
-                   unit.getMapCounter().getCounterStack().shade();
-               }
-            } else {
-                unit.getMapCounter().getCounterStack().shade();
-            }
         }
-        if (arrUnitToDisplay.size() > 0) {
+        if (!arrUnitToDisplay.isEmpty()) {
             WinModal.instance.set();
             scheduleMoveHilite(arrUnitToDisplay);
         }else{
@@ -125,7 +90,7 @@ public class Move extends Observable {
                                arrUnitToMove.remove(unit);
                                if (arrUnitToMove.size() == 0 ){
                                    WinModal.instance.release();
-                                   anyMovesLeft(isAI);
+                                   //anyMovesLeft(isAI);
                                    return;
                                }else{
                                    scheduleMoveHilite(arrUnitToMove);

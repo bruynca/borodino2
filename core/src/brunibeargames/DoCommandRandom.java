@@ -76,6 +76,8 @@ public class DoCommandRandom implements Observer {
         float x = (Gdx.graphics.getWidth() - 400f) / 2f;
         Vector2 pos = new Vector2(x, y);
         BottomMenu.instance.addObserver(this);
+        TurnCounter.instance.updateText(i18NBundle.get("commandrandomphase"));
+
 
         winCommandRandom = new WinCommandRandom(arrAllOfficersPossible,400,500,pos);
 
