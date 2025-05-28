@@ -322,6 +322,14 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		Hex hex = null;
+		if (Hex.hexTable != null) {
+			hex = Hex.GetHexFromScreenPosition(screenX, screenY);
+//			Gdx.app.log("Mouse Event", "Hex clicked=" + hex.xTable+ " y-"+hex.yTable);
+			if (hex != null) {
+				fireHex(hex,button,screenX,screenY);
+			}
+		}
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -392,7 +400,7 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 //		mapStage.addActor(image);
 //		WinDebug.instance.doShowStream(hex);
 //		WinDebug.instance.doRiver(hex);
-		if (isWriteTerrain)
+/*		if (isWriteTerrain)
 		{
 			
 			TerrainWriter(hex);
@@ -411,16 +419,43 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 				unitPlace.getMapCounter().place(hex);
 
 				unitPlace = null;
-			}
-
-		}
-
-
-
-
-		 
-		return true;
+			} */
+			return false;
 	}
+	 public void fireHex(Hex hex, int button, int screenX, int screenY) {
+		 /**
+		  * this needs to be reworked as dragging happens all the time
+		  * and so we need to hit The MOA icon 2 times
+		  if (isHandleHexFire && isDragged){
+		  isHandleHexFire = false;
+		  isDragged = false;
+		  return;
+		  } */
+		 if (hex != null) {
+
+			 Gdx.app.log("ardenne", "Hex Fired hex=" + hex);
+		 }else{
+			 Gdx.app.log("ardenne", "Hex Fired Null");
+
+		 }
+
+		 if (hex != null) {
+			 if (button == Input.Buttons.LEFT) {
+				 setChanged();
+				 if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+					 notifyObservers(new ObserverPackage(ObserverPackage.Type.TouchUpShift, hex, screenX, screenY));
+				 } else {
+					 notifyObservers(new ObserverPackage(ObserverPackage.Type.TouchUp, hex, screenX, screenY));
+				 }
+			 }
+			 if (button == Input.Buttons.MIDDLE) {
+				 setChanged();
+				 notifyObservers(new ObserverPackage(ObserverPackage.Type.TouchUpMiddle, hex, screenX, screenY));
+			 }
+			 setChanged();
+			 //return true;
+		 }
+	 }
 	public Unit unitPlace= null;
 	boolean isFirstTime = true;
 	FileHandle logger;
