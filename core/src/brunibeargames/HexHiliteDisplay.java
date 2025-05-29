@@ -54,17 +54,17 @@ public class HexHiliteDisplay {
      //   label2.setPosition(pos.x, pos.y+50);
 
 
-        pos.x -= 48;  //-48
-        pos.y -= 18; //22
+        pos.x -= 36;  //-48
+        pos.y -= 15; //22
         float xdiv = hex.xTable;
  //       float adjustx = (32/xdiv) * .3125f;
-        if (xdiv < 10) {
+ /*       if (xdiv < 10) {
             pos.x -= 10;
         }else if (xdiv < 20){
             pos.x -=6;
         }else if (xdiv < 30){
         pos.x -=3;
-        }
+        } */
 
         if (type == HiliteHex.TypeHilite.ReinforceDisplay){
             image = new Image(backHiliteReinDisplay);

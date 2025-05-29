@@ -346,6 +346,13 @@ public class SplashScreen {
         soundsManager.load("sounds/mortar.mp3", Sound.class);
         soundsManager.load("sounds/tada.mp3", Sound.class);
         unitsManager.load("counter/counter.txt", TextureAtlas.class);
+        // assetManager.load("your_graphic.png", Texture.class, new TextureLoader.TextureParameter() {{
+//     format = Pixmap.Format.RGBA8888;
+//     genMipMaps = true; // Generate mipmaps if needed for scaling
+//     minFilter = Texture.TextureFilter.Linear; // Or MipMapLinearLinear
+//     magFilter = Texture.TextureFilter.Linear;
+//     premultipliedAlpha = true; // Set to true for premultiplied alpha
+// }});
         TextureLoader.TextureParameter param = new TextureLoader.TextureParameter();
         param.minFilter = Texture.TextureFilter.Linear;
 

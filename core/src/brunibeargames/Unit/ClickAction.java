@@ -10,6 +10,7 @@ import java.util.Observer;
 import brunibeargames.AIUtil;
 import brunibeargames.Hex;
 import brunibeargames.HiliteHex;
+import brunibeargames.Move;
 import brunibeargames.ObserverPackage;
 import brunibeargames.UI.EventConfirm;
 
@@ -162,6 +163,8 @@ public class ClickAction implements Observer {
     public void process(Hex hex, boolean isAI, HiliteHex.TypeHilite type) {
         switch(typeAction){
             case Move:
+                app.log("ClickAction", "process Move " + unit+" toHex="+hex);
+                moveUnit(unit, hex, isAI);
            case Advance:
             default:
                 break;
@@ -169,6 +172,13 @@ public class ClickAction implements Observer {
 
     }
     private void moveUnit(Unit unit, Hex hex, boolean isAI){
+        isLocked = true;
+        unit.getMapCounter().getCounterStack().removeHilite();
+        unit.getMapCounter().removeClickAction();
+        hiliteHex.remove();
+        Move.instance.moveUnitFromClick(unit, hex, isAI);
+        hexProcess = hex;
+
 
     }
     public static int getClickActionsLeft(){

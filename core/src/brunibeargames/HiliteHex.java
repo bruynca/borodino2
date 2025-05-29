@@ -40,6 +40,9 @@ public class HiliteHex implements Observer {
         if (typeIn != TypeHilite.Debug) {
             Borodino.instance.addObserver(this);
         }
+        if (typeIn != TypeHilite.Move) {
+            Borodino.instance.addObserver(this);
+        }
     }
     public void addSecondPanzer(ArrayList<Hex> arrHexIn){
         for (Hex hex:arrHexIn){
@@ -82,7 +85,7 @@ public class HiliteHex implements Observer {
 
 
     private void processHit(Hex hex) {
- /*       if (type == TypeHilite.Supply){
+       /* if (type == TypeHilite.Supply){
             Supply.instance.process(hex);
         }else if(type== TypeHilite.SupplyAmerican) {
             return;
@@ -92,11 +95,11 @@ public class HiliteHex implements Observer {
         }else if (type == TypeHilite.ReinforceDisplay) {
             Reinforcement.instance.showReinDisplay(hex);
         }
-        else{
+        else{ */
             if (clickAction != null) {
                 clickAction.process(hex, false, type);
             }
-        } */
+
     }
 
     private void cancelHit(){

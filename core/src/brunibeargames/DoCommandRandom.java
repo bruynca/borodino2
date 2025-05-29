@@ -94,7 +94,7 @@ public class DoCommandRandom implements Observer {
                 public void run() {
                     winCommandRandom.end();
                 }
-            }, 2f); // The delay in seconds (0.1f for 0.1 seconds)
+            }, 1f); // The delay in seconds (0.1f for 0.1 seconds)
 
             // nextphase?
             return;

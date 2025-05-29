@@ -390,7 +390,7 @@ hilite
   index: -1
 hilitehex
   rotate: false
-  xy: 415, 1087
+  xy: 417, 1087
   size: 205, 178
   orig: 205, 178
   offset: 0, 0
@@ -398,8 +398,8 @@ hilitehex
 hilitehexmove3
   rotate: false
   xy: 242, 1087
-  size: 173, 150
-  orig: 173, 150
+  size: 175, 152
+  orig: 175, 152
   offset: 0, 0
   index: -1
 info
@@ -418,7 +418,7 @@ infodown
   index: -1
 infoover
   rotate: false
-  xy: 812, 1087
+  xy: 814, 1087
   size: 112, 196
   orig: 112, 196
   offset: 0, 0
@@ -516,7 +516,7 @@ russianline2
   index: -1
 warning
   rotate: false
-  xy: 620, 1087
+  xy: 622, 1087
   size: 192, 192
   orig: 192, 192
   offset: 0, 0
