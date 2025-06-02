@@ -5,7 +5,6 @@ import com.badlogic.gdx.utils.I18NBundle;
 
 import java.util.ArrayList;
 
-import brunibeargames.UI.BottomMenu;
 import brunibeargames.Unit.CounterStack;
 import brunibeargames.Unit.Unit;
 
@@ -50,8 +49,7 @@ public class Game {
             Unit.loadUnits(arrAllies);
             ArrayList<Unit> arrAxis =Unit.getSetupUnits(false);
             Unit.loadUnits(arrAxis);
-            TurnCounter turnCounter = new TurnCounter();
-            BottomMenu bottomMenu = new BottomMenu();
+
            // BottomMenu.instance.showNextPhase();
             Scenarios.loadUnits(0);
 
@@ -73,8 +71,8 @@ public class Game {
             }
         }else{
             LoadGame loadGame = new LoadGame(str, isResume);
-          //  BottomMenu.instance.showNextPhase();
-            TopMenu topMenu = new TopMenu();
+            //BottomMenu.instance.showNextPhase();
+            //TopMenu topMenu = new TopMenu();
         }
     }
     public void addUnit(Unit unit) {

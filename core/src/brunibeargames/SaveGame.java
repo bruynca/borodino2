@@ -42,9 +42,9 @@ public class SaveGame {
 			saveGame.append("<turn value=");
 			int turn =     NextPhase.instance.turn;
 			saveGame.append("\""+String.format("%02d", turn)+"\" />");
-		    int wType = Weather.instance.getCurrentType().ordinal();
-			saveGame.append("<weather value=");
-			saveGame.append("\""+String.format("%02d", wType)+"\" />");
+		    //int wType = Weather.instance.getCurrentType().ordinal();
+			//saveGame.append("<weather value=");
+			//saveGame.append("\""+String.format("%02d", wType)+"\" />");
 			int phase = NextPhase.instance.getPhase();
 			saveGame.append("<phase value=");
 			saveGame.append("\""+String.format("%02d", phase)+"\" />");
@@ -54,13 +54,13 @@ public class SaveGame {
 			saveGame.append("<scenario value=");
 			int  scenario = GameSetup.instance.getScenario().ordinal();
 			saveGame.append("\""+String.format("%02d", scenario)+"\" />");
-			saveGame.append("<bombers value=");
-			int cntallied = Weather.instance.getCurrentBombers();
-			saveGame.append("\""+String.format("%02d", cntallied)+"\" />");
+			//saveGame.append("<bombers value=");
+			//int cntallied = Weather.instance.getCurrentBombers();
+			//saveGame.append("\""+String.format("%02d", cntallied)+"\" />");
 			saveGame.append("<cntdebug value=");
 			int cntDebug = NextPhase.instance.cntDebug;
 			saveGame.append("\""+String.format("%02d", cntDebug)+"\" />");
-			saveGame.append("<airplane value=");
+		//	saveGame.append("<airplane value=");
 /*			ArrayList<CardsforGame> arrCards = new ArrayList<>();
 			arrCards.addAll(CardHandler.instance.getArrCardsChosenAllied());
 			arrCards.addAll(CardHandler.instance.getArrCardsChosenGerman());
@@ -299,11 +299,22 @@ public class SaveGame {
 			saveGame.append("false");
 		}
 		saveGame.append("\"/>");
+		saveGame.append("<initiative value=\"");
+		if (NextPhase.instance.initiative.getIsAllies()){
+			saveGame.append("true");
+		}else{
+			saveGame.append("false");
+		}
+		saveGame.append("\"/>");
 
 		int scene = GameSetup.instance.getScenario().ordinal();
 		saveGame.append("<scenario value=");
 		saveGame.append("\""+String.format("%02d", scene)+"\" />");
 		saveGame.append("</game>");
+
+
+
+
 
 		return saveGame;
 		}

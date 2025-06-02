@@ -49,9 +49,12 @@ public class LoadGame {
 			weather = Integer.parseInt(root.getChildByName("weather").getAttribute("value"));
 			Weather.instance.loadWeather(weather);
 		}
-
+		if (root.hasChild("initiative")) {
+			boolean isAllies = Boolean.parseBoolean(root.getChildByName("initiative").getAttribute("value"));
+			;
+			NextPhase.instance.initiative.setAllies(isAllies);
+		}
 		int phase = 0;
-
 		if (root.hasChild("phase")) {
 			phase = Integer.parseInt(root.getChildByName("phase").getAttribute("value"));
 		} else {
@@ -115,7 +118,7 @@ public class LoadGame {
 			int defense = Integer.parseInt(xmlunit.getChildByName("currentDefense").getAttribute("value"));
 			attack = Integer.parseInt(xmlunit.getChildByName("atstartAttack").getAttribute("value"));
 			unit.setAtStartAttackFactor(attack);
-			defense = Integer.parseInt(xmlunit.getChildByName("atstartDefense").getAttribute("value"));
+//			defense = Integer.parseInt(xmlunit.getChildByName("atstartDefense").getAttribute("value"));
 			int turnMoved = Integer.parseInt(xmlunit.getChildByName("turnMoved").getAttribute("value"));
 			unit.setMovedThisTurn(turnMoved);
 			boolean isDG = Boolean.parseBoolean(xmlunit.getChildByName("dg").getAttribute("value"));
@@ -346,7 +349,7 @@ public class LoadGame {
 
 
 		Gdx.app.log("LoadGame", "Turn=" + turn);
-		TurnCounter.instance.updateTurn(turn, NextPhase.instance.weather.getCurrentType());
+		//TurnCounter.instance.updateTurn(turn, NextPhase.instance.weather.getCurrentType());
 
 		setPhase(phase);
 	}

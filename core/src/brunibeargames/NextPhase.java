@@ -38,6 +38,7 @@ public class NextPhase {
     DoCommandDivision   doCommandDivision;
     DoCommandRandom   doCommandRandom;
     DiceEffect diceEffect;
+    TurnCounter turnCounter;
     Move move;
 
     // DiceEffect diceEffect = new DiceEffect();
@@ -62,6 +63,9 @@ public class NextPhase {
         doCommandRandom = new DoCommandRandom();
         diceEffect = new DiceEffect();
         move = new Move();
+        BottomMenu bottomMenu = new BottomMenu();
+        initiative = new Initiative();
+        turnCounter = new TurnCounter();
         System.gc();
 
     }
@@ -153,7 +157,7 @@ public class NextPhase {
                    endPhase();
                     break;
                 case DETERMINE_INITIATIVE:
-                    initiative = new Initiative();
+                    initiative.determineInitiative();
                     break;
                 case PLAYER1_CARD:
                     if (initiative.getIsAllies()) {

@@ -65,14 +65,10 @@ public class Move extends Observable {
          *  for restarted games logic   not much at present
          */
         for (Unit unit : arrUnitToMoveWork) {
-            arrUnitToDisplay.add(unit);
-
-        }
-        if (!arrUnitToDisplay.isEmpty()) {
-            WinModal.instance.set();
-            scheduleMoveHilite(arrUnitToDisplay);
-        }else{
-            anyMovesLeft(isAI);
+            unit.getMapCounter().getCounterStack().removeShade();
+            unit.getHexOccupy().moveUnitToFront(unit);
+            Counter.rePlace(unit.getHexOccupy());
+            ClickAction clickAction = new ClickAction(unit, ClickAction.TypeAction.Move);
         }
 
     }
@@ -82,7 +78,7 @@ public class Move extends Observable {
                            @Override
                            public void run() {
 
-                               SoundsLoader.instance.playLimber();
+                              // SoundsLoader.instance.playLimber();
                                unit.getMapCounter().getCounterStack().removeShade();
                                unit.getHexOccupy().moveUnitToFront(unit);
                                Counter.rePlace(unit.getHexOccupy());
@@ -293,9 +289,7 @@ public class Move extends Observable {
          *  IT IS ASSUMED THAT Mobile assault has been checked for validity before
          *  invoking this rtn
          */
-        if (startHex.xTable ==20 && startHex.yTable == 14 && endHex.xTable == 20 && endHex.yTable == 15){
-            int bt=0;
-        }
+
         isRiverCrossed = false;
 //        if (endHex.xTable == 16 && endHex.yTable == 10) {
 //              int bg = 0;
@@ -308,13 +302,6 @@ public class Move extends Observable {
         }
 
 
-//        if (!startHex.getSurround().contains(endHex)) { // should not happen
-//            return 999;
-//        }
-
-//        if (!HexCanNotCross.checkCanCross(startHex, endHex)) {
-//            return 999;
-//        }
 
         /**
          *  check if target hex has a unit

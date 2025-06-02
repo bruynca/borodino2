@@ -73,7 +73,11 @@ public class WinDebug {
 	public void ClickButton(InputEvent event, float xIn, float yIN) {
 		Gdx.app.log("Windebug", "Click Button");
 		Unit test = null;
-		//doShowHexes();
+		doShowHexes();
+		int i=1;
+		if (i==1){
+			return;
+		}
 		for (Corp corp:Corp.russianCorp) {
 			Gdx.app.log("Corp Display", "Corp=" + corp.name);
 			for (Division div : Division.arrDivisions) {

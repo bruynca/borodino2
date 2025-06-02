@@ -130,6 +130,7 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 		 gamePreferences = new GamePreferences();
 		 splashScreen = new SplashScreen();
 		 batch = new SpriteBatch();
+		 MyColor myColor = new MyColor();
 		 Hex.loadHexes();
 		 FontFactory fontFactory = new FontFactory();
 		 CreateInputProcessors();
@@ -285,6 +286,10 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 				 ScreenGame.instance.panCamera(0, -4);
 			 }
 		 }
+		// if (Gdx.input.isKeyPressed(Input.Keys.C)) {
+		//	 MyColor.instance.show();
+		// }
+
 
 	 }
 

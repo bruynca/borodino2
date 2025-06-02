@@ -1,6 +1,7 @@
 package brunibeargames;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -26,6 +27,7 @@ public class HexHiliteDisplay {
     static TextureRegion backHiliteReinDisplay;
     static TextureRegion backHiliteCannonRange;
     static TextureRegion backHiliteMove;
+    static Texture backHiliteMoveTexture;
     static TextureRegion backHiliteExit;
     static ArrayList<HexHiliteDisplay> arrHexHilite = new ArrayList<>();
     static Label.LabelStyle labelStyleName;
@@ -43,7 +45,17 @@ public class HexHiliteDisplay {
       if (pos == null){
             int brk = 0;
         }
-        String str = hex.xTable+ " "+hex.yTable;
+        //String str = hex.xTable+ " "+hex.yTable;
+        String azoc = "";
+        String rzaoc= "";
+        if (hex.isAlliedZOC[0]){
+            azoc="AZ";
+        }
+        if (hex.isRussianZOC[0]){
+            rzaoc="RZ";
+        }
+       // String str = hex.xTable+ " "+hex.yTable;
+        String str = azoc+"  "+rzaoc;
         /**
          *  SPOT to change AISCORE
          */
@@ -75,7 +87,7 @@ public class HexHiliteDisplay {
                 image = new Image(backHilite);
 
         }else if (type == HiliteHex.TypeHilite.Move){
-            image = new Image(backHiliteMove);
+            image = new Image(backHiliteMove.getTexture());
         }else if (type != HiliteHex.TypeHilite.Debug) {
             image = new Image(backHiliteMove);
         }else if (type == HiliteHex.TypeHilite.Debug) {
@@ -134,14 +146,19 @@ public class HexHiliteDisplay {
     static public void textTureLoad(){
         textureAtlas = SplashScreen.instance.unitsManager.get("counter/counter.txt");
         backHilite =  textureAtlas.findRegion("hilitehex");
-     //   backHiliteReinDisplay =  textureAtlas.findRegion("hilitehexreindisplay");
+        //   backHiliteReinDisplay =  textureAtlas.findRegion("hilitehexreindisplay");
       //  backHiliteCannonRange =  textureAtlas.findRegion("hilitehexcannonrange");
         backHiliteMove =  textureAtlas.findRegion("hilitehexmove3");
-      //  backHiliteExit =  textureAtlas.findRegion("hilitehexexit");
+        backHiliteMoveTexture  = backHiliteMove.getTexture();
+
+        //  backHiliteExit =  textureAtlas.findRegion("hilitehexexit");
         arrHexHilite = new ArrayList<>();
         labelStyleName
                 = new Label.LabelStyle(FontFactory.instance.yellowFont, Color.YELLOW);
 
+    }
+    static public void updateTexture(Texture inTexture){
+        backHiliteMoveTexture = inTexture;
     }
 
 }

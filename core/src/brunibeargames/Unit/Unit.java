@@ -662,6 +662,9 @@ public class Unit {
 //				unit.hexOccupy =  Hex.hexTable[0][0];
 //				int i =0;
 //			}
+			if (unit.ID == 128){
+				int b=0;
+			}
 			sXML.append(unit.hexOccupy.xTable);
 			sXML.append(strTerm);
 			sXML.append(strHexY);
@@ -671,13 +674,13 @@ public class Unit {
 			sXML.append(String.format("%02d", unit.currentStep));
 			sXML.append(strTerm);
 			sXML.append(strCurrentMove);
-	//		sXML.append(String.format("%02d", unit.getCurrentMovement()));
+			sXML.append(String.format("%02d", unit.getCurrentMovement()));
 			sXML.append(strTerm);
 			sXML.append(strCurrentAttack);
-	//		sXML.append(String.format("%02d", unit.getCurrenAttackFactor()));
+			sXML.append(String.format("%02d", unit.getCurrenAttackFactor()));
 			sXML.append(strTerm);
 			sXML.append(strCurrentDefense);
-	//		sXML.append(String.format("%02d", unit.getCurrentDefenseFactor()));
+			sXML.append(String.format("%02d", unit.getCurrentDefenseFactor()));
 			sXML.append(strTerm);
 			sXML.append(strAtStartAttack);
 			sXML.append(String.format("%02d", unit.atStartAttackFactor));
@@ -741,6 +744,14 @@ public class Unit {
 		}
 		sXML.append(strUnitsTerm);
 		return sXML.toString();
+	}
+
+	private int getCurrentDefenseFactor() {
+		return currentAttackFactor;
+	}
+
+	private int getCurrenAttackFactor() {
+		return currentAttackFactor;
 	}
 
 	/**
