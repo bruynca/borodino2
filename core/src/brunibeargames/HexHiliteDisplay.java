@@ -54,7 +54,8 @@ public class HexHiliteDisplay {
         if (hex.isRussianZOC[0]){
             rzaoc="RZ";
         }
-        String str = hex.xTable+ " "+hex.yTable;
+        float f = hex.getCalcMoveCost(0);
+        String str = hex.xTable+ " "+hex.yTable+ " "+f;
        // String str = azoc+"  "+rzaoc;
         /**
          *  SPOT to change AISCORE
@@ -62,7 +63,7 @@ public class HexHiliteDisplay {
 
         label = new Label(str,labelStyleName);
         label.setFontScale(.8f);
-        label.setPosition(pos.x+ 60, pos.y+40);
+        label.setPosition(pos.x+ 40, pos.y+40);
      //   label2.setPosition(pos.x, pos.y+50);
 
 

@@ -293,7 +293,7 @@ public class Move extends Observable {
      * @return cost for first of float and 1 if zoc for second
      */
     public static float[] cost(Unit unit, Hex startHex, Hex endHex,  boolean checkTerrain,boolean checkCommand, int thread) {
-        if (endHex.xTable == 17 && endHex.yTable == 11)
+        if (endHex.xTable == 15 && endHex.yTable == 13)
         {
             int br=0;
         }
@@ -347,7 +347,9 @@ public class Move extends Observable {
               // nothing
             }else
             {
-                cost[0] +=1; // an aditional
+                if (Hex.isStreamAcross(startHex, endHex)) {
+                    cost[0] += 1; // an aditional
+                }
             }
         }
         if (endHex.isForest() && !(isPath || isRoad) && checkTerrain){
