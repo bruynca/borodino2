@@ -208,7 +208,7 @@ public class ClickAction implements Observer {
         unit.getMapCounter().counterStack.hilite();
 
         UnitMove unitMove;
-        unitMove = new UnitMove(unit,unit.getCurrentMovement(),true,true,0);
+        unitMove = new UnitMove(unit,unit.getCurrentMovement(),false,true,0);
 
         ArrayList<Hex> arrHexMove = new ArrayList<>();
         arrHexMove.addAll(unitMove.getMovePossible());

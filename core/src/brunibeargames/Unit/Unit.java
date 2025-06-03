@@ -92,6 +92,7 @@ public class Unit {
 	public boolean isHQ;
 
 	public boolean isArtillery;
+	public boolean isHorseArtillery;
 	public boolean isTransport;
 
 	public int entryTurn;
@@ -323,7 +324,7 @@ public class Unit {
 			case "artillery":
             case "horseartllty":
 			case "horseartillery":
-                isArtillery = true;
+                isHorseArtillery = true;
 				isInfantry = false;
 				break;
             case "vedettes":
@@ -641,6 +642,7 @@ public class Unit {
 		final String strLimbered = "<limber value=\"";
 
 		final String strMoveTurn = "<turnMoved value=\"";
+		final String strActivated = "<activated value=\"";
 		final String strOTTurn = "<turnOT value=\"";
 		final String strOperationalSupply = "<supply value=\"";
 		final String strThisTurnSupply = "<turnsupply value=\"";
@@ -738,8 +740,16 @@ public class Unit {
 				sXML.append("false");
 			}
 
+
 			sXML.append(strTerm);
 
+			sXML.append(strActivated);
+			if (unit.isActivated) {
+				sXML.append("true");
+			}else{
+				sXML.append("false");
+			}
+			sXML.append(strTerm);
 			sXML.append(strUnitTerm);
 		}
 		sXML.append(strUnitsTerm);
@@ -1032,6 +1042,15 @@ public class Unit {
 
 
 
+	public static void initActivate()
+	{
+		for (Unit unit:Game.instance.arrOnUnitBoard){
+			Gdx.app.log("Unit", "ID="+unit.ID);
+			Gdx.app.log("Unit", "Brigade="+unit.brigade);
+
+			unit.setActivatedDisplay();
+		}
+	}
 
 	public static void initCanAttack()
 	{
@@ -1215,11 +1234,25 @@ public class Unit {
     public void setActivated(boolean activated) {
         isActivated = activated;
 		if (isActivated) {
-			counter.getCounterStack().activate();
+			if (counter != null) {
+				counter.getCounterStack().activate();
+			}
 		}else{
-			counter.getCounterStack().removeActivate();
+			if (counter != null) {
+				counter.getCounterStack().removeActivate();
+			}
 		}
     }
+	/*
+	 force activation display
+	 */
+	public void setActivatedDisplay() {
+		if (isActivated) {
+			if (counter != null) {
+				counter.getCounterStack().activate();
+			}
+		}
+	}
 
 	public int getCurrentMovement() {
 		return currentMoveFactor;

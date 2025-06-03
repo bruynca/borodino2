@@ -54,8 +54,8 @@ public class HexHiliteDisplay {
         if (hex.isRussianZOC[0]){
             rzaoc="RZ";
         }
-       // String str = hex.xTable+ " "+hex.yTable;
-        String str = azoc+"  "+rzaoc;
+        String str = hex.xTable+ " "+hex.yTable;
+       // String str = azoc+"  "+rzaoc;
         /**
          *  SPOT to change AISCORE
          */
@@ -87,7 +87,7 @@ public class HexHiliteDisplay {
                 image = new Image(backHilite);
 
         }else if (type == HiliteHex.TypeHilite.Move){
-            image = new Image(backHiliteMove.getTexture());
+            image = new Image(backHiliteMove);
         }else if (type != HiliteHex.TypeHilite.Debug) {
             image = new Image(backHiliteMove);
         }else if (type == HiliteHex.TypeHilite.Debug) {

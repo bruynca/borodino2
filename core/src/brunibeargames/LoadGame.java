@@ -89,7 +89,7 @@ public class LoadGame {
 		ArrayList<Unit> arrCheck = new ArrayList<>();
 		for (Element xmlunit : xmlUnitAll) {
 			int ID = Integer.parseInt(xmlunit.getChildByName("ID").getAttribute("value"));
-			if (ID == 17) {
+			if (ID == 193) {
 				int i = 0;
 
 			}
@@ -124,6 +124,12 @@ public class LoadGame {
 			boolean isDG = Boolean.parseBoolean(xmlunit.getChildByName("dg").getAttribute("value"));
 			if (isDG) {
 				unit.setDisorganized();
+			}
+			boolean isAcivated = Boolean.parseBoolean(xmlunit.getChildByName("activated").getAttribute("value"));
+			if (isAcivated) {
+				unit.setActivated(true);
+			}else{
+				unit.setActivated(false);
 			}
 			if (xmlunit.hasChild("attacked")) {
 				unit.hasAttackedThisTurn = Boolean.parseBoolean(xmlunit.getChildByName("attacked").getAttribute("value"));
@@ -346,6 +352,7 @@ public class LoadGame {
 		
 
 //	}*/
+		Unit.initActivate();
 
 
 		Gdx.app.log("LoadGame", "Turn=" + turn);

@@ -546,7 +546,7 @@ public class CounterStack {
 
     private Image getAlliedilhouttes() {
         Image image = null;
-        if (unit.isArtillery){
+        if (unit.isArtillery || unit.isHorseArtillery){
             image = new Image(cannongame);
             return image;
         }

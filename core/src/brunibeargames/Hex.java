@@ -1075,7 +1075,7 @@ public class Hex {
 
 	}
 
-	private boolean isStreamBank() {
+	boolean isStreamBank() {
 		return isStreamBank;
 	}
 

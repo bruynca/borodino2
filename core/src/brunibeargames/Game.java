@@ -71,6 +71,7 @@ public class Game {
             }
         }else{
             LoadGame loadGame = new LoadGame(str, isResume);
+
             //BottomMenu.instance.showNextPhase();
             //TopMenu topMenu = new TopMenu();
         }

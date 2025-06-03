@@ -282,24 +282,29 @@ public class Move extends Observable {
 
     static public boolean isRiverCrossed = false;
 
-    public static float cost(Unit unit, Hex startHex, Hex endHex,  boolean checkTerrain,boolean checkCommand, int thread) {
-        /**
-         *  start with a cost of 1 for clear
-         *  anything else we will add to this cost unless hex is prohibited
-         *  IT IS ASSUMED THAT Mobile assault has been checked for validity before
-         *  invoking this rtn
-         */
-
+    /**
+     *
+     * @param unit
+     * @param startHex
+     * @param endHex
+     * @param checkTerrain
+     * @param checkCommand
+     * @param thread
+     * @return cost for first of float and 1 if zoc for second
+     */
+    public static float[] cost(Unit unit, Hex startHex, Hex endHex,  boolean checkTerrain,boolean checkCommand, int thread) {
+        if (endHex.xTable == 17 && endHex.yTable == 11)
+        {
+            int br=0;
+        }
+        float[] cost = new float[2];
         isRiverCrossed = false;
 //        if (endHex.xTable == 16 && endHex.yTable == 10) {
 //              int bg = 0;
 //         }
-        float cost = 0; // assume clear
-        if (checkCommand){
-            cost = 1;
-        }else{
-            int bt=0;
-        }
+        cost[0] = 1; // assume clear
+        cost[1] = 0; // no zoc
+
 
 
 
@@ -310,7 +315,7 @@ public class Move extends Observable {
          */
         boolean isEnemyInHex = false;
         if ((unit.isAllies && endHex.isRussianOccupied[thread] || (!unit.isAllies && endHex.isAlliedOccupied[thread]))) {
-                return 888;
+                cost[0] = 999;
         }
         /**
          *  add case for check command range and ezoc is covered by same side unit
@@ -318,78 +323,53 @@ public class Move extends Observable {
         if ((unit.isAllies && endHex.isRussianZOC[thread]) || !unit.isAllies && endHex.isAlliedZOC[thread] ) {
             if (checkCommand){
               if ((unit.isRussian && endHex.isRussianOccupied[thread]) ||(unit.isAllies && endHex.isAlliedOccupied[thread])){
-                  cost=0;
+                  cost[0]=0;
               }
             }else {
-                cost = 999;
+                cost[1] = 1;
             }
         }
         boolean isRoad =false;
         boolean isPath = false;
         if (Hex.isRoadConnection(startHex,endHex)){
             isRoad = true;
-            cost += .5F;
+            cost[0] += .5F;
         }else if (startHex.isPath() && endHex.isPath() && Hex.isPathConnection(startHex,endHex)){
-
-                cost += .5F;
+                isPath = true;
+                cost[0] += 1;
         }
 
-        int steps =endHex.getStacksIn();
 
 
-  /*      if (startHex.isStreamBank() && endHex.isStreamBank() && checkTerrain) {
+
+        if (startHex.isStreamBank() && endHex.isStreamBank() && checkTerrain) {
             if (Bridge.isBridge(startHex, endHex)){
               // nothing
-            }else if (River.instance.isStreamBetween(startHex, endHex)) {
-                isRiverCrossed = true;
-                if (unit.isMechanized){
-                    if (unit.isTransport) {
-                        cost += 14;
-                    }else {
-
-                        cost += 12;
-                    }
-                }else{
-                    cost +=3;
-                }
+            }else
+            {
+                cost[0] +=1; // an aditional
             }
-
         }
         if (endHex.isForest() && !(isPath || isRoad) && checkTerrain){
-            if (unit.isMechanized){
-                if (unit.isTransport){
-                    cost += 6;
-                }else {
-                    cost += 4;
+            if (unit.isCalvary || unit.isHorseArtillery){
+                cost[0] +=3;                ;
+            }else{
+                cost[0] +=1;
+            }
+        }
+        if (endHex.isRiverBank && startHex.isRiverBank){
+            if (Hex.isAcrossRiver(endHex,startHex)){
+                if (Bridge.isBridge(endHex,startHex)){
+                    // do nothing
+                }else{
+                    cost[0] = 997; // river
                 }
-            }else{
-                cost +=2;
-            }
-        }
-        if (!endHex.isForest() && endHex.isTown() && checkTerrain && !(isPath || isRoad)){
-            if (unit.isMechanized){
-                cost +=2;
-            }else{
-                cost +=1;
-            }
-        }
-        if (endHex.isCity() && checkTerrain && !(isPath || isRoad)){
-            if (unit.isMechanized){
-                cost +=2;
-            }else{
-                cost +=1;
             }
         }
 
         if (isEnemyInHex) {
-            if (unit.isTransport){
-                cost =999;
-            }else {
-                cost += 2.5f; //
-                isMOAEncountered = true;
-
-            }
-        }*/
+            cost[0] = 999;
+        }
  //       if (endHex.xTable == 24 && endHex.yTable == 8){
  //           int bg =0;
  //       }

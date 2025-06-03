@@ -139,13 +139,13 @@ public class UnitMove {
 				int j=0;
 			}
 			if (hex.xTable >= 0 && hex.xTable < Hex.xEnd && hex.yTable >= 0 && hex.yTable < Hex.yEnd){
-				float flt = Move.instance.cost(unit, hexSearch, hex,  checkTerrain, checkCommand, thread);
-				float k = flt;
-				if (checkAdjacent && k == 777) {
-					if (!arrHexAdjacentEnemy[thread].contains(hex)) {
-						arrHexAdjacentEnemy[thread].add(hex);
+				float[] flt = Move.instance.cost(unit, hexSearch, hex,  checkTerrain, checkCommand, thread);
+				float k = flt[0];
+				// check zoc
+				if (flt[1] == 1) {
+					if (moveCostLeft >= k){
+						k = moveCostLeft;
 					}
-
 				}
 				if (moveCostLeft >= k)
 				{
