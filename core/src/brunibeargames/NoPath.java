@@ -7,14 +7,12 @@ public class NoPath {
     Hex hex;
     public ArrayList<Hex> arrHexesNoPath = new ArrayList<Hex>();
     NoPath(Hex in1, Hex in2){
-        NoPath np =find(in1);
-        if (np == null){
-            hex = in1;
+        //NoPath np =find(in1);
+
+            arrHexesNoPath.add(in1);
             arrHexesNoPath.add(in2);
             arrSave.add(this);
-        }else{
-            np.arrHexesNoPath.add(in2);
-        }
+        
     }
     static NoPath find(Hex hexIn){
         for (NoPath np:arrSave){

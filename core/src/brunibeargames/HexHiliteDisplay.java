@@ -55,6 +55,10 @@ public class HexHiliteDisplay {
             rzaoc="RZ";
         }
         float f = hex.getCalcMoveCost(0);
+        String road ="";
+        if (hex.isRoad){
+            road="R";
+        }
         String str = hex.xTable+ " "+hex.yTable+ " "+f;
        // String str = azoc+"  "+rzaoc;
         /**
@@ -63,7 +67,7 @@ public class HexHiliteDisplay {
 
         label = new Label(str,labelStyleName);
         label.setFontScale(.8f);
-        label.setPosition(pos.x+ 40, pos.y+40);
+        label.setPosition(pos.x+ 35, pos.y+40);
      //   label2.setPosition(pos.x, pos.y+50);
 
 

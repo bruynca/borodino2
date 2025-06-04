@@ -293,9 +293,9 @@ public class Move extends Observable {
      * @return cost for first of float and 1 if zoc for second
      */
     public static float[] cost(Unit unit, Hex startHex, Hex endHex,  boolean checkTerrain,boolean checkCommand, int thread) {
-        if (endHex.xTable == 15 && endHex.yTable == 13)
-        {
-            int br=0;
+        if (endHex.xTable == 15 && endHex.yTable == 12 &&
+           startHex.xTable == 16 && startHex.yTable == 12) {
+            int br = 0;
         }
         float[] cost = new float[2];
         isRiverCrossed = false;
@@ -306,8 +306,6 @@ public class Move extends Observable {
         cost[1] = 0; // no zoc
 
 
-
-
         /**
          *  check if target hex has a unit
          *  or in case of fakeAI check if hex has been set
@@ -315,29 +313,39 @@ public class Move extends Observable {
          */
         boolean isEnemyInHex = false;
         if ((unit.isAllies && endHex.isRussianOccupied[thread] || (!unit.isAllies && endHex.isAlliedOccupied[thread]))) {
-                cost[0] = 999;
+            cost[0] = 999;
         }
         /**
          *  add case for check command range and ezoc is covered by same side unit
          */
-        if ((unit.isAllies && endHex.isRussianZOC[thread]) || !unit.isAllies && endHex.isAlliedZOC[thread] ) {
-            if (checkCommand){
-              if ((unit.isRussian && endHex.isRussianOccupied[thread]) ||(unit.isAllies && endHex.isAlliedOccupied[thread])){
-                  cost[0]=0;
-              }
-            }else {
+        if ((unit.isAllies && endHex.isRussianZOC[thread]) || !unit.isAllies && endHex.isAlliedZOC[thread]) {
+            if (checkCommand) {
+                if ((unit.isRussian && endHex.isRussianOccupied[thread]) || (unit.isAllies && endHex.isAlliedOccupied[thread])) {
+                    cost[0] = 0;
+                }
+            } else {
                 cost[1] = 1;
             }
         }
-        boolean isRoad =false;
-        boolean isPath = false;
-        if (Hex.isRoadConnection(startHex,endHex)){
-            isRoad = true;
-            cost[0] += .5F;
-        }else if (startHex.isPath() && endHex.isPath() && Hex.isPathConnection(startHex,endHex)){
-                isPath = true;
-                cost[0] += 1;
+        boolean isRoadB = false;
+        boolean isPathB = false;
+        if (startHex.isRoad && endHex.isRoad) {
+            if (Hex.isRoadConnection(startHex, endHex)) {
+                isRoadB = true;
+                /**
+                 *  march mode logic not done here
+                 */
+                //cost[0] += .5F;
+            }
         }
+        if (startHex.isPath && endHex.isPath) {
+            if (Hex.isPathConnection(startHex, endHex)) {
+                isPathB = true;
+                //cost[0] += 1;
+            }
+        }
+
+
 
 
 
@@ -352,7 +360,7 @@ public class Move extends Observable {
                 }
             }
         }
-        if (endHex.isForest() && !(isPath || isRoad) && checkTerrain){
+        if (endHex.isForest() && !(isPathB || isRoadB) && checkTerrain){
             if (unit.isCalvary || unit.isHorseArtillery){
                 cost[0] +=3;                ;
             }else{

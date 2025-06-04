@@ -68,11 +68,69 @@ public class Hex {
 	}
 
 	public static boolean isRoadConnection(Hex startHex, Hex endHex) {
+		if (arrSpecialRoadCheck.contains(startHex) || arrSpecialRoadCheck.contains(endHex)) {
+			return doSpecialRoad(startHex, endHex);
+		}else{
+			return true;
+		}
+
+
+	}
+
+	private static boolean doSpecialRoad(Hex startHex, Hex endHex) {
+		if (startHex.xTable == 10 && startHex.yTable == 27 &&
+				endHex.xTable == 11 && endHex.yTable == 26) {
+			return true;
+		}
+		if (endHex.xTable == 10 && endHex.yTable == 27 &&
+				startHex.xTable == 11 && startHex.yTable == 26) {
+			return true;
+		}
+		if (endHex.xTable == 41 && endHex.yTable == 13 &&
+				startHex.xTable == 42 && startHex.yTable == 14) {
+			return true;
+		}
+		if (startHex.xTable == 41 && startHex.yTable == 13 &&
+				endHex.xTable == 42 && endHex.yTable == 14)  {
+			return true;
+		}
+		if (endHex.xTable == 43 && endHex.yTable == 13 &&
+				startHex.xTable == 42 && startHex.yTable == 14) {
+			return true;
+		}
+		if (startHex.xTable == 43 && startHex.yTable == 13 &&
+				endHex.xTable == 42 && endHex.yTable == 14)  {
+			return true;
+		}
+		if (endHex.xTable == 44 && endHex.yTable == 13 &&
+				startHex.xTable == 43 && startHex.yTable == 13) {
+			return true;
+		}
+		if (startHex.xTable == 44 && startHex.yTable == 13 &&
+				endHex.xTable == 43 && endHex.yTable == 13)  {
+			return true;
+		}
 		return false;
 	}
 
+	static public ArrayList<Hex> arrSpecialRoadCheck = new ArrayList<>();
+	static public ArrayList<Hex> arrSpecialPathCheck = new ArrayList<>();
+	static public void loadSpecialRoadCheck() {
+		for (int[] road : specialRoads) {
+			arrSpecialRoadCheck.add(hexTable[road[0]][road[1]]);
+		}
+	}
+	static int[][] specialRoads = {{10,27},{11,26},{41,13},{42,14},
+			{43,13},{44,13}};
 	public static boolean isPathConnection(Hex startHex, Hex endHex) {
-		return false;
+		if (startHex.npath == null || endHex.npath == null) {
+			 return true;
+		}
+		if ((startHex.npath.arrHexesNoPath.contains(endHex)) &&
+			(endHex.npath.arrHexesNoPath.contains(startHex))) {
+			return false;
+		}
+		return true;
 	}
 
 
@@ -286,7 +344,7 @@ public class Hex {
 					{{38, 24}, {38, 23}}, {{39, 22}, {39, 23}}, {{40, 22}, {40, 23}}, {{40, 21}, {40, 22}},
 					{{41, 21}, {41, 22}}, {{41, 22}, {40, 22}}, {{20, 16}, {20, 17}}, {{20, 14}, {21, 14}},
 					{{28, 16}, {28, 15}}, {{31, 16}, {30, 16}}, {{30, 16}, {30, 17}}, {{30, 14}, {31, 14}},
-					{{23, 14}, {23, 13}}, {{36, 04}, {37, 03}}, {{15, 03}, {16, 04}}, {{20, 13}, {21, 12}}};
+					{{23, 14}, {23, 13}}, {{36, 04}, {37, 03}}, {{15, 03}, {16, 04}}, {{20, 13}, {21, 12}},{{15,12},{16,12}}};
 	static int[][] forest = {{9, 18}, {10, 5}, {8, 4}, {0, 0}, {1, 0}, {0, 1}, {2, 0}, {3, 0}, {4, 0},
 			{5, 0}, {6, 0}, {7, 0}, {8, 0}, {7, 1}, {7, 2}, {8, 3}, {9, 3},
 			{9, 2}, {10, 3}, {11, 2}, {12, 2}, {13, 2}, {12, 3}, {13, 3}, {12, 4},
@@ -998,6 +1056,7 @@ public class Hex {
 			Hex hex = hexTable[x][y];
 			hex.isRoad = true;
 		}
+		loadSpecialRoadCheck();
 
 	}
 
