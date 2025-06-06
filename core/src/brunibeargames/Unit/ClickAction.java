@@ -74,7 +74,7 @@ public class ClickAction implements Observer {
 
 
     public void click() {
-        app.log("ClickAction","Click unit="+unit+unit.ID);
+        app.log("ClickAction","Click unit="+unit+unit.brigade);
         if (isLocked){
             return;
         }

@@ -93,12 +93,11 @@ public class Counter {
                 {
                     Gdx.app.log("Counter","Right");
                     cycleUnits();
-
                 }
                 return true;
             }
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-   //             Gdx.app.log("Counter","TouchUp");
+                Gdx.app.log("Counter","TouchUp");
                 if (event.getButton( ) == Input.Buttons.LEFT)
                 {
    //                 Gdx.app.log("Counter","Left TouchUp unit="+unit);

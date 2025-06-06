@@ -189,11 +189,11 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 
 		 private void CreateInputProcessors() {
 		im = new InputMultiplexer(this);
-	    im.addProcessor(0, splashStage);
-		im.addProcessor(1, guiStage);
-		im.addProcessor(2, mapStage);
-  		im.addProcessor(2, hexStage);
-		im.addProcessor(4, gd);
+	    im.addProcessor(1, splashStage);
+		im.addProcessor(2, guiStage);
+		im.addProcessor(3, mapStage);
+  		im.addProcessor(4, hexStage);
+		im.addProcessor(5, gd);
 		Gdx.input.setInputProcessor(im);
 
 		
@@ -330,7 +330,7 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 		Hex hex = null;
 		if (Hex.hexTable != null) {
 			hex = Hex.GetHexFromScreenPosition(screenX, screenY);
-//			Gdx.app.log("Mouse Event", "Hex clicked=" + hex.xTable+ " y-"+hex.yTable);
+			Gdx.app.log("Mouse Event", "Hex clicked=" + hex.xTable+ " y-"+hex.yTable);
 			if (hex != null) {
 				fireHex(hex,button,screenX,screenY);
 			}

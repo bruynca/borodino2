@@ -293,8 +293,8 @@ public class Move extends Observable {
      * @return cost for first of float and 1 if zoc for second
      */
     public static float[] cost(Unit unit, Hex startHex, Hex endHex,  boolean checkTerrain,boolean checkCommand, int thread) {
-        if (endHex.xTable == 15 && endHex.yTable == 12 &&
-           startHex.xTable == 16 && startHex.yTable == 12) {
+        if (endHex.xTable == 11 && endHex.yTable == 26 &&
+           startHex.xTable == 12 && startHex.yTable == 26) {
             int br = 0;
         }
         float[] cost = new float[2];

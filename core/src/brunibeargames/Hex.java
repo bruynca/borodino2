@@ -68,6 +68,7 @@ public class Hex {
 	}
 
 	public static boolean isRoadConnection(Hex startHex, Hex endHex) {
+
 		if (arrSpecialRoadCheck.contains(startHex) || arrSpecialRoadCheck.contains(endHex)) {
 			return doSpecialRoad(startHex, endHex);
 		}else{
@@ -78,39 +79,12 @@ public class Hex {
 	}
 
 	private static boolean doSpecialRoad(Hex startHex, Hex endHex) {
-		if (startHex.xTable == 10 && startHex.yTable == 27 &&
-				endHex.xTable == 11 && endHex.yTable == 26) {
-			return true;
+		for (ArrayList arr: noRoadArr){
+			if (arr.contains(startHex) && arr.contains(endHex)){
+				return false;
+			}
 		}
-		if (endHex.xTable == 10 && endHex.yTable == 27 &&
-				startHex.xTable == 11 && startHex.yTable == 26) {
-			return true;
-		}
-		if (endHex.xTable == 41 && endHex.yTable == 13 &&
-				startHex.xTable == 42 && startHex.yTable == 14) {
-			return true;
-		}
-		if (startHex.xTable == 41 && startHex.yTable == 13 &&
-				endHex.xTable == 42 && endHex.yTable == 14)  {
-			return true;
-		}
-		if (endHex.xTable == 43 && endHex.yTable == 13 &&
-				startHex.xTable == 42 && startHex.yTable == 14) {
-			return true;
-		}
-		if (startHex.xTable == 43 && startHex.yTable == 13 &&
-				endHex.xTable == 42 && endHex.yTable == 14)  {
-			return true;
-		}
-		if (endHex.xTable == 44 && endHex.yTable == 13 &&
-				startHex.xTable == 43 && startHex.yTable == 13) {
-			return true;
-		}
-		if (startHex.xTable == 44 && startHex.yTable == 13 &&
-				endHex.xTable == 43 && endHex.yTable == 13)  {
-			return true;
-		}
-		return false;
+		return true;
 	}
 
 	static public ArrayList<Hex> arrSpecialRoadCheck = new ArrayList<>();
@@ -345,6 +319,10 @@ public class Hex {
 					{{41, 21}, {41, 22}}, {{41, 22}, {40, 22}}, {{20, 16}, {20, 17}}, {{20, 14}, {21, 14}},
 					{{28, 16}, {28, 15}}, {{31, 16}, {30, 16}}, {{30, 16}, {30, 17}}, {{30, 14}, {31, 14}},
 					{{23, 14}, {23, 13}}, {{36, 04}, {37, 03}}, {{15, 03}, {16, 04}}, {{20, 13}, {21, 12}},{{15,12},{16,12}}};
+	static int[][][] noRoad =
+			{{{10, 27}, {11, 26}}, {{41, 13}, {41, 14}}, {{41, 13}, {41,14}},
+			{{42, 14}, {41,14}}, {{42,14}, {42,15}}};
+
 	static int[][] forest = {{9, 18}, {10, 5}, {8, 4}, {0, 0}, {1, 0}, {0, 1}, {2, 0}, {3, 0}, {4, 0},
 			{5, 0}, {6, 0}, {7, 0}, {8, 0}, {7, 1}, {7, 2}, {8, 3}, {9, 3},
 			{9, 2}, {10, 3}, {11, 2}, {12, 2}, {13, 2}, {12, 3}, {13, 3}, {12, 4},
@@ -1025,8 +1003,22 @@ public class Hex {
 			hex1.npath = new NoPath(hex1, hex2);
 			hex2.npath = new NoPath(hex2, hex1);
 		}
+		for (int i = 0; i < noRoad.length; i++) {
+			;
+			int x = noRoad[i][0][0];
+			int y = noRoad[i][0][1];
+			Hex hex1 = hexTable[x][y];
+			x = noRoad[i][1][0];
+			y = noRoad[i][1][1];
+			Hex hex2 = hexTable[x][y];
+			ArrayList<Hex> arrHex = new ArrayList<>();
+			arrHex.add(hex1);
+			arrHex.add(hex2);
+			noRoadArr[i] = arrHex;
+		}
 
 	}
+	static public ArrayList noRoadArr[] = new ArrayList[noRoad.length];
 
 	public boolean isPathTo(Hex hex) {
 		if (npath == null) {
