@@ -17,10 +17,13 @@ public class HiliteHex implements Observer {
     ClickAction clickAction;
     ObserverPackage op;
     HexHiliteEdge hexHiliteEdge;
-    public HiliteHex(ArrayList<Hex> arrHexIn, TypeHilite typeIn, ClickAction clickActionIn){
+    public HiliteHex(ArrayList<Hex> arrHexIn, ArrayList<Hex> arrRoadMarch, TypeHilite typeIn, ClickAction clickActionIn){
        instance = this;
         arrHex.clear();
         arrHex.addAll(arrHexIn);
+        if (arrRoadMarch != null){
+            arrHex.addAll(arrRoadMarch);
+        }
         type = typeIn;
         clickAction = clickActionIn;
         arrHexHilite.clear();
@@ -36,25 +39,26 @@ public class HiliteHex implements Observer {
 //            }
 
         }
-
-        if (typeIn != TypeHilite.Debug) {
-            Borodino.instance.addObserver(this);
-        }
-        if (typeIn != TypeHilite.Move) {
-            Borodino.instance.addObserver(this);
-        }
-    }
-    public void addSecondPanzer(ArrayList<Hex> arrHexIn){
-        for (Hex hex:arrHexIn){
-            HexHiliteDisplay hh = new HexHiliteDisplay(hex, TypeHilite.MoveExit);
-            arrHexHilite.add(hh);
+        if (arrRoadMarch != null){
+            for (Hex hex:arrRoadMarch){
+                HexHiliteDisplay hh = new HexHiliteDisplay(hex, TypeHilite.RoadMarch);
+                arrHexHilite.add(hh);
 //            if (typeIn == TypeHilite.Move) {
 //                hexHiliteEdge.createBorderImage(hex);
 //            }
 
+            }
+
         }
 
+        if (typeIn != TypeHilite.Debug) {
+            Borodino.instance.addObserver(this);
+        }
+        if (typeIn != TypeHilite.Move ) {
+            Borodino.instance.addObserver(this);
+        }
     }
+
     @Override
     public void update(Observable observable, Object o) {
 
@@ -124,7 +128,7 @@ public class HiliteHex implements Observer {
 
 
     public  enum TypeHilite {Move,Advance,Supply,SupplyAmerican, None, Reinforcement,Range,ReinforceDisplay,
-        Debug,AI,ShowSupply,MoveExit, Hilite}{
+        Debug,AI,ShowSupply,MoveExit, Hilite,RoadMarch}{
 
     }
     

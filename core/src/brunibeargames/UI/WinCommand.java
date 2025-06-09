@@ -320,7 +320,7 @@ public class WinCommand {
                     for (Unit unit:arrUnits) {
                         arrHex.add(unit.getHexOccupy());
                     }
-                    hiliteHex = new HiliteHex(arrHex, HiliteHex.TypeHilite.AI, null);;
+                    hiliteHex = new HiliteHex(arrHex, null, HiliteHex.TypeHilite.AI, null);;
                 }
                 return true;
             }
@@ -417,7 +417,7 @@ public class WinCommand {
                     for (Unit unit:arrUnits) {
                         arrHex.add(unit.getHexOccupy());
                     }
-                    hiliteHex = new HiliteHex(arrHex, HiliteHex.TypeHilite.AI, null);;
+                    hiliteHex = new HiliteHex(arrHex, null, HiliteHex.TypeHilite.AI, null);;
                 }
                 return true;
             }

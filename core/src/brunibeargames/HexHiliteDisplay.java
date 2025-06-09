@@ -1,7 +1,6 @@
 package brunibeargames;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -26,8 +25,9 @@ public class HexHiliteDisplay {
     static TextureRegion backHilite;
     static TextureRegion backHiliteReinDisplay;
     static TextureRegion backHiliteCannonRange;
+    static TextureRegion backHiliteRoad;
     static TextureRegion backHiliteMove;
-    static Texture backHiliteMoveTexture;
+    //static Texture backHiliteMoveTexture;
     static TextureRegion backHiliteExit;
     static ArrayList<HexHiliteDisplay> arrHexHilite = new ArrayList<>();
     static Label.LabelStyle labelStyleName;
@@ -93,6 +93,8 @@ public class HexHiliteDisplay {
 
         }else if (type == HiliteHex.TypeHilite.Move){
             image = new Image(backHiliteMove);
+        }else if (type == HiliteHex.TypeHilite.RoadMarch){
+            image = new Image(backHiliteRoad);
         }else if (type != HiliteHex.TypeHilite.Debug) {
             image = new Image(backHiliteMove);
         }else if (type == HiliteHex.TypeHilite.Debug) {
@@ -112,7 +114,7 @@ public class HexHiliteDisplay {
             }
         }
 
-        if (typeIn == HiliteHex.TypeHilite.Move){
+        if (typeIn == HiliteHex.TypeHilite.Move || typeIn == HiliteHex.TypeHilite.RoadMarch){
             image.addAction(Actions.fadeOut(.01f));
             image.addAction(Actions.fadeIn(.5f/(hex.getCalcMoveCost(0)+1)));
         }
@@ -154,7 +156,7 @@ public class HexHiliteDisplay {
         //   backHiliteReinDisplay =  textureAtlas.findRegion("hilitehexreindisplay");
       //  backHiliteCannonRange =  textureAtlas.findRegion("hilitehexcannonrange");
         backHiliteMove =  textureAtlas.findRegion("hilitehexmove3");
-        backHiliteMoveTexture  = backHiliteMove.getTexture();
+        backHiliteRoad =  textureAtlas.findRegion("hilitehexroad");
 
         //  backHiliteExit =  textureAtlas.findRegion("hilitehexexit");
         arrHexHilite = new ArrayList<>();
@@ -162,8 +164,6 @@ public class HexHiliteDisplay {
                 = new Label.LabelStyle(FontFactory.instance.yellowFont, Color.YELLOW);
 
     }
-    static public void updateTexture(Texture inTexture){
-        backHiliteMoveTexture = inTexture;
-    }
+
 
 }

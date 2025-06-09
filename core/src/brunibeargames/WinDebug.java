@@ -196,7 +196,7 @@ public class WinDebug {
 				arrHex.add(Hex.hexTable[x][y]);
 			}
 		}
-		hiliteHex = new HiliteHex(arrHex, HiliteHex.TypeHilite.Debug,null);
+		hiliteHex = new HiliteHex(arrHex, null, HiliteHex.TypeHilite.Debug,null);
 	}
 
 }

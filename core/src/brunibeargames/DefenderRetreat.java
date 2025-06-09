@@ -70,7 +70,7 @@ class DefenderRetreat {
         for (RetreathPath rep : arrRetreats) {
             for (Hex hex : rep.arrHexPath) {
                 if (attack.arrDefenders.get(0).isAllies) {
-                    if (hex.getAxisZoc(0)) {
+                    if (hex.getRussianZoc(0)) {
                         rep.points += 100;
                     }
                 } else {

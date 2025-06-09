@@ -72,32 +72,7 @@ public class Move extends Observable {
         }
 
     }
-    private void scheduleMoveHilite(final ArrayList<Unit> arrUnitToMove) {
-        final Unit unit = arrUnitToMove.get(0);
-        Timer.schedule(new Timer.Task(){
-                           @Override
-                           public void run() {
 
-                              // SoundsLoader.instance.playLimber();
-                               unit.getMapCounter().getCounterStack().removeShade();
-                               unit.getHexOccupy().moveUnitToFront(unit);
-                               Counter.rePlace(unit.getHexOccupy());
-                               ClickAction clickAction = new ClickAction(unit, ClickAction.TypeAction.Move);
-                               arrUnitToMove.remove(unit);
-                               if (arrUnitToMove.size() == 0 ){
-                                   WinModal.instance.release();
-                                   //anyMovesLeft(isAI);
-                                   return;
-                               }else{
-                                   scheduleMoveHilite(arrUnitToMove);
-                               }
-                           }
-                       }
-                , .08F        //    (delay)
-        );
-
-
-    }
     public boolean  anyMovesLeft(boolean isAI) {
         if (ClickAction.getClickActionsLeft() > 0) {
             return true;

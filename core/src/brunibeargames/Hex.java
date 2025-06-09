@@ -183,7 +183,7 @@ public class Hex {
 		return hex;
 	}
 
-	boolean isRoad = false;
+	public boolean isRoad = false;
 	boolean isClear = true;
 	boolean isTown = false;
 	boolean isPath = false;
@@ -1322,7 +1322,7 @@ public class Hex {
 	public boolean getAlliedZoc(int thread){
 		return isAlliedZOC[thread];
 	}
-	public boolean getAxisZoc(int thread){
+	public boolean getRussianZoc(int thread){
 		return isRussianZOC[thread];
 	}
 

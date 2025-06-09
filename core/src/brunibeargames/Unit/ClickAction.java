@@ -212,11 +212,13 @@ public class ClickAction implements Observer {
 
         ArrayList<Hex> arrHexMove = new ArrayList<>();
         arrHexMove.addAll(unitMove.getMovePossible());
+        ArrayList<Hex> arrRoadMarch = new ArrayList<>();
         AIUtil.RemoveDuplicateHex(arrHexMove);
-
+        arrRoadMarch.addAll(RoadMarch.getMovePossible(unit));
+        arrRoadMarch.removeAll(arrHexMove);
         HiliteHex.TypeHilite type = HiliteHex.TypeHilite.Move;
 
-        hiliteHex = new HiliteHex(arrHexMove, type, this);
+        hiliteHex = new HiliteHex(arrHexMove,arrRoadMarch, type, this);
 
     }
 
