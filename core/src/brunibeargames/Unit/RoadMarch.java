@@ -6,8 +6,12 @@ import brunibeargames.Hex;
 
 public class RoadMarch {
     static int move;
+    static ArrayList<Hex> arrForward = new ArrayList<>();
+    static ArrayList<Hex> arrBackward = new ArrayList<>();
     public static ArrayList<Hex> getMovePossible(Unit unit) {
         ArrayList<Hex> arrReturn = new ArrayList<>();
+        arrForward.clear();
+        arrBackward.clear();
         move = unit.getCurrentMoveFactor() * 2;
         Hex hex = unit.getHexOccupy();
         if (hex == null){
@@ -58,6 +62,7 @@ public class RoadMarch {
             arrWorkForward.clear();
             arrWorkForward.addAll(arrSaveNextStep);
             arrReturn.addAll(arrSaveNextStep);
+            arrForward.addAll(arrSaveNextStep);
             i++;
             if (i == move){
                 break;
@@ -82,6 +87,8 @@ public class RoadMarch {
             arrWorkBackward.clear();
             arrWorkBackward.addAll(arrSaveNextStep);
             arrReturn.addAll(arrSaveNextStep);
+            arrBackward.addAll(arrSaveNextStep);
+
             i++;
             if (i == move){
                 break;
@@ -98,13 +105,13 @@ public class RoadMarch {
         }
 
         if (unit.isAllies) {
-            if (hex1.getRussianZoc(0) || hex1.checkRussianInHex() || hex1.checkAlliesInHex()) {
+            if (hex1.getRussianZoc(0) || hex1.checkRussianInHex() || hex1.checkAlliesCombatInHex()) {
                 return false;
             } else {
                 return true;
             }
         } else {
-            if (hex1.getAlliedZoc(0) || hex1.checkAlliesInHex()|| hex1.checkRussianInHex()) {
+            if (hex1.getAlliedZoc(0) || hex1.checkAlliesInHex()|| hex1.checkRussianCombatInHex()) {
                 return false;
             } else {
                 return true;
@@ -112,5 +119,40 @@ public class RoadMarch {
         }
     }
 
+    /**
+     * add road march to end of the array
+     *
+     * @param arrMove the orignal array to add
+     * @param unit the unit that is moving
+     * @param hex final hex of the move
+     */
 
+    public static void addRoadMarchHexes(ArrayList<Hex> arrMove, Unit unit, Hex hex) {
+        getMovePossible(unit);
+        arrMove.addAll(arrForward);
+        ArrayList<Hex> arrWork = new ArrayList<>();
+        // which one to use
+        //
+         if (arrBackward.contains(hex)){
+            arrWork.addAll(arrBackward);
+
+        }else{
+            arrWork.addAll(arrForward);
+        }
+         // remove any hexes after the final hex of move in new array keep
+        ArrayList<Hex> arrKeep = new ArrayList<>();
+        int i=0;
+         for (i=0; i < arrWork.size();i++){
+             arrKeep.add(arrWork.get(i));
+             if (arrWork.get(i) == hex) {
+                break;
+             }
+         }
+         // add keep to array of the move
+        for (Hex hex1:arrKeep){
+            if (!arrMove.contains(hex1)){
+                arrMove.add(hex1);
+            }
+        }
+    }
 }

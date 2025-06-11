@@ -87,7 +87,7 @@ public class Unit {
 	 *  Processing fields
 	 */
 	public int ID;
-	public boolean isGroundCombat;
+	public boolean isGroundCombat = true;
 	public boolean isMechanized;
 	public boolean isHQ;
 
@@ -222,6 +222,7 @@ public class Unit {
 		}
 		if (isOfficer||(isOfficer && isCommander)) {
 			this.isOfficer = true;
+			this.isGroundCombat =false;
 			this.corp = corp;
 			this.currentMoveFactor = 6;
 			isInfantry = false;
@@ -237,6 +238,7 @@ public class Unit {
 		}
 		if (isCommander) {
 			this.isCommander = true;
+			this.isGroundCombat =false;
 			this.currentMoveFactor = 10;
 			this.brigade = " ";
 			isInfantry = false;

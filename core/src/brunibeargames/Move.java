@@ -11,6 +11,7 @@ import java.util.Observable;
 import brunibeargames.UI.EventPopUp;
 import brunibeargames.Unit.ClickAction;
 import brunibeargames.Unit.Counter;
+import brunibeargames.Unit.RoadMarch;
 import brunibeargames.Unit.Unit;
 import brunibeargames.Unit.UnitMove;
 
@@ -96,6 +97,12 @@ public class Move extends Observable {
     public void moveUnitFromClick(Unit unit, Hex hex, boolean isAI) {
         UnitMove unitMove = new UnitMove(unit, unit.getCurrentMoveFactor(),true,true,0);
         arrMove=  unitMove.getLeastPath(hex, true, null);
+        /**
+         *  Road march
+         */
+        if (!arrMove.contains(hex)){
+            RoadMarch.addRoadMarchHexes(arrMove,unit,hex);
+        }
  //       SoundsLoader.instance.playTrucksSound();
         actualMove(unit,arrMove, AfterMove.ToClick, isAI);
     }
@@ -179,7 +186,7 @@ public class Move extends Observable {
         if (af == AfterMove.ToClick){
             unit.setMovedThisTurn(NextPhase.instance.getTurn());
             unit.getMapCounter().getCounterStack().shade();
-            unit.setCurrentMovement((int) (unit.getHexOccupy().getCalcMoveCost(0)));
+            //unit.setCurrentMovement((int) (unit.getHexOccupy().getCalcMoveCost(0)));
             unit.getMapCounter().getCounterStack().setPoints();
        //     unit.getMapCounter().getCounterStack().setSupplyGas();
             if (!isAI) {
@@ -206,7 +213,7 @@ public class Move extends Observable {
         if (af == AfterMove.ToReinforcement){
             unit.setMovedThisTurn(NextPhase.instance.getTurn());
             unit.getMapCounter().getCounterStack().shade();
-            unit.setCurrentMovement((int) (unit.getHexOccupy().getCalcMoveCost(0)));
+            //unit.setCurrentMovement((int) (unit.getHexOccupy().getCalcMoveCost(0)));
             unit.getMapCounter().getCounterStack().setPoints();
  //           Reinforcement.instance.getScreen().afterMove(unit);
             return;

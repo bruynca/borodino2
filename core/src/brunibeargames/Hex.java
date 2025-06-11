@@ -1061,12 +1061,31 @@ public class Hex {
 		}
 		return false;
 	}
+	public boolean checkAlliesCombatInHex() {
+		for (Unit unit : arrUnitsInHex) {
+			if (unit.isAllies && unit.isGroundCombat){
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public boolean checkRussianInHex() {
 		for (Unit unit : arrUnitsInHex) {
 			if (unit.isRussian){
 				return true;
 			}
+
+		}
+		return false;
+
+	}
+	public boolean checkRussianCombatInHex() {
+		for (Unit unit : arrUnitsInHex) {
+			if (unit.isRussian && unit.isGroundCombat){
+				return true;
+			}
+
 		}
 		return false;
 
