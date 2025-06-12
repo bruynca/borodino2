@@ -328,7 +328,7 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		Hex hex = null;
-		if (Hex.hexTable != null) {
+		if (Hex.hexTable != null && Screen.instance !=null) {
 			hex = Hex.GetHexFromScreenPosition(screenX, screenY);
 			Gdx.app.log("Mouse Event", "Hex clicked=" + hex.xTable+ " y-"+hex.yTable);
 			if (hex != null) {

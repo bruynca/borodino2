@@ -126,7 +126,7 @@ public class Move extends Observable {
         float delay = .42f;
         WinModal.instance.set(); // freeze counters
         if (unit.getMapCounter() != null) {
-            unit.getMapCounter().getCounterStack().setPoints();
+          //  unit.getMapCounter().getCounterStack().setPoints();
         }
       //  unit.getMapCounter().getCounterStack().setSupplyGas();
         float steps = delay / arrMove.size();
@@ -187,7 +187,7 @@ public class Move extends Observable {
             unit.setMovedThisTurn(NextPhase.instance.getTurn());
             unit.getMapCounter().getCounterStack().shade();
             //unit.setCurrentMovement((int) (unit.getHexOccupy().getCalcMoveCost(0)));
-            unit.getMapCounter().getCounterStack().setPoints();
+          //  unit.getMapCounter().getCounterStack().setPoints();
        //     unit.getMapCounter().getCounterStack().setSupplyGas();
             if (!isAI) {
                 moveReturnFromClick(true,hexEnd,unit);
@@ -214,7 +214,7 @@ public class Move extends Observable {
             unit.setMovedThisTurn(NextPhase.instance.getTurn());
             unit.getMapCounter().getCounterStack().shade();
             //unit.setCurrentMovement((int) (unit.getHexOccupy().getCalcMoveCost(0)));
-            unit.getMapCounter().getCounterStack().setPoints();
+          //  unit.getMapCounter().getCounterStack().setPoints();
  //           Reinforcement.instance.getScreen().afterMove(unit);
             return;
         }

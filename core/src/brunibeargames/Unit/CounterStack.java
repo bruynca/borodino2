@@ -328,7 +328,7 @@ public class CounterStack {
         labelPoints = new Label(strPoints,labelStyleName2);
         labelPoints.setTouchable(Touchable.disabled);
         labelPoints.setAlignment(Align.bottom);
-
+        stack.addActor(labelPoints);
     }
     public void setPointsOfficer(){
 
@@ -341,6 +341,7 @@ public class CounterStack {
         labelPoints = new Label(strPoints,labelStyleName2);
         labelPoints.setTouchable(Touchable.disabled);
         labelPoints.setAlignment(Align.bottomLeft);
+        stack.addActor(labelPoints);
 
     }
     public void setCorp(){
