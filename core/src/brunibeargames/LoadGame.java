@@ -120,7 +120,7 @@ public class LoadGame {
 			unit.setAtStartAttackFactor(attack);
 //			defense = Integer.parseInt(xmlunit.getChildByName("atstartDefense").getAttribute("value"));
 			int turnMoved = Integer.parseInt(xmlunit.getChildByName("turnMoved").getAttribute("value"));
-			unit.setMovedThisTurn(turnMoved);
+			unit.setTurnMoved(turnMoved);
 			boolean isDG = Boolean.parseBoolean(xmlunit.getChildByName("dg").getAttribute("value"));
 			if (isDG) {
 				unit.setDisorganized();

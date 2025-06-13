@@ -63,7 +63,7 @@ public class Corp {
         arrCorpColors.add(corpColor);
         corpColor = new CorpColor(Color.valueOf("A8431E"),"5");
         arrCorpColors.add(corpColor);
-        corpColor = new CorpColor(Color.valueOf("3B2B53"),"2C");
+        corpColor = new CorpColor(Color.LIGHT_GRAY,"2C");
         arrCorpColors.add(corpColor);
         corpColor = new CorpColor(Color.valueOf("19A895"),"3C");
         arrCorpColors.add(corpColor);

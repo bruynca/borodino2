@@ -649,7 +649,6 @@ public class Unit {
 		final String strOperationalSupply = "<supply value=\"";
 		final String strThisTurnSupply = "<turnsupply value=\"";
 		final String strDG = "<dg value=\"";
-
 		final String strID = "<ID value=\"";
 
 
@@ -693,7 +692,7 @@ public class Unit {
 	//		sXML.append(String.format("%02d", unit.atStartDefenseFactor));
 			sXML.append(strTerm);
 			sXML.append(strMoveTurn);
-			sXML.append(String.format("%02d", unit.turnMoved));
+			sXML.append(String.format("%02d", unit.getTurnMoved()));
 			sXML.append(strTerm);
 
 			sXML.append(strCanAttack);
@@ -1180,14 +1179,6 @@ public class Unit {
 		currentAttackFactor = atStartAttackFactor;
 	}
 
-	public void setMovedThisTurn(int movedThisTurn) {
-		this.movedThisTurn = movedThisTurn;
-	}
-	int movedThisTurn =0;
-
-	public int getMovedThisTurn() {
-		return movedThisTurn;
-	}
 
 	public boolean isEliminated() {
 		return isEliminated;
@@ -1202,9 +1193,7 @@ public class Unit {
 		return currentMoveFactor;
 	}
 
-	public int getMovedLast() {
-		return turnMoved;
-	}
+
 
 	public Corp getCorp() {
 		return corp;
@@ -1259,6 +1248,14 @@ public class Unit {
 	public int getCurrentMovement() {
 		return currentMoveFactor;
 
+	}
+
+	public void setTurnMoved(int turnMoved) {
+		this.turnMoved = turnMoved;
+	}
+
+	public int getTurnMoved() {
+		return turnMoved;
 	}
 }
 

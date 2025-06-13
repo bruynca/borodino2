@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Timer;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import brunibeargames.UI.BottomMenu;
 import brunibeargames.UI.EventPopUp;
 import brunibeargames.Unit.ClickAction;
 import brunibeargames.Unit.Counter;
@@ -55,6 +56,11 @@ public class Move extends Observable {
         } else {
             arrUnitToMoveWork = Unit.getOnBoardAxis();
         }
+        String strTit = i18NBundle.get("movementphasehelptitle");
+        String strT = i18NBundle.get("movementphasehelp");
+
+        BottomMenu.instance.setHelpData(strTit, strT);
+        BottomMenu.instance.showInquirNextPhase();
         /**
          * Check Turn last shade
          */
@@ -66,12 +72,16 @@ public class Move extends Observable {
          *  for restarted games logic   not much at present
          */
         for (Unit unit : arrUnitToMoveWork) {
-            unit.getMapCounter().getCounterStack().removeShade();
-            unit.getHexOccupy().moveUnitToFront(unit);
-            Counter.rePlace(unit.getHexOccupy());
-            ClickAction clickAction = new ClickAction(unit, ClickAction.TypeAction.Move);
-        }
+            if (unit.getTurnMoved() >= turn) {
+                unit.getMapCounter().getCounterStack().shade();
+            } else {
+                unit.getMapCounter().getCounterStack().removeShade();
+                unit.getHexOccupy().moveUnitToFront(unit);
+                Counter.rePlace(unit.getHexOccupy());
+                ClickAction clickAction = new ClickAction(unit, ClickAction.TypeAction.Move);
+            }
 
+        }
     }
 
     public boolean  anyMovesLeft(boolean isAI) {
@@ -184,7 +194,7 @@ public class Move extends Observable {
         WinModal.instance.release();
         SoundsLoader.instance.stopSounds();
         if (af == AfterMove.ToClick){
-            unit.setMovedThisTurn(NextPhase.instance.getTurn());
+            unit.setTurnMoved(NextPhase.instance.getTurn());
             unit.getMapCounter().getCounterStack().shade();
             //unit.setCurrentMovement((int) (unit.getHexOccupy().getCalcMoveCost(0)));
           //  unit.getMapCounter().getCounterStack().setPoints();
@@ -199,7 +209,7 @@ public class Move extends Observable {
         }
 
         if (af == AfterMove.ToAdvance){
-            unit.setMovedThisTurn(NextPhase.instance.getTurn());
+            unit.setTurnMoved(NextPhase.instance.getTurn());
             if (unit.getMapCounter() != null) {
                 unit.getMapCounter().getCounterStack().shade();
             }
@@ -211,7 +221,7 @@ public class Move extends Observable {
             return;
         }
         if (af == AfterMove.ToReinforcement){
-            unit.setMovedThisTurn(NextPhase.instance.getTurn());
+            unit.setTurnMoved(NextPhase.instance.getTurn());
             unit.getMapCounter().getCounterStack().shade();
             //unit.setCurrentMovement((int) (unit.getHexOccupy().getCalcMoveCost(0)));
           //  unit.getMapCounter().getCounterStack().setPoints();
