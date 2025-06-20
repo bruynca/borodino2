@@ -451,7 +451,7 @@ public class AIUtil {
                 arrReturn.addAll(unit.getHexOccupy().getSurround());
             }
         }else{
-            for (Unit unit:Unit.getOnBoardAxis()) {
+            for (Unit unit:Unit.getOnBoardRussians()) {
                 arrReturn.addAll(unit.getHexOccupy().getSurround());
             }
 

@@ -145,8 +145,8 @@ public class Unit {
 			}
 		}
 	}
-	public static void shadeAllAxis() {
-		for (Unit unit:getOnBoardAxis())
+	public static void shadeAllRussians() {
+		for (Unit unit: getOnBoardRussians())
 		{
 			if (unit.isOnBoard  && unit.counter.getCounterStack() != null)
 			{
@@ -869,11 +869,12 @@ public class Unit {
 			Array<Element> xmlDiv = xmlcorp.getChildrenByName("division");
 			for (Element xmldivision: xmlDiv){
 				String divName = xmldivision.getChildByName("name").getAttribute("value");
+				String divMN = xmldivision.getChildByName("mn").getAttribute("value");
 				String entry="";
 				if (xmldivision.hasChild("entry")){
 					entry = xmldivision.getChildByName("entry").getAttribute("value");
 				}
-				Division div = new Division(divName,corp,isAllies,entry);
+				Division div = new Division(divName,corp,isAllies,entry,divMN);
 				Array<Element> xmlBrig = xmldivision.getChildrenByName("brigade");
 				for (Element xmlBrigade:xmlBrig){
 					String strBrigade= xmlBrigade.getAttribute("value");
@@ -966,25 +967,11 @@ public class Unit {
 		return arrReturn;
 	}
 	/**
-	 * Get all onboard allied combat units
-	 * @return
-	 */
-	public static ArrayList<Unit> getAllied() {
-		ArrayList<Unit> arrReturn = new ArrayList<>();
-		for (Unit unit:arrGameCombatUnits)
-		{
-			if (unit.isAllies) {
-				arrReturn.add(unit);
-			}
-		}
-		return arrReturn;
-	}
-	/**
 	 * Get all onboard axis combat units
 	 * @return
 	 */
 
-	public static ArrayList<Unit> getOnBoardAxis() {
+	public static ArrayList<Unit> getOnBoardRussians() {
 		ArrayList<Unit> arrReturn = new ArrayList<>();
 		for (Unit unit:arrGameCombatUnits)
 		{
@@ -995,20 +982,9 @@ public class Unit {
 		}
 		return arrReturn;
 	}
-	public static ArrayList<Unit> getAxis() {
-		ArrayList<Unit> arrReturn = new ArrayList<>();
-		for (Unit unit:arrGameCombatUnits)
-		{
-			if (!unit.isAllies)
-			{
-				arrReturn.add(unit);
-			}
-		}
-		return arrReturn;
-	}
 	public static ArrayList<Unit> getOnBoardAllies() {
 		ArrayList<Unit> arrReturn = new ArrayList<>();
-		for (Unit unit:arrGameCombatUnits)
+		for (Unit unit:getOnBoardAllied())
 		{
 			if (unit.isOnBoard  && unit.isAllies && !unit.isEliminated)
 			{
@@ -1256,6 +1232,11 @@ public class Unit {
 
 	public int getTurnMoved() {
 		return turnMoved;
+	}
+
+	public Division getDivision() {
+		return division;
+
 	}
 }
 

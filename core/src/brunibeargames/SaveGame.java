@@ -64,7 +64,7 @@ public class SaveGame {
 			 *  get both allied and axis
 			 */
 			ArrayList<Unit> arrUnits = Unit.getOnBoardAllied();
-			arrUnits.addAll(Unit.getOnBoardAxis());
+			arrUnits.addAll(Unit.getOnBoardRussians());
 			arrUnits.addAll(Unit.getEliminated(true));
 			arrUnits.addAll(Unit.getEliminated(false));
 

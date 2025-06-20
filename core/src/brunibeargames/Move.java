@@ -54,13 +54,23 @@ public class Move extends Observable {
         if (isAllies) {
             arrUnitToMoveWork = Unit.getOnBoardAllied();
         } else {
-            arrUnitToMoveWork = Unit.getOnBoardAxis();
+            arrUnitToMoveWork = Unit.getOnBoardRussians();
         }
         String strTit = i18NBundle.get("movementphasehelptitle");
         String strT = i18NBundle.get("movementphasehelp");
 
         BottomMenu.instance.setHelpData(strTit, strT);
         BottomMenu.instance.showInquirNextPhase();
+        BottomMenu.instance.hideBack();
+        BottomMenu.instance.setWarningPhaseChange(true);
+        BottomMenu.instance.setEnablePhaseChange(true);
+        BottomMenu.instance.showNextPhase();
+        String message= i18NBundle.get("warnmovephase");
+        String title = i18NBundle.get("nextphasebutton");
+        BottomMenu.instance.setPhaseData(title, message);
+
+
+
         /**
          * Check Turn last shade
          */
@@ -72,7 +82,9 @@ public class Move extends Observable {
          *  for restarted games logic   not much at present
          */
         for (Unit unit : arrUnitToMoveWork) {
-            if (unit.getTurnMoved() >= turn) {
+            if ((unit.getTurnMoved() >= turn) ||
+               (unit.isAllies &&    unit.getHexOccupy().getRussianZoc(0)) ||
+               ( unit.isRussian && unit.getHexOccupy().getAlliedZoc(0))) {
                 unit.getMapCounter().getCounterStack().shade();
             } else {
                 unit.getMapCounter().getCounterStack().removeShade();
@@ -254,7 +266,7 @@ public class Move extends Observable {
         if (isAllies) {
             arrUnitToMoveWork = Unit.getOnBoardAllied();
         } else {
-            arrUnitToMoveWork = Unit.getOnBoardAxis();
+            arrUnitToMoveWork = Unit.getOnBoardRussians();
         }
         for (Unit unit:arrUnitToMoveWork){
             unit.getMapCounter().getCounterStack().removeHilite();

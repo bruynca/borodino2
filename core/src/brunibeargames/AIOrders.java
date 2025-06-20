@@ -362,7 +362,7 @@ public class AIOrders {
             ArrayList<AIOrders> arrReturn = new ArrayList<>();
             ArrayList<Hex> arrHexEnemy = new ArrayList<>();
             if (isAllies){
-                for (Unit unit:Unit.getOnBoardAxis()){
+                for (Unit unit:Unit.getOnBoardRussians()){
                     arrHexEnemy.add(unit.getHexOccupy());
                 }
             }

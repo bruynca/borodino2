@@ -249,6 +249,9 @@ public class BottomMenu extends Observable {
         this.helpTitle= title;
     }
 
+    public void hideBack() {
+        backOut.setVisible(false);
+    }
 }
 
 

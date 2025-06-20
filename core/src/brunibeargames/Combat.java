@@ -71,7 +71,7 @@ public class Combat implements Observer {
 
     }
     public void doCombatPhase() {
-          Gdx.app.log("Combat", "doCombatphase");
+        Gdx.app.log("Combat", "doCombatphase");
         SaveGame.SaveLastPhase(" Last Turn", 2);
         AttackArrows.getInstance().removeArrows();
         arrHexDefender.clear();
@@ -79,7 +79,7 @@ public class Combat implements Observer {
         if (isAllies){
             Unit.shadeAllAllies();
         }else{
-            Unit.shadeAllAxis();
+            Unit.shadeAllRussians();
         }
         CombatDisplay.instance.end();
         if (isAllies) {
@@ -95,7 +95,7 @@ public class Combat implements Observer {
         if (isAllies) {
         arrUnitWorkFindHexesCanAttack = Unit.getOnBoardAllied();
         } else {
-        arrUnitWorkFindHexesCanAttack = Unit.getOnBoardAxis();
+        arrUnitWorkFindHexesCanAttack = Unit.getOnBoardRussians();
         }
     /**
      * get hexes that the units can attack
@@ -317,7 +317,7 @@ public class Combat implements Observer {
         if (isAllies) {
             arrUnitWorkFindHexesCanAttack = Unit.getOnBoardAllied();
         } else {
-            arrUnitWorkFindHexesCanAttack = Unit.getOnBoardAxis();
+            arrUnitWorkFindHexesCanAttack = Unit.getOnBoardRussians();
         }
         /**
          * get hexes that the units can attack

@@ -104,7 +104,7 @@ public class AccessInternet {
             params.put("type", type);
             sb = Integer.toString(GameSetup.instance.getScenario().ordinal());
             params.put("scenario", sb);
-            sb = Integer.toString(Unit.getOnBoardAxis().size());
+            sb = Integer.toString(Unit.getOnBoardRussians().size());
             params.put("german_cnt", sb);
             sb = Integer.toString(Unit.getOnBoardAllies().size());
             params.put("allied_cnt", sb);

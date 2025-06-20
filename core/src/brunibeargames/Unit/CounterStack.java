@@ -22,6 +22,7 @@ public class CounterStack {
     Label labelSub;
     Image imgSil;
     Label labelCorp;
+    Label labelDivision;
     Stack stack;
     Label labelPoints;
     Label labelPoint2;
@@ -175,10 +176,13 @@ public class CounterStack {
         stack.add(backGround);
         stack.setSize(Counter.size,Counter.size);
         stack.add(corpColor());
+        setDivision();
+        stack.addActor(labelDivision);
 
         imgSil = getRussianSilhouttes();
         imgSil.setTouchable(Touchable.disabled);
         stack.addActor(imgSil);
+
 
         String strBrigade = unit.brigade;
         labelName= new Label(strBrigade,labelStyleName);
@@ -189,8 +193,6 @@ public class CounterStack {
         labelName.setScale(Counter.scaleBrigade);
         stack.addActor(labelName);
         arrActors.add(imgSil);
-        setCorp();
-        stack.addActor(labelCorp);
 
         setPoints();
         stack.setScale(.95f);
@@ -365,6 +367,25 @@ public class CounterStack {
         labelCorp.setAlignment(Align.left);
  //       labelCorp.setFontScale(1.3f);
     }
+    public void setDivision(){
+        if (labelDivision != null){
+            stack.removeActor(labelDivision);
+        }
+        String strMn = unit.getDivision().mN;
+        if (unit.isCommander){ // davout
+            return;
+        }else{
+            labelDivision = new Label(strMn, labelStyleCorp);
+        }
+    //    if (strMn.length() > 1){
+            labelDivision.setFontScale(.6f);
+     //   }else{
+     //       labelDivision.setFontScale((.8f));
+     //   }
+        labelDivision.setTouchable(Touchable.disabled);
+        labelDivision.setAlignment(Align.left);
+        //       labelCorp.setFontScale(1.3f);
+    }
     public void adjustFont(float adjust){
         labelPoints.setFontScale(adjust);
         if (labelName != null) { // allied
@@ -395,13 +416,16 @@ public class CounterStack {
 
         stack.addActor(labelName);
         //       arrActors.add(labelName);
+        setDivision();
+        stack.addActor(labelDivision);
+
         imgSil = getAlliedilhouttes();
         imgSil.setTouchable(Touchable.disabled);
         stack.addActor(imgSil);
         arrActors.add(imgSil);
 
-        setCorp();
-        stack.addActor(labelCorp);
+//        setCorp();
+       // stack.addActor(labelCorp);
         String str = String.valueOf(unit.getCurrentStep())+" ";
 //        labelSub= new Label(str,labelStyleName);
 //        labelSub.setTouchable(Touchable.disabled);
