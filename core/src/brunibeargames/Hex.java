@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 import java.util.ArrayList;
 
 import brunibeargames.Unit.Counter;
+import brunibeargames.Unit.Division;
 import brunibeargames.Unit.Unit;
 
 public class Hex {
@@ -1380,6 +1381,13 @@ public class Hex {
 	public boolean isHasBeenAttackedThisTurn() {
 		return isHasBeenAttackedThisTurn();
 	}
+
+	/**
+	 *  check if unit can occupy this hex
+	 *  only 2 combat units or 3 units belonging to same division
+	 * @param unit
+	 * @return
+	 */
 	public boolean canOccupy(Unit unit) {
 		if (unit.isAllies && checkRussianInHex()){
 			return false;
@@ -1387,12 +1395,30 @@ public class Hex {
 		if (!unit.isAllies && checkAlliesInHex()){
 			return false;
 		}
-		int stackInHex =  0;
-		for (Unit unitch:getUnitsInHex()){
-			stackInHex += unitch.getCurrentStep();
+		if (!unit.isGroundCombat){
+			return true;
 		}
-		if ((unit.getCurrentStep() + stackInHex) > stackMax){
+		int countersInHex =  0;
+		ArrayList<Division> arrDivs = new ArrayList<>();
+		for (Unit unitch:getUnitsInHex()){
+			if (unitch.isGroundCombat){
+				countersInHex++	;
+				if (!arrDivs.contains(unitch.getDivision())) {
+					arrDivs.add(unitch.getDivision());
+				}
+			}
+		}
+		if (countersInHex > 2){
 			return false;
+		}
+		if (countersInHex == 2){
+			if (arrDivs.size() > 1){
+				return false;
+			}else{
+				if (!arrDivs.contains(unit.getDivision())){
+					return false;
+				}
+			}
 		}
 		return true;
 	}

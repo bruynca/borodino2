@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Timer;
 import java.util.UUID;
 
 import brunibeargames.UI.BottomMenu;
+import brunibeargames.UI.StopImage;
 import brunibeargames.Unit.ClickAction;
 import brunibeargames.Unit.CounterStack;
 import brunibeargames.Unit.Officer;
@@ -40,6 +41,7 @@ public class NextPhase {
     DiceEffect diceEffect;
     TurnCounter turnCounter;
     Move move;
+    StopImage stopImage;
 
     // DiceEffect diceEffect = new DiceEffect();
   //  Explosions explosions = new Explosions();
@@ -66,6 +68,7 @@ public class NextPhase {
         BottomMenu bottomMenu = new BottomMenu();
         initiative = new Initiative();
         turnCounter = new TurnCounter();
+        stopImage = new StopImage();
         System.gc();
 
     }

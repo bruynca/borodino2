@@ -13,6 +13,7 @@ import brunibeargames.HiliteHex;
 import brunibeargames.Move;
 import brunibeargames.ObserverPackage;
 import brunibeargames.UI.EventConfirm;
+import brunibeargames.UI.StopImage;
 
 import static com.badlogic.gdx.Gdx.app;
 
@@ -212,14 +213,37 @@ public class ClickAction implements Observer {
 
         ArrayList<Hex> arrHexMove = new ArrayList<>();
         arrHexMove.addAll(unitMove.getMovePossible());
+        ArrayList<Hex> arrRemove =  getOverStacked(unit, arrHexMove);
+        arrHexMove.removeAll(arrRemove);
         ArrayList<Hex> arrRoadMarch = new ArrayList<>();
         AIUtil.RemoveDuplicateHex(arrHexMove);
         arrRoadMarch.addAll(RoadMarch.getMovePossible(unit));
         arrRoadMarch.removeAll(arrHexMove);
         HiliteHex.TypeHilite type = HiliteHex.TypeHilite.Move;
-
         hiliteHex = new HiliteHex(arrHexMove,arrRoadMarch, type, this);
+        for (Hex hex: arrRemove){
+            StopImage stopImage = new StopImage(hex);
+        }
+    }
 
+    /**
+     * Rules is ony 2 units per hex if sam division then 3 units per hex
+     *
+     * @param unit       that is moving
+     * @param arrHexMove the move arre=ay passed by UnitMove
+     * @return all overstacked hexs
+     * assume that passed arrhexcMoves have same type ie allies or russian
+     */
+    private ArrayList<Hex> getOverStacked(Unit unit, ArrayList<Hex> arrHexMove) {
+        ArrayList<Hex> arrRemove = new ArrayList<>();
+        ArrayList<Hex> arrWork = new ArrayList<>();
+        arrWork.addAll(arrHexMove);
+        for (Hex hex : arrWork) {
+            if (!hex.canOccupy(unit)) {
+               arrRemove.add(hex);
+            }
+        }
+        return arrRemove;
     }
 
     public enum TypeAction {Move, Limber, CombatClick,

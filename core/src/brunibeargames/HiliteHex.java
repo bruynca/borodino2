@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import brunibeargames.UI.StopImage;
 import brunibeargames.Unit.ClickAction;
 
 public class HiliteHex implements Observer {
@@ -118,6 +119,7 @@ public class HiliteHex implements Observer {
         arrHex.clear();
         clickAction = null;
         Borodino.instance.deleteObserver(this);
+        StopImage.remove();
 
     }
 
