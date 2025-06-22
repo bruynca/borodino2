@@ -1,5 +1,6 @@
 package brunibeargames.UI;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -19,6 +20,7 @@ import brunibeargames.Borodino;
 import brunibeargames.Fonts;
 import brunibeargames.GameMenuLoader;
 import brunibeargames.Hex;
+import brunibeargames.Map;
 import brunibeargames.SplashScreen;
 
 public class StopImage {
@@ -35,6 +37,7 @@ public class StopImage {
     private EventListener stopEventListener;
 
     Label label;
+    WinToolTip winToolTip;
 
 
     public StopImage() {
@@ -48,6 +51,18 @@ public class StopImage {
     public StopImage(Hex hex) {
         this.hex = hex;
         Vector2 vec = hex.getCounterPosition();
+        Vector2 v2 = Map.ConvertToScreen(hex);
+        int y = Gdx.graphics.getHeight();
+        int x = Gdx.graphics.getWidth();
+        String str = " ";
+        winToolTip = new WinToolTip(str);
+        if (v2.y > y - 50){
+            v2.y -=100;
+        }
+        if (v2.x > x - 100){
+            v2.x -= 100;
+        }
+
         String str2 = i18NBundle.format("overstack");
 
         label = new Label(str2, new Label.LabelStyle(Fonts.getFont24(), Color.WHITE));
@@ -58,11 +73,11 @@ public class StopImage {
         image.addListener(new ClickListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                 Borodino.instance.mapStage.addActor(label);
-                 label.setPosition(vec.x, vec.y+20);
+                 winToolTip = new WinToolTip(str2);
+                 winToolTip.show(v2);
             }
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                label.remove();
+                winToolTip.remove();
             }
         });
         Borodino.instance.mapStage.addActor(image);
