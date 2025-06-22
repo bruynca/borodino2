@@ -221,9 +221,7 @@ public class ClickAction implements Observer {
         arrRoadMarch.removeAll(arrHexMove);
         HiliteHex.TypeHilite type = HiliteHex.TypeHilite.Move;
         hiliteHex = new HiliteHex(arrHexMove,arrRoadMarch, type, this);
-        for (Hex hex: arrRemove){
-            StopImage stopImage = new StopImage(hex);
-        }
+
     }
 
     /**
@@ -243,7 +241,35 @@ public class ClickAction implements Observer {
                arrRemove.add(hex);
             }
         }
+        createStopImages(arrHexMove, arrRemove);
         return arrRemove;
+    }
+
+    /**
+     * Create Stop images - only do for hexes that are completely surrounded
+     * @param arrHexMove
+     * @param arrRemove
+     */
+    private void createStopImages(ArrayList<Hex> arrHexMove, ArrayList<Hex> arrRemove) {
+        ArrayList<Hex> arrWork = new ArrayList<>();
+        for (Hex hex : arrRemove) {
+            boolean isSurround = true;
+            for (Hex hex1 : hex.getSurround()) {
+                if (!arrHexMove.contains(hex1)) {
+                    isSurround = false;
+                    break;
+                }
+            }
+            if (isSurround) {
+                arrWork.add(hex);
+            }
+        }
+        for (Hex hex:arrWork){
+            StopImage stopImage = new StopImage(hex);
+        }
+
+
+
     }
 
     public enum TypeAction {Move, Limber, CombatClick,
