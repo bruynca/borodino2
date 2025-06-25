@@ -1379,7 +1379,7 @@ public class Hex {
 
 
 	public boolean isHasBeenAttackedThisTurn() {
-		return isHasBeenAttackedThisTurn();
+		return hasBeenAttackedThisTurn;
 	}
 
 	/**

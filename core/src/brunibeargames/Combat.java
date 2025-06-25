@@ -3,6 +3,7 @@ package brunibeargames;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -44,16 +45,21 @@ public class Combat implements Observer {
     Attack attack;
     boolean isCancelAttack = false;
     boolean isAttackArrows = false;
-    TextureRegion combat = new TextureRegion(UILoader.instance.combatDisplay.asset.get("combat"));
+    TextureRegion combat;
+
     TextButton attackButton;
     TextButton cancelButton;
+    TextureRegion attackButtonTex;
+    TextureRegion cancelButtonTex;
+    TextureRegion attackButtonOverTex;
+    TextureRegion cancelButtonOverTex;
     static Vector2 positionWinCombat = new Vector2(-100, 0);
     static Vector2 positionWinEnemy = new Vector2(-100, 0);
     WinStackCombat winStackCombat;
-
+    TextureAtlas textureAtlas;
     public Combat() {
         instance = this;        i18NBundle= GameMenuLoader.instance.localization;
-
+        TextureAtlas tCombat = SplashScreen.instance.effectsManager.get("effects/combat.txt");
         initializeButtons();
     }
     /**
@@ -61,7 +67,7 @@ public class Combat implements Observer {
      *
      * @param isAllies
      */
-    public void Intialize(boolean isAllies, boolean isAI) {
+    public void intialize(boolean isAllies, boolean isAI) {
         Gdx.app.log("Combat", "Initialize");
         this.isAllies = isAllies;
         this.isAI = isAI;
@@ -72,7 +78,7 @@ public class Combat implements Observer {
     }
     public void doCombatPhase() {
         Gdx.app.log("Combat", "doCombatphase");
-        SaveGame.SaveLastPhase(" Last Turn", 2);
+        SaveGame.SaveLastPhase(" Last Turn CombatStart", 2);
         AttackArrows.getInstance().removeArrows();
         arrHexDefender.clear();
         arrHexCheckFirstTime.clear();
@@ -85,7 +91,7 @@ public class Combat implements Observer {
         if (isAllies) {
             TurnCounter.instance.updateText(i18NBundle.get("combata"));
         }else{
-            TurnCounter.instance.updateText(i18NBundle.get("combatg"));
+            TurnCounter.instance.updateText(i18NBundle.get("combatr"));
 
         }
         ArrayList<Unit> arrUnitWorkFindHexesCanAttack;
@@ -134,30 +140,35 @@ public class Combat implements Observer {
         }
     }
     public void initializeButtons() {
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle(new TextureRegionDrawable(new TextureRegion(UILoader.instance.combatDisplay.asset.get("attackbutton"))),
-                new TextureRegionDrawable(new TextureRegion(UILoader.instance.combatDisplay.asset.get("attackbuttonover"))),
+        textureAtlas = SplashScreen.instance.effectsManager.get("effects/combat.txt");
+        combat = textureAtlas.findRegion("attack");
+        attackButtonTex = textureAtlas.findRegion("attackbutton");
+        cancelButtonTex = textureAtlas.findRegion("cancelbutton");
+        attackButtonOverTex = textureAtlas.findRegion("attackbuttonover");
+        cancelButtonOverTex = textureAtlas.findRegion("cancelbuttonover");
+
+        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle(new TextureRegionDrawable(attackButtonTex),
+                new TextureRegionDrawable(attackButtonOverTex),
                 null,
                 Fonts.getFont24());
-        textButtonStyle.over = new TextureRegionDrawable(new TextureRegion(UILoader.instance.combatDisplay.asset.get("attackbuttonover")));
+        textButtonStyle.over = new TextureRegionDrawable(attackButtonOverTex);
         if (!Gdx.app.getType().equals(Application.ApplicationType.Desktop)) {
             textButtonStyle.font.getData().scale(0f);
         }
 
         attackButton = new TextButton(GameMenuLoader.instance.localization.get("attack"), textButtonStyle);
-//        attackButton.setSize(169 , 49 );
         attackButton.setSize(200 , 70 );
         attackButton.getLabelCell().padRight(20);
         attackButton.getLabel().setFontScale(2f);
 
-
-        textButtonStyle = new TextButton.TextButtonStyle(new TextureRegionDrawable(new TextureRegion(UILoader.instance.combatDisplay.asset.get("cancelbutton"))),
-                new TextureRegionDrawable(new TextureRegion(UILoader.instance.combatDisplay.asset.get("cancelbuttonover"))),
+        textButtonStyle = new TextButton.TextButtonStyle(new TextureRegionDrawable(cancelButtonTex),
+                new TextureRegionDrawable(cancelButtonOverTex),
                 null,
                 Fonts.getFont24());
-        textButtonStyle.over = new TextureRegionDrawable(new TextureRegion(UILoader.instance.combatDisplay.asset.get("cancelbuttonover")));
-       if (!Gdx.app.getType().equals(Application.ApplicationType.Desktop)) {
-           textButtonStyle.font.getData().scale(0f);
-       }
+        textButtonStyle.over = new TextureRegionDrawable(cancelButtonOverTex);
+
+
+
 
      cancelButton = new TextButton(GameMenuLoader.instance.localization.get("cancel"), textButtonStyle);
 //     cancelButton.setSize(169, 49);
@@ -185,13 +196,12 @@ public class Combat implements Observer {
     }
     private void scheduleAttackHilite(final ArrayList<Hex> arrHexToHilite) {
         Gdx.app.log("Combat", "scheduleAttacks arrHexToHile="+arrHexToHilite);
-
-        final Hex hex = arrHexToHilite.get(0);
+         final Hex hex = arrHexToHilite.get(0);
         Timer.schedule(new Timer.Task() {
                            @Override
                            public void run() {
                                if (NextPhase.instance.getPhase() == Phase.COMBAT.ordinal()) {
-                                   SoundsLoader.instance.playLimber();
+                                  // SoundsLoader.instance.playLimber();
                                    createCombatImage(hex, true);
                                }
                                arrHexToHilite.remove(hex);

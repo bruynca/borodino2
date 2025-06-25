@@ -12,28 +12,21 @@ activated
   index: -1
 alliedrandom
   rotate: false
-  xy: 127, 474
+  xy: 0, 474
   size: 121, 141
   orig: 121, 141
   offset: 0, 0
   index: -1
-attack
-  rotate: false
-  xy: 0, 474
-  size: 127, 126
-  orig: 127, 126
-  offset: 0, 0
-  index: -1
 bagration
   rotate: false
-  xy: 369, 474
+  xy: 242, 474
   size: 121, 143
   orig: 121, 143
   offset: 0, 0
   index: -1
 barclay
   rotate: false
-  xy: 490, 474
+  xy: 363, 474
   size: 121, 143
   orig: 121, 143
   offset: 0, 0
@@ -355,7 +348,7 @@ counterwurtemburg
   index: -1
 davout
   rotate: false
-  xy: 611, 474
+  xy: 484, 474
   size: 121, 143
   orig: 121, 143
   offset: 0, 0
@@ -397,21 +390,21 @@ hilite
   index: -1
 hilitehex
   rotate: false
-  xy: 1445, 474
+  xy: 1318, 474
   size: 205, 178
   orig: 205, 178
   offset: 0, 0
   index: -1
 hilitehexmove3
   rotate: false
-  xy: 1095, 474
+  xy: 968, 474
   size: 175, 152
   orig: 175, 152
   offset: 0, 0
   index: -1
 hilitehexroad
   rotate: false
-  xy: 1270, 474
+  xy: 1143, 474
   size: 175, 152
   orig: 175, 152
   offset: 0, 0
@@ -432,7 +425,7 @@ infodown
   index: -1
 infoover
   rotate: false
-  xy: 1842, 474
+  xy: 1715, 474
   size: 112, 196
   orig: 112, 196
   offset: 0, 0
@@ -453,7 +446,7 @@ italianline2
   index: -1
 kutuzov
   rotate: false
-  xy: 248, 474
+  xy: 121, 474
   size: 121, 142
   orig: 121, 142
   offset: 0, 0
@@ -474,14 +467,14 @@ moved
   index: -1
 murat
   rotate: false
-  xy: 732, 474
+  xy: 605, 474
   size: 121, 143
   orig: 121, 143
   offset: 0, 0
   index: -1
 napoleon
   rotate: false
-  xy: 853, 474
+  xy: 726, 474
   size: 121, 143
   orig: 121, 143
   offset: 0, 0
@@ -502,7 +495,7 @@ polishline2
   index: -1
 randomrussian
   rotate: false
-  xy: 974, 474
+  xy: 847, 474
   size: 121, 143
   orig: 121, 143
   offset: 0, 0
@@ -537,7 +530,7 @@ stop
   index: -1
 warning
   rotate: false
-  xy: 1650, 474
+  xy: 1523, 474
   size: 192, 192
   orig: 192, 192
   offset: 0, 0

@@ -37,7 +37,7 @@ public class SplashScreen {
     private AssetManager mapsManager;
     public  AssetManager unitsManager;
     public  AssetManager cardManager;
-    private AssetManager UIManager;
+    public AssetManager UIManager;
     private SoundsLoader soundAssets;
     private TextureAtlas atlas;
     private TextureAtlas logoAtlas;
@@ -239,8 +239,8 @@ public class SplashScreen {
                 img.addAction(Actions.fadeOut(.4f));
             }
             //          VisUI.load();            //	VisUI.load(VisUI.SkinScale.X2);
-            //VisUI.load();
-            VisUI.load(VisUI.SkinScale.X2);
+            VisUI.load();
+            //VisUI.load(VisUI.SkinScale.X2);
             VisUI.setDefaultTitleAlign(Align.center);
 
 
@@ -319,11 +319,10 @@ public class SplashScreen {
         UIManager = new AssetManager();
         cardManager = new AssetManager();
         mapsManager.load("map/borodinoprod.jpg", Texture.class);
-        effectsManager.load("effects/attackarrows.txt", TextureAtlas.class);
         effectsManager.load("effects/dicefronts.txt", TextureAtlas.class);
         effectsManager.load("effects/dicefrontsblue.txt", TextureAtlas.class);
-//        effectsManager.load("effects/combatdisplay.txt", TextureAtlas.class);
-        effectsManager.load("effects/attackarrows.txt", TextureAtlas.class);
+        effectsManager.load("effects/combat.txt", TextureAtlas.class);
+        //effectsManager.load("effects/attackarrows.txt", TextureAtlas.class);
 //        effectsManager.load("effects/dicerolling.txt", TextureAtlas.class);
 //        effectsManager.load("effects/explosion.txt", TextureAtlas.class);
         UIManager.load("menus/bottommenu.txt", TextureAtlas.class);

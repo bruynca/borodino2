@@ -14,7 +14,8 @@ public class AttackArrows {
     private static AttackArrows instance;
     private Group group;
     private ArrayList<Image> arrImages = new ArrayList<>();
-    TextureAtlas textureAtlas = SplashScreen.instance.unitsManager.get("units/germancounteratlas.txt");
+    TextureAtlas textureAtlas = SplashScreen.instance.effectsManager.get("effects/combat.txt");
+
     TextureRegion texArrow =  textureAtlas.findRegion("attackarrow0");
 
 

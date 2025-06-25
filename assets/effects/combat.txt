@@ -1,0 +1,138 @@
+combat.png
+size: 230, 1423
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+0to0
+  rotate: false
+  xy: 0, 0
+  size: 110, 50
+  orig: 110, 50
+  offset: 0, 0
+  index: -1
+attack
+  rotate: false
+  xy: 0, 50
+  size: 136, 156
+  orig: 136, 156
+  offset: 0, 0
+  index: -1
+attackarrow0
+  rotate: false
+  xy: 136, 50
+  size: 65, 65
+  orig: 65, 65
+  offset: 0, 0
+  index: -1
+attackbutton
+  rotate: false
+  xy: 0, 206
+  size: 161, 49
+  orig: 161, 49
+  offset: 0, 0
+  index: -1
+attackbuttonover
+  rotate: false
+  xy: 0, 255
+  size: 161, 49
+  orig: 161, 49
+  offset: 0, 0
+  index: -1
+backgroundallied
+  rotate: false
+  xy: 0, 304
+  size: 230, 350
+  orig: 230, 350
+  offset: 0, 0
+  index: -1
+backgroundgerman
+  rotate: false
+  xy: 0, 654
+  size: 230, 304
+  orig: 230, 304
+  offset: 0, 0
+  index: -1
+backgroundrussian
+  rotate: false
+  xy: 0, 958
+  size: 230, 304
+  orig: 230, 304
+  offset: 0, 0
+  index: -1
+bridge
+  rotate: false
+  xy: 0, 1262
+  size: 42, 24
+  orig: 42, 24
+  offset: 0, 0
+  index: -1
+cancelbutton
+  rotate: false
+  xy: 42, 1262
+  size: 161, 49
+  orig: 161, 49
+  offset: 0, 0
+  index: -1
+cancelbuttonover
+  rotate: false
+  xy: 0, 1311
+  size: 161, 49
+  orig: 161, 49
+  offset: 0, 0
+  index: -1
+close
+  rotate: false
+  xy: 161, 1311
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+crtback
+  rotate: false
+  xy: 0, 1360
+  size: 56, 39
+  orig: 56, 39
+  offset: 0, 0
+  index: -1
+mechattack
+  rotate: false
+  xy: 56, 1360
+  size: 42, 17
+  orig: 42, 17
+  offset: 0, 0
+  index: -1
+river
+  rotate: false
+  xy: 98, 1360
+  size: 42, 24
+  orig: 42, 24
+  offset: 0, 0
+  index: -1
+surprise
+  rotate: false
+  xy: 140, 1360
+  size: 42, 24
+  orig: 42, 24
+  offset: 0, 0
+  index: -1
+town
+  rotate: false
+  xy: 182, 1360
+  size: 42, 24
+  orig: 42, 24
+  offset: 0, 0
+  index: -1
+trees
+  rotate: false
+  xy: 0, 1399
+  size: 42, 24
+  orig: 42, 24
+  offset: 0, 0
+  index: -1
+village
+  rotate: false
+  xy: 42, 1399
+  size: 42, 24
+  orig: 42, 24
+  offset: 0, 0
+  index: -1

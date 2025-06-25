@@ -80,7 +80,7 @@ public class Attack extends Observable implements Observer  {
         this.isAI = isAI;
         this.isMobileAssualt = isMobileAssualt;
         for (Unit unit : hexTarget.getUnitsInHex()) {
-            if ((isAllies && !!unit.isAllies) || (!isAllies && unit.isAllies)) {
+            if ((isAllies && !unit.isAllies) || (!isAllies && unit.isAllies)) {
                 arrDefenders.add(unit);
  //                   if (unit.getInSupplyThisTurn()) {
                         defenseStrength += unit.getCurrentAttackFactor();
@@ -92,6 +92,10 @@ public class Attack extends Observable implements Observer  {
 
         attackOdds = new AttackOdds(this);
         odds = attackOdds.oddactualString;
+        if (!isAI) {
+            CombatDisplay.instance.updateCombat(this, odds);
+        }
+
     }
 
     public String[] getAttackResults() {

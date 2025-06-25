@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Timer;
 
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.Observer;
 
 import brunibeargames.UI.BottomMenu;
 import brunibeargames.UI.EventPopUp;
@@ -16,7 +17,7 @@ import brunibeargames.Unit.RoadMarch;
 import brunibeargames.Unit.Unit;
 import brunibeargames.Unit.UnitMove;
 
-public class Move extends Observable {
+public class Move extends Observable implements Observer {
     static public Move instance;
     private I18NBundle i18NBundle;
 
@@ -68,6 +69,7 @@ public class Move extends Observable {
         String message= i18NBundle.get("warnmovephase");
         String title = i18NBundle.get("nextphasebutton");
         BottomMenu.instance.setPhaseData(title, message);
+        BottomMenu.instance.addObserver(this);
 
 
 
@@ -102,6 +104,7 @@ public class Move extends Observable {
         } else {
             if (!isAI) {
                 String str = i18NBundle.get("nomoremove");
+                EventPopUp.instance.addObserver(this);
                 EventPopUp.instance.show(str);
                 return false;
             }
@@ -246,7 +249,7 @@ public class Move extends Observable {
 
     public void moveReturnFromClick(boolean isSaveMove, Hex hexExitPanzer, Unit unit){
         if (isSaveMove) {
-            SaveGame.SaveLastPhase(" Last Turn", 2);
+            SaveGame.SaveLastPhase(" Last Turn Move", 2);
         }
 
         /**
@@ -262,6 +265,7 @@ public class Move extends Observable {
     }
 
     public void endMove(boolean isAllies, boolean isAI) {
+        Gdx.app.log("Move", "endMove");
         ArrayList<Unit> arrUnitToMoveWork;
         if (isAllies) {
             arrUnitToMoveWork = Unit.getOnBoardAllied();
@@ -272,6 +276,18 @@ public class Move extends Observable {
             unit.getMapCounter().getCounterStack().removeHilite();
             unit.getMapCounter().getCounterStack().removeShade();
             unit.getMapCounter().removeClickAction();
+        }
+        NextPhase.instance.endPhase();
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+        ObserverPackage oB = (ObserverPackage) o;
+        Gdx.app.log("Move", "update type=" + oB.type.toString());
+        if (oB.type == ObserverPackage.Type.NextPhase || oB.type == ObserverPackage.Type.EVENTPOPUPHIDE){
+            BottomMenu.instance.deleteObserver(this);
+            EventPopUp.instance.deleteObserver(this);
+            endMove(isAllies, isAI);
         }
 
     }

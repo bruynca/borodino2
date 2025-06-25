@@ -6,13 +6,18 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -22,22 +27,42 @@ import com.badlogic.gdx.utils.I18NBundle;
 import static com.badlogic.gdx.graphics.Color.WHITE;
 
 public class WinCRT {
-TextureAtlas textureAtlas = SplashScreen.instance.unitsManager.get("units/germancounteratlas.txt");
+TextureAtlas textureAtlas = SplashScreen.instance.effectsManager.get("effects/combat.txt");
 TextureRegion close =  textureAtlas.findRegion("close");
     TextureRegion backHilite = textureAtlas.findRegion("crtback");
 
     TextTooltip.TextTooltipStyle tooltipStyle;
     Window window;
+    Window windowNew;
     Stage stage;
     int cntCountersToProcess =0;
     I18NBundle i18NBundle;
     Attack attack;
+
+    private Skin skin;
+    private Label[][] cellLabels; // rows: 6 (die rolls), cols: 9 (odds)
+
+    // Combat Results Table values
+    private final String[] headers = {"1-5", "1-4", "1-3", "1-2", "2-1", "3-1", "4-1", "5-1", "6-1"};
+    private final String[][] results = {
+            {"Ar", "Ar", "Dr", "Dr", "Dr", "Dr", "De", "De", "De"},
+            {"Ar", "Ar", "Ar", "Dr", "Dr", "Dr", "Dr", "De", "De"},
+            {"Ae", "Ar", "Ar", "Ar", "Dr", "Dr", "Dr", "Dr", "De"},
+            {"Ae", "Ae", "Ar", "Ar", "Ar", "Dr", "Dr", "Dr", "Dr"},
+            {"Ae", "Ae", "Ae", "Ar", "Ar", "Ar", "Dr", "Dr", "Dr"},
+            {"Ae", "Ae", "Ae", "Ar", "Ar", "Ar", "Ar", "Ex", "Ex"},
+    };
     private EventListener hitOK;
     static public WinCRT instance;
     public WinCRT(){
         instance= this;
     }
     public void show(Attack attack, String dieResult){
+        skin = Borodino.instance.skin;
+        stage = Borodino.instance.guiStage;
+
+        Gdx.app.log("WinCRT", "Create");
+        createnewWindow();
         if (window != null){
             window.remove();
             window = null;
@@ -143,6 +168,8 @@ TextureRegion close =  textureAtlas.findRegion("close");
         stage.addActor(window);
 
     }
+
+
     public void end(){
         if (window != null) {
             int lastX = (int) window.getX();
@@ -151,5 +178,106 @@ TextureRegion close =  textureAtlas.findRegion("close");
             if (window != null){window.remove();}
         }
     }
+    private void createnewWindow() {
+        Window window = new Window("Combat Results Table", skin);
+        window.setMovable(false);
+        window.setResizable(false);
+        window.pad(10);
+        window.defaults().pad(2);
+
+        Table outerTable = new Table(skin);
+        outerTable.defaults().pad(2);
+
+        // Title
+        Label title = new Label("Combat Ratios", skin);
+        title.setAlignment(Align.center);
+        outerTable.add(title).colspan(10).center().padBottom(10);
+        outerTable.row();
+
+        // Header Row
+        outerTable.add("Die Roll");
+        for (String header : headers) {
+            outerTable.add(header);
+        }
+        outerTable.row();
+
+        // Results Rows
+        cellLabels = new Label[6][9];
+
+        for (int row = 0; row < 6; row++) {
+            Table rowTable = new Table(skin);
+            rowTable.add("" + (row + 1)); // Die roll label
+            for (int col = 0; col < 9; col++) {
+                Label cell = new Label(results[row][col], skin);
+                cellLabels[row][col] = cell;
+                rowTable.add(cell).pad(2);
+            }
+            outerTable.add(rowTable).colspan(10).left();
+            outerTable.row();
+        }
+
+        // Explanations
+        Label explanation = new Label(
+                "Attacks executed at greater than 6-1 are treated as 6-1.\n" +
+                        "Attacks executed at less than 1-5 are treated as 1-5.\n" +
+                        "Attacks by artillery alone against non-adjacent units must be made at odds of 1-3 or greater.\n",
+                skin);
+        explanation.setWrap(true);
+        outerTable.add(explanation).colspan(10).width(600).padTop(10);
+        outerTable.row();
+
+        Label legend = new Label(
+                "Explanation Of Results:\n" +
+                        "Ae = Attacker eliminated.\n" +
+                        "Ar = Attacker retreats one hex.\n" +
+                        "Ne = No effect (Ae and Ar barrage attack results are Ne).\n" +
+                        "Dr = Defender retreat.\n" +
+                        "De = Defender eliminated.",
+                skin);
+        legend.setWrap(true);
+        outerTable.add(legend).colspan(10).width(600).padTop(10);
+        outerTable.row();
+
+        // Close Button
+        TextButton close = new TextButton("Close", skin);
+        close.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                window.remove(); // Just hides the CRT window
+            }
+        });
+        outerTable.add(close).colspan(10).center().padTop(15);
+        outerTable.row();
+
+        // Listener on the whole window
+        window.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Window clicked at: x=" + x + ", y=" + y);
+            }
+        });
+
+        window.add(outerTable);
+        window.pack();
+        window.setPosition(
+                (Gdx.graphics.getWidth() - window.getWidth()) / 2,
+                (Gdx.graphics.getHeight() - window.getHeight()) / 2
+        );
+
+        stage.addActor(window);
+
+        // Example Highlight
+        highlight(3, 5); // 4th row, 6th odds column => (die roll = 4), (odds = 3-1)
+    }
+
+    public void highlight(int rowIndex, int colIndex) {
+        for (int r = 0; r < cellLabels.length; r++) {
+            cellLabels[r][colIndex].setColor(Color.YELLOW); // highlight odds column
+        }
+        cellLabels[rowIndex][colIndex].setColor(Color.RED); // highlight result cell
+    }
+
+
+
 
 }

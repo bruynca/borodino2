@@ -42,6 +42,8 @@ public class NextPhase {
     TurnCounter turnCounter;
     Move move;
     StopImage stopImage;
+    Combat combat;
+    CombatDisplay combatDisplay;
 
     // DiceEffect diceEffect = new DiceEffect();
   //  Explosions explosions = new Explosions();
@@ -69,6 +71,9 @@ public class NextPhase {
         initiative = new Initiative();
         turnCounter = new TurnCounter();
         stopImage = new StopImage();
+        combat = new Combat();
+        combatDisplay = new CombatDisplay();
+        WinCRT winCRT = new WinCRT();
         System.gc();
 
     }
@@ -205,6 +210,10 @@ public class NextPhase {
                 case MOVEMENT:
                     move.doMovePhase(initiative.getIsAllies());
                      break;
+
+                case COMBAT:
+                    combat.intialize(initiative.getIsAllies(),false);
+                    break;
                 default:
                     Gdx.app.log("NexPhase", "Invalid Phase");
                     ErrorGame errorGame = new ErrorGame("invalid Phase", this);

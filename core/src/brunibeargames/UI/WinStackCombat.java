@@ -39,7 +39,7 @@ import brunibeargames.Unit.Counter;
 import brunibeargames.Unit.Unit;
 
 public class WinStackCombat implements Observer {
-    TextureAtlas textureAtlas = SplashScreen.instance.unitsManager.get("units/germancounteratlas.txt");
+    TextureAtlas textureAtlas = SplashScreen.instance.UIManager.get("menus/unitselection.txt");
     Texture ok =  null;
 
 
@@ -61,6 +61,7 @@ public class WinStackCombat implements Observer {
 
         stage= Borodino.instance.guiStage;
         this.hex = hex;
+        ok = UILoader.instance.unitSelection.asset.get("ok").getTexture();
         arrUnits.addAll(arrUnitsIn);
         i18NBundle = GameMenuLoader.instance.localization;
         Borodino.instance.addObserver(this);
@@ -157,7 +158,6 @@ public class WinStackCombat implements Observer {
                     {
                         counter.getCounterStack().hilite();
                     }
- //                   reCalculate();
                 }
             });
             //              counter.stack.setSize( Counter.sizeOnMap,Counter.sizeOnMap);

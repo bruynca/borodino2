@@ -13,13 +13,22 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.awt.Dimension;
@@ -75,7 +84,7 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 	 public Stage mainmenuStage;
 	public Screen screen;
 	public Texture texHex;
-	Skin skin;
+	public Skin skin;
 	BitmapFont font;
 	Enter enter;
 	Settings settings;
@@ -100,6 +109,8 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 		instance = this;
 		int width = Gdx.graphics.getWidth();
 		int height = Gdx.graphics.getHeight();
+		//skin = new Skin(Gdx.files.internal("uiskin.json")); // Make sure you have a basic skin
+		 skin = new Skin(Gdx.files.internal("uiskin.json"));
 		 if(Gdx.app.getType() == Application.ApplicationType.Desktop) {
 			 isDesktop = true;
 
@@ -214,17 +225,13 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 			hexStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
 			hexStage.draw(); // make sure done after sprite batch end
 			mapStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
+			//findNullTextures((SnapshotArray<Actor>) mapStage.getActors());
+
 			mapStage.draw(); // make sure done after sprite batch end
 			guiStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
 			guiStage.draw(); // make sure done after sprite batch end
 		}
-/*		if (aiRender){
-			cntAiRender++;
-			if (cntAiRender > 15) {
-				EventAI.instance.tick();
-				cntAiRender =0;
-			}
-		} */
+
 		checkKeyPress();
 		if (Screen.instance != null) {
 			if (isUpdateExplosion || isScroll || isUpdateDice || isBridgeExplosion || isUpdateShell) {
@@ -254,6 +261,67 @@ public class Borodino extends Observable implements ApplicationListener, Gesture
 
 
 	}
+	 private void findNullTextures(SnapshotArray<Actor> actors) {
+		 for (Actor actor : actors) {
+			 // Check if the actor itself is an Image and its drawable/texture is null
+			 if (actor instanceof Image) {
+				 Image image = (Image) actor;
+				 Drawable drawable = image.getDrawable();
+				 if (drawable instanceof TextureRegionDrawable) {
+					 TextureRegionDrawable trd = (TextureRegionDrawable) drawable;
+					 TextureRegion region = trd.getRegion();
+					 if (region == null) {
+						 Gdx.app.error("NullTextureDebug", "Actor '" + actor.getName() + "' (Image) has a null TextureRegion in its Drawable!");
+					 } else if (region.getTexture() == null) {
+						 Gdx.app.error("NullTextureDebug", "Actor '" + actor.getName() + "' (Image) has a TextureRegion whose Texture is NULL!");
+						 // You can set a breakpoint here to inspect `actor` and `region`
+					 }
+				 } else if (drawable == null) {
+					 Gdx.app.error("NullTextureDebug", "Actor '" + actor.getName() + "' (Image) has a NULL Drawable!");
+				 }
+			 }
+			 // You can extend this to check other actors that might have drawables, e.g., Buttons
+			 else if (actor instanceof Button) {
+				 Button button = (Button) actor;
+				 Drawable upDrawable = button.getStyle().up;
+				 checkDrawableForNullTexture(button.getName() + " (Button Up)", upDrawable);
+				 Drawable downDrawable = button.getStyle().down;
+				 checkDrawableForNullTexture(button.getName() + " (Button Down)", downDrawable);
+				 // Check other states like checked, disabled etc. if relevant
+			 }
+			 // Labels also might have background drawables or font regions from their style
+			 else if (actor instanceof Label) {
+				 Label label = (Label) actor;
+				 Drawable backgroundDrawable = label.getStyle().background;
+				 checkDrawableForNullTexture(label.getName() + " (Label Background)", backgroundDrawable);
+				 // Checking font textures is more complex but could be done if issue is with font rendering
+			 }
+
+
+			 // If the actor is a Group, recursively check its children
+			 if (actor instanceof Group) {
+				 findNullTextures(((Group) actor).getChildren());
+			 }
+		 }
+	 }
+
+	 /**
+	  * Helper method to check a Drawable for a null Texture.
+	  */
+	 private void checkDrawableForNullTexture(String context, Drawable drawable) {
+		 if (drawable instanceof TextureRegionDrawable) {
+			 TextureRegionDrawable trd = (TextureRegionDrawable) drawable;
+			 TextureRegion region = trd.getRegion();
+			 if (region == null) {
+				 Gdx.app.error("NullTextureDebug", "Drawable for '" + context + "' has a null TextureRegion!");
+			 } else if (region.getTexture() == null) {
+				 Gdx.app.error("NullTextureDebug", "Drawable for '" + context + "' has a TextureRegion whose Texture is NULL!");
+				 // You can set a breakpoint here
+			 }
+		 } else if (drawable == null) {
+			 Gdx.app.log("NullTextureDebug", "Drawable for '" + context + "' is NULL. This might be intentional.");
+		 }
+	 }
 
 	 private void checkKeyPress() {
 		 if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
