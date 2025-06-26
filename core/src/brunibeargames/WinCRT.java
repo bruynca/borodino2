@@ -205,16 +205,16 @@ TextureRegion close =  textureAtlas.findRegion("close");
         cellLabels = new Label[6][9];
 
         for (int row = 0; row < 6; row++) {
-            Table rowTable = new Table(skin);
-            rowTable.add("" + (row + 1)); // Die roll label
+            outerTable.add("" + (row + 1)).pad(2); // Die roll label
             for (int col = 0; col < 9; col++) {
                 Label cell = new Label(results[row][col], skin);
                 cellLabels[row][col] = cell;
-                rowTable.add(cell).pad(2);
+                outerTable.add(cell).pad(2); // Correctly applies padding to the cell
             }
-            outerTable.add(rowTable).colspan(10).left();
             outerTable.row();
         }
+
+
 
         // Explanations
         Label explanation = new Label(
