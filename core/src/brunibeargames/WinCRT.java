@@ -180,6 +180,9 @@ TextureRegion close =  textureAtlas.findRegion("close");
     }
     private void createnewWindow() {
         Window window = new Window("Combat Results Table", skin);
+        window.getTitleLabel().setAlignment(Align.center);
+        window.getTitleLabel().setFontScale(1.2f);
+        window.padTop(45); // Adds space under the title bar
         window.setMovable(false);
         window.setResizable(false);
         window.pad(10);
