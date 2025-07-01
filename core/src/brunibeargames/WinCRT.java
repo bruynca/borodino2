@@ -6,21 +6,16 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
 
@@ -41,6 +36,7 @@ TextureRegion close =  textureAtlas.findRegion("close");
 
     private Skin skin;
     private Label[][] cellLabels; // rows: 6 (die rolls), cols: 9 (odds)
+    Window.WindowStyle windowStyle;
 
     // Combat Results Table values
     private final String[] headers = {"1-5", "1-4", "1-3", "1-2", "2-1", "3-1", "4-1", "5-1", "6-1"};
@@ -58,11 +54,10 @@ TextureRegion close =  textureAtlas.findRegion("close");
         instance= this;
     }
     public void show(Attack attack, String dieResult){
-        skin = Borodino.instance.skin;
+  /*      skin = Borodino.instance.skin;
         stage = Borodino.instance.guiStage;
 
         Gdx.app.log("WinCRT", "Create");
-        createnewWindow();
         if (window != null){
             window.remove();
             window = null;
@@ -76,7 +71,7 @@ TextureRegion close =  textureAtlas.findRegion("close");
         tooltipStyle.background = new NinePatchDrawable(np);
 
         np = new NinePatch(UILoader.instance.unitSelection.asset.get("window"), 10, 10, 33, 6);
-        Window.WindowStyle windowStyle = new Window.WindowStyle(Fonts.getFont24(), WHITE, new NinePatchDrawable(np));
+        windowStyle = new Window.WindowStyle(Fonts.getFont24(), WHITE, new NinePatchDrawable(np));
         String title = i18NBundle.format("crtwindow");
         window = new Window(title, windowStyle);
         Label lab = window.getTitleLabel();
@@ -107,7 +102,7 @@ TextureRegion close =  textureAtlas.findRegion("close");
         /**
          *  draw heading
          */
-
+/*
         Label label = new Label("RESULT",labelStyleg);
 
         label.setAlignment(Align.left);
@@ -166,6 +161,10 @@ TextureRegion close =  textureAtlas.findRegion("close");
 
         }
         stage.addActor(window);
+        */
+
+        createnewWindow();
+
 
     }
 
@@ -179,26 +178,54 @@ TextureRegion close =  textureAtlas.findRegion("close");
         }
     }
     private void createnewWindow() {
-        Window window = new Window("Combat Results Table", skin);
+        skin = Borodino.instance.skin;
+        stage = Borodino.instance.guiStage;
+
+        Gdx.app.log("WinCRT", "Create");
+        if (window != null){
+            window.remove();
+            window = null;
+        }
+        this.attack = attack;
+        stage= Borodino.instance.guiStage;
+        i18NBundle = GameMenuLoader.instance.localization;
+        tooltipStyle = new TextTooltip.TextTooltipStyle();
+        tooltipStyle.label = new Label.LabelStyle(Fonts.getFont24(), WHITE);
+        NinePatch np = new NinePatch(GameMenuLoader.instance.gameMenu.asset.get("tooltip"), 2, 2, 2, 2);
+        tooltipStyle.background = new NinePatchDrawable(np);
+
+        np = new NinePatch(UILoader.instance.unitSelection.asset.get("window"), 10, 10, 33, 6);
+        windowStyle = new Window.WindowStyle(Fonts.getFont24(), WHITE, new NinePatchDrawable(np));
+        String title = i18NBundle.format("crtwindow");
+        window = new Window(title, windowStyle);
+
+        window = new Window(title, windowStyle);
         window.getTitleLabel().setAlignment(Align.center);
-        window.getTitleLabel().setFontScale(1.2f);
-        window.padTop(45); // Adds space under the title bar
-        window.setMovable(false);
+        window.getTitleLabel().setFontScale(1.0f);
+        //window.getTitleLabel().setScale(1.8f);
+        //window.getTitleLabel().setColor(BLUE);
+        window.padTop(20); // Adds space under the title bar
+        window.setMovable(true);
         window.setResizable(false);
-        window.pad(10);
+        //window.pad(0);
         window.defaults().pad(2);
 
         Table outerTable = new Table(skin);
         outerTable.defaults().pad(2);
 
         // Title
-        Label title = new Label("Combat Ratios", skin);
-        title.setAlignment(Align.center);
-        outerTable.add(title).colspan(10).center().padBottom(10);
+        outerTable.row();
+        Label.LabelStyle labelStyle2 =new Label.LabelStyle(Fonts.getFont24(),Color.WHITE);
+        String str = i18NBundle.format("combatratio");
+
+        Label labTitle = new Label(str, labelStyle2);
+        labTitle.setAlignment(Align.center);
+        outerTable.add(str).colspan(10).center().padBottom(10);
         outerTable.row();
 
         // Header Row
-        outerTable.add("Die Roll");
+        str = i18NBundle.format("dieroll");
+        outerTable.add("str");
         for (String header : headers) {
             outerTable.add(header);
         }
@@ -220,29 +247,20 @@ TextureRegion close =  textureAtlas.findRegion("close");
 
 
         // Explanations
-        Label explanation = new Label(
-                "Attacks executed at greater than 6-1 are treated as 6-1.\n" +
-                        "Attacks executed at less than 1-5 are treated as 1-5.\n" +
-                        "Attacks by artillery alone against non-adjacent units must be made at odds of 1-3 or greater.\n",
-                skin);
+        str = i18NBundle.format("attackexpl");
+        Label explanation = new Label(str, skin);
         explanation.setWrap(true);
         outerTable.add(explanation).colspan(10).width(600).padTop(10);
         outerTable.row();
+        str = i18NBundle.format("explresult");
 
-        Label legend = new Label(
-                "Explanation Of Results:\n" +
-                        "Ae = Attacker eliminated.\n" +
-                        "Ar = Attacker retreats one hex.\n" +
-                        "Ne = No effect (Ae and Ar barrage attack results are Ne).\n" +
-                        "Dr = Defender retreat.\n" +
-                        "De = Defender eliminated.",
-                skin);
+        Label legend = new Label(str,skin);
         legend.setWrap(true);
         outerTable.add(legend).colspan(10).width(600).padTop(10);
         outerTable.row();
 
         // Close Button
-        TextButton close = new TextButton("Close", skin);
+        /*TextButton close = new TextButton("Close", skin);
         close.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -250,7 +268,7 @@ TextureRegion close =  textureAtlas.findRegion("close");
             }
         });
         outerTable.add(close).colspan(10).center().padTop(15);
-        outerTable.row();
+        outerTable.row();*/
 
         // Listener on the whole window
         window.addListener(new ClickListener() {
@@ -266,6 +284,14 @@ TextureRegion close =  textureAtlas.findRegion("close");
                 (Gdx.graphics.getWidth() - window.getWidth()) / 2,
                 (Gdx.graphics.getHeight() - window.getHeight()) / 2
         );
+        Vector2 v2 = GamePreferences.getWindowLocation("CRT");
+        if (v2.x == 0 && v2.y == 0) {
+            //window.setPosition((Gdx.graphics.getWidth() - (window.getWidth() +120)), (Gdx.graphics.getHeight() - window.getHeight() - 400 ));
+        }else{
+            window.setPosition(v2.x, v2.y);
+
+        }
+
 
         stage.addActor(window);
 
@@ -279,6 +305,7 @@ TextureRegion close =  textureAtlas.findRegion("close");
         }
         cellLabels[rowIndex][colIndex].setColor(Color.RED); // highlight result cell
     }
+
 
 
 

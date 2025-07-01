@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
@@ -37,6 +36,8 @@ import brunibeargames.UILoader;
 import brunibeargames.Unit.ClickAction;
 import brunibeargames.Unit.Counter;
 import brunibeargames.Unit.Unit;
+
+import static com.badlogic.gdx.graphics.Color.WHITE;
 
 public class WinStackCombat implements Observer {
     TextureAtlas textureAtlas = SplashScreen.instance.UIManager.get("menus/unitselection.txt");
@@ -70,25 +71,14 @@ public class WinStackCombat implements Observer {
         NinePatch np = new NinePatch(GameMenuLoader.instance.gameMenu.asset.get("tooltip"), 2, 2, 2, 2);
         tooltipStyle.background = new NinePatchDrawable(np);
         np = new NinePatch(UILoader.instance.unitSelection.asset.get("window"), 10, 10, 33, 6);
-        Window.WindowStyle windowStyle = new Window.WindowStyle(Fonts.getFont24(), Color.WHITE, new NinePatchDrawable(np));
+        Window.WindowStyle windowStyle = new Window.WindowStyle(Fonts.getFont24(), WHITE, new NinePatchDrawable(np));
+
+
         String title = i18NBundle.format("combatstack");
         window = new Window(title, windowStyle);
         Label lab = window.getTitleLabel();
         lab.setScale(1.5f);
         lab.setAlignment(Align.center);
-        Image image = new Image(ok);
-        image.setScale(1.2f);
-        image.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                end();
-            }
-        });
-        window.getTitleTable().add(image);
-        hitOK = new TextTooltip(
-                i18NBundle.format("stackcombat"),
-                tooltipStyle);
-        image.addListener(hitOK);
 
         window.setModal(false);
         window.setTransform(true);
