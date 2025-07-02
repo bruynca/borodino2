@@ -307,7 +307,16 @@ TextureRegion close =  textureAtlas.findRegion("close");
     }
 
 
-
-
-
+    public boolean checkOutsideWindow(int x, int y) {
+        float winStartx = window.getX();
+        float winEndx = window.getX() + window.getWidth();
+        float winStarty = window.getY();
+        float winEndy = window.getY() + window.getHeight();
+        int reverse = Gdx.graphics.getHeight() - y;
+        if (x < winStartx || x > winEndx || reverse < winStarty || reverse > winEndy) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

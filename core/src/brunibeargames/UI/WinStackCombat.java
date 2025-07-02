@@ -26,6 +26,7 @@ import java.util.Observer;
 import brunibeargames.Attack;
 import brunibeargames.Borodino;
 import brunibeargames.Combat;
+import brunibeargames.CombatDisplay;
 import brunibeargames.Fonts;
 import brunibeargames.GameMenuLoader;
 import brunibeargames.GamePreferences;
@@ -36,6 +37,7 @@ import brunibeargames.UILoader;
 import brunibeargames.Unit.ClickAction;
 import brunibeargames.Unit.Counter;
 import brunibeargames.Unit.Unit;
+import brunibeargames.WinCRT;
 
 import static com.badlogic.gdx.graphics.Color.WHITE;
 
@@ -211,7 +213,11 @@ public class WinStackCombat implements Observer {
         float  winEndy = window.getY()+window.getHeight();
         int reverse = Gdx.graphics.getHeight() - op.y;
         if (op.x < winStartx || op.x > winEndx || reverse < winStarty || reverse > winEndy) {
-            cancel();
+            if (WinCRT.instance.checkOutsideWindow(op.x, op.y)){
+                if (CombatDisplay.instance.checkOutsideWindow(op.x,op.y)){
+                    cancel();
+                 }
+            }
         }
     }
 

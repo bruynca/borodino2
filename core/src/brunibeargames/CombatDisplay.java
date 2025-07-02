@@ -24,7 +24,7 @@ public class CombatDisplay {
     TextureRegion tRiver =  textureAtlas.findRegion("river");
     TextureRegion tTown =  textureAtlas.findRegion("town");
     TextureRegion tTrees =  textureAtlas.findRegion("trees");
-    TextureRegion tBackGerman =  textureAtlas.findRegion("backgroundgerman");
+    TextureRegion tBackRussian =  textureAtlas.findRegion("backgroundrussiann");
     TextureRegion tBackAllied =  textureAtlas.findRegion("backgroundallied");
     TextureRegion tVillage =  textureAtlas.findRegion("village");
     TextureRegion tSurpise =  textureAtlas.findRegion("surprise");
@@ -96,7 +96,7 @@ public class CombatDisplay {
         if (attack.isAllies()){
             background.setDrawable(new TextureRegionDrawable(tBackAllied));
         }else{
-            background.setDrawable(new TextureRegionDrawable(tBackGerman));
+            background.setDrawable(new TextureRegionDrawable(tBackRussian));
         }
 
         int yposition = showIcons(attack.getHexTarget(),  attack);
@@ -109,10 +109,11 @@ public class CombatDisplay {
     public Attack getAttack(){
         return attack;
     }
-
+    boolean haBeenDragged = false;
     public void end(){
         group.setVisible(false);
         WinCRT.instance.end();
+        haBeenDragged = false;
         if (hexGroup != null) {
             //hexGroup.clear();
         }
@@ -200,7 +201,7 @@ public class CombatDisplay {
 
     private void initializeBackgroundImage(){
 
-        background = new Image(tBackGerman);
+        background = new Image(tBackRussian);
         background.setHeight(360);
         background.setWidth(236);
         background.setPosition((Gdx.graphics.getWidth() - (background.getWidth() +160)), (Gdx.graphics.getHeight() - background.getHeight() - 16 ));
@@ -208,6 +209,11 @@ public class CombatDisplay {
         background.addListener(new DragListener() {
             public void drag(InputEvent event, float x, float y, int pointer) {
                 group.moveBy(x - 20, y - 20);
+                haBeenDragged = true;
+                Gdx.app.log("CombatDisplay", "dragging");
+                Gdx.app.log("CombatDisplay", "x+y="+background.getX()+"  "+background.getY());
+
+
             }
         });
 
@@ -331,6 +337,26 @@ public class CombatDisplay {
 
         group.addActor(alliedCombatFactors);
     }
+
+    public boolean checkOutsideWindow(int x, int y) {
+    /*        float winStartx = background.getX();
+            float winEndx = background.getX() + background.getWidth();
+            float winStarty = background.getY();
+            float winEndy = background.getY() + background.getHeight();
+            int reverse = Gdx.graphics.getHeight() - y;
+            if (x < winStartx || x > winEndx || reverse < winStarty || reverse > winEndy) {
+                return true;
+            } else {
+                return false;
+            } */
+            if (haBeenDragged){
+                haBeenDragged = false;
+                return false;
+            }else{
+                return true;
+            }
+    }
 }
+
 
 
