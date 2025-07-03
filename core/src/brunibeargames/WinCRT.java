@@ -39,8 +39,8 @@ TextureRegion close =  textureAtlas.findRegion("close");
     Window.WindowStyle windowStyle;
 
     // Combat Results Table values
-    private final String[] headers = {"1-5", "1-4", "1-3", "1-2","1-1", "2-1", "3-1", "4-1", "5-1", "6-1"};
-    private final String[][] results = {
+    public static final String[] headers = {"1-5", "1-4", "1-3", "1-2","1-1", "2-1", "3-1", "4-1", "5-1", "6-1"};
+    public static final String[][] results = {
             {"Ar", "Ar", "Dr", "Dr", "Dr", "Dr", "Dr", "De", "De","De"},
             {"Ar", "Ar", "Ar", "Dr", "Dr", "Dr", "Dr", "Dr", "De","De"},
             {"Ae", "Ar", "Ar", "Ar", "Dr", "Dr", "Dr", "Dr", "Dr","De"},
@@ -299,28 +299,36 @@ TextureRegion close =  textureAtlas.findRegion("close");
         // Example Highlight
         //highlight(3, 5); // 4th row, 6th odds column => (die roll = 4), (odds = 3-1)
         float odds = attack.getActualOdds();
+        int colIndex = 0;
+        colIndex = getColindex(odds);
         if (odds == 0) {
-            // no action
-        }else if(odds < .25f )  {
-            highlight(0, 0);
+            unhighlight(); // no action
+        }else{
+            highlight(0, colIndex);
+        }
+    }
+
+    public int getColindex(float odds) {
+        if(odds < .25f )  {
+            return 0;
         }else if(odds < .33f )  {
-            highlight(0, 1);
+            return 1;
         }else if(odds < .49f )  {
-            highlight(0, 2);
+            return 2;
         }else if(odds < 1.0 )  {
-            highlight(0, 3);
+            return 3;
         }else if(odds < 2 )  {
-            highlight(0, 4);
+            return 4;
         }else if(odds < 3 )  {
-            highlight(0, 5);
+            return 5;
         }else if(odds < 4 )  {
-            highlight(0, 6);
+            return 6;
         }else if(odds < 5 )  {
-            highlight(0, 7);
+            return 7;
         }else if(odds < 6 )  {
-            highlight(0, 8);
+            return 8;
         }else   {
-            highlight(1, 9);
+            return 9;
         }
 
     }
@@ -330,6 +338,20 @@ TextureRegion close =  textureAtlas.findRegion("close");
             cellLabels[r][colIndex].setColor(Color.YELLOW); // highlight odds column
         }
         //cellLabels[rowIndex][colIndex].setColor(Color.RED); // highlight result cell
+    }
+    public void unhighlight() {
+        for (int r = 0; r < cellLabels.length; r++) {
+            for (int c = 0; c < cellLabels[r].length; c++) {
+                cellLabels[r][c].setColor(Color.WHITE);
+            }
+        }
+    }
+    public String[] getColumn(int colIndex){
+        String[] ret = new String[6];
+        for (int i=0; i<6; i++){
+            ret[i] = cellLabels[i][colIndex].getText().toString();
+        }
+        return ret;
     }
 
 

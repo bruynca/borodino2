@@ -168,6 +168,7 @@ public class Attack extends Observable implements Observer  {
         attackStrength = calcAttackStrength();
         attackOdds.update();
         odds = attackOdds.oddactualString;
+        CombatDisplay.instance.updateCombat(this, odds);
     }
 
     public Hex getHexTarget() {
@@ -207,10 +208,10 @@ public class Attack extends Observable implements Observer  {
  //       die2 = 6;
         Gdx.app.log("Attack", "die=" + die1 + " " + die2);
 
-        dieResult = attackOdds.getResult(die1, die2);
+        dieResult = attackOdds.getResult(die1);
         DiceEffect.instance.addObserver(this);
         DiceEffect.instance.rollBlueDice(die2);
-        DiceEffect.instance.rollRedDice(die1);
+        //DiceEffect.instance.rollRedDice(die1);
 
     }
     public void afterDieRoll(){
