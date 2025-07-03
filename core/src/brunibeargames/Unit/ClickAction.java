@@ -1,6 +1,7 @@
 package brunibeargames.Unit;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.utils.I18NBundle;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import brunibeargames.AIUtil;
+import brunibeargames.Combat;
 import brunibeargames.Hex;
 import brunibeargames.HiliteHex;
 import brunibeargames.Move;
@@ -16,6 +18,7 @@ import brunibeargames.UI.EventConfirm;
 import brunibeargames.UI.StopImage;
 
 import static com.badlogic.gdx.Gdx.app;
+import static com.badlogic.gdx.Gdx.input;
 
 public class ClickAction implements Observer {
     Unit unit;
@@ -110,8 +113,33 @@ public class ClickAction implements Observer {
                 moveSetup(unit);
             case Limber:
             case CombatClick:
+                Gdx.app.log("ClickAction", "Combat clicked on unit" + unit);
+                unitInProcess = null; //Combat does not extend beyond click
+                if (unit.getMapCounter().getCounterStack().isHilited()){
+                    unit.getMapCounter().getCounterStack().removeHilite();
+                    Combat.instance.removeUnit(unit);
+                    return;
+                }
+                /**
+                 *  Check for all units in stack
+                 */
+                if (input.isKeyPressed(Input.Keys.SHIFT_LEFT) || input.isKeyPressed(Input.Keys.SHIFT_RIGHT)){
+                    for (Unit unitCheck:unit.getHexOccupy().getUnitsInHex()){
+                        if (unitCheck.canAttackThisTurn){
+                            unitCheck.getMapCounter().getCounterStack().hilite();
+                            Combat.instance.addUnit(unitCheck);
+                        }
+                    }
+                    return;
+                }else{
+                    unit.getMapCounter().getCounterStack().hilite();
+                    Combat.instance.addUnit(unit);
+                }
+
+
               break;
             case Advance:
+
                 break;
             case Supply:
             case SelectDelete:

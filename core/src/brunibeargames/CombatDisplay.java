@@ -67,7 +67,7 @@ public class CombatDisplay {
         tooltipStyle.background = new NinePatchDrawable(np);
 
         initializeBackgroundImage();
-        //initializeOddsImage();
+        initializeOddsImage();
         initializeGermanCombatFactorsLabel();
         initializeRussianCombatFactorsLabel();
         initializeBridgeImage();
@@ -91,8 +91,8 @@ public class CombatDisplay {
         hexGroup.clear();
         String dOds = odds.replaceAll(":","to") ;
         TextureRegion  tOdds = textureAtlas.findRegion(dOds);
-
-        this.odds = new Image(tOdds);
+        this.odds.setDrawable(new TextureRegionDrawable(tOdds));
+        //this.odds = new Image(tOdds);
         if (attack.isAllies()){
             background.setDrawable(new TextureRegionDrawable(tBackAllied));
         }else{
@@ -222,7 +222,7 @@ public class CombatDisplay {
 
     private void initializeOddsImage(){
 
-        odds = new Image(new TextureRegion(UILoader.instance.combatDisplay.asset.get("0to0")));
+        odds = new Image(textureAtlas.findRegion("0to0"));
         odds.setHeight(50);
         odds.setWidth(110);
         odds.setPosition(background.getX() + 63 , background.getY() + background.getHeight() - 110);

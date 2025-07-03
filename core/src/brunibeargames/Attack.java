@@ -123,6 +123,9 @@ public class Attack extends Observable implements Observer  {
         attackStrength = calcAttackStrength();
         attackOdds.update();
         odds = attackOdds.oddactualString;
+        if (!isAI) {
+            CombatDisplay.instance.updateCombat(this, odds);
+        }
     }
 
     private void updateDisplayFlags() {

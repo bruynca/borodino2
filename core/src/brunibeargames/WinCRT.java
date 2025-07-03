@@ -39,14 +39,14 @@ TextureRegion close =  textureAtlas.findRegion("close");
     Window.WindowStyle windowStyle;
 
     // Combat Results Table values
-    private final String[] headers = {"1-5", "1-4", "1-3", "1-2", "2-1", "3-1", "4-1", "5-1", "6-1"};
+    private final String[] headers = {"1-5", "1-4", "1-3", "1-2","1-1", "2-1", "3-1", "4-1", "5-1", "6-1"};
     private final String[][] results = {
-            {"Ar", "Ar", "Dr", "Dr", "Dr", "Dr", "De", "De", "De"},
-            {"Ar", "Ar", "Ar", "Dr", "Dr", "Dr", "Dr", "De", "De"},
-            {"Ae", "Ar", "Ar", "Ar", "Dr", "Dr", "Dr", "Dr", "De"},
-            {"Ae", "Ae", "Ar", "Ar", "Ar", "Dr", "Dr", "Dr", "Dr"},
-            {"Ae", "Ae", "Ae", "Ar", "Ar", "Ar", "Dr", "Dr", "Dr"},
-            {"Ae", "Ae", "Ae", "Ar", "Ar", "Ar", "Ar", "Ex", "Ex"},
+            {"Ar", "Ar", "Dr", "Dr", "Dr", "Dr", "Dr", "De", "De","De"},
+            {"Ar", "Ar", "Ar", "Dr", "Dr", "Dr", "Dr", "Dr", "De","De"},
+            {"Ae", "Ar", "Ar", "Ar", "Dr", "Dr", "Dr", "Dr", "Dr","De"},
+            {"Ae", "Ar", "Ar", "Ar", "Ar", "Dr", "Dr", "Dr", "Dr","Dr"},
+            {"Ae", "Ae", "Ar", "Ar", "Ar", "Ar", "Dr", "Dr", "Ex","Ex"},
+            {"Ae", "Ae", "Ae", "Ar", "Ar", "Ar", "Ar", "Ex", "Ex","Ex"},
     };
     private EventListener hitOK;
     static public WinCRT instance;
@@ -54,6 +54,7 @@ TextureRegion close =  textureAtlas.findRegion("close");
         instance= this;
     }
     public void show(Attack attack, String dieResult){
+        this.attack = attack;
   /*      skin = Borodino.instance.skin;
         stage = Borodino.instance.guiStage;
 
@@ -194,7 +195,7 @@ TextureRegion close =  textureAtlas.findRegion("close");
         NinePatch np = new NinePatch(GameMenuLoader.instance.gameMenu.asset.get("tooltip"), 2, 2, 2, 2);
         tooltipStyle.background = new NinePatchDrawable(np);
 
-        np = new NinePatch(UILoader.instance.unitSelection.asset.get("window"), 10, 10, 33, 6);
+        np = new NinePatch(UILoader.instance.unitSelection.asset.get("windowtransparent"), 10, 10, 33, 6);
         windowStyle = new Window.WindowStyle(Fonts.getFont24(), WHITE, new NinePatchDrawable(np));
         String title = i18NBundle.format("crtwindow");
         window = new Window(title, windowStyle);
@@ -220,23 +221,23 @@ TextureRegion close =  textureAtlas.findRegion("close");
 
         Label labTitle = new Label(str, labelStyle2);
         labTitle.setAlignment(Align.center);
-        outerTable.add(str).colspan(10).center().padBottom(10);
+        outerTable.add(str).colspan(11).center().padBottom(10);
         outerTable.row();
 
         // Header Row
         str = i18NBundle.format("dieroll");
-        outerTable.add("str");
+        outerTable.add(str);
         for (String header : headers) {
             outerTable.add(header);
         }
         outerTable.row();
 
         // Results Rows
-        cellLabels = new Label[6][9];
+        cellLabels = new Label[6][10];
 
         for (int row = 0; row < 6; row++) {
             outerTable.add("" + (row + 1)).pad(2); // Die roll label
-            for (int col = 0; col < 9; col++) {
+            for (int col = 0; col < 10; col++) {
                 Label cell = new Label(results[row][col], skin);
                 cellLabels[row][col] = cell;
                 outerTable.add(cell).pad(2); // Correctly applies padding to the cell
@@ -296,14 +297,39 @@ TextureRegion close =  textureAtlas.findRegion("close");
         stage.addActor(window);
 
         // Example Highlight
-        highlight(3, 5); // 4th row, 6th odds column => (die roll = 4), (odds = 3-1)
+        //highlight(3, 5); // 4th row, 6th odds column => (die roll = 4), (odds = 3-1)
+        float odds = attack.getActualOdds();
+        if (odds == 0) {
+            // no action
+        }else if(odds < .25f )  {
+            highlight(0, 0);
+        }else if(odds < .33f )  {
+            highlight(0, 1);
+        }else if(odds < .49f )  {
+            highlight(0, 2);
+        }else if(odds < 1.0 )  {
+            highlight(0, 3);
+        }else if(odds < 2 )  {
+            highlight(0, 4);
+        }else if(odds < 3 )  {
+            highlight(0, 5);
+        }else if(odds < 4 )  {
+            highlight(0, 6);
+        }else if(odds < 5 )  {
+            highlight(0, 7);
+        }else if(odds < 6 )  {
+            highlight(0, 8);
+        }else   {
+            highlight(1, 9);
+        }
+
     }
 
     public void highlight(int rowIndex, int colIndex) {
         for (int r = 0; r < cellLabels.length; r++) {
             cellLabels[r][colIndex].setColor(Color.YELLOW); // highlight odds column
         }
-        cellLabels[rowIndex][colIndex].setColor(Color.RED); // highlight result cell
+        //cellLabels[rowIndex][colIndex].setColor(Color.RED); // highlight result cell
     }
 
 
