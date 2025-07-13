@@ -9,7 +9,7 @@ import brunibeargames.Unit.Unit;
 public class AttackOdds {
 
         static public String[] result ={"Ae","Ar","Dr","Ex","De","D1","A1"};
-
+    public static String[] oddsString = {"1:5","1:4","1:3","1:2","1:1","2:1","3:1","4:1","5:1","6:1"};
         public String oddactualString;
         public String oddUnConverted;
         static public int ixTableView;
@@ -28,13 +28,17 @@ public class AttackOdds {
 
         public void update() {
             int shiftCRT = 0;
+            oddsCheck = attack.attackStrength/attack.defenseStrength;
             crtColumn = WinCRT.instance.getColindex(attack.getActualOdds());
             strResult = WinCRT.instance.getColumn(crtColumn);
+            oddactualString = oddsString[crtColumn];
+
         }
         String getResult(int dice1){
             int check = dice1 -1;
 
-            return strResult[check];
+//            return strResult[check];
+            return Integer.toString(check);
         }
 
         private boolean isArmorEffect(ArrayList<Unit> arrAttackers, Hex hexAttack) {

@@ -44,6 +44,7 @@ public class NextPhase {
     StopImage stopImage;
     Combat combat;
     CombatDisplay combatDisplay;
+    CombatDisplayResults combatDisplayResults;
 
     // DiceEffect diceEffect = new DiceEffect();
   //  Explosions explosions = new Explosions();
@@ -73,6 +74,7 @@ public class NextPhase {
         stopImage = new StopImage();
         combat = new Combat();
         combatDisplay = new CombatDisplay();
+        combatDisplayResults = new CombatDisplayResults();
         WinCRT winCRT = new WinCRT();
         System.gc();
 

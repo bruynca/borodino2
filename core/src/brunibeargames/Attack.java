@@ -3,6 +3,7 @@ package brunibeargames;
 import com.badlogic.gdx.Gdx;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
@@ -36,7 +37,7 @@ public class Attack extends Observable implements Observer  {
     boolean isRiver;
     boolean isMechAttack;
     String dieResult;
-
+    public ArrayList<Unit> arrLossesExAttacker;
 
 
     public boolean isVillage() {
@@ -74,6 +75,7 @@ public class Attack extends Observable implements Observer  {
         if (!isAI) {
             Gdx.app.log("Attack", "Constructor Hex=" + hex);
         }
+        arrLossesExAttacker = new ArrayList<>();
         hexTarget = hex;
         instance = this;
         this.isAllies = isAllies;
@@ -103,11 +105,11 @@ public class Attack extends Observable implements Observer  {
     }
 
     public int[][] getDice() {
-        int[][] tabReturn = new int[AttackOdds.combatResultTableAttacker.length][2];
-        for (int i = 0; i < tabReturn.length; i++) {
+        int[][] tabReturn = new int[2][2];
+        /*for (int i = 0; i < tabReturn.length; i++) {
             tabReturn[i][0] = AttackOdds.combatResultTableAttacker[i][AttackOdds.ixTableView][0];
             tabReturn[i][1] = AttackOdds.combatResultTableAttacker[i][AttackOdds.ixTableView][1];
-        }
+        } */
         return tabReturn;
     }
 
@@ -218,26 +220,64 @@ public class Attack extends Observable implements Observer  {
         Gdx.app.log("Attack", "dieResult=" + dieResult);
          //     dieResult ="D2r2";
         WinCRT.instance.show(this, dieResult);
+        String strResult = WinCRT.instance.strResult;
+        dieResult = "Ex";
+        attackerLoses = 0;
+        attackRetreats = 0;
+        defenderLoses = 0;
+        defenderRetreats = 0;
+        /*
+            for exchange
+         */
 
-        for (int i = 0; i < dieResult.length(); i++) {
-            switch (dieResult.charAt(i)) {
-                case 'A':
-                    attackerLoses = Character.getNumericValue(dieResult.charAt(i + 1));
+        //      for (int i = 0; i < dieResult.length(); i++) {
+            switch (dieResult) {
+                case "Ar":
+                    attackerLoses = 0;
+                    attackRetreats = 1;
                     break;
-                case 'D':
-                    defenderLoses = Character.getNumericValue(dieResult.charAt(i + 1));
+                case "Dr":
+                    defenderLoses = 0;
+                    defenderRetreats = 1;
                     break;
-                case 'r':
-                    defenderRetreats = Character.getNumericValue(dieResult.charAt(i + 1));
+                case "De":
+                    int cntLose= 0;
+                    for (Unit unit:hexTarget.getUnitsInHex()) {
+                        cntLose += unit.getCurrentAttackFactor();
+                    }
+                    defenderLoses = cntLose;
+                    break;
+                case "Ae":
+                    cntLose= 0;
+                    for (Unit unit:arrAttackers){
+                        cntLose += unit.getCurrentAttackFactor();
+                    }
+                    attackerLoses = cntLose;
+                case "Ex":
+                    cntLose= 0;
+                    for (Unit unit:hexTarget.getUnitsInHex()) {
+                        cntLose += unit.getCurrentAttackFactor();
+                    }
+                    defenderLoses = cntLose;
+                    ArrayList<Unit> arrLose =  findUnitsToEliminate(arrAttackers, arrDefenders);
+                    // switch
+                    arrLossesExAttacker.clear();
+                    arrLossesExAttacker.addAll(arrLose);
+                    for (Unit unit:arrLossesExAttacker) {
+                        cntLose += unit.getCurrentAttackFactor();
+                    }
+                    attackerLoses = cntLose;
+
                     break;
             }
-        }
+ //       }
         Gdx.app.log("Attack", "attacker Loses    =" + attackerLoses);
         Gdx.app.log("Attack", "defender Loses    =" + defenderLoses);
         Gdx.app.log("Attack", "defender retreats =" + defenderRetreats);
+        Gdx.app.log("Attack", "attacker retreats =" + attackRetreats);
 
         defenderLosses = new Losses(arrDefenders, defenderLoses);
-        attackerLosses = new Losses(arrAttackers, attackerLoses);
+        attackerLosses = new Losses(arrLossesExAttacker, attackerLoses);
         /**
          *  defender retreats
          */
@@ -300,6 +340,11 @@ public class Attack extends Observable implements Observer  {
     }
 
 
+    /**
+     * This method is called after a retreat has occurred during combat.
+     * It updates the combat display with the results of the advance or continue movement options,
+     * and displays the overall combat results.
+     */
     public void afterRetreat(){
         Gdx.app.log("Attack", "AfterRetreat");
 
@@ -406,7 +451,93 @@ public class Attack extends Observable implements Observer  {
     public float getDefenseStrength() {
         return defenseStrength;
     }
+    public static ArrayList<Unit> findUnitsToEliminate(ArrayList<Unit> attackers, ArrayList<Unit> defenders) {
+        // Calculate total combat factor of defenders
+        int defenderTotal =0;
+        for (Unit defender : defenders) {
+            defenderTotal += defender.getCurrentAttackFactor();
+        }
 
+        // If no defenders or no combat factor to match, return empty list
+        if (defenderTotal == 0) {
+            return new ArrayList<>();
+        }
+
+        int n = attackers.size();
+        // If no attackers, return empty list (or handle as per game rules)
+        if (n == 0) {
+            return new ArrayList<>();
+        }
+
+        // Calculate total combat factor of attackers
+        int attackerTotal = 0;
+        for (Unit attacker : attackers) {
+            attackerTotal += attacker.getCurrentAttackFactor();
+        }
+
+        // If attackers' total is less than defenders', return all attackers
+        if (attackerTotal < defenderTotal) {
+            return new ArrayList<>(attackers);
+        }
+
+        // Dynamic programming to find minimum number of units
+        // dp[i][sum] represents the minimum number of units needed to achieve 'sum' using first i units
+        int maxSum = Math.min(attackerTotal, defenderTotal + 100); // Cap sum to avoid excessive memory
+        int[][] dp = new int[n + 1][maxSum + 1];
+        List<Integer>[][] selectedUnits = new List[n + 1][maxSum + 1];
+
+        // Initialize dp and selectedUnits arrays
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; j <= maxSum; j++) {
+                dp[i][j] = Integer.MAX_VALUE;
+                selectedUnits[i][j] = new ArrayList<>();
+            }
+        }
+        dp[0][0] = 0; // Base case: no units, sum 0
+
+        // Fill dp table
+        for (int i = 1; i <= n; i++) {
+            int cf = attackers.get(i - 1).getCurrentAttackFactor();
+            for (int j = 0; j <= maxSum; j++) {
+                // Don't include unit i-1
+                dp[i][j] = dp[i - 1][j];
+                selectedUnits[i][j] = new ArrayList<>(selectedUnits[i - 1][j]);
+
+                // Include unit i-1 if it improves the solution
+                if (j >= cf && dp[i - 1][j - cf] != Integer.MAX_VALUE) {
+                    int newCount = dp[i - 1][j - cf] + 1;
+                    if (newCount < dp[i][j]) {
+                        dp[i][j] = newCount;
+                        selectedUnits[i][j] = new ArrayList<>(selectedUnits[i - 1][j - cf]);
+                        selectedUnits[i][j].add(i - 1);
+                    }
+                }
+            }
+        }
+
+        // Find the smallest sum >= defenderTotal with minimum units
+        int minUnits = Integer.MAX_VALUE;
+        int bestSum = defenderTotal;
+        for (int sum = defenderTotal; sum <= maxSum; sum++) {
+            if (dp[n][sum] < minUnits) {
+                minUnits = dp[n][sum];
+                bestSum = sum;
+            }
+        }
+
+        // Construct result list
+        ArrayList<Unit> unitsToEliminate = new ArrayList<>();
+        if (minUnits != Integer.MAX_VALUE) {
+            for (int index : selectedUnits[n][bestSum]) {
+                unitsToEliminate.add(attackers.get(index));
+            }
+        } else {
+            // Fallback: return all attackers if no valid combination (shouldn't happen given attackerTotal check)
+            return new ArrayList<>(attackers);
+        }
+
+        return unitsToEliminate;
+    }
 
     @Override
     public void update(Observable observable, Object o) {

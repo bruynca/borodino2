@@ -3,6 +3,7 @@ package brunibeargames;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
 
 import java.util.ArrayList;
@@ -25,8 +27,11 @@ public class CombatDisplayResults extends Observable {
     static public CombatDisplayResults instance;
     private Image background;
     private Group group;
-    private Label axisResults;
-private Label alliedResults;
+    private Label russianResults;
+  //  private Label russianBrigade;
+   // private Label alliedBrigade;
+
+    private Label alliedResults;
     private Label results;
 
     private boolean visible;
@@ -34,6 +39,10 @@ private Label alliedResults;
     private I18NBundle i18NBundle;
     Stage stage;
     Label.LabelStyle labelStyleDisplay;
+    TextureAtlas textureAtlas = SplashScreen.instance.effectsManager.get("effects/combat.txt");
+    TextureRegion tBackRussian =  textureAtlas.findRegion("combatresultsdisplayrussian");
+    TextureRegion tBackAllied =  textureAtlas.findRegion("combatresultsdisplayfrench");
+
     public CombatDisplayResults(){
         labelStyleDisplay  =new Label.LabelStyle(FontFactory.instance.largeFontWhite, Color.YELLOW);
 
@@ -53,40 +62,38 @@ private Label alliedResults;
     }
     public void clearText(){
         alliedResults.setText("");
-        axisResults.setText("");
+        russianResults.setText("");
         results.setText("");
     }
     public void updateResults(String strOdds){
         Gdx.app.log("CombatDisplayResults", "update Results"+strOdds);
-
-        StringBuffer strResult = new StringBuffer();
-        int attackerLoses;
-        int defenderLoses;
-        int defenderRetreats;
-        if (strOdds.contentEquals("NR")){
-            strResult.append(i18NBundle.get("noresult"));
-        }else {
-            for (int i = 0; i < strOdds.length(); i++) {
-                switch (strOdds.charAt(i)) {
-                    case 'A':
-                        attackerLoses = Character.getNumericValue(strOdds.charAt(i + 1));
-                        strResult.append(i18NBundle.format("attackerlose", Integer.toString(attackerLoses)));
-                        strResult.append("  ");
-                        break;
-                    case 'D':
-                        defenderLoses = Character.getNumericValue(strOdds.charAt(i + 1));
-                        strResult.append(i18NBundle.format("defenderlose", Integer.toString(defenderLoses)));
-                        strResult.append("  ");
-
-                        break;
-                    case 'r':
-                        defenderRetreats = Character.getNumericValue(strOdds.charAt(i + 1));
-                        strResult.append(i18NBundle.format("defenderretreat", Integer.toString(defenderRetreats)));
-                        strResult.append("  ");
-                        break;
-                }
-            }
+        if (attack.isAllies()){
+            background.setDrawable(new TextureRegionDrawable(tBackAllied));
+        }else{
+            background.setDrawable(new TextureRegionDrawable(tBackRussian));
         }
+        StringBuffer strResult = new StringBuffer();
+        int attackerLoses = 0;
+        int defenderLoses = 0;
+        int defenderRetreats;
+        switch (strOdds) {
+            case "Ex":
+                attackerLoses = 0;
+                strResult.append(i18NBundle.format("exchange", Integer.toString(attackerLoses)));
+                strResult.append("  ");
+                break;
+            case "AR":
+                strResult.append(i18NBundle.format("attackerlose", Integer.toString(attackerLoses)));
+                strResult.append("  ");
+                break;
+            case "DR":
+              //  defenderLoses = Character.getNumericValue(strOdds.charAt(i + 1));
+                strResult.append(i18NBundle.format("defenderlose", Integer.toString(defenderLoses)));
+                strResult.append("  ");
+
+                break;
+        }
+
         results.setText(strResult);
         results.pack();
         GlyphLayout layout = results.getGlyphLayout();
@@ -109,16 +116,20 @@ private Label alliedResults;
         this.attack = attack;
         isDefenseDisplayed = true;
         String defender = "";
+        String strBrigade =   " ";
         if (combatResults.size() > 0) {
             for (int i = 0; i < combatResults.size(); i++) {
                 CombatResults combatResult = combatResults.get(i);
-                String str = " ";
+                strBrigade = combatResult.getUnit().brigade;
+                String paddedShort = String.format("%-" + 11 + "s", strBrigade);
+
+                //String paddedRightFormat = String.format("%-" + 12 + "s", str);
                 if (combatResult.isDestroyed()) {
-                    defender += i18NBundle.format("destroyed", str) + "\n";
+                    defender += i18NBundle.format("destroyed", paddedShort) + "\n";
                     //defender += combatResult.getUnitName() + " was destroyed" + "\n";
                 }
                 if (combatResult.isStepLosses()) {
-                    defender += i18NBundle.format("loststep", str) + "\n";
+                    defender += i18NBundle.format("loststep") + "\n";
                     //defender += combatResult.getUnitName() + " lost step" + "\n";
                 }
 
@@ -134,7 +145,7 @@ private Label alliedResults;
             alliedResults.setText(defender);
             setAlliedLabel();
         }else {
-            axisResults.setText(defender);
+            russianResults.setText(defender);
             setAxisLabel();
         }
 
@@ -155,13 +166,15 @@ private Label alliedResults;
 
             for (int i = 0; i < combatResults.size(); i++) {
                 CombatResults combatResult = combatResults.get(i);
-                String str = " ";
+                String strBrigade = combatResult.getUnit().brigade;
+                String paddedShort = String.format("%-" + 11 + "s", strBrigade);
+
                 if (combatResult.isDestroyed()) {
-                    attacker += i18NBundle.format("destroyed", str  )+ "\n";
+                    attacker += i18NBundle.format("destroyed",paddedShort)+ "\n";
                     //attacker += combatResult.getUnitName() + " was destroyed" + "\n";
                 }
                 if (combatResult.isStepLosses()) {
-                    attacker += i18NBundle.format("loststep", str )+ "\n";
+                    attacker += i18NBundle.format("loststep")+ "\n";
                     //attacker += combatResult.getUnitName() + " lost step" + "\n";
                 }
                 if (combatResult.isCanContinueMovement()) {
@@ -187,7 +200,7 @@ private Label alliedResults;
             attacker += i18NBundle.format("noresult");
         }
         if (!isAttackerAllies){
-            axisResults.setText(attacker);
+            russianResults.setText(attacker);
             setAxisLabel();
             return;
         }else {
@@ -199,12 +212,12 @@ private Label alliedResults;
     boolean isAttackDisplayed = false;
     boolean isDefenseDisplayed = false;
     private void setAxisLabel(){
-        axisResults.pack();
-        GlyphLayout layout = axisResults.getGlyphLayout();
+        russianResults.pack();
+        GlyphLayout layout = russianResults.getGlyphLayout();
         float height = layout.height;
         float width = layout.width;
-        axisResults.setSize(width, height);
-        axisResults.setPosition(background.getX() + 5 , background.getY() + background.getHeight() - (height + 160));
+        russianResults.setSize(width, height);
+        russianResults.setPosition(background.getX() + 20 , background.getY() + background.getHeight() - (height + 160));
         if (!group.isVisible()) {
             visible = true;
             group.addAction(Actions.sequence(Actions.visible(true), Actions.fadeIn(0.5f)));
@@ -219,7 +232,7 @@ private Label alliedResults;
         float height = layout.height;
         float width = layout.width;
         alliedResults.setSize(width, height);
-        alliedResults.setPosition(background.getX() + background.getWidth()/2 + 5 , background.getY() + background.getHeight() - (height + 160));
+        alliedResults.setPosition(background.getX() + background.getWidth()/2 + 20 , background.getY() + background.getHeight() - (height + 160));
         if (!group.isVisible()) {
             visible = true;
             group.addAction(Actions.sequence(Actions.visible(true), Actions.fadeIn(0.5f)));
@@ -249,7 +262,7 @@ private Label alliedResults;
 
     private void   initializeBackgroundImage(){
 
-        background = new Image(new TextureRegion(UILoader.instance.combatDisplay.asset.get("combatresultsdisplayrussian")));
+        background = new Image(tBackAllied);
         background.setHeight(304);
         background.setWidth(650);
         background.setPosition((Gdx.graphics.getWidth()/2 - background.getWidth()/2), (Gdx.graphics.getHeight()/2 - background.getHeight()/2));
@@ -290,12 +303,14 @@ private Label alliedResults;
     private void initializeAttackerResultsLabel(){
         Label.LabelStyle style = new Label.LabelStyle();
         style.font = Fonts.getFont24Android();
-        axisResults = new Label("",style);
-        axisResults.setSize(30, 20);
-        axisResults.setPosition(background.getX() + 5 , background.getY() + background.getHeight() - 127);
-        axisResults.setVisible(true);
+        russianResults = new Label("",style);
+        russianResults.setSize(30, 20);
+        russianResults.setPosition(background.getX() + 20 , background.getY() + background.getHeight() - 127);
+        russianResults.setVisible(true);
 
-        axisResults.addListener(new ClickListener() {
+
+
+        russianResults.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (!event.getType().equals("touchUp")) {
@@ -327,7 +342,7 @@ private Label alliedResults;
         });
 
 
-        group.addActor(axisResults);
+        group.addActor(russianResults);
     }
     private void initializeResultsLabel() {
         results = new Label("",labelStyleDisplay);
@@ -371,7 +386,7 @@ private Label alliedResults;
         style.font = Fonts.getFont24Android();
         alliedResults = new Label("",style);
         alliedResults.setSize(30, 20);
-        alliedResults.setPosition(background.getX() + background.getWidth()/2 + 5 , background.getY() + background.getHeight() - 127);
+        alliedResults.setPosition(background.getX()+15 + background.getWidth()/2 + 5 , background.getY() + background.getHeight() - 127);
         alliedResults.setVisible(true);
 
         alliedResults.addListener(new ClickListener() {

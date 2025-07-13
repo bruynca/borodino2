@@ -48,6 +48,7 @@ TextureRegion close =  textureAtlas.findRegion("close");
             {"Ae", "Ae", "Ar", "Ar", "Ar", "Ar", "Dr", "Dr", "Ex","Ex"},
             {"Ae", "Ae", "Ae", "Ar", "Ar", "Ar", "Ar", "Ex", "Ex","Ex"},
     };
+    String dieResult;
     private EventListener hitOK;
     static public WinCRT instance;
     public WinCRT(){
@@ -55,6 +56,14 @@ TextureRegion close =  textureAtlas.findRegion("close");
     }
     public void show(Attack attack, String dieResult){
         this.attack = attack;
+        try {
+            int z = Integer.parseInt(dieResult);
+            this.dieResult = dieResult;
+        } catch (NumberFormatException e) {
+            //
+            dieResult = "";
+        }
+
   /*      skin = Borodino.instance.skin;
         stage = Borodino.instance.guiStage;
 
@@ -293,7 +302,7 @@ TextureRegion close =  textureAtlas.findRegion("close");
 
         }
 
-
+       // window.setScale(.95f);
         stage.addActor(window);
 
         // Example Highlight
@@ -332,12 +341,16 @@ TextureRegion close =  textureAtlas.findRegion("close");
         }
 
     }
-
+    public String strResult;
     public void highlight(int rowIndex, int colIndex) {
         for (int r = 0; r < cellLabels.length; r++) {
             cellLabels[r][colIndex].setColor(Color.YELLOW); // highlight odds column
         }
-        //cellLabels[rowIndex][colIndex].setColor(Color.RED); // highlight result cell
+        if (dieResult != null && !dieResult.isEmpty()) {
+            int row = Integer.parseInt(dieResult);
+            cellLabels[row][colIndex].setColor(Color.RED); // highlight result cell
+            strResult = cellLabels[row][colIndex].getText().toString();
+        }
     }
     public void unhighlight() {
         for (int r = 0; r < cellLabels.length; r++) {

@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -30,6 +31,7 @@ import brunibeargames.CombatDisplay;
 import brunibeargames.Fonts;
 import brunibeargames.GameMenuLoader;
 import brunibeargames.GamePreferences;
+import brunibeargames.GameSelection;
 import brunibeargames.Hex;
 import brunibeargames.ObserverPackage;
 import brunibeargames.SplashScreen;
@@ -57,6 +59,12 @@ public class WinStackCombat implements Observer {
     Hex hex;
     private boolean isActive = true;
     private EventListener hitOK;
+    TextButton.TextButtonStyle tx = GameSelection.instance.textButtonStyle;
+    TextButton textButton;
+    TextButton dummyButton;
+    boolean isRollDie = false;
+    int cntHilited = 0;
+
 
 
     public WinStackCombat(ArrayList<Unit> arrUnitsIn, Hex hex) {
@@ -119,6 +127,20 @@ public class WinStackCombat implements Observer {
         window.remove();
 
         setCounters();
+        addAttackButton();
+        window.row();
+        /**
+         *  dummy used for positioning
+         */
+        window.add(dummyButton).width(150).height(40).bottom().padBottom(15).row();
+       // window.add(textButton).width(textButton.getWidth()).height(textButton.getHeight());
+        //window.row();
+    //    window.pack();
+        window.addActor(textButton);
+        float widthWindow = window.getWidth();
+        float heightWindow = window.getHeight();
+        textButton.setX(widthWindow/2 - textButton.getWidth()/2);
+        textButton.setY(dummyButton.getY());
         stage.addActor(window);
     }
     /**
@@ -145,10 +167,20 @@ public class WinStackCombat implements Observer {
                     }
                     if (counter.getCounterStack().isHilited()) {
                         counter.getCounterStack().removeHilite();
+                        cntHilited--;
+                        if (cntHilited < 0){
+                            cntHilited = 0;
+                        }
                     }
                     else
                     {
                         counter.getCounterStack().hilite();
+                        cntHilited++;
+                    }
+                    if (cntHilited == 0){
+                        textButton.setVisible(false);
+                    }else{
+                        textButton.setVisible(true);
                     }
                 }
             });
@@ -159,10 +191,24 @@ public class WinStackCombat implements Observer {
             if (cnt == 12){
                 window.row();
             }
+
         }
         //        reCalculate();
     }
+    private void addAttackButton(){
+        //String rollDie = i18NBundle.format("combatstack");
 
+        textButton =  new TextButton("Attack",tx);
+        textButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                end();
+            }
+        });
+        dummyButton = new TextButton("dummy",tx);
+        textButton.setVisible(false);
+        dummyButton.setVisible(false);
+    }
 
 
     private void end(){
