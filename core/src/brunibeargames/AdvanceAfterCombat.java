@@ -1,6 +1,8 @@
 package brunibeargames;
 
 
+import com.badlogic.gdx.Gdx;
+
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -29,7 +31,7 @@ public class AdvanceAfterCombat implements Observer {
      * @param attack
      */
     public void doAdvance(Attack attack) {
-        app.log("AdvanceAfterCombat", "doAdvance=" + attack.hexTarget);
+        Gdx.app.log("AdvanceAfterCombat", "doAdvance=" + attack.hexTarget);
         if (!isSeen){
             isSeen = true;
   //          HelpPage.instance.showOther("advanceafterhelp");
@@ -66,13 +68,13 @@ public class AdvanceAfterCombat implements Observer {
         arrHexAdvance = calculateAdvancePossible(attack.hexTarget);
         arrUnitsToAdvance.clear();
         arrUnitsToAdvance.addAll(attack.arrAttackers);
-        HelpPage.instance.showOther("advance");
-        if (arrSanity.size() == 0){
+  //      HelpPage.instance.showOther("advance");
+        if (arrSanity.isEmpty()){
             end();
         }
     }
     public void end(){
-        app.log("AdvanceAfterCombat", "end");
+        Gdx.app.log("AdvanceAfterCombat", "end");
         TurnCounter.instance.stopAdvance();
         ClickAction.cancelAll();
         Borodino.instance.deleteObserver(this);
@@ -83,7 +85,7 @@ public class AdvanceAfterCombat implements Observer {
      *  is this the end of all possible advances for this combat
      */
     public void checkEnd(Unit unit){
-        app.log("advanceAfterCombat", "checkend unit="+unit);
+        Gdx.app.log("advanceAfterCombat", "checkend unit="+unit);
 
         arrUnitsToAdvance.remove(unit);
         if (arrUnitsToAdvance.size() == 0 || arrSanity.size() == 0){
@@ -96,7 +98,7 @@ public class AdvanceAfterCombat implements Observer {
      * @param unit
      */
     public ArrayList<Hex> getPossible(Unit unit){
-        app.log("advanceAfterCombat", "getPossible unit="+unit);
+        Gdx.app.log("advanceAfterCombat", "getPossible unit="+unit);
 
         ArrayList<Hex> arrReturn = new ArrayList<>();
         for (Hex hex:arrHexAdvance){
@@ -115,7 +117,7 @@ public class AdvanceAfterCombat implements Observer {
      * is it still possible to advance because of stacking
      */
     public void checkStillPossible(){
-        app.log("advanceAfterCombat", "checkstillPossible ");
+        Gdx.app.log("advanceAfterCombat", "checkstillPossible ");
 
 
         for (Unit unit:arrUnitsToAdvance){
@@ -135,7 +137,7 @@ public class AdvanceAfterCombat implements Observer {
      * @return possible hexes.
      */
     private ArrayList<Hex> calculateAdvancePossible(Hex hexTarget) {
-        app.log("advanceAfterCombat", "caclulateAdvancePossible");
+        Gdx.app.log("advanceAfterCombat", "caclulateAdvancePossible");
 
         ArrayList<Hex> arrReturn = new ArrayList<>();
         arrReturn.add(hexTarget);

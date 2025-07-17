@@ -11,14 +11,14 @@ public class Losses {
      *  changes to allow for new CRT for Borodino
      *  Losses are all or nothing and we are just going to eliminate
      *  all the units
+     *
+     *
      */
     boolean areAllEliminated = false;
-    public Losses(ArrayList<Unit> arrUnits, int toLose) {
-        Gdx.app.log("Losses", "Units=" + arrUnits + " to lose=" + toLose);
+    public Losses(ArrayList<Unit> arrUnits, boolean isPartial) {
+        Gdx.app.log("Losses", "Units=" + arrUnits );
 
-        if (toLose == 0) {
-            return;
-        }
+
         if (arrUnits.size() == 0) {
             areAllEliminated = true;
             return;
@@ -27,7 +27,9 @@ public class Losses {
             unit.eliminate(false);
             CombatResults cr = CombatResults.find(unit);
             cr.setDestroyed(true);
-            areAllEliminated = true;
+            if (!isPartial) {
+                areAllEliminated = true;
+            }
         }
       /*  ArrayList<Unit> arrSorted = new ArrayList<>(); // sort highest first
         int i =0;

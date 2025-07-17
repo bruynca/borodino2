@@ -267,6 +267,7 @@ public class Attack extends Observable implements Observer  {
                         cntLose += unit.getCurrentAttackFactor();
                     }
                     attackerLoses = cntLose;
+                    defenderRetreats = 1;
 
                     break;
             }
@@ -276,8 +277,8 @@ public class Attack extends Observable implements Observer  {
         Gdx.app.log("Attack", "defender retreats =" + defenderRetreats);
         Gdx.app.log("Attack", "attacker retreats =" + attackRetreats);
 
-        defenderLosses = new Losses(arrDefenders, defenderLoses);
-        attackerLosses = new Losses(arrLossesExAttacker, attackerLoses);
+        defenderLosses = new Losses(arrDefenders, false);
+        attackerLosses = new Losses(arrLossesExAttacker, true);
         /**
          *  defender retreats
          */
@@ -288,7 +289,7 @@ public class Attack extends Observable implements Observer  {
         if (!defenderLosses.areAllEliminated && defenderRetreats > 0) {
             defenderRetreat = new DefenderRetreat(this);
             if (defenderRetreat.losses > 0) {
-                defenderLosses = new Losses(arrDefenders, defenderRetreat.losses);
+                defenderLosses = new Losses(arrDefenders, false);
             }
             /**
              * save all units to retreat and fire the first on not eliminated

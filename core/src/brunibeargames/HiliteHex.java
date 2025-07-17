@@ -90,6 +90,8 @@ public class HiliteHex implements Observer {
 
 
     private void processHit(Hex hex) {
+        Gdx.app.log("HiliteHex", "Process Hit hex="+hex);
+
        /* if (type == TypeHilite.Supply){
             Supply.instance.process(hex);
         }else if(type== TypeHilite.SupplyAmerican) {

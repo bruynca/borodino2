@@ -9,6 +9,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import brunibeargames.AIUtil;
+import brunibeargames.AdvanceAfterCombat;
 import brunibeargames.Combat;
 import brunibeargames.Hex;
 import brunibeargames.HiliteHex;
@@ -139,7 +140,17 @@ public class ClickAction implements Observer {
 
               break;
             case Advance:
-
+                app.log("ClickAction", "Advance clicked on unit" + unit);
+                /**
+                 */
+                unit.getMapCounter().counterStack.hilite();
+                ArrayList<Hex> arrHexWork = AdvanceAfterCombat.instance.getPossible(unit);
+                if (arrHexWork.size()> 0) {
+                    hiliteHex = new HiliteHex(AdvanceAfterCombat.instance.getPossible(unit), null,HiliteHex.TypeHilite.Advance, this);
+                    AdvanceAfterCombat.instance.addToOK(arrHexWork);
+                }else{
+                    AdvanceAfterCombat.instance.checkStillPossible();
+                }
                 break;
             case Supply:
             case SelectDelete:
@@ -190,11 +201,20 @@ public class ClickAction implements Observer {
     private Unit unitConfirm;
     private Hex  hexConfirm;
     public void process(Hex hex, boolean isAI, HiliteHex.TypeHilite type) {
+        app.log("ClickAction", "process " );
         switch(typeAction){
             case Move:
                 app.log("ClickAction", "process Move " + unit+" toHex="+hex);
                 moveUnit(unit, hex, isAI);
            case Advance:
+               app.log("ClickAction", "process Advance=" + unit+" toHex="+hex);
+               unit.getMapCounter().getCounterStack().removeHilite();
+               unit.getMapCounter().removeClickAction();
+               hiliteHex.remove();
+               Move.instance.moveUnitAfterAdvance(unit, hex);
+               hexProcess = hex;
+               AdvanceAfterCombat.instance.checkEnd(unit);
+               break;
             default:
                 break;
         }

@@ -45,6 +45,8 @@ public class NextPhase {
     Combat combat;
     CombatDisplay combatDisplay;
     CombatDisplayResults combatDisplayResults;
+    AdvanceAfterCombat advanceAfterCombat;
+    HelpPage helpPage;
 
     // DiceEffect diceEffect = new DiceEffect();
   //  Explosions explosions = new Explosions();
@@ -75,6 +77,8 @@ public class NextPhase {
         combat = new Combat();
         combatDisplay = new CombatDisplay();
         combatDisplayResults = new CombatDisplayResults();
+        advanceAfterCombat = new AdvanceAfterCombat();
+        helpPage =  new HelpPage();
         WinCRT winCRT = new WinCRT();
         System.gc();
 
