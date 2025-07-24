@@ -11,6 +11,7 @@ import java.util.Observer;
 import brunibeargames.AIUtil;
 import brunibeargames.AdvanceAfterCombat;
 import brunibeargames.Combat;
+import brunibeargames.DefenderRetreat;
 import brunibeargames.Hex;
 import brunibeargames.HiliteHex;
 import brunibeargames.Move;
@@ -30,10 +31,19 @@ public class ClickAction implements Observer {
     static boolean isLocked = false;
     private HiliteHex hiliteHex;
     private I18NBundle i18NBundle;
+    DefenderRetreat defenderRetreat;
 
 
     public ClickAction(Unit unit, TypeAction type) {
 
+        this.unit = unit;
+        typeAction = type;
+        unit.getMapCounter().addClickAction(this);
+        arrClickAction.add(this);
+        unitInProcess = null; // when new clickactions added
+    }
+    public ClickAction(Unit unit, TypeAction type, DefenderRetreat defenderRetreat) {
+        this.defenderRetreat = defenderRetreat;
         this.unit = unit;
         typeAction = type;
         unit.getMapCounter().addClickAction(this);
@@ -153,6 +163,12 @@ public class ClickAction implements Observer {
                 }
                 break;
             case Supply:
+            case Retreat:
+                Gdx.app.log("ClickAction", "Retreat on " + unit);
+                retreatSetup(unit,defenderRetreat);
+
+                break;
+
             case SelectDelete:
                 Gdx.app.log("ClickAction", "Select clicked on unit" + unit);
 //                SecondPanzerLoses.instance.select(unit);
@@ -160,6 +176,13 @@ public class ClickAction implements Observer {
                 break;
         }
     }
+
+    private void retreatSetup(Unit unit, DefenderRetreat defenderRetreat) {
+        unit.getMapCounter().counterStack.hilite();
+        HiliteHex.TypeHilite type = HiliteHex.TypeHilite.Retreat;
+        hiliteHex = new HiliteHex(defenderRetreat.arrHexPossible, null, type, this);
+    }
+
     public void cancel(){
         unit.getMapCounter().counterStack.removeHilite();
         unitInProcess = null;
@@ -215,6 +238,15 @@ public class ClickAction implements Observer {
                hexProcess = hex;
                AdvanceAfterCombat.instance.checkEnd(unit);
                break;
+            case Retreat:
+                app.log("ClickAction", "process Retreat=" + unit+" toHex="+hex);
+                unit.getMapCounter().getCounterStack().removeHilite();
+                unit.getMapCounter().removeClickAction();
+                hiliteHex.remove();
+                Move.instance.moveUnitAfterAdvance(unit, hex);
+                hexProcess = hex;
+                defenderRetreat.doNextRetreat(unit);
+                break;
             default:
                 break;
         }
@@ -320,7 +352,7 @@ public class ClickAction implements Observer {
 
     }
 
-    public enum TypeAction {Move, Limber, CombatClick,
+    public enum TypeAction {Move, Limber, CombatClick, Retreat,
         Command, Supply, Advance,SelectDelete};
 
 }

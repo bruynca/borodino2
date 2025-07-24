@@ -182,7 +182,6 @@ public class Attack extends Observable implements Observer  {
     }
 
 
-    ArrayList<Unit> arrUnitsToRetreat = new ArrayList<>();
 
     public void dieRoll() {
         Gdx.app.log("Attack", "dieRoll");
@@ -191,6 +190,7 @@ public class Attack extends Observable implements Observer  {
                 unit.setCanAttackThisTurnOff();
             }
             unit.setHasAttackedThisTurn();
+            unit.getMapCounter().getCounterStack().removeHilite();
         }
         for (Unit unit : arrDefenders) {
             unit.setHasbeenAttackedThisTurn();
@@ -221,7 +221,7 @@ public class Attack extends Observable implements Observer  {
          //     dieResult ="D2r2";
         WinCRT.instance.show(this, dieResult);
         String strResult = WinCRT.instance.strResult;
-        dieResult = "Ex";
+        dieResult = "Dr";
         attackerLoses = 0;
         attackRetreats = 0;
         defenderLoses = 0;
@@ -276,36 +276,45 @@ public class Attack extends Observable implements Observer  {
         Gdx.app.log("Attack", "defender Loses    =" + defenderLoses);
         Gdx.app.log("Attack", "defender retreats =" + defenderRetreats);
         Gdx.app.log("Attack", "attacker retreats =" + attackRetreats);
+        if (dieResult.contentEquals("Dr")) {
+            defenderLosses = new Losses();
+            attackerLosses = new Losses();
 
-        defenderLosses = new Losses(arrDefenders, false);
-        attackerLosses = new Losses(arrLossesExAttacker, true);
+        }else {
+            defenderLosses = new Losses(arrDefenders, false);
+            attackerLosses = new Losses(arrLossesExAttacker, true);
+        }
+        ArrayList<Unit> arrUnitsToRetreat = new ArrayList<>();
+        arrUnitsToRetreat.addAll(arrDefenders);
         /**
          *  defender retreats
          */
         if (defenderLosses.areAllEliminated) {
             isDefendHexVacant = true;
         }
-        arrUnitsToRetreat.clear();
         if (!defenderLosses.areAllEliminated && defenderRetreats > 0) {
             defenderRetreat = new DefenderRetreat(this);
-            if (defenderRetreat.losses > 0) {
-                defenderLosses = new Losses(arrDefenders, false);
+            /**
+             *  check if canRetreat showed a display
+             *  if not add to losses
+             */
+            if (defenderRetreat.cntUnitsCanToRetreat > 0) {
+                // Defender retreat will have set up click actions for units to retreat
+                // wait for fire back
+                // see Move(unit, defenderRetreat.arrHexPossible, Move.AfterMove.Retreats, isAI);
+                return;
+            }else{
+                /**
+                 *  add to losses and go to next stage
+                 */
+                defenderLosses.addLosses(arrDefenders);
+                afterRetreat();
             }
             /**
              * save all units to retreat and fire the first on not eliminated
              */
-            arrUnitsToRetreat.addAll(arrDefenders);
+           // arrUnitsToRetreat.addAll(arrDefenders);
 
-            for (Unit unit : arrDefenders) {
-                if (!unit.isEliminated()) {
-                    CombatResults cr = CombatResults.find(unit);
-                    cr.setHexesRetreated(defenderRetreat.arrRetreatPath.size());
-                    instance = this;
-                    Move.instance.actualMove(unit, defenderRetreat.arrRetreatPath, Move.AfterMove.Retreats, isAI);
-                    return; //
-                }
-            }
-            isDefendHexVacant = true;
         }
         afterRetreat();
 
@@ -318,26 +327,7 @@ public class Attack extends Observable implements Observer  {
     public void doNextRetreat(Unit unitDone){
         Gdx.app.log("Attack", "doNextRetreat unitDone="+unitDone);
 
-        arrUnitsToRetreat.remove(unitDone);
-        ArrayList<Unit> arrRemove = new ArrayList<>();
 
-        for (Unit unit : arrUnitsToRetreat) {
-            if (!unit.isEliminated()) {
-  //              arrUnitsToRetreat.add(unit); // why ??
-                Gdx.app.log("Attack", "doNextRetreat UnitNot Elim");
-                CombatResults cr = CombatResults.find(unit);
-                cr.setHexesRetreated(defenderRetreat.arrRetreatPath.size());
-                Move.instance.actualMove(unit, defenderRetreat.arrRetreatPath, Move.AfterMove.Retreats, isAI);
-                return; //
-            }else {
-                arrRemove.add(unit);
-            }
-        }
-        arrUnitsToRetreat.removeAll(arrRemove);
-        if (arrUnitsToRetreat.size() == 0) {
-            isDefendHexVacant = true;
-            afterRetreat();
-        }
     }
 
 
@@ -352,6 +342,7 @@ public class Attack extends Observable implements Observer  {
         /**
          *  update combat display with advanve or continue results
          */
+        isDefendHexVacant = true;
 
         if (isDefendHexVacant && attackerLosses != null && !attackerLosses.areAllEliminated){
             if (isMobileAssualt) {

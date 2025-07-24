@@ -184,7 +184,9 @@ TextureRegion close =  textureAtlas.findRegion("close");
             int lastX = (int) window.getX();
             int lastY = (int) window.getY();
             GamePreferences.setWindowLocation("CRT", lastX, lastY);
-            if (window != null){window.remove();}
+            if (window != null){
+                window.remove();
+                dieResult = null;}
         }
     }
     private void createnewWindow() {

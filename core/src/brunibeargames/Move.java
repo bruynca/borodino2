@@ -232,7 +232,7 @@ public class Move extends Observable implements Observer {
             return;
         }
         if (af == AfterMove.Retreats){
-            Attack.instance.doNextRetreat(unit);
+            //Attack.instance.doNextRetreat(unit);
             return;
         }
         if (af == AfterMove.ToReinforcement){

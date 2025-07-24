@@ -3,52 +3,104 @@ package brunibeargames;
 import com.badlogic.gdx.Gdx;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
+import brunibeargames.Unit.ClickAction;
 import brunibeargames.Unit.Unit;
-import brunibeargames.Unit.UnitMove;
 
-class DefenderRetreat {
+public class DefenderRetreat implements Observer {
     /**
-     * need to check stacking
+     * Changes for Borodino
+     * This will handle all retreat processing for defenders
+     * 1. Determine if retreat is possible
      */
     int losses;
-    ArrayList<Hex> arrRetreatPath = new ArrayList<>();
+    public boolean canRetreat = false;
+    public int cntUnitsCanToRetreat =0;
+    public ArrayList<Unit> arrDefenders = new ArrayList<>();
+    public ArrayList<Hex> arrHexPossible = new ArrayList();
+    Attack attack;
+    boolean isAllies;
+    HiliteHex hiliteHex;
 
     DefenderRetreat(Attack attack) {
         Gdx.app.log("DefenderRetreat", "Constructor");
-
+        arrDefenders.addAll(attack.arrDefenders);
+        this.attack = attack;
+        arrHexPossible.clear();
+        isAllies = attack.arrDefenders.get(0).isAllies;
+        cntUnitsCanToRetreat = checkRetreat();
         /**
          * get an array of 3 hexes without checkin terrain
          */
-        if (attack.arrDefenders.size() < 1) {
-            ErrorGame errorGame = new ErrorGame("No Defenders to retreat", this);
-            return;
-        }
-        Unit unitRetreatBase = attack.arrDefenders.get(0);
-        UnitMove unitMove = new UnitMove(unitRetreatBase, attack.defenderRetreats, false, false, 0);
-        ArrayList<Hex> arrUnitCanGo = unitMove.getMovePossible();
-        ArrayList<Hex> arrHexPossible = HexHelper.getSurroundinghexes(attack.hexTarget, attack.defenderRetreats);
-        arrHexPossible.retainAll(arrUnitCanGo); // intersection
 
-        ArrayList<RetreathPath> arrRetreats = createRetreatPaths(attack.defenderRetreats, arrHexPossible);
-        scoreRetreatPath(arrRetreats, attack);
-        ArrayList<RetreathPath> arrSorted = sortRetreat(arrRetreats);
-        if (arrSorted.size() == 0) { // no retreats possible
-            losses += attack.defenderRetreats;
-        } else {
-            /**
-             *  take first from sorted
-             */
-            losses += attack.defenderRetreats - arrSorted.get(0).arrHexPath.size();
-            if (arrSorted.get(0).points > 100) {
-                losses++;
-            }
-            for (int i = arrSorted.get(0).arrHexPath.size() - 1; i >= 0; i--) {
-                arrRetreatPath.add(arrSorted.get(0).arrHexPath.get(i));
+    }
+
+    /**
+     * check if there is at lease 1 retreat hex available.
+     * @return
+     */
+    public  int  checkRetreat(){
+        Gdx.app.log("DefenderRetreat", "checkRetreat");
+        canRetreat = true;
+        if (arrDefenders.isEmpty()){
+            cntUnitsCanToRetreat = 0;
+            return cntUnitsCanToRetreat;
+        }
+        cntUnitsCanToRetreat = arrDefenders.size();
+        if (isPlaceToRetreat()){
+            setUpRetreat();
+            return cntUnitsCanToRetreat;
+        }
+        /**
+         *  no place to retreat
+         */
+        canRetreat = false;
+        return cntUnitsCanToRetreat;
+    }
+
+    private void setUpRetreat() {
+        Gdx.app.log("DefenderRetreat", "setUpRetreat");
+        for (Unit unit : arrDefenders) {
+            ClickAction clickAction = new ClickAction(unit, ClickAction.TypeAction.Retreat, this);
+            unit.getMapCounter().getCounterStack().hilite();
+        }
+    }
+
+    private boolean isPlaceToRetreat() {
+        Gdx.app.log("DefenderRetreat", "isPlaceToRetreat");
+        arrHexPossible.addAll(attack.hexTarget.arrSurroundHex);
+        ArrayList<Hex> arrRemove = new ArrayList<>();
+        Unit unitTest= arrDefenders.get(0);
+        for (Hex hex : arrHexPossible) {
+            if (isAllies) {
+                if (hex.getRussianZoc(0)) {
+                    arrRemove.add(hex);
+                }
+                if (hex.isRussianOccupied[0]) {
+                    arrRemove.add(hex);
+                }
+                if (!hex.canOccupy(unitTest)){
+                    arrRemove.add(hex);
+                }
+            } else {
+                if (hex.getAlliedZoc(0)) {
+                    arrRemove.add(hex);
+                }
+                if (hex.isAlliedOccupied[0]) {
+                    arrRemove.add(hex);
+                }
+                if (!hex.canOccupy(unitTest)){
+                    arrRemove.add(hex);
+                }
             }
         }
-        Gdx.app.log("DefenderRetreat", "Losses=" + losses);
-
+        arrHexPossible.removeAll(arrRemove);
+        if (arrHexPossible.isEmpty()){
+            return false;
+        }
+        return true;
     }
 
     public int getLosses() {
@@ -56,85 +108,23 @@ class DefenderRetreat {
 
     }
 
-    private void scoreRetreatPath(ArrayList<RetreathPath> arrRetreats, Attack attack) {
-        /**
-         * update for distance to Supply
-         */
-        for (RetreathPath rep : arrRetreats) {
-            float dist = 9999;
-            rep.updatePoints((int) dist);
-        }
-        /**
-         * update for going through zoc
-         */
-        for (RetreathPath rep : arrRetreats) {
-            for (Hex hex : rep.arrHexPath) {
-                if (attack.arrDefenders.get(0).isAllies) {
-                    if (hex.getRussianZoc(0)) {
-                        rep.points += 100;
-                    }
-                } else {
-                    if (hex.getAlliedZoc(0)) {
-                        rep.points += 100;
-                    }
-                }
-            }
-        }
+
+
+
+
+
+    @Override
+    public void update(Observable observable, Object o) {
+
     }
 
 
-    private ArrayList<RetreathPath> createRetreatPaths ( int defenderRetreats, ArrayList<
-    Hex > arrHexPossible){
-        ArrayList<RetreathPath> arrReturn = new ArrayList<>();
-        int num = defenderRetreats;
-        /**
-         *  get all hexes that are number away
-         */
-        ArrayList<Hex> arrDest = new ArrayList<>();
-
-        for (Hex hex : arrHexPossible) {
-            if (hex.getRange() == num) {
-                arrDest.add(hex);
-            }
+    public void doNextRetreat(Unit unit) {
+        arrDefenders.remove(unit);
+        if (arrDefenders.isEmpty()){
+            attack.afterRetreat();
         }
-        num--;
-        /**
-         *  max is retreat 2
-         */
-        for (Hex hex : arrDest) {
-            if (num > 0) {
-                for (Hex hex2 : hex.getSurround()) {
-                    if (arrHexPossible.contains(hex2) && hex2.getRange() == num) {
-                        RetreathPath retreathPath = new RetreathPath(hex);
-                        retreathPath.addHex(hex2);
-                        arrReturn.add(retreathPath);
-                    }
-                }
-            } else {
-                RetreathPath retreathPath = new RetreathPath(hex);
-                arrReturn.add(retreathPath);
-            }
-
-        }
-        return arrReturn;
     }
-
-    private ArrayList<RetreathPath> sortRetreat (ArrayList < RetreathPath > arrRetreats) {
-        ArrayList<RetreathPath> arrReturn = new ArrayList();
-        int i;
-        int points = 99999;
-        for (RetreathPath rp : arrRetreats) {
-            for (i = 0; i < arrReturn.size(); i++) {
-                if (rp.points < arrReturn.get(i).points) {
-                    break;
-                }
-            }
-            arrReturn.add(i, rp);
-        }
-        return arrReturn;
-    }
-
-
 }
 
 

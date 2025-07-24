@@ -67,9 +67,14 @@ public class AdvanceAfterCombat implements Observer {
         Borodino.instance.addObserver(this);
         arrHexAdvance = calculateAdvancePossible(attack.hexTarget);
         arrUnitsToAdvance.clear();
-        arrUnitsToAdvance.addAll(attack.arrAttackers);
+        for (Unit unit: attack.arrAttackers){
+            if (!unit.isEliminated()){
+                arrUnitsToAdvance.add(unit);
+            }
+        }
+  //      arrUnitsToAdvance.addAll(attack.arrAttackers);
   //      HelpPage.instance.showOther("advance");
-        if (arrSanity.isEmpty()){
+        if (arrSanity.isEmpty() || arrUnitsToAdvance.isEmpty()){
             end();
         }
     }
