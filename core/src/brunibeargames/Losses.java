@@ -1,6 +1,7 @@
 package brunibeargames;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.I18NBundle;
 
 import java.util.ArrayList;
 
@@ -14,19 +15,31 @@ public class Losses {
      *
      *
      */
+    private static I18NBundle i18NBundle;
+
     boolean areAllEliminated = false;
-    public Losses() {
+    boolean isDefender = false;
+    public Losses(boolean isDefender) {
+        this.isDefender = false;
         areAllEliminated = false;
     }
-    public Losses(ArrayList<Unit> arrUnits, boolean isPartial) {
+    public Losses(ArrayList<Unit> arrUnits, boolean isPartial, boolean isDefender) {
         Gdx.app.log("Losses", "Units=" + arrUnits );
-
+        i18NBundle = GameMenuLoader.instance.localization;
+        this.isDefender = isDefender;
 
         if (arrUnits.size() == 0) {
             areAllEliminated = true;
             return;
         }
         for (Unit unit : arrUnits) {
+            String str =i18NBundle.format("destroyed", unit.brigade);
+
+            if (isDefender){
+                CombatDisplayResults.instance.updateCombatResultsDefender(str);
+            }else{
+                CombatDisplayResults.instance.updateCombatResultsAttacker(str);
+            }
             unit.eliminate(false);
             CombatResults cr = CombatResults.find(unit);
             cr.setDestroyed(true);
@@ -46,6 +59,14 @@ public class Losses {
      */
     public void addLosses(ArrayList<Unit> arrDefenders) {
         for (Unit unit : arrDefenders)  {
+            String str =i18NBundle.format("destroyed", unit.brigade);
+
+            if (isDefender){
+                CombatDisplayResults.instance.updateCombatResultsDefender(str);
+            }else{
+                CombatDisplayResults.instance.updateCombatResultsAttacker(str);
+            }
+
             unit.eliminate(false);
             CombatResults cr = CombatResults.find(unit);
             cr.setDestroyed(true);

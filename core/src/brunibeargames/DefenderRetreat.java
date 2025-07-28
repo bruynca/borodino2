@@ -1,6 +1,7 @@
 package brunibeargames;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.I18NBundle;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -23,14 +24,19 @@ public class DefenderRetreat implements Observer {
     Attack attack;
     boolean isAllies;
     HiliteHex hiliteHex;
+    private static I18NBundle i18NBundle;
+
 
     DefenderRetreat(Attack attack) {
         Gdx.app.log("DefenderRetreat", "Constructor");
+        i18NBundle = GameMenuLoader.instance.localization;
+
         arrDefenders.addAll(attack.arrDefenders);
         this.attack = attack;
         arrHexPossible.clear();
         isAllies = attack.arrDefenders.get(0).isAllies;
         cntUnitsCanToRetreat = checkRetreat();
+
         /**
          * get an array of 3 hexes without checkin terrain
          */
@@ -65,6 +71,8 @@ public class DefenderRetreat implements Observer {
         for (Unit unit : arrDefenders) {
             ClickAction clickAction = new ClickAction(unit, ClickAction.TypeAction.Retreat, this);
             unit.getMapCounter().getCounterStack().hilite();
+            String str =i18NBundle.format("retreat", unit.brigade);
+            CombatDisplayResults.instance.updateCombatResultsDefender(str);
         }
     }
 

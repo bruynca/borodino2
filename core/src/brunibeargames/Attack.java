@@ -229,6 +229,19 @@ public class Attack extends Observable implements Observer  {
         /*
             for exchange
          */
+        CombatDisplayResults.instance.updateResults(dieResult, this);
+        boolean isAttackerAllies = false;
+        boolean isDefenseAllies = false;
+        if (isAllies) {
+            isAttackerAllies = true;
+            isDefenseAllies = false;
+        }else{
+            isAttackerAllies = false;
+            isDefenseAllies = true;
+        }
+        defenderLosses = new Losses(isDefenseAllies);
+        attackerLosses = new Losses(isAttackerAllies);
+
 
         //      for (int i = 0; i < dieResult.length(); i++) {
             switch (dieResult) {
@@ -245,6 +258,7 @@ public class Attack extends Observable implements Observer  {
                     for (Unit unit:hexTarget.getUnitsInHex()) {
                         cntLose += unit.getCurrentAttackFactor();
                     }
+                    defenderLosses.addLosses(arrDefenders);
                     defenderLoses = cntLose;
                     break;
                 case "Ae":
@@ -253,6 +267,9 @@ public class Attack extends Observable implements Observer  {
                         cntLose += unit.getCurrentAttackFactor();
                     }
                     attackerLoses = cntLose;
+                    defenderLosses = new Losses(arrDefenders, false, true);
+                    attackerLosses = new Losses(arrLossesExAttacker, true, false);
+
                 case "Ex":
                     cntLose= 0;
                     for (Unit unit:hexTarget.getUnitsInHex()) {
@@ -267,6 +284,9 @@ public class Attack extends Observable implements Observer  {
                         cntLose += unit.getCurrentAttackFactor();
                     }
                     attackerLoses = cntLose;
+                    defenderLosses = new Losses(arrDefenders, false,true);
+                    attackerLosses = new Losses(arrLossesExAttacker, true, false);
+
                     defenderRetreats = 1;
 
                     break;
@@ -276,14 +296,7 @@ public class Attack extends Observable implements Observer  {
         Gdx.app.log("Attack", "defender Loses    =" + defenderLoses);
         Gdx.app.log("Attack", "defender retreats =" + defenderRetreats);
         Gdx.app.log("Attack", "attacker retreats =" + attackRetreats);
-        if (dieResult.contentEquals("Dr")) {
-            defenderLosses = new Losses();
-            attackerLosses = new Losses();
 
-        }else {
-            defenderLosses = new Losses(arrDefenders, false);
-            attackerLosses = new Losses(arrLossesExAttacker, true);
-        }
         ArrayList<Unit> arrUnitsToRetreat = new ArrayList<>();
         arrUnitsToRetreat.addAll(arrDefenders);
         /**
@@ -366,14 +379,14 @@ public class Attack extends Observable implements Observer  {
          * display the result of combat
          * We have turned the display with Americans first so need to change flags
          */
-        if (isAllies()) {
+   /*     if (isAllies()) {
             CombatDisplayResults.instance.updateCombatResultsDefender(CombatResults.arrCombatAxis, false, this);
             CombatDisplayResults.instance.updateCombatResultsAttacker(CombatResults.arrCombatAllied, false, this);
         }else{
             CombatDisplayResults.instance.updateCombatResultsDefender(CombatResults.arrCombatAllied, true, this);
             CombatDisplayResults.instance.updateCombatResultsAttacker(CombatResults.arrCombatAxis, true, this);
         }
-        CombatDisplayResults.instance.updateResults(dieResult);
+        CombatDisplayResults.instance.updateResults(dieResult, this); */
         return;
 
     }

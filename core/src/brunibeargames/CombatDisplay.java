@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -112,8 +113,10 @@ public class CombatDisplay {
     boolean haBeenDragged = false;
     public void end(){
         group.setVisible(false);
-        WinCRT.instance.end();
+        //WinCRT.instance.end();
         haBeenDragged = false;
+        GamePreferences.setWindowLocation("combatdisplay", (int) background.getX(), (int) background.getY());
+
         if (hexGroup != null) {
             //hexGroup.clear();
         }
@@ -204,7 +207,15 @@ public class CombatDisplay {
         background = new Image(tBackRussian);
         background.setHeight(360);
         background.setWidth(236);
-        background.setPosition((Gdx.graphics.getWidth() - (background.getWidth() +160)), (Gdx.graphics.getHeight() - background.getHeight() - 16 ));
+        Vector2 v2 = GamePreferences.getWindowLocation("combatdisplay");
+        if (v2.x == 0 && v2.y == 0) {
+            background.setPosition(Gdx.graphics.getWidth()-(background.getWidth()+10),
+                    Gdx.graphics.getHeight()-(background.getHeight()-10));
+        }else{
+            background.setPosition(v2.x, v2.y);
+        }
+
+        //background.setPosition((Gdx.graphics.getWidth() - (background.getWidth() +160)), (Gdx.graphics.getHeight() - background.getHeight() - 16 ));
 
         background.addListener(new DragListener() {
             public void drag(InputEvent event, float x, float y, int pointer) {

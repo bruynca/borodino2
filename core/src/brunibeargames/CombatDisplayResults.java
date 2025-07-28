@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -14,10 +15,11 @@ import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
 
-import java.util.ArrayList;
 import java.util.Observable;
 
 import brunibeargames.UI.MouseImage;
@@ -42,7 +44,13 @@ public class CombatDisplayResults extends Observable {
     TextureAtlas textureAtlas = SplashScreen.instance.effectsManager.get("effects/combat.txt");
     TextureRegion tBackRussian =  textureAtlas.findRegion("combatresultsdisplayrussian");
     TextureRegion tBackAllied =  textureAtlas.findRegion("combatresultsdisplayfrench");
-
+    int cntDefendLable=0;
+    int cntAttackLable=0;
+    int maxLable = 5;
+    private Label[] battleDefendLabel = new Label[5];
+    private String battleDefendString = "";
+    private Label[] battleAttackLabel = new Label[5];
+    private String battleAttacktring = "";
     public CombatDisplayResults(){
         labelStyleDisplay  =new Label.LabelStyle(FontFactory.instance.largeFontWhite, Color.YELLOW);
 
@@ -65,7 +73,8 @@ public class CombatDisplayResults extends Observable {
         russianResults.setText("");
         results.setText("");
     }
-    public void updateResults(String strOdds){
+    public void updateResults(String strOdds, Attack attack){
+        this.attack = attack;
         Gdx.app.log("CombatDisplayResults", "update Results"+strOdds);
         if (attack.isAllies()){
             background.setDrawable(new TextureRegionDrawable(tBackAllied));
@@ -86,9 +95,9 @@ public class CombatDisplayResults extends Observable {
                 strResult.append(i18NBundle.format("attackerlose", Integer.toString(attackerLoses)));
                 strResult.append("  ");
                 break;
-            case "DR":
+            case "Dr":
               //  defenderLoses = Character.getNumericValue(strOdds.charAt(i + 1));
-                strResult.append(i18NBundle.format("defenderlose", Integer.toString(defenderLoses)));
+                strResult.append(i18NBundle.format("defenderretreat", Integer.toString(defenderLoses)));
                 strResult.append("  ");
 
                 break;
@@ -107,126 +116,50 @@ public class CombatDisplayResults extends Observable {
             group.addAction(Actions.sequence(Actions.visible(true), Actions.fadeIn(0.5f)));
             setChanged();
             notifyObservers(new ObserverPackage(ObserverPackage.Type.CombatDisplayResults,null,0,0));
-       }
+            CombatDisplay.instance.end();
+        }
 
     }
-    public void updateCombatResultsDefender(ArrayList<CombatResults> combatResults, boolean isAttackerAllies, Attack attack){
-        Gdx.app.log("CombatDisplayResults", "updatCombatResultsDefender");
-
-        this.attack = attack;
-        isDefenseDisplayed = true;
-        String defender = "";
-        String strBrigade =   " ";
-        if (combatResults.size() > 0) {
-            for (int i = 0; i < combatResults.size(); i++) {
-                CombatResults combatResult = combatResults.get(i);
-                strBrigade = combatResult.getUnit().brigade;
-                String paddedShort = String.format("%-" + 11 + "s", strBrigade);
-
-                //String paddedRightFormat = String.format("%-" + 12 + "s", str);
-                if (combatResult.isDestroyed()) {
-                    defender += i18NBundle.format("destroyed", paddedShort) + "\n";
-                    //defender += combatResult.getUnitName() + " was destroyed" + "\n";
-                }
-                if (combatResult.isStepLosses()) {
-                    defender += i18NBundle.format("loststep") + "\n";
-                    //defender += combatResult.getUnitName() + " lost step" + "\n";
-                }
-
-            }
-            if (combatResults.get(0).getHexesRetreated() > 0) {
-                defender += i18NBundle.format("defenderretreated", combatResults.get(0).getHexesRetreated()) + "\n";
-                //defender += "Defending forces retreated " + combatResults.get(0).getHexesRetreated() + " hexes";
-            }
-        }else{
-            defender += i18NBundle.format("noresult");
+    public void updateCombatResultsDefender(String message){
+        Gdx.app.log("CombatDisplayResults", "updatCombatResultsDefender ");
+        Label.LabelStyle style = new Label.LabelStyle();
+        style.font = Fonts.getFont24Android();
+        battleDefendLabel[cntDefendLable] = new Label(message, style);
+        battleDefendLabel[cntDefendLable].setWrap(true); // Enable text wrapping
+        battleDefendLabel[cntDefendLable].setAlignment(Align.center); // Center-align text
+        float y = background.getY() + 140;
+        if (cntDefendLable > 0) {
+            y -= cntDefendLable * battleDefendLabel[0].getHeight();
         }
-        if (!isAttackerAllies){
-            alliedResults.setText(defender);
-            setAlliedLabel();
-        }else {
-            russianResults.setText(defender);
-            setAxisLabel();
-        }
+        battleDefendLabel[cntDefendLable].setPosition((background.getX()+15 + background.getWidth()/2 + 15),y);
+        group.addActor(battleDefendLabel[cntDefendLable]);
+        battleDefendString = message;
+        cntDefendLable++;
 
     }
     Attack attack;
     public Attack getAttack(){
         return attack;
     }
-    public void updateCombatResultsAttacker(ArrayList<CombatResults> combatResults, boolean isAttackerAllies, Attack attack){
+    public void updateCombatResultsAttacker(String message){
         Gdx.app.log("CombatDisplayResults", "updatCombatResultsAttacker");
-
-        this.attack = attack;
-        isAttackDisplayed = true;
-        String attacker = "";
-        boolean isjustOneAdvance = false;
-        boolean isjustMover = false;
-        if (combatResults.size() > 0) {
-
-            for (int i = 0; i < combatResults.size(); i++) {
-                CombatResults combatResult = combatResults.get(i);
-                String strBrigade = combatResult.getUnit().brigade;
-                String paddedShort = String.format("%-" + 11 + "s", strBrigade);
-
-                if (combatResult.isDestroyed()) {
-                    attacker += i18NBundle.format("destroyed",paddedShort)+ "\n";
-                    //attacker += combatResult.getUnitName() + " was destroyed" + "\n";
-                }
-                if (combatResult.isStepLosses()) {
-                    attacker += i18NBundle.format("loststep")+ "\n";
-                    //attacker += combatResult.getUnitName() + " lost step" + "\n";
-                }
-                if (combatResult.isCanContinueMovement()) {
-                    if (!isjustMover) {
-                        attacker += i18NBundle.get("cancontinuemoving");
-                        isjustMover = true;
-                    }
-                }
-                if (combatResult.isCanAdvance()) {
-                    if (!isjustOneAdvance) {
-                        attacker += i18NBundle.get("canadvance");
-                        isjustOneAdvance = true;
-                    }
-                    //attacker += "Attacking Units can Advance";
-                }
-                if (combatResults.get(0).getHexesRetreated() > 0) {
-                    attacker += i18NBundle.format("attackerretreated", combatResults.get(0).getHexesRetreated()) + "\n";
-                    //attacker += "Defending forces retreated " + combatResults.get(0).getHexesRetreated() + " hexes";
-                }
-
-            }
-        }else{
-            attacker += i18NBundle.format("noresult");
+        Label.LabelStyle style = new Label.LabelStyle();
+        style.font = Fonts.getFont24Android();
+        battleAttackLabel[cntAttackLable] = new Label(message, style);
+        battleAttackLabel[cntAttackLable].setWrap(true); // Enable text wrapping
+        battleAttackLabel[cntAttackLable].setAlignment(Align.center); // Center-align text
+        float y = background.getY() + 140;
+        if (cntAttackLable > 0) {
+            y -= cntAttackLable * battleDefendLabel[0].getHeight();
         }
-        if (!isAttackerAllies){
-            russianResults.setText(attacker);
-            setAxisLabel();
-            return;
-        }else {
-            alliedResults.setText(attacker);
-            setAlliedLabel();
-        }
+        battleAttackLabel[cntAttackLable].setPosition(background.getX() + 20 , y);
+        group.addActor(battleAttackLabel[cntAttackLable]);
+        cntAttackLable++;
+
+
 
     }
-    boolean isAttackDisplayed = false;
-    boolean isDefenseDisplayed = false;
-    private void setAxisLabel(){
-        russianResults.pack();
-        GlyphLayout layout = russianResults.getGlyphLayout();
-        float height = layout.height;
-        float width = layout.width;
-        russianResults.setSize(width, height);
-        russianResults.setPosition(background.getX() + 20 , background.getY() + background.getHeight() - (height + 160));
-        if (!group.isVisible()) {
-            visible = true;
-            group.addAction(Actions.sequence(Actions.visible(true), Actions.fadeIn(0.5f)));
-            setChanged();
-            notifyObservers(new ObserverPackage(ObserverPackage.Type.CombatDisplayResults,null,0,0));
-        }
-
-    }
-    private void setAlliedLabel(){
+    private void setDefenderLabel(){
         alliedResults.pack();
         GlyphLayout layout = alliedResults.getGlyphLayout();
         float height = layout.height;
@@ -261,11 +194,27 @@ public class CombatDisplayResults extends Observable {
 
 
     private void   initializeBackgroundImage(){
-
         background = new Image(tBackAllied);
+        Vector2 v2 = GamePreferences.getWindowLocation("combatdisplayresults");
+        if (v2.x == 0 && v2.y == 0) {
+            background.setPosition(0, (float) Gdx.graphics.getHeight() /2 - background.getHeight()/2);
+        }else{
+            background.setPosition(v2.x, v2.y);
+        }
+
         background.setHeight(304);
         background.setWidth(650);
-        background.setPosition((Gdx.graphics.getWidth()/2 - background.getWidth()/2), (Gdx.graphics.getHeight()/2 - background.getHeight()/2));
+        final boolean[] isdragged = new boolean[1];
+        background.addListener(new DragListener() {
+            public void drag(InputEvent event, float x, float y, int pointer) {
+                group.moveBy(x - 20, y - 20);
+                isdragged[0] = true;
+                Gdx.app.log("CombatDisplay", "dragging");
+                Gdx.app.log("CombatDisplay", "x+y="+background.getX()+"  "+background.getY());
+
+
+            }
+        });
 
         background.addListener(new ClickListener() {
             @Override
@@ -273,11 +222,17 @@ public class CombatDisplayResults extends Observable {
 
                 if (!event.getType().equals("touchUp")) {
                     Gdx.app.log("combatdisplayresults","clicked");
-                    if (isAttackDisplayed && isDefenseDisplayed){
+                    if (isdragged[0]) {
+                        isdragged[0] = false;
+                        return;
+                    }
+                    /*if (isAttackDisplayed && isDefenseDisplayed){
                         CombatDisplay.instance.end();
                         Gdx.app.log("combatdisplayresults","call attack");
                         attack.afterDisplay(this);
-                    }
+                    }*/
+                    GamePreferences.setWindowLocation("combatdisplayresults", (int) background.getX(), (int) background.getY());
+
                     hide();
                 }
             }
@@ -301,7 +256,17 @@ public class CombatDisplayResults extends Observable {
     }
 
     private void initializeAttackerResultsLabel(){
-        Label.LabelStyle style = new Label.LabelStyle();
+        // Create a table to hold the label with a background
+       // Table table = new Table();
+       // table.setSize(270, 150); // Set size of the table (adjust as needed)
+       // table.setPosition(background.getX() + 20 , background.getY() +10);
+       // table.top();
+        // Create the label
+
+        // Add label to table with padding and width constraint
+       // table.add(battleAttackLabel).width(250).pad(10).expandY().center(); // Constrain width for wrapping
+
+   /*     Label.LabelStyle style = new Label.LabelStyle();
         style.font = Fonts.getFont24Android();
         russianResults = new Label("",style);
         russianResults.setSize(30, 20);
@@ -339,10 +304,9 @@ public class CombatDisplayResults extends Observable {
                 MouseImage.instance.setIgnore(false);
                 MouseImage.instance.mouseImageReset();
             }
-        });
+        }); */
 
 
-        group.addActor(russianResults);
     }
     private void initializeResultsLabel() {
         results = new Label("",labelStyleDisplay);
@@ -354,12 +318,12 @@ public class CombatDisplayResults extends Observable {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (!event.getType().equals("touchUp")) {
-                    if (isAttackDisplayed && isDefenseDisplayed){
+               /*     if (isAttackDisplayed && isDefenseDisplayed){
                         CombatDisplay.instance.end();
                         Gdx.app.log("combatdisplayresults","call attack");
                         attack.afterDisplay(this);
                         hide();
-                    }
+                    } */
                 }
             }
 
@@ -381,10 +345,18 @@ public class CombatDisplayResults extends Observable {
     }
 
 
-        private void initializeDefenderResultsLabel(){
-        Label.LabelStyle style = new Label.LabelStyle();
-        style.font = Fonts.getFont24Android();
-        alliedResults = new Label("",style);
+   private void initializeDefenderResultsLabel(){
+
+        // Create a table to hold the label with a background
+      //  Table table = new Table();
+      //  table.setSize(270, 150); // Set size of the table (adjust as needed)
+      //  table.setPosition((background.getX()+15 + background.getWidth()/2 + 5F),background.getY() + 10);
+      //  table.top();
+        // Create the label
+
+       // Add label to table with padding and width constraint
+        //  stage.addActor(table);
+/*        alliedResults = new Label("",style);
         alliedResults.setSize(30, 20);
         alliedResults.setPosition(background.getX()+15 + background.getWidth()/2 + 5 , background.getY() + background.getHeight() - 127);
         alliedResults.setVisible(true);
@@ -415,9 +387,8 @@ public class CombatDisplayResults extends Observable {
                 MouseImage.instance.setIgnore(false);
                 MouseImage.instance.mouseImageReset();
             }
-        });
+        }); */
 
-        group.addActor(alliedResults);
     }
     private void initializeTitleLabel(){
         Label.LabelStyle style = new Label.LabelStyle();
@@ -435,12 +406,12 @@ public class CombatDisplayResults extends Observable {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (!event.getType().equals("touchUp")) {
-                    if (isAttackDisplayed && isDefenseDisplayed){
+                /*    if (isAttackDisplayed && isDefenseDisplayed){
                         CombatDisplay.instance.end();
                         Gdx.app.log("combatdisplayresults","call attack");
                         attack.afterDisplay(this);
                         hide();
-                    }
+                    }*/
                 }
             }
 
