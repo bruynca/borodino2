@@ -2,6 +2,7 @@ package brunibeargames;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.I18NBundle;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -25,6 +26,8 @@ public class AdvanceAfterCombat implements Observer {
     ArrayList<Hex> arrHexAdvance = new ArrayList<>();
     ArrayList<Unit> arrUnitsToAdvance =  new ArrayList<>();
     ArrayList<Unit> arrSanity = new ArrayList<>();
+    private static I18NBundle i18NBundle;
+
 
     /**
      * got here because hex was vacated
@@ -36,6 +39,7 @@ public class AdvanceAfterCombat implements Observer {
             isSeen = true;
   //          HelpPage.instance.showOther("advanceafterhelp");
         }
+        i18NBundle = GameMenuLoader.instance.localization;
         TurnCounter.instance.blinkAdvance();
         this.attack = attack;
         numHexAdvance = attack.defenderRetreats;
@@ -43,6 +47,9 @@ public class AdvanceAfterCombat implements Observer {
         ArrayList<Hex> arrHexCheck = new ArrayList<>();
         for (Unit unit:attack.arrAttackers){
             if (!unit.isEliminated()) {
+                String str =i18NBundle.format("canadvance", unit.brigade);
+                CombatDisplayResults.instance.updateCombatResultsAttacker(str);
+
                 ClickAction clickAction = new ClickAction(unit, ClickAction.TypeAction.Advance);
                 arrHexOK.add(unit.getHexOccupy());
                 arrSanity.add(unit);
@@ -82,6 +89,7 @@ public class AdvanceAfterCombat implements Observer {
         Gdx.app.log("AdvanceAfterCombat", "end");
         TurnCounter.instance.stopAdvance();
         ClickAction.cancelAll();
+        CombatDisplayResults.instance.hide();
         Borodino.instance.deleteObserver(this);
         Combat.instance.doCombatPhase();
     }
@@ -127,6 +135,9 @@ public class AdvanceAfterCombat implements Observer {
 
         for (Unit unit:arrUnitsToAdvance){
             ArrayList<Hex> arrHex = getPossible(unit);
+            String str =i18NBundle.format("canadvance", unit.brigade);
+            CombatDisplayResults.instance.updateCombatResultsAttacker(str);
+
             if (arrHex.size() > 0){
                 return; // still possible
             }

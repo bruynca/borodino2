@@ -133,7 +133,7 @@ public class Combat implements Observer {
 //                EventOK.instance.show(str);
                 return;
             }
-
+            CombatDisplayResults.instance.hide();
             String str = i18NBundle.get("nomorecombat");
             EventPopUp.instance.show(str);
             return;
@@ -227,7 +227,6 @@ public class Combat implements Observer {
     }
     public void createCombatImage(final Hex hex, boolean isClick) {
         Gdx.app.log("Combat", "createCombatImage");
-
         Image image = new Image(combat);
         final Stack stack = new Stack();
         arrCombatImageStack.add(stack);
@@ -442,6 +441,7 @@ public class Combat implements Observer {
   //      CombatDisplayResults.instance.hide();
         WinCRT.instance.end();
         CombatDisplay.instance.end();
+        CombatDisplayResults.instance.hide();
 
         Borodino.instance.deleteObserver(this);
 

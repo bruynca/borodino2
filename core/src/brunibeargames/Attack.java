@@ -229,6 +229,7 @@ public class Attack extends Observable implements Observer  {
         /*
             for exchange
          */
+
         CombatDisplayResults.instance.updateResults(dieResult, this);
         boolean isAttackerAllies = false;
         boolean isDefenseAllies = false;
@@ -358,21 +359,11 @@ public class Attack extends Observable implements Observer  {
         isDefendHexVacant = true;
 
         if (isDefendHexVacant && attackerLosses != null && !attackerLosses.areAllEliminated){
-            if (isMobileAssualt) {
-                for (Unit unit : arrAttackers) {
-                    if (!unit.isEliminated() && unit.getCurrentMoveFactor() > 0){
-                        CombatResults cb = new CombatResults(unit);
-                        cb.setCanContinueMovement(true);
-                    }
-                }
-            }else{
-                for (Unit unit : arrAttackers) {
-                    if (!unit.isEliminated()){
-                        CombatResults cb = new CombatResults(unit);
-                        cb.setCanAdvance(true);
-                    }
-                }
-            }
+            AdvanceAfterCombat.instance.doAdvance(this);
+        }else{
+            CombatDisplayResults.instance.hide();
+            Combat.instance.cleanup(true);
+            Combat.instance.doCombatPhase();
         }
 
         /**

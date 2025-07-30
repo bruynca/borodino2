@@ -1121,19 +1121,15 @@ public class Hex {
 			hexCheck.isAlliedZOCOccupied = false;
 
 			for (Hex hex:arrSurround){
-				if ((hexCheck.isStreamBank() && hex.isStreamBank()) &&
-						!Bridge.isBridge(hexCheck,hex) && Hex.isStreamAcross(hex,hexCheck)){
-					// do nothing
-				}else{
-					for (Unit unit:hex.getUnitsInHex()) {
-						if (unit.isAllies && unit.isExertZOC()) {
-							hexCheck.isAlliedZOC[0] = true;
-						}
-						if (unit.isRussian && unit.isExertZOC()) {
-							hexCheck.isRussianZOC[0] = true;
-						}
+				for (Unit unit:hex.getUnitsInHex()) {
+					if (unit.isAllies && unit.isExertZOC()) {
+						hexCheck.isAlliedZOC[0] = true;
+					}
+					if (unit.isRussian && unit.isExertZOC()) {
+						hexCheck.isRussianZOC[0] = true;
 					}
 				}
+
 			}
 		}
 		for (Unit unit:arrUnitsInHex){

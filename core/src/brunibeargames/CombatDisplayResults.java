@@ -61,7 +61,6 @@ public class CombatDisplayResults extends Observable {
         i18NBundle = GameMenuLoader.instance.localization;
 
         initializeBackgroundImage();
-        initializeDefenderResultsLabel();
         initializeAttackerResultsLabel();
         initializeResultsLabel();
         initializeTitleLabel();
@@ -84,6 +83,20 @@ public class CombatDisplayResults extends Observable {
         StringBuffer strResult = new StringBuffer();
         int attackerLoses = 0;
         int defenderLoses = 0;
+        cntDefendLable = 0;
+        cntAttackLable = 0;
+
+        for (int i=0; i<maxLable; i++){
+            if (battleDefendLabel[i] != null){
+                battleDefendLabel[i].remove();
+            }
+            if (battleAttackLabel[i] != null){
+                battleAttackLabel[i].remove();
+            }
+        }
+        battleDefendLabel = new Label[maxLable];
+        battleAttackLabel = new Label[maxLable];
+
         int defenderRetreats;
         switch (strOdds) {
             case "Ex":
@@ -133,6 +146,9 @@ public class CombatDisplayResults extends Observable {
         }
         battleDefendLabel[cntDefendLable].setPosition((background.getX()+15 + background.getWidth()/2 + 15),y);
         group.addActor(battleDefendLabel[cntDefendLable]);
+        if (cntDefendLable > 0){
+
+        }
         battleDefendString = message;
         cntDefendLable++;
 
@@ -159,24 +175,24 @@ public class CombatDisplayResults extends Observable {
 
 
     }
-    private void setDefenderLabel(){
-        alliedResults.pack();
-        GlyphLayout layout = alliedResults.getGlyphLayout();
-        float height = layout.height;
-        float width = layout.width;
-        alliedResults.setSize(width, height);
-        alliedResults.setPosition(background.getX() + background.getWidth()/2 + 20 , background.getY() + background.getHeight() - (height + 160));
-        if (!group.isVisible()) {
-            visible = true;
-            group.addAction(Actions.sequence(Actions.visible(true), Actions.fadeIn(0.5f)));
-            setChanged();
-            notifyObservers(new ObserverPackage(ObserverPackage.Type.CombatDisplayResults,null,0,0));
-        }
-
-    }
 
 
     public void hide(){
+        Gdx.app.log("CombatDisplayResult", "Hide");
+
+        GamePreferences.setWindowLocation("combatdisplayresults", (int) background.getX(), (int) background.getY());
+        for (int i=0; i<maxLable; i++){
+            if (battleDefendLabel[i] != null){
+                battleDefendLabel[i].remove();
+                Gdx.app.log("CombatDisplayResult", "remove d ="+battleDefendLabel[i].getText());
+            }
+            if (battleAttackLabel[i] != null){
+                battleAttackLabel[i].remove();
+                Gdx.app.log("CombatDisplayResult", "remove a ="+battleAttackLabel[i].getText());
+            }
+        }
+        battleDefendLabel = new Label[maxLable];
+        battleAttackLabel = new Label[maxLable];
         WinCRT.instance.end();
         RunnableAction run = new RunnableAction();
         run.setRunnable(new Runnable() {
@@ -231,9 +247,8 @@ public class CombatDisplayResults extends Observable {
                         Gdx.app.log("combatdisplayresults","call attack");
                         attack.afterDisplay(this);
                     }*/
-                    GamePreferences.setWindowLocation("combatdisplayresults", (int) background.getX(), (int) background.getY());
 
-                    hide();
+                    //hide();
                 }
             }
 
@@ -345,51 +360,7 @@ public class CombatDisplayResults extends Observable {
     }
 
 
-   private void initializeDefenderResultsLabel(){
 
-        // Create a table to hold the label with a background
-      //  Table table = new Table();
-      //  table.setSize(270, 150); // Set size of the table (adjust as needed)
-      //  table.setPosition((background.getX()+15 + background.getWidth()/2 + 5F),background.getY() + 10);
-      //  table.top();
-        // Create the label
-
-       // Add label to table with padding and width constraint
-        //  stage.addActor(table);
-/*        alliedResults = new Label("",style);
-        alliedResults.setSize(30, 20);
-        alliedResults.setPosition(background.getX()+15 + background.getWidth()/2 + 5 , background.getY() + background.getHeight() - 127);
-        alliedResults.setVisible(true);
-
-        alliedResults.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                if (!event.getType().equals("touchUp")) {
-                    if (isAttackDisplayed && isDefenseDisplayed){
-                        CombatDisplay.instance.end();
-                        Gdx.app.log("combatdisplayresults","call attack");
-                        attack.afterDisplay(this);
-                        hide();
-                    }
-                }
-            }
-
-            @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                super.enter(event, x, y, pointer, fromActor);
-                MouseImage.instance.setIgnore(true);
-                MouseImage.instance.setMouseHand();
-            }
-
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                super.exit(event, x, y, pointer, toActor);
-                MouseImage.instance.setIgnore(false);
-                MouseImage.instance.mouseImageReset();
-            }
-        }); */
-
-    }
     private void initializeTitleLabel(){
         Label.LabelStyle style = new Label.LabelStyle();
         style.font = Fonts.getFont24Android();
