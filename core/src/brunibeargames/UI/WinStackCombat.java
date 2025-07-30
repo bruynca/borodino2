@@ -197,8 +197,9 @@ public class WinStackCombat implements Observer {
     }
     private void addAttackButton(){
         //String rollDie = i18NBundle.format("combatstack");
+        String attack = i18NBundle.format("attack");
 
-        textButton =  new TextButton("Attack",tx);
+        textButton =  new TextButton(attack,tx);
         textButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

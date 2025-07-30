@@ -133,7 +133,7 @@ public class Combat implements Observer {
 //                EventOK.instance.show(str);
                 return;
             }
-            CombatDisplayResults.instance.hide();
+            CombatDisplayResults.instance.allowFinish();
             String str = i18NBundle.get("nomorecombat");
             EventPopUp.instance.show(str);
             return;
@@ -441,7 +441,7 @@ public class Combat implements Observer {
   //      CombatDisplayResults.instance.hide();
         WinCRT.instance.end();
         CombatDisplay.instance.end();
-        CombatDisplayResults.instance.hide();
+        CombatDisplayResults.instance.allowFinish();
 
         Borodino.instance.deleteObserver(this);
 

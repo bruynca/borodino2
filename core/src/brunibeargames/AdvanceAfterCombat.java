@@ -89,7 +89,7 @@ public class AdvanceAfterCombat implements Observer {
         Gdx.app.log("AdvanceAfterCombat", "end");
         TurnCounter.instance.stopAdvance();
         ClickAction.cancelAll();
-        CombatDisplayResults.instance.hide();
+        CombatDisplayResults.instance.allowFinish();
         Borodino.instance.deleteObserver(this);
         Combat.instance.doCombatPhase();
     }
@@ -135,7 +135,7 @@ public class AdvanceAfterCombat implements Observer {
 
         for (Unit unit:arrUnitsToAdvance){
             ArrayList<Hex> arrHex = getPossible(unit);
-            String str =i18NBundle.format("canadvance", unit.brigade);
+            String str =i18NBundle.format("nocanadvance", unit.brigade);
             CombatDisplayResults.instance.updateCombatResultsAttacker(str);
 
             if (arrHex.size() > 0){

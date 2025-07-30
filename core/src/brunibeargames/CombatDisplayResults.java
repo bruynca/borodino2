@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -51,6 +52,9 @@ public class CombatDisplayResults extends Observable {
     private String battleDefendString = "";
     private Label[] battleAttackLabel = new Label[5];
     private String battleAttacktring = "";
+    TextButton.TextButtonStyle tx = GameSelection.instance.textButtonStyle;
+    TextButton finishButton;
+
     public CombatDisplayResults(){
         labelStyleDisplay  =new Label.LabelStyle(FontFactory.instance.largeFontWhite, Color.YELLOW);
 
@@ -61,12 +65,32 @@ public class CombatDisplayResults extends Observable {
         i18NBundle = GameMenuLoader.instance.localization;
 
         initializeBackgroundImage();
-        initializeAttackerResultsLabel();
         initializeResultsLabel();
         initializeTitleLabel();
+        initializeFinishButton();
 
         stage.addActor(group);
     }
+
+    private void initializeFinishButton() {
+        String finish = i18NBundle.format("finish");
+
+        finishButton =  new TextButton(finish,tx);
+        finishButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                end();
+            }
+        });
+        finishButton.setWidth(background.getWidth()/4);
+        finishButton.setHeight(60);
+        float x = ((background.getWidth() - finishButton.getWidth())/2) +background.getX();
+        finishButton.setPosition(x , background.getY() + 4);
+        finishButton.setVisible(false);
+        group.addActor(finishButton);
+
+    }
+
     public void clearText(){
         alliedResults.setText("");
         russianResults.setText("");
@@ -100,8 +124,11 @@ public class CombatDisplayResults extends Observable {
         int defenderRetreats;
         switch (strOdds) {
             case "Ex":
-                attackerLoses = 0;
                 strResult.append(i18NBundle.format("exchange", Integer.toString(attackerLoses)));
+                strResult.append("  ");
+                break;
+            case "De":
+                strResult.append(i18NBundle.format("defenderexchange", Integer.toString(attackerLoses)));
                 strResult.append("  ");
                 break;
             case "AR":
@@ -177,10 +204,15 @@ public class CombatDisplayResults extends Observable {
     }
 
 
-    public void hide(){
-        Gdx.app.log("CombatDisplayResult", "Hide");
+    public void allowFinish(){
+        Gdx.app.log("CombatDisplayResult", "allowFinish");
+        finishButton.setVisible(true);
 
-        GamePreferences.setWindowLocation("combatdisplayresults", (int) background.getX(), (int) background.getY());
+    }
+    private void end(){
+        Gdx.app.log("CombatDisplayResult", "End");
+
+        GamePreferences.setWindowLocation("combatdisplayresults", (int) group.getX(), (int) group.getY());
         for (int i=0; i<maxLable; i++){
             if (battleDefendLabel[i] != null){
                 battleDefendLabel[i].remove();
@@ -201,6 +233,7 @@ public class CombatDisplayResults extends Observable {
                 visible = false;
             }
         });
+        finishButton.setVisible(false);
         group.addAction(Actions.sequence(Actions.fadeOut(0.5f), Actions.visible(false),run));
     }
 
@@ -227,6 +260,7 @@ public class CombatDisplayResults extends Observable {
                 isdragged[0] = true;
                 Gdx.app.log("CombatDisplay", "dragging");
                 Gdx.app.log("CombatDisplay", "x+y="+background.getX()+"  "+background.getY());
+                Gdx.app.log("CombatDisplay", "x+y="+group.getX()+"  "+group.getY());
 
 
             }
@@ -270,59 +304,7 @@ public class CombatDisplayResults extends Observable {
         group.addActor(background);
     }
 
-    private void initializeAttackerResultsLabel(){
-        // Create a table to hold the label with a background
-       // Table table = new Table();
-       // table.setSize(270, 150); // Set size of the table (adjust as needed)
-       // table.setPosition(background.getX() + 20 , background.getY() +10);
-       // table.top();
-        // Create the label
 
-        // Add label to table with padding and width constraint
-       // table.add(battleAttackLabel).width(250).pad(10).expandY().center(); // Constrain width for wrapping
-
-   /*     Label.LabelStyle style = new Label.LabelStyle();
-        style.font = Fonts.getFont24Android();
-        russianResults = new Label("",style);
-        russianResults.setSize(30, 20);
-        russianResults.setPosition(background.getX() + 20 , background.getY() + background.getHeight() - 127);
-        russianResults.setVisible(true);
-
-
-
-        russianResults.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                if (!event.getType().equals("touchUp")) {
-                    if (isAttackDisplayed && isDefenseDisplayed){
-                        CombatDisplay.instance.end();
-                        Gdx.app.log("combatdisplayresults","call attack");
-                        attack.afterDisplay(this);
-                        hide();
-                    }
-
-
-                    //  hide();
-                }
-            }
-
-            @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                super.enter(event, x, y, pointer, fromActor);
-                MouseImage.instance.setIgnore(true);
-                MouseImage.instance.setMouseHand();
-            }
-
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                super.exit(event, x, y, pointer, toActor);
-                MouseImage.instance.setIgnore(false);
-                MouseImage.instance.mouseImageReset();
-            }
-        }); */
-
-
-    }
     private void initializeResultsLabel() {
         results = new Label("",labelStyleDisplay);
         results.setSize(30, 20);

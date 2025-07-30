@@ -221,7 +221,7 @@ public class Attack extends Observable implements Observer  {
          //     dieResult ="D2r2";
         WinCRT.instance.show(this, dieResult);
         String strResult = WinCRT.instance.strResult;
-        dieResult = "Dr";
+        dieResult = "De";
         attackerLoses = 0;
         attackRetreats = 0;
         defenderLoses = 0;
@@ -361,7 +361,7 @@ public class Attack extends Observable implements Observer  {
         if (isDefendHexVacant && attackerLosses != null && !attackerLosses.areAllEliminated){
             AdvanceAfterCombat.instance.doAdvance(this);
         }else{
-            CombatDisplayResults.instance.hide();
+            CombatDisplayResults.instance.allowFinish();
             Combat.instance.cleanup(true);
             Combat.instance.doCombatPhase();
         }

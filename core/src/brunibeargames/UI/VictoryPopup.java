@@ -158,7 +158,7 @@ public class VictoryPopup {
         }
         ClickAction.cancelAll();
         Combat.instance.cleanup(true);
-        CombatDisplayResults.instance.hide();
+        CombatDisplayResults.instance.allowFinish();
         BottomMenu.instance.setEnablePhaseChange(false);
         AccessInternet.updateGame(NextPhase.instance.getTurn(), "Allied");
         return;
