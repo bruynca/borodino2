@@ -209,11 +209,20 @@ TextureRegion close =  textureAtlas.findRegion("close");
         np = new NinePatch(UILoader.instance.unitSelection.asset.get("windowtransparent"), 10, 10, 33, 6);
         windowStyle = new Window.WindowStyle(Fonts.getFont24(), WHITE, new NinePatchDrawable(np));
         String title = i18NBundle.format("crtwindow");
-        window = new Window(title, windowStyle);
+        Label.LabelStyle labelStyle2 =new Label.LabelStyle(Fonts.getFont24(),Color.WHITE);
+        Label close  = new Label("X", labelStyle2);
+        close.setScale(1.4f);
+        close.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                end();
+            }
+        });
 
         window = new Window(title, windowStyle);
         window.getTitleLabel().setAlignment(Align.center);
         window.getTitleLabel().setFontScale(1.0f);
+        window.getTitleTable().add(close).right().pad(2);
         //window.getTitleLabel().setScale(1.8f);
         //window.getTitleLabel().setColor(BLUE);
         window.padTop(20); // Adds space under the title bar
@@ -227,7 +236,6 @@ TextureRegion close =  textureAtlas.findRegion("close");
 
         // Title
         outerTable.row();
-        Label.LabelStyle labelStyle2 =new Label.LabelStyle(Fonts.getFont24(),Color.WHITE);
         String str = i18NBundle.format("combatratio");
 
         Label labTitle = new Label(str, labelStyle2);

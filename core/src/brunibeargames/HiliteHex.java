@@ -132,7 +132,7 @@ public class HiliteHex implements Observer {
 
 
     public  enum TypeHilite {Move,Advance,Supply,SupplyAmerican, None, Reinforcement,Range,ReinforceDisplay,
-        Debug,AI,ShowSupply,MoveExit, Hilite, Retreat, RoadMarch}{
+        Debug,AI,ShowSupply,MoveExit, Hilite, Retreat, AdvanceDefender, RoadMarch}{
 
     }
     

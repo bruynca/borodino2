@@ -11,7 +11,7 @@ import java.util.Random;
 import brunibeargames.Unit.Unit;
 
 public class Attack extends Observable implements Observer  {
-    ArrayList<Unit> arrAttackers = new ArrayList<>();
+    public ArrayList<Unit> arrAttackers = new ArrayList<>();
     ArrayList<Unit> arrDefenders = new ArrayList<>();
     Hex hexTarget;
     boolean isAllies;
@@ -29,6 +29,7 @@ public class Attack extends Observable implements Observer  {
     Losses attackerLosses;
     boolean isDefendHexVacant = false;
     DefenderRetreat defenderRetreat;
+    AttackerRetreat attackerRetreat;
     static public Attack instance;
     boolean isVillage;
     boolean isTown;
@@ -70,12 +71,14 @@ public class Attack extends Observable implements Observer  {
     public float getActualOdds(){
         return attackOdds.oddsCheck;
     }
+    ArrayList<Hex> arrHexAttacker = new ArrayList<>();
 
     public Attack(Hex hex, boolean isAllies, boolean isMobileAssualt, boolean isAI, Unit unitMobileAssualt) {
         if (!isAI) {
             Gdx.app.log("Attack", "Constructor Hex=" + hex);
         }
         arrLossesExAttacker = new ArrayList<>();
+
         hexTarget = hex;
         instance = this;
         this.isAllies = isAllies;
@@ -221,27 +224,27 @@ public class Attack extends Observable implements Observer  {
          //     dieResult ="D2r2";
         WinCRT.instance.show(this, dieResult);
         String strResult = WinCRT.instance.strResult;
-        dieResult = "De";
+        dieResult = "Ar";
         attackerLoses = 0;
         attackRetreats = 0;
         defenderLoses = 0;
         defenderRetreats = 0;
+        arrHexAttacker.clear();
+        for (Unit unit : arrAttackers) {
+            if (!arrHexAttacker.contains(unit.getHexOccupy())){
+                arrHexAttacker.add(unit.getHexOccupy());
+            }
+        }
+
         /*
             for exchange
          */
 
         CombatDisplayResults.instance.updateResults(dieResult, this);
-        boolean isAttackerAllies = false;
+        boolean isAttacker = false;
         boolean isDefenseAllies = false;
-        if (isAllies) {
-            isAttackerAllies = true;
-            isDefenseAllies = false;
-        }else{
-            isAttackerAllies = false;
-            isDefenseAllies = true;
-        }
-        defenderLosses = new Losses(isDefenseAllies);
-        attackerLosses = new Losses(isAttackerAllies);
+        defenderLosses = new Losses(true);
+        attackerLosses = new Losses(false);
 
 
         //      for (int i = 0; i < dieResult.length(); i++) {
@@ -259,7 +262,7 @@ public class Attack extends Observable implements Observer  {
                     for (Unit unit:hexTarget.getUnitsInHex()) {
                         cntLose += unit.getCurrentAttackFactor();
                     }
-                    defenderLosses.addLosses(arrDefenders);
+                    defenderLosses.addLosses(arrDefenders, Losses.TypeLoss.None);
                     defenderLoses = cntLose;
                     break;
                 case "Ae":
@@ -270,7 +273,7 @@ public class Attack extends Observable implements Observer  {
                     attackerLoses = cntLose;
                     defenderLosses = new Losses(arrDefenders, false, true);
                     attackerLosses = new Losses(arrLossesExAttacker, true, false);
-
+                    break;
                 case "Ex":
                     cntLose= 0;
                     for (Unit unit:hexTarget.getUnitsInHex()) {
@@ -303,32 +306,50 @@ public class Attack extends Observable implements Observer  {
         /**
          *  defender retreats
          */
-        if (defenderLosses.areAllEliminated) {
-            isDefendHexVacant = true;
-        }
-        if (!defenderLosses.areAllEliminated && defenderRetreats > 0) {
-            defenderRetreat = new DefenderRetreat(this);
-            /**
-             *  check if canRetreat showed a display
-             *  if not add to losses
-             */
-            if (defenderRetreat.cntUnitsCanToRetreat > 0) {
-                // Defender retreat will have set up click actions for units to retreat
-                // wait for fire back
-                // see Move(unit, defenderRetreat.arrHexPossible, Move.AfterMove.Retreats, isAI);
-                return;
-            }else{
-                /**
-                 *  add to losses and go to next stage
-                 */
-                defenderLosses.addLosses(arrDefenders);
-                afterRetreat();
+        if (defenderRetreats > 0) {
+            if (defenderLosses.areAllEliminated) {
+                isDefendHexVacant = true;
             }
-            /**
-             * save all units to retreat and fire the first on not eliminated
-             */
-           // arrUnitsToRetreat.addAll(arrDefenders);
+            if (!defenderLosses.areAllEliminated && defenderRetreats > 0) {
+                defenderRetreat = new DefenderRetreat(this);
+                /**
+                 *  check if canRetreat showed a display
+                 *  if not add to losses
+                 */
+                if (defenderRetreat.cntUnitsCanToRetreat > 0) {
+                    // Defender retreat will have set up click actions for units to retreat
+                    // wait for fire back
+                    // see Move(unit, defenderRetreat.arrHexPossible, Move.AfterMove.Retreats, isAI);
+                    return;
+                } else {
+                    /**
+                     *  add to losses and go to next stage
+                     */
+                    defenderLosses.addLosses(arrDefenders, Losses.TypeLoss.CntRetreat);
+                    afterRetreat();
+                }
+                /**
+                 * save all units to retreat and fire the first on not eliminated
+                 */
+                // arrUnitsToRetreat.addAll(arrDefenders);
 
+            }
+        }else{
+            if(attackRetreats > 0){
+                attackerRetreat = new AttackerRetreat(this, attackerLosses);
+                if (attackerRetreat.cntUnitsCanToRetreat > 0) {
+                    // Defender retreat will have set up click actions for units to retreat
+                    // wait for fire back
+                    // see Move(unit, defenderRetreat.arrHexPossible, Move.AfterMove.Retreats, isAI);
+                    return;
+                } else {
+                    /**
+                     *  add to losses and go to next stage
+                     */
+                    afterRetreat();
+                }
+
+            }
         }
         afterRetreat();
 
@@ -356,15 +377,41 @@ public class Attack extends Observable implements Observer  {
         /**
          *  update combat display with advanve or continue results
          */
-        isDefendHexVacant = true;
+        switch (dieResult) {
+            case "Ar":
+            case "Ae":
+                /**
+                 * because move units not complete
+                 * will have to check which units were supposed to retreat
+                 */
+                ArrayList<Hex> arrAdvanceTo = getVacatedHexes(arrAttackers,arrHexAttacker);
+                if (!arrAdvanceTo.isEmpty()){
+                    DefenderAdvance.instance.doAdvance(this,arrAdvanceTo);
+                    return; // wait for end
+                }
+                break;
+            case "Dr":
+            case "De":
+                    AdvanceAfterCombat.instance.doAdvance(this);
+                    return;
 
-        if (isDefendHexVacant && attackerLosses != null && !attackerLosses.areAllEliminated){
-            AdvanceAfterCombat.instance.doAdvance(this);
-        }else{
-            CombatDisplayResults.instance.allowFinish();
-            Combat.instance.cleanup(true);
-            Combat.instance.doCombatPhase();
+            case "Ex":
+                boolean isAttackerleft = false;
+                for (Unit unit:arrAttackers){
+                    if (!unit.isEliminated()){
+                        isAttackerleft = true;
+                    }
+                }
+                if (isDefendHexVacant && isAttackerleft){
+                    AdvanceAfterCombat.instance.doAdvance(this);
+                }
+                break;
         }
+
+
+        CombatDisplayResults.instance.allowFinish();
+        Combat.instance.cleanup(true);
+        Combat.instance.doCombatPhase(); // restart
 
         /**
          * display the result of combat
@@ -379,6 +426,39 @@ public class Attack extends Observable implements Observer  {
         }
         CombatDisplayResults.instance.updateResults(dieResult, this); */
         return;
+
+    }
+
+    /**
+     * determine if hexes attacking are clear
+     * This is a problem because last attacker will not be removed until the move
+     * is complete and thats asynchernou it should only be 1
+     *
+     * @param arrAttackers units arttacking
+     * @param arrHexAttacker hexes wish should be vacant
+     * @return Array of hexes that are really vacant
+     */
+    private ArrayList<Hex> getVacatedHexes(ArrayList<Unit> arrAttackers, ArrayList<Hex> arrHexAttacker) {
+        Gdx.app.log("Attack", "getVacatedHexes units="+arrAttackers);
+
+        ArrayList<Hex> arrReturn = new ArrayList<>();
+        arrReturn.addAll(arrHexAttacker);
+        ArrayList<Hex> arrRemove = new ArrayList<>();
+        for (Hex hex : arrHexAttacker) {
+            if (hex.getUnitsInHex().size() == 0){
+                // dont remove
+            }else if (hex.getUnitsInHex().size() == 1){
+                if (!arrAttackers.contains(hex.getUnitsInHex().get(0))){
+                    arrRemove.add(hex);
+                }
+            }else{
+                arrRemove.add(hex);
+
+            }
+        }
+        arrReturn.removeAll(arrRemove);
+        return arrReturn;
+
 
     }
 

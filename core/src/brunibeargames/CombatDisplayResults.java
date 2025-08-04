@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -128,11 +127,15 @@ public class CombatDisplayResults extends Observable {
                 strResult.append("  ");
                 break;
             case "De":
-                strResult.append(i18NBundle.format("defenderexchange", Integer.toString(attackerLoses)));
+                strResult.append(i18NBundle.format("defenderloss", Integer.toString(attackerLoses)));
                 strResult.append("  ");
                 break;
-            case "AR":
+            case "Ae":
                 strResult.append(i18NBundle.format("attackerlose", Integer.toString(attackerLoses)));
+                strResult.append("  ");
+                break;
+            case "Ar":
+                strResult.append(i18NBundle.format("attackerretreat", Integer.toString(attackerLoses)));
                 strResult.append("  ");
                 break;
             case "Dr":
@@ -193,7 +196,7 @@ public class CombatDisplayResults extends Observable {
         battleAttackLabel[cntAttackLable].setAlignment(Align.center); // Center-align text
         float y = background.getY() + 140;
         if (cntAttackLable > 0) {
-            y -= cntAttackLable * battleDefendLabel[0].getHeight();
+            y -= cntAttackLable * battleAttackLabel[0].getHeight();
         }
         battleAttackLabel[cntAttackLable].setPosition(background.getX() + 20 , y);
         group.addActor(battleAttackLabel[cntAttackLable]);
@@ -244,13 +247,14 @@ public class CombatDisplayResults extends Observable {
 
     private void   initializeBackgroundImage(){
         background = new Image(tBackAllied);
-        Vector2 v2 = GamePreferences.getWindowLocation("combatdisplayresults");
-        if (v2.x == 0 && v2.y == 0) {
-            background.setPosition(0, (float) Gdx.graphics.getHeight() /2 - background.getHeight()/2);
-        }else{
-            background.setPosition(v2.x, v2.y);
-        }
-
+      //  Vector2 v2 = GamePreferences.getWindowLocation("combatdisplayresults");
+      //  if (v2.x == 0 && v2.y == 0) {
+      //      background.setPosition(0, (float) Gdx.graphics.getHeight() /2 - background.getHeight()/2);
+      //  }else{
+      //      background.setPosition(v2.x, v2.y);
+      //  }
+        background.setPosition(Gdx.graphics.getWidth()-(background.getWidth()),
+                Gdx.graphics.getHeight()-(background.getHeight()));
         background.setHeight(304);
         background.setWidth(650);
         final boolean[] isdragged = new boolean[1];

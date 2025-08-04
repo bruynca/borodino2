@@ -10,7 +10,9 @@ import java.util.Observer;
 
 import brunibeargames.AIUtil;
 import brunibeargames.AdvanceAfterCombat;
+import brunibeargames.AttackerRetreat;
 import brunibeargames.Combat;
+import brunibeargames.DefenderAdvance;
 import brunibeargames.DefenderRetreat;
 import brunibeargames.Hex;
 import brunibeargames.HiliteHex;
@@ -32,6 +34,7 @@ public class ClickAction implements Observer {
     private HiliteHex hiliteHex;
     private I18NBundle i18NBundle;
     DefenderRetreat defenderRetreat;
+    AttackerRetreat attackerRetreat;
 
 
     public ClickAction(Unit unit, TypeAction type) {
@@ -65,6 +68,17 @@ public class ClickAction implements Observer {
         unitInProcess = null; // when new clickactions added
 
     }
+
+    public ClickAction(Unit unit, TypeAction type, AttackerRetreat attackerRetreat) {
+        this.attackerRetreat = attackerRetreat;
+        this.unit = unit;
+        typeAction = type;
+        unit.getMapCounter().addClickAction(this);
+        arrClickAction.add(this);
+        unitInProcess = null; // when new clickactions added
+
+    }
+
     public Unit getUnit(){
         return unit;
     }
@@ -168,6 +182,15 @@ public class ClickAction implements Observer {
                 retreatSetup(unit,defenderRetreat);
 
                 break;
+            case AttackerRetreat:
+                Gdx.app.log("ClickAction", "AttackerRetreat on " + unit);
+                attackerRetreatSetup(unit,attackerRetreat);
+
+                break;
+            case AdvanceDefender:
+                Gdx.app.log("ClickAction", "AdvanceDefender " + unit);
+                advanceDefenderSetup(unit);
+                break;
 
             case SelectDelete:
                 Gdx.app.log("ClickAction", "Select clicked on unit" + unit);
@@ -175,6 +198,20 @@ public class ClickAction implements Observer {
             default:
                 break;
         }
+    }
+
+    private void advanceDefenderSetup(Unit unit) {
+        unit.getMapCounter().counterStack.hilite();
+        HiliteHex.TypeHilite type = HiliteHex.TypeHilite.AdvanceDefender;
+        hiliteHex = new HiliteHex(DefenderAdvance.instance.getHexes(), null, type, this);
+
+    }
+
+    private void attackerRetreatSetup(Unit unit, AttackerRetreat attackerRetreat) {
+        unit.getMapCounter().counterStack.hilite();
+        HiliteHex.TypeHilite type = HiliteHex.TypeHilite.Retreat;
+        hiliteHex = new HiliteHex(attackerRetreat.getArrHexPossible(unit), null, type, this);
+
     }
 
     private void retreatSetup(Unit unit, DefenderRetreat defenderRetreat) {
@@ -247,6 +284,25 @@ public class ClickAction implements Observer {
                 hexProcess = hex;
                 defenderRetreat.doNextRetreat(unit);
                 break;
+            case AttackerRetreat:
+                app.log("ClickAction", "process AttackerRetreat=" + unit+" toHex="+hex);
+                unit.getMapCounter().getCounterStack().removeHilite();
+                unit.getMapCounter().removeClickAction();
+                hiliteHex.remove();
+                Move.instance.moveUnitAfterAdvance(unit, hex);
+                hexProcess = hex;
+                attackerRetreat.doNextRetreat(unit);
+                break;
+            case AdvanceDefender:
+                app.log("ClickAction", "process AdvanceDefender=" + unit+" toHex="+hex);
+                unit.getMapCounter().getCounterStack().removeHilite();
+                unit.getMapCounter().removeClickAction();
+                hiliteHex.remove();
+                Move.instance.moveUnitAfterAdvance(unit, hex);
+                hexProcess = hex;
+                DefenderAdvance.instance.checkEnd(unit);
+                break;
+
             default:
                 break;
         }
@@ -352,7 +408,7 @@ public class ClickAction implements Observer {
 
     }
 
-    public enum TypeAction {Move, Limber, CombatClick, Retreat,
-        Command, Supply, Advance,SelectDelete};
+    public enum TypeAction {Move, Limber, CombatClick, Retreat, AttackerRetreat,
+        Command, Supply, Advance,AdvanceDefender,SelectDelete};
 
 }

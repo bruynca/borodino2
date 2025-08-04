@@ -46,6 +46,7 @@ public class NextPhase {
     CombatDisplay combatDisplay;
     CombatDisplayResults combatDisplayResults;
     AdvanceAfterCombat advanceAfterCombat;
+    DefenderAdvance defenderAdvance;
     HelpPage helpPage;
 
     // DiceEffect diceEffect = new DiceEffect();
@@ -79,6 +80,7 @@ public class NextPhase {
         combatDisplayResults = new CombatDisplayResults();
         advanceAfterCombat = new AdvanceAfterCombat();
         helpPage =  new HelpPage();
+        defenderAdvance = new DefenderAdvance();
         WinCRT winCRT = new WinCRT();
         System.gc();
 

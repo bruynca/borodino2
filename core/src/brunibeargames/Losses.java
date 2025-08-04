@@ -20,8 +20,9 @@ public class Losses {
     boolean areAllEliminated = false;
     boolean isDefender = false;
     public Losses(boolean isDefender) {
-        this.isDefender = false;
+        this.isDefender = isDefender;
         areAllEliminated = false;
+        i18NBundle = GameMenuLoader.instance.localization;
     }
     public Losses(ArrayList<Unit> arrUnits, boolean isPartial, boolean isDefender) {
         Gdx.app.log("Losses", "Units=" + arrUnits );
@@ -55,11 +56,15 @@ public class Losses {
     /**
      *  add to losees
      *  first case is units that dont have retreat path
-     * @param arrDefenders
+     *  Need to change to add for Attacker Retreats
+     * @param units
      */
-    public void addLosses(ArrayList<Unit> arrDefenders) {
-        for (Unit unit : arrDefenders)  {
+    public void addLosses(ArrayList<Unit> units, TypeLoss typeLoss) {
+        for (Unit unit : units)  {
             String str =i18NBundle.format("destroyed", unit.brigade);
+            if (typeLoss == TypeLoss.CntRetreat){
+                str =i18NBundle.format("cantretreat", unit.brigade);
+            }
 
             if (isDefender){
                 CombatDisplayResults.instance.updateCombatResultsDefender(str);
@@ -74,4 +79,25 @@ public class Losses {
         }
 
     }
+
+    public void addLosses(Unit unit, TypeLoss typeLoss) {
+        String str =i18NBundle.format("destroyed", unit.brigade);
+
+        if (typeLoss == TypeLoss.CntRetreat){
+            str =i18NBundle.format("cantretreat", unit.brigade);
+        }
+
+        if (isDefender){
+            CombatDisplayResults.instance.updateCombatResultsDefender(str);
+        }else{
+            CombatDisplayResults.instance.updateCombatResultsAttacker(str);
+        }
+
+        unit.eliminate(false);
+        CombatResults cr = CombatResults.find(unit);
+        cr.setDestroyed(true);
+        areAllEliminated = true;
+
+    }
+    enum TypeLoss {None, CntRetreat}
 }

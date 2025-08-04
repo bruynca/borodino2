@@ -48,8 +48,8 @@ public class Hex {
      *
      * The index `i` ranges from 0 to 19, representing the 20 possible axis positions.
      */
-    boolean[] isRussianOccupied = new boolean[20];
-	boolean[] isAlliedOccupied = new boolean[20];
+    public boolean[] isRussianOccupied = new boolean[20];
+	public boolean[] isAlliedOccupied = new boolean[20];
 	private boolean isRussianEntered;
 	private int[] calcMoveCost = new int[20];
 	private int range;
@@ -1486,6 +1486,13 @@ public class Hex {
 			hex.isRussianZOC[0] = false;
 			hex.isAlliedZOC[0] = false;
 		}
+	}
+
+	public boolean isVacant(int i) {
+		if (isAlliedOccupied[i] || isRussianOccupied[i]){
+			return false;
+		}
+		return true;
 	}
 }
 

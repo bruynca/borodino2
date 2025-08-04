@@ -5,9 +5,11 @@ import java.util.ArrayList;
 public class HexInt {
     public int count;
     public Hex hex;
+    static ArrayList<HexInt> arrHexInt = new ArrayList<>();
     public HexInt(Hex hex, int inIn){
         count = inIn;
         this.hex  = hex;
+        arrHexInt.add(this);
     }
 
     /**
