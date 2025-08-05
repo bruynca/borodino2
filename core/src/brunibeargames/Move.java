@@ -82,7 +82,7 @@ public class Move extends Observable implements Observer {
                 Counter.rePlace(unit.getHexOccupy());
                 ClickAction clickAction = new ClickAction(unit, ClickAction.TypeAction.Move);
             }
-
+            //
         }
     }
 
