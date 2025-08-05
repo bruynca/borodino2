@@ -212,7 +212,7 @@ public class CombatDisplayResults extends Observable {
         finishButton.setVisible(true);
 
     }
-    private void end(){
+    public void end(){
         Gdx.app.log("CombatDisplayResult", "End");
 
         GamePreferences.setWindowLocation("combatdisplayresults", (int) group.getX(), (int) group.getY());

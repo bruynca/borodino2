@@ -49,7 +49,7 @@ public class AdvanceAfterCombat implements Observer {
             if (!unit.isEliminated()) {
                 String str =i18NBundle.format("canadvance", unit.brigade);
                 CombatDisplayResults.instance.updateCombatResultsAttacker(str);
-
+                unit.getMapCounter().getCounterStack().hilite();
                 ClickAction clickAction = new ClickAction(unit, ClickAction.TypeAction.Advance);
                 arrHexOK.add(unit.getHexOccupy());
                 arrSanity.add(unit);

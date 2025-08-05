@@ -52,9 +52,11 @@ public class DefenderAdvance implements Observer {
         for (Unit unit:arrUnitsToAdvance){
             if (!unit.isEliminated()) {
                 String str =i18NBundle.format("canadvance", unit.brigade);
+                unit.getMapCounter().getCounterStack().hilite();
                 CombatDisplayResults.instance.updateCombatResultsDefender(str);
                 ClickAction clickAction = new ClickAction(unit, ClickAction.TypeAction.AdvanceDefender);
                 arrHexOK.add(unit.getHexOccupy());
+                AttackArrows.getInstance().removeArrows();
             }
 
         }
@@ -78,6 +80,9 @@ public class DefenderAdvance implements Observer {
     }
     public void end(){
         Gdx.app.log("DefenderAdvance", "end");
+        for (Unit unit:arrUnitsToAdvance){
+            unit.getMapCounter().getCounterStack().removeHilite();
+        }
         TurnCounter.instance.stopAdvance();
         ClickAction.cancelAll();
         CombatDisplayResults.instance.allowFinish();
@@ -92,7 +97,7 @@ public class DefenderAdvance implements Observer {
         Gdx.app.log("DefendersAdvance", "checkend unit="+unit);
 
         arrUnitsToAdvance.remove(unit);
-        if (arrUnitsToAdvance.size() == 0 || arrSanity.size() == 0){
+        if (arrUnitsToAdvance.size() == 0){
             end();
         }
     }
@@ -110,13 +115,15 @@ public class DefenderAdvance implements Observer {
         /**
          *  Hex touched
          */
+        app.log("Defender Advance","observer update hex="+hex);
+
         if (oB.type != ObserverPackage.Type.TouchUp) {
             return;
         }
         if (EventPopUp.instance.isShowing()){
             return;
         }
-        app.log("Defender Advance","observer update hex="+hex);
+      //  app.log("Defender Advance","observer update hex="+hex);
 
         if (arrHexOK.contains(hex)) {
             return;

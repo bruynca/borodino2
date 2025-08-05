@@ -57,19 +57,7 @@ public class Move extends Observable implements Observer {
         } else {
             arrUnitToMoveWork = Unit.getOnBoardRussians();
         }
-        String strTit = i18NBundle.get("movementphasehelptitle");
-        String strT = i18NBundle.get("movementphasehelp");
-
-        BottomMenu.instance.setHelpData(strTit, strT);
-        BottomMenu.instance.showInquirNextPhase();
-        BottomMenu.instance.hideBack();
-        BottomMenu.instance.setWarningPhaseChange(true);
-        BottomMenu.instance.setEnablePhaseChange(true);
-        BottomMenu.instance.showNextPhase();
-        String message= i18NBundle.get("warnmovephase");
-        String title = i18NBundle.get("nextphasebutton");
-        BottomMenu.instance.setPhaseData(title, message);
-        BottomMenu.instance.addObserver(this);
+        setUpBottom();
 
 
 
@@ -96,6 +84,22 @@ public class Move extends Observable implements Observer {
             }
 
         }
+    }
+
+    private void setUpBottom() {
+        String strTit = i18NBundle.get("movementphasehelptitle");
+        String strT = i18NBundle.get("movementphasehelp");
+        BottomMenu.instance.setHelpData(strTit, strT);
+        BottomMenu.instance.showInquirNextPhase();
+        BottomMenu.instance.hideBack();
+        BottomMenu.instance.setWarningPhaseChange(true);
+        BottomMenu.instance.setEnablePhaseChange(true);
+        BottomMenu.instance.showNextPhase();
+        String message= i18NBundle.get("warnmovephase");
+        String title = i18NBundle.get("nextphasebutton");
+        BottomMenu.instance.setPhaseData(title, message);
+        BottomMenu.instance.addObserver(this);
+
     }
 
     public boolean  anyMovesLeft(boolean isAI) {
@@ -137,10 +141,12 @@ public class Move extends Observable implements Observer {
         //       SoundsLoader.instance.playTrucksSound();
         actualMove(unit,arrMove, AfterMove.ToAdvance, isAI);
     }
+    public boolean isInMove = false;
     public void actualMove(Unit unit, ArrayList<Hex> arrMove, AfterMove afterMove, final boolean isAI) {
         /**
          *  calling rtn should have set off anything
          */
+        isInMove = true;
         Gdx.app.log("Move", "actualMove Unit="+unit);
         if (unit.isMechanized) {
             SoundsLoader.instance.playMovementSound();
@@ -159,6 +165,11 @@ public class Move extends Observable implements Observer {
 
         int i = 0;
         Hex hexEnd = null;
+        for (Hex hex : arrMove) {
+            unit.getHexOccupy().leaveHex(unit);
+            hex.enterHex(unit);
+            i++;
+        }
 
         for (Hex hex : arrMove) {
             final Hex hexTime = hex;
@@ -169,21 +180,23 @@ public class Move extends Observable implements Observer {
             } else {
                 hexPrevious = arrMove.get(i - 1);
             }
- //           Gdx.app.log("Move", "actualMove before run hex="+hexPrevious+" i="+i);
+    //           Gdx.app.log("Move", "actualMove before run hex="+hexPrevious+" i="+i);
 
             final Unit unitMove = unit;
-           Timer.schedule(new Timer.Task() {
+         Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
 //                   Gdx.app.log("Move", "actualMove leaving hex="+hexPrevious);
 
-                    if (unitMove.getHexOccupy().leaveHex(unitMove)) {
+        /*            if (unitMove.getHexOccupy().leaveHex(unitMove)) {
                         Counter.rePlace(hexPrevious);
                         hexTime.enterHex(unitMove);
                         Counter.rePlace(hexTime);
                     }else{
                         ErrorGame errorGame = new ErrorGame("Move Error Leaving Hex", this);
-                    }
+                    } */
+                    Counter.rePlace(hexPrevious);
+                    Counter.rePlace(hexTime);
                 }
 
             }, timer);
@@ -206,6 +219,7 @@ public class Move extends Observable implements Observer {
         );
     }
     public void  afterMoveDisplay(AfterMove af, Unit unit, boolean isAI, Hex hexEnd){
+        isInMove = false;
         WinModal.instance.release();
         SoundsLoader.instance.stopSounds();
         if (af == AfterMove.ToClick){

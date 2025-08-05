@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import brunibeargames.UI.BottomMenu;
 import brunibeargames.UI.EventPopUp;
 import brunibeargames.UI.WinStackCombat;
 import brunibeargames.Unit.ClickAction;
@@ -77,7 +78,9 @@ public class Combat implements Observer {
 
     }
     public void doCombatPhase() {
+
         Gdx.app.log("Combat", "doCombatphase");
+
         SaveGame.SaveLastPhase(" Last Turn CombatStart", 2);
         AttackArrows.getInstance().removeArrows();
         arrHexDefender.clear();
@@ -113,7 +116,13 @@ public class Combat implements Observer {
                 for (Hex hex : arrHexWork) {
                         if (hex.getUnitsInHex().size() > 0) {
                             if (isAllies && hex.checkRussianInHex()|| !isAllies && hex.checkAlliesInHex()) {
-                                if (!hex.isHasBeenAttackedThisTurn()) {
+                                boolean isFree = true;
+                                for (Unit unitCheck : hex.getUnitsInHex()) {
+                                    if (unitCheck.hasBeenAttackedThisTurn) {
+                                        isFree = false;
+                                    }
+                                }
+                                if (!hex.isHasBeenAttackedThisTurn() && isFree) {
                                     arrHexDefender.add(hex);
                                 }
                             }
@@ -124,6 +133,9 @@ public class Combat implements Observer {
             }
         }
          HexHelper.removeDupes(arrHexDefender);
+        CombatDisplayResults.instance.end();
+        WinCRT.instance.end();
+        setUpBottom();
         if (arrHexDefender.size() > 0){
             designateWhoCanBeAttacked(arrHexDefender);
         }else{
@@ -139,6 +151,22 @@ public class Combat implements Observer {
             return;
         }
     }
+    private void setUpBottom() {
+        String strTit = i18NBundle.get("movementphasehelptitle");
+        String strT = i18NBundle.get("movementphasehelp");
+        BottomMenu.instance.setHelpData(strTit, strT);
+        BottomMenu.instance.showInquirNextPhase();
+        BottomMenu.instance.hideBack();
+        BottomMenu.instance.setWarningPhaseChange(true);
+        BottomMenu.instance.setEnablePhaseChange(true);
+        BottomMenu.instance.showNextPhase();
+        String message= i18NBundle.get("warnmovephase");
+        String title = i18NBundle.get("nextphasebutton");
+        BottomMenu.instance.setPhaseData(title, message);
+        BottomMenu.instance.addObserver(this);
+
+    }
+
     public void initializeButtons() {
         textureAtlas = SplashScreen.instance.effectsManager.get("effects/combat.txt");
         combat = textureAtlas.findRegion("attack");

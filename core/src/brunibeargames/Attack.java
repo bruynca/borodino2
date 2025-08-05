@@ -39,6 +39,7 @@ public class Attack extends Observable implements Observer  {
     boolean isMechAttack;
     String dieResult;
     public ArrayList<Unit> arrLossesExAttacker;
+    private String actDie;
 
 
     public boolean isVillage() {
@@ -67,6 +68,9 @@ public class Attack extends Observable implements Observer  {
 
     public String getAttackOdd(){
         return attackOdds.oddactualString;
+    }
+    public String[] getResult(){
+        return attackOdds.strResult;
     }
     public float getActualOdds(){
         return attackOdds.oddsCheck;
@@ -198,6 +202,7 @@ public class Attack extends Observable implements Observer  {
         for (Unit unit : arrDefenders) {
             unit.setHasbeenAttackedThisTurn();
         }
+        hexTarget.setHasBeenAttackedThisTurn(true);
 
         CombatResults.init();
         attackOdds.update();
@@ -208,23 +213,23 @@ public class Attack extends Observable implements Observer  {
  //       }
         int die1 = getDieRoll();
         int die2 = getDieRoll();
-
- //       die1 =6;
+        actDie = Integer.toString(die1-1);
  //       die2 = 6;
         Gdx.app.log("Attack", "die=" + die1 + " " + die2);
 
-        dieResult = attackOdds.getResult(die1);
+        dieResult = getResult()[die1-1];
+
         DiceEffect.instance.addObserver(this);
-        DiceEffect.instance.rollBlueDice(die2);
+        DiceEffect.instance.rollBlueDice(die1);
         //DiceEffect.instance.rollRedDice(die1);
 
     }
     public void afterDieRoll(){
         Gdx.app.log("Attack", "dieResult=" + dieResult);
          //     dieResult ="D2r2";
-        WinCRT.instance.show(this, dieResult);
-        String strResult = WinCRT.instance.strResult;
-        dieResult = "Ar";
+        WinCRT.instance.show(this, actDie);
+      //  String strResult = getAttackOdd()[WinCRT.instance.strResult;
+        //dieResult = "Dr";
         attackerLoses = 0;
         attackRetreats = 0;
         defenderLoses = 0;
@@ -271,8 +276,7 @@ public class Attack extends Observable implements Observer  {
                         cntLose += unit.getCurrentAttackFactor();
                     }
                     attackerLoses = cntLose;
-                    defenderLosses = new Losses(arrDefenders, false, true);
-                    attackerLosses = new Losses(arrLossesExAttacker, true, false);
+                    attackerLosses = new Losses(arrAttackers, true, false);
                     break;
                 case "Ex":
                     cntLose= 0;
@@ -335,7 +339,7 @@ public class Attack extends Observable implements Observer  {
 
             }
         }else{
-            if(attackRetreats > 0){
+            if(attackRetreats > 0 ){
                 attackerRetreat = new AttackerRetreat(this, attackerLosses);
                 if (attackerRetreat.cntUnitsCanToRetreat > 0) {
                     // Defender retreat will have set up click actions for units to retreat
