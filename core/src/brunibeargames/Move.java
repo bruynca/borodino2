@@ -358,7 +358,11 @@ public class Move extends Observable implements Observer {
                     cost[0] = 0;
                 }
             } else {
-                cost[1] = 1;
+                if (unit.isActivated()) {
+                    cost[1] = 1; // enter ZOC
+                }else{
+                    cost[0] = 994; //zoc not activated
+                }
             }
         }
         boolean isRoadB = false;
