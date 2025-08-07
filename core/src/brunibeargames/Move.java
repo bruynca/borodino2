@@ -168,7 +168,7 @@ public class Move extends Observable implements Observer {
         for (Hex hex : arrMove) {
             unit.getHexOccupy().leaveHex(unit);
             hex.enterHex(unit);
-            i++;
+
         }
 
         for (Hex hex : arrMove) {

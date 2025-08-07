@@ -136,6 +136,7 @@ public class ClickAction implements Observer {
             case Move:
                 Gdx.app.log("ClickAction", "Move on unit" + unit);
                 moveSetup(unit);
+                break;
             case Limber:
             case CombatClick:
                 Gdx.app.log("ClickAction", "Combat clicked on unit" + unit);
@@ -266,6 +267,7 @@ public class ClickAction implements Observer {
             case Move:
                 app.log("ClickAction", "process Move " + unit+" toHex="+hex);
                 moveUnit(unit, hex, isAI);
+                break;
            case Advance:
                app.log("ClickAction", "process Advance=" + unit+" toHex="+hex);
                unit.getMapCounter().getCounterStack().removeHilite();

@@ -157,8 +157,8 @@ public class Combat implements Observer {
         BottomMenu.instance.setHelpData(strTit, strT);
         BottomMenu.instance.showInquirNextPhase();
         BottomMenu.instance.hideBack();
-        BottomMenu.instance.setWarningPhaseChange(true);
-        BottomMenu.instance.setEnablePhaseChange(true);
+        BottomMenu.instance.setWarningPhaseChange(false);
+        BottomMenu.instance.setEnablePhaseChange(false);
         BottomMenu.instance.showNextPhase();
         String message= i18NBundle.get("warnmovephase");
         String title = i18NBundle.get("nextphasebutton");
