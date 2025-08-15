@@ -88,6 +88,7 @@ public class AttackerRetreat implements Observer {
 
         private boolean isPlaceToRetreat(Unit unit) {
             Gdx.app.log("AttackerrRetreat", "isPlaceToRetreat");
+            arrHexPossible.clear();
             arrHexPossible.addAll(unit.getHexOccupy().arrSurroundHex);
             ArrayList<Hex> arrRemove = new ArrayList<>();
             Unit unitTest= arrAttackers.get(0);

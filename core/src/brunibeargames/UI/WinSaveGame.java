@@ -2,7 +2,6 @@ package brunibeargames.UI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -13,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -28,6 +28,7 @@ import brunibeargames.Borodino;
 import brunibeargames.Fonts;
 import brunibeargames.GameMenuLoader;
 import brunibeargames.GamePreferences;
+import brunibeargames.GameSelection;
 import brunibeargames.Hex;
 import brunibeargames.SaveGame;
 import brunibeargames.SplashScreen;
@@ -37,10 +38,9 @@ import brunibeargames.Unit.Unit;
 
 public class WinSaveGame {
     Image image;
-    TextureAtlas textureAtlas2 = SplashScreen.instance.unitsManager.get("units/germancounteratlas.txt");
+    TextureAtlas textureAtlas = SplashScreen.instance.effectsManager.get("effects/combat.txt");
 
-    TextureAtlas textureAtlas = SplashScreen.instance.unitsManager.get("units/germancounteratlas.txt");
- //   Texture ok =  SplashScreen.instance.getOkButton();
+    //   Texture ok =  SplashScreen.instance.getOkButton();
 
     TextureRegion close =  textureAtlas.findRegion("close");
 
@@ -56,10 +56,13 @@ public class WinSaveGame {
     ArrayList<Unit> arrUnits = new ArrayList<>();
     Attack attack;
     Hex hex;
-    TextureRegion tfBack =  textureAtlas2.findRegion("tfback");
-    TextureRegion tfSelected =  textureAtlas2.findRegion("tfselected");
-    TextureRegion tfcusror =  textureAtlas2.findRegion("tfcusor");
+    TextureRegion tfBack =  textureAtlas.findRegion("tfback");
+    TextureRegion tfSelected =  textureAtlas.findRegion("tfselected");
+    TextureRegion tfcusror =  textureAtlas.findRegion("tfcusor");
     VisTextField visTextField;
+    TextButton.TextButtonStyle tx = GameSelection.instance.textButtonStyle;
+    TextButton saveButton;
+
 
     private EventListener hitOK;
     public WinSaveGame(){
@@ -93,6 +96,19 @@ public class WinSaveGame {
         Label lab = window.getTitleLabel();
         lab.setAlignment(Align.center);
         visTextField = new VisTextField("");
+        String str = i18NBundle.format("ok");
+        saveButton =  new TextButton(str,tx);
+        saveButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                String str = visTextField.getText();
+                if (str != null) {
+                    SaveGame saveGame = new SaveGame(str);
+                    EventPopUp.instance.show(i18NBundle.format("gamesaved") + "\n\n" + str);
+                    end();
+                }
+            }
+        });
  /*       Image image = new Image(ok);
         image.addListener(new ClickListener() {
             @Override
@@ -126,7 +142,7 @@ public class WinSaveGame {
         window.setTransform(true);
 
         int widthWindow = 450;
-        int heightWindow = 100;
+        int heightWindow = (int) (100+saveButton.getHeight());
         window.setSize(widthWindow,heightWindow);
         window.setPosition(100,100);
         showWindow();
@@ -157,6 +173,9 @@ public class WinSaveGame {
 
         window.add(label);
         window.add(visTextField).align(Align.left);
+        window.row();
+        window.add(saveButton).align(Align.center).colspan(2);
+        window.pack();
 
         stage.addActor(window);
 

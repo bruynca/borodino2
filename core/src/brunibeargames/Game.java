@@ -55,7 +55,7 @@ public class Game {
 
 
             nextPhase.nextPhase();
-            //TopMenu topMenu = new TopMenu();
+            TopMenu topMenu = new TopMenu();
             /**
              *
              */
@@ -73,7 +73,7 @@ public class Game {
             LoadGame loadGame = new LoadGame(str, isResume);
 
             //BottomMenu.instance.showNextPhase();
-            //TopMenu topMenu = new TopMenu();
+            TopMenu topMenu = new TopMenu();
         }
     }
     public void addUnit(Unit unit) {

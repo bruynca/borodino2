@@ -201,6 +201,9 @@ public class CombatDisplayResults extends Observable {
         battleAttackLabel[cntAttackLable].setPosition(background.getX() + 20 , y);
         group.addActor(battleAttackLabel[cntAttackLable]);
         cntAttackLable++;
+        if (cntAttackLable == battleAttackLabel.length){
+            cntAttackLable--;
+        }
 
 
 

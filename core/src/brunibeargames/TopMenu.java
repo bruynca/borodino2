@@ -45,7 +45,7 @@ public class TopMenu {
     private final TextTooltip.TextTooltipStyle tooltipStyle;
     private Group group;
     public static TopMenu instance;
-    TextureAtlas textureAtlas = SplashScreen.instance.unitsManager.get("units/germancounteratlas.txt");
+    TextureAtlas textureAtlas = SplashScreen.instance.UIManager.get("menus/buttons.txt");
     TextureRegion bReinforce =  textureAtlas.findRegion("rienforcementbuttonpressed");
     TextureRegion bReinforceP =  textureAtlas.findRegion("rienforcementbutton");
     TextureRegion bCRT = textureAtlas.findRegion("crttop");
@@ -58,7 +58,7 @@ public class TopMenu {
     TextureRegion bTecP = textureAtlas.findRegion("tectoppushed");
     TextureRegion bExitP = textureAtlas.findRegion("exitbutton");
     TextureRegion bExit = textureAtlas.findRegion("exitbuttonpushed");
-    Stage stage;
+     Stage stage;
 
 
     public TopMenu(){
@@ -67,12 +67,17 @@ public class TopMenu {
         instance = this;
 
         tooltipStyle = new TextTooltip.TextTooltipStyle();
+
         tooltipStyle.label = new Label.LabelStyle(Fonts.getFont24(), Color.WHITE);
-        NinePatch np = new NinePatch(GameMenuLoader.instance.gameMenu.asset.get("tooltip"),2, 2, 2, 2);
+        NinePatch np = new NinePatch(UILoader.instance.topMenu.asset.get("background"), 12, 12, 12, 12);
         tooltipStyle.background = new NinePatchDrawable(np);
         int x =10;
         initializeMenuButton();
-        initializeManualButton();
+        initializeSaveGame(x);
+        x +=saveButton.getWidth()+5;
+        initializeQuitButton(x);
+
+    /*    initializeManualButton();
         x +=manualButton.getWidth()+5;
         initializeSoundButton(x);
         x +=soundButton.getWidth()+5;
@@ -102,31 +107,31 @@ public class TopMenu {
         x += tecButton.getWidth()+5;
         initializeSaveGame(x);
         x +=saveButton.getWidth()+5;
-        initializeQuitButton(x);
+        initializeQuitButton(x); */
 
 
         group = new Group();
 
-        group.addActor(manualButton);
-        group.addActor(soundButton);
-        group.addActor(reinforcementButton);
-        group.addActor(objectivesButton);
-        group.addActor(crtButton);
-        group.addActor(btButton);
-        if (GameSetup.instance.getScenario().ordinal() > 0) {
-            group.addActor(exitButton);
-        }
-        group.addActor(cardButton);
+     //   group.addActor(manualButton);
+     //   group.addActor(soundButton);
+     //   group.addActor(reinforcementButton);
+     //   group.addActor(objectivesButton);
+     //   group.addActor(crtButton);
+     //   group.addActor(btButton);
+    //    if (GameSetup.instance.getScenario().ordinal() > 0) {
+    //        group.addActor(exitButton);
+    //    }
+    //    group.addActor(cardButton);
  //       group.addActor(effectsButton);
-        group.addActor(keyboardButton);
-        group.addActor(tecButton);
+    //    group.addActor(keyboardButton);
+    //    group.addActor(tecButton);
         group.addActor(quitbutton);
         group.addActor(saveButton);
         group.addAction(Actions.fadeOut(0.01f));
         group.setVisible(false);
+      stage.addActor(group);
 
         stage.addActor(menuButton);
-        stage.addActor(group);
     }
 
 

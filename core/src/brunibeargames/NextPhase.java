@@ -82,6 +82,8 @@ public class NextPhase {
         helpPage =  new HelpPage();
         defenderAdvance = new DefenderAdvance();
         WinCRT winCRT = new WinCRT();
+        WinCrtNADefender winCrtNADefender = new WinCrtNADefender();
+        WinCrtNotActive winCrtNotActive = new WinCrtNotActive();
         System.gc();
 
     }

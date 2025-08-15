@@ -363,7 +363,7 @@ public class SplashScreen {
 
     }
     public void reStart(){
-        stage.addActor(splashImage);
+        stage.addActor(imgBorodino);
         gameMenu = new GameMenu(stage, sound,atlas,screenHeight, screenWidth);
         System.gc();
     }
