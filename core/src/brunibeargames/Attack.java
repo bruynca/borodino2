@@ -228,6 +228,7 @@ public class Attack extends Observable implements Observer  {
         Gdx.app.log("Attack", "dieResult=" + dieResult);
          //     dieResult ="D2r2";
         WinCRT.instance.show(this, actDie);
+        AttackArrows.getInstance().removeArrows();
       //  String strResult = getAttackOdd()[WinCRT.instance.strResult;
         //dieResult = "Dr";
         attackerLoses = 0;

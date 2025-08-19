@@ -1226,12 +1226,18 @@ public class Unit {
 
 	}
 
+
+
 	public void setTurnMoved(int turnMoved) {
 		this.turnMoved = turnMoved;
 	}
 
 	public int getTurnMoved() {
 		return turnMoved;
+	}
+	@Override
+	public String toString() {
+		return brigade;
 	}
 
 	public Division getDivision() {

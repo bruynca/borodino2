@@ -91,7 +91,11 @@ public class AdvanceAfterCombat implements Observer {
         ClickAction.cancelAll();
         CombatDisplayResults.instance.allowFinish();
         Borodino.instance.deleteObserver(this);
-        Combat.instance.doCombatPhase();
+        for (Unit unit:arrUnitsToAdvance){
+            unit.getMapCounter().getCounterStack().removeHilite();
+            unit.getMapCounter().getCounterStack().removeShade();
+        }
+        //Combat.instance.doCombatPhase();
     }
 
     /**

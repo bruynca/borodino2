@@ -68,15 +68,14 @@ public class CombatDisplay {
 
         initializeBackgroundImage();
         initializeOddsImage();
-        initializeGermanCombatFactorsLabel();
+        initializeAlliedCombatFactorsLabel();
         initializeRussianCombatFactorsLabel();
         initializeBridgeImage();
-        initializeMechAttackImage();
         initializeRiverImage();
         initializeTownImage();
         initializeTreesImage();
-        initializeVillageImage();
-        initializeSurpriseImage();
+      //  initializeVillageImage();
+      //  initializeSurpriseImage();
 
 
         group.addActor(hexGroup);
@@ -114,7 +113,9 @@ public class CombatDisplay {
         group.setVisible(false);
         //WinCRT.instance.end();
         haBeenDragged = false;
-        GamePreferences.setWindowLocation("combatdisplay", (int) background.getX(), (int) background.getY());
+        int x = (int) background.getX();
+        int y = (int) background.getY();
+        GamePreferences.setWindowLocation("combatdisplay", x, y);
 
         if (hexGroup != null) {
             //hexGroup.clear();
@@ -152,11 +153,11 @@ public class CombatDisplay {
             hexGroup.addActor(trees);
             yPositionDefend += 25;
         }
-        if (attack.isVillage()) {
-            village.setPosition(background.getX() + xPositionDefend, background.getY() + background.getHeight() - yPositionDefend);
-            hexGroup.addActor(village);
-            yPositionDefend += 25;
-        }
+    //    if (attack.isVillage()) {
+    //        village.setPosition(background.getX() + xPositionDefend, background.getY() + background.getHeight() - yPositionDefend);
+    //        hexGroup.addActor(village);
+    //        yPositionDefend += 25;
+    //    }
         if (attack.isRiver()) {
             river.setPosition(background.getX() + xPosition, background.getY() + background.getHeight() - yPositionAttack);
             hexGroup.addActor(river);
@@ -168,7 +169,7 @@ public class CombatDisplay {
             hexGroup.addActor(bridge);
             yPositionAttack += 25;
         }
-        if (attack.isMechAttack()) {
+      /*  if (attack.isMechAttack()) {
             mechattack.setPosition(background.getX() + xPosition, background.getY() + background.getHeight() - yPositionAttack);
             hexGroup.addActor(mechattack);
            yPositionAttack += 25;
@@ -177,7 +178,7 @@ public class CombatDisplay {
             surprise.setPosition(background.getX() + xPosition, background.getY() + background.getHeight() - yPositionAttack);
             hexGroup.addActor(surprise);
             yPositionAttack += 25;
-       }
+       } */
 
 
         int linePosition = 0;
@@ -324,7 +325,7 @@ public class CombatDisplay {
     }
 
 
-    private void initializeGermanCombatFactorsLabel(){
+    private void initializeAlliedCombatFactorsLabel(){
         Label.LabelStyle style = new Label.LabelStyle();
         style.font = Fonts.getFont24();
         germanCombatFactors = new Label("0",style);

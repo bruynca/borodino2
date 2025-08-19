@@ -46,10 +46,10 @@ public class CombatDisplayResults extends Observable {
     TextureRegion tBackAllied =  textureAtlas.findRegion("combatresultsdisplayfrench");
     int cntDefendLable=0;
     int cntAttackLable=0;
-    int maxLable = 5;
-    private Label[] battleDefendLabel = new Label[5];
+    int maxLable = 6;
+    private Label[] battleDefendLabel = new Label[6];
     private String battleDefendString = "";
-    private Label[] battleAttackLabel = new Label[5];
+    private Label[] battleAttackLabel = new Label[6];
     private String battleAttacktring = "";
     TextButton.TextButtonStyle tx = GameSelection.instance.textButtonStyle;
     TextButton finishButton;
@@ -201,9 +201,6 @@ public class CombatDisplayResults extends Observable {
         battleAttackLabel[cntAttackLable].setPosition(background.getX() + 20 , y);
         group.addActor(battleAttackLabel[cntAttackLable]);
         cntAttackLable++;
-        if (cntAttackLable == battleAttackLabel.length){
-            cntAttackLable--;
-        }
 
 
 
@@ -237,6 +234,7 @@ public class CombatDisplayResults extends Observable {
             @Override
             public void run() {
                 visible = false;
+                Combat.instance.doCombatPhase();
             }
         });
         finishButton.setVisible(false);

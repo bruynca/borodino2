@@ -60,7 +60,7 @@ public class WinStackCombat implements Observer {
     private boolean isActive = true;
     private EventListener hitOK;
     TextButton.TextButtonStyle tx = GameSelection.instance.textButtonStyle;
-    TextButton textButton;
+    TextButton attackButton;
     TextButton dummyButton;
     boolean isRollDie = false;
     int cntHilited = 0;
@@ -129,6 +129,8 @@ public class WinStackCombat implements Observer {
         setCounters();
         addAttackButton();
         window.row();
+      //  Label = getActivatedLabel();
+      //  window.row();
         /**
          *  dummy used for positioning
          */
@@ -136,11 +138,11 @@ public class WinStackCombat implements Observer {
        // window.add(textButton).width(textButton.getWidth()).height(textButton.getHeight());
         //window.row();
     //    window.pack();
-        window.addActor(textButton);
+        window.addActor(attackButton);
         float widthWindow = window.getWidth();
         float heightWindow = window.getHeight();
-        textButton.setX(widthWindow/2 - textButton.getWidth()/2);
-        textButton.setY(dummyButton.getY());
+        attackButton.setX(widthWindow/2 - attackButton.getWidth()/2);
+        attackButton.setY(dummyButton.getY());
         stage.addActor(window);
     }
     /**
@@ -178,9 +180,9 @@ public class WinStackCombat implements Observer {
                         cntHilited++;
                     }
                     if (cntHilited == 0){
-                        textButton.setVisible(false);
+                        attackButton.setVisible(false);
                     }else{
-                        textButton.setVisible(true);
+                        attackButton.setVisible(true);
                     }
                 }
             });
@@ -199,15 +201,15 @@ public class WinStackCombat implements Observer {
         //String rollDie = i18NBundle.format("combatstack");
         String attack = i18NBundle.format("attack");
 
-        textButton =  new TextButton(attack,tx);
-        textButton.addListener(new ClickListener() {
+        attackButton =  new TextButton(attack,tx);
+        attackButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 end();
             }
         });
         dummyButton = new TextButton("dummy",tx);
-        textButton.setVisible(false);
+        attackButton.setVisible(false);
         dummyButton.setVisible(false);
     }
 

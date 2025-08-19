@@ -144,9 +144,19 @@ public class AttackerRetreat implements Observer {
     }
 
     public void doNextRetreat(Unit unit) {
-            arrAttackers.remove(unit);
+        Gdx.app.log("AttackerrRetreat", "donextRetreat unit="+unit);
+
+        arrAttackers.remove(unit);
             if (arrAttackers.isEmpty()){
                 attack.afterRetreat();
+            }else{
+                unit  = arrAttackers.get(0);
+                if (isPlaceToRetreat(unit)){
+                    // do nothing  will depend on click
+                }else{
+                    attackerLosses.addLosses(unit, Losses.TypeLoss.CntRetreat);
+                    cntUnitsCanToRetreat--;
+                }
             }
     }
 

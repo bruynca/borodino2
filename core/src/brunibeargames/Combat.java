@@ -41,6 +41,7 @@ public class Combat implements Observer {
     public ArrayList<Hex> arrHexAttackers = new ArrayList<>();
     ArrayList<Hex> arrHexCheckFirstTime = new ArrayList<>();
     ArrayList<Unit> arrTempAttackers = new ArrayList<>();
+    ArrayList<Unit> arrUnits = new ArrayList<>();
     Hex hexHilite;
     //	HiliteHex hiliteHex;
     Attack attack;
@@ -133,7 +134,7 @@ public class Combat implements Observer {
             }
         }
          HexHelper.removeDupes(arrHexDefender);
-        CombatDisplayResults.instance.end();
+        //CombatDisplayResults.instance.end();
         WinCRT.instance.end();
         setUpBottom();
         if (arrHexDefender.size() > 0){
@@ -564,6 +565,20 @@ public class Combat implements Observer {
             cleanup(true);   // now done in WinStackCombet
             doCombatPhase();
         }
+    }
+    static ArrayList<UnitInt> arrUnitInt = new ArrayList<>();
+
+    class UnitInt{
+        Unit unit;
+        ArrayList<Hex> arrToAttack = new ArrayList<>();
+        private UnitInt(Unit unit, Hex hexAttack) {
+            this.unit = unit;
+            arrToAttack.add(hexAttack);
+        }
+        public Unit getUnit() {
+            return unit;
+        }
+
     }
 
 
