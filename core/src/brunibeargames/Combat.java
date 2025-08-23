@@ -41,7 +41,8 @@ public class Combat implements Observer {
     public ArrayList<Hex> arrHexAttackers = new ArrayList<>();
     ArrayList<Hex> arrHexCheckFirstTime = new ArrayList<>();
     ArrayList<Unit> arrTempAttackers = new ArrayList<>();
-    ArrayList<Unit> arrUnits = new ArrayList<>();
+    ArrayList<UnitHexToAttack> arrUnitHexAttack = new ArrayList<>();
+
     Hex hexHilite;
     //	HiliteHex hiliteHex;
     Attack attack;
@@ -84,6 +85,7 @@ public class Combat implements Observer {
 
         SaveGame.SaveLastPhase(" Last Turn CombatStart", 2);
         AttackArrows.getInstance().removeArrows();
+        arrUnitHexAttack.clear();
         arrHexDefender.clear();
         arrHexCheckFirstTime.clear();
         if (isAllies){
@@ -91,7 +93,7 @@ public class Combat implements Observer {
         }else{
             Unit.shadeAllRussians();
         }
-        CombatDisplay.instance.end();
+        //CombatDisplay.instance.end();
         if (isAllies) {
             TurnCounter.instance.updateText(i18NBundle.get("combata"));
         }else{
@@ -125,6 +127,7 @@ public class Combat implements Observer {
                                 }
                                 if (!hex.isHasBeenAttackedThisTurn() && isFree) {
                                     arrHexDefender.add(hex);
+                                    UnitHexToAttack unitInt =addUnitHex(unit,hex,arrUnitHexAttack);
                                 }
                             }
                         }
@@ -218,10 +221,26 @@ public class Combat implements Observer {
                 arrHexSchedule.add(hex);
             }
         }
-        if (arrHexSchedule.size() > 0 ){
+        if (!arrHexSchedule.isEmpty()){
             WinModal.instance.set();
             scheduleAttackHilite(arrHexSchedule);
         }
+        /**
+         * problem with below is that we must put in logic
+         * to attack from mre hexes.
+         * Similar to above where we show defender hexes to click on
+         */
+/*        for (UnitHexToAttack unitHex : arrUnitHexAttack){
+            if (isAI){
+                createCombatImage(unitHex.getUnit().getHexOccupy(), false);
+            }else {
+                arrHexSchedule.add(unitHex.getUnit().getHexOccupy());
+            }
+        }
+        if (!arrHexSchedule.isEmpty()){
+            WinModal.instance.set();
+            scheduleAttackHilite(arrHexSchedule);
+        }*/
     }
     private void scheduleAttackHilite(final ArrayList<Hex> arrHexToHilite) {
         Gdx.app.log("Combat", "scheduleAttacks arrHexToHile="+arrHexToHilite);
@@ -566,19 +585,43 @@ public class Combat implements Observer {
             doCombatPhase();
         }
     }
-    static ArrayList<UnitInt> arrUnitInt = new ArrayList<>();
+    private UnitHexToAttack addUnitHex(Unit unit,Hex hexAttack,ArrayList<UnitHexToAttack> arrWork){
+        UnitHexToAttack unitHexToAttack  = findUnitInt(unit,arrWork);
+        if (unitHexToAttack == null){
+            unitHexToAttack = new UnitHexToAttack(unit,hexAttack);
+            arrWork.add(unitHexToAttack);
+            return unitHexToAttack;
+        }else{
+            unitHexToAttack.arrToAttack.add(hexAttack);
+            HexHelper.removeDupes(unitHexToAttack.arrToAttack);
+        }
+        return unitHexToAttack;
 
-    class UnitInt{
+    }
+    private UnitHexToAttack findUnitInt(Unit unit, ArrayList<UnitHexToAttack> arrWork) {
+        for (UnitHexToAttack unitInt : arrWork){
+            if (unitInt.getUnit() == unit){
+                return unitInt;
+            }
+        }
+        return null;
+    }
+
+
+    class UnitHexToAttack {
         Unit unit;
         ArrayList<Hex> arrToAttack = new ArrayList<>();
-        private UnitInt(Unit unit, Hex hexAttack) {
+        private UnitHexToAttack(Unit unit, Hex hexAttack) {
             this.unit = unit;
             arrToAttack.add(hexAttack);
         }
+
         public Unit getUnit() {
             return unit;
         }
-
+        public ArrayList<Hex> getArrToAttack() {
+            return arrToAttack;
+        }
     }
 
 

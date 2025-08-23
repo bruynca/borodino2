@@ -364,6 +364,7 @@ public class SplashScreen {
     }
     public void reStart(){
         stage.addActor(imgBorodino);
+        Borodino.instance.setInSplash(true);
         gameMenu = new GameMenu(stage, sound,atlas,screenHeight, screenWidth);
         System.gc();
     }

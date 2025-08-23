@@ -1,60 +1,60 @@
 combat.png
-size: 668, 1172
+size: 918, 1123
 format: RGBA8888
 filter: Linear, Linear
 repeat: none
 0to0
-  rotate: false
-  xy: 437, 0
-  size: 110, 50
-  orig: 110, 50
-  offset: 0, 0
-  index: -1
-1to1
-  rotate: false
-  xy: 547, 0
-  size: 110, 50
-  orig: 110, 50
-  offset: 0, 0
-  index: -1
-1to2
   rotate: false
   xy: 0, 65
   size: 110, 50
   orig: 110, 50
   offset: 0, 0
   index: -1
-1to3
+1to1
   rotate: false
   xy: 110, 65
   size: 110, 50
   orig: 110, 50
   offset: 0, 0
   index: -1
-1to4
+1to2
   rotate: false
   xy: 220, 65
   size: 110, 50
   orig: 110, 50
   offset: 0, 0
   index: -1
-1to5
+1to3
   rotate: false
   xy: 330, 65
   size: 110, 50
   orig: 110, 50
   offset: 0, 0
   index: -1
-2to1
+1to4
   rotate: false
   xy: 440, 65
   size: 110, 50
   orig: 110, 50
   offset: 0, 0
   index: -1
-3to1
+1to5
   rotate: false
   xy: 550, 65
+  size: 110, 50
+  orig: 110, 50
+  offset: 0, 0
+  index: -1
+2to1
+  rotate: false
+  xy: 660, 65
+  size: 110, 50
+  orig: 110, 50
+  offset: 0, 0
+  index: -1
+3to1
+  rotate: false
+  xy: 770, 65
   size: 110, 50
   orig: 110, 50
   offset: 0, 0
@@ -82,63 +82,63 @@ repeat: none
   index: -1
 attack
   rotate: false
-  xy: 0, 214
+  xy: 322, 165
   size: 136, 156
   orig: 136, 156
   offset: 0, 0
   index: -1
 attackarrow0
   rotate: false
-  xy: 372, 0
+  xy: 592, 0
   size: 65, 65
   orig: 65, 65
   offset: 0, 0
   index: -1
 attackbutton
   rotate: false
-  xy: 501, 115
+  xy: 515, 115
   size: 161, 49
   orig: 161, 49
   offset: 0, 0
   index: -1
 attackbuttonover
   rotate: false
-  xy: 0, 165
+  xy: 676, 115
   size: 161, 49
   orig: 161, 49
   offset: 0, 0
   index: -1
 backgroundallied
   rotate: false
-  xy: 136, 214
+  xy: 458, 165
   size: 230, 350
   orig: 230, 350
   offset: 0, 0
   index: -1
 backgroundrussian
   rotate: false
-  xy: 366, 214
+  xy: 688, 165
   size: 230, 350
   orig: 230, 350
   offset: 0, 0
   index: -1
 bridge
   rotate: false
-  xy: 64, 0
+  xy: 284, 0
   size: 42, 24
   orig: 42, 24
   offset: 0, 0
   index: -1
 cancelbutton
   rotate: false
-  xy: 161, 165
+  xy: 0, 165
   size: 161, 49
   orig: 161, 49
   offset: 0, 0
   index: -1
 cancelbuttonover
   rotate: false
-  xy: 322, 165
+  xy: 161, 165
   size: 161, 49
   orig: 161, 49
   offset: 0, 0
@@ -152,49 +152,56 @@ close
   index: -1
 combatresultsdisplayfrench
   rotate: false
-  xy: 0, 564
+  xy: 0, 515
   size: 650, 304
   orig: 650, 304
   offset: 0, 0
   index: -1
 combatresultsdisplayrussian
   rotate: false
-  xy: 0, 868
+  xy: 0, 819
   size: 650, 304
   orig: 650, 304
   offset: 0, 0
   index: -1
 crtback
   rotate: false
-  xy: 316, 0
+  xy: 536, 0
   size: 56, 39
   orig: 56, 39
   offset: 0, 0
   index: -1
-mechattack
+line
   rotate: false
   xy: 22, 0
+  size: 220, 2
+  orig: 220, 2
+  offset: 0, 0
+  index: -1
+mechattack
+  rotate: false
+  xy: 242, 0
   size: 42, 17
   orig: 42, 17
   offset: 0, 0
   index: -1
 river
   rotate: false
-  xy: 106, 0
+  xy: 326, 0
   size: 42, 24
   orig: 42, 24
   offset: 0, 0
   index: -1
 surprise
   rotate: false
-  xy: 148, 0
+  xy: 368, 0
   size: 42, 24
   orig: 42, 24
   offset: 0, 0
   index: -1
 tfback
   rotate: false
-  xy: 483, 165
+  xy: 330, 115
   size: 185, 30
   orig: 185, 30
   offset: 0, 0
@@ -208,28 +215,28 @@ tfcusor
   index: -1
 tfselected
   rotate: false
-  xy: 330, 115
+  xy: 657, 0
   size: 171, 30
   orig: 171, 30
   offset: 0, 0
   index: -1
 town
   rotate: false
-  xy: 190, 0
+  xy: 410, 0
   size: 42, 24
   orig: 42, 24
   offset: 0, 0
   index: -1
 trees
   rotate: false
-  xy: 232, 0
+  xy: 452, 0
   size: 42, 24
   orig: 42, 24
   offset: 0, 0
   index: -1
 village
   rotate: false
-  xy: 274, 0
+  xy: 494, 0
   size: 42, 24
   orig: 42, 24
   offset: 0, 0

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -80,12 +81,13 @@ public class CombatDisplay {
 
         group.addActor(hexGroup);
         stage.addActor(group);
+
     }
 
 
     public void updateCombat(Attack attack, String odds) {
        this.attack = attack;
-
+        setGroupPosition();
         group.setVisible(true);
         hexGroup.clear();
         String dOds = odds.replaceAll(":","to") ;
@@ -113,8 +115,8 @@ public class CombatDisplay {
         group.setVisible(false);
         //WinCRT.instance.end();
         haBeenDragged = false;
-        int x = (int) background.getX();
-        int y = (int) background.getY();
+        int x = (int)group.getX();
+        int y = (int) group.getY();
         GamePreferences.setWindowLocation("combatdisplay", x, y);
 
         if (hexGroup != null) {
@@ -207,19 +209,21 @@ public class CombatDisplay {
         background = new Image(tBackRussian);
         background.setHeight(360);
         background.setWidth(236);
-        //Vector2 v2 = GamePreferences.getWindowLocation("combatdisplay");
-        //if (v2.x == 0 && v2.y == 0) {
-            background.setPosition(Gdx.graphics.getWidth()-(background.getWidth()),
-                    Gdx.graphics.getHeight()-(background.getHeight()-10));
-        //}else{
-        //    background.setPosition(v2.x, v2.y);
-       // }
+
 
         //background.setPosition((Gdx.graphics.getWidth() - (background.getWidth() +160)), (Gdx.graphics.getHeight() - background.getHeight() - 16 ));
 
         background.addListener(new DragListener() {
+            private float startX, startY;
+            @Override
+            public void dragStart(InputEvent event, float x, float y, int pointer) {
+                // Store the initial touch position relative to the group's origin
+                startX = x;
+                startY = y;
+            }
+
             public void drag(InputEvent event, float x, float y, int pointer) {
-                group.moveBy(x - 20, y - 20);
+                group.moveBy(x - startX, y - startY);
                 haBeenDragged = true;
                 Gdx.app.log("CombatDisplay", "dragging");
                 Gdx.app.log("CombatDisplay", "x+y="+background.getX()+"  "+background.getY());
@@ -229,6 +233,16 @@ public class CombatDisplay {
         });
 
         group.addActor(background);
+    }
+    private void setGroupPosition(){
+        Vector2 v2 = GamePreferences.getWindowLocation("combatdisplay");
+        if (v2.x == 0 && v2.y == 0) {
+            float x = ((Gdx.graphics.getWidth()-(background.getWidth())/2));
+            float y = ((Gdx.graphics.getHeight()-(background.getHeight()-10))/2);
+            group.setPosition(x,y);
+        }else{
+            group.setPosition(v2.x, v2.y);
+        }
     }
 
     private void initializeOddsImage(){
