@@ -24,6 +24,7 @@ import brunibeargames.UI.EventPopUp;
 import brunibeargames.UI.WinStackCombat;
 import brunibeargames.Unit.ClickAction;
 import brunibeargames.Unit.Unit;
+import brunibeargames.Unit.UnitHexToAttack;
 
 public class Combat implements Observer {
 
@@ -109,6 +110,7 @@ public class Combat implements Observer {
         } else {
         arrUnitWorkFindHexesCanAttack = Unit.getOnBoardRussians();
         }
+        UnitHexToAttack.startProcess(); // initialize
     /**
      * get hexes that the units can attack
      */
@@ -127,7 +129,7 @@ public class Combat implements Observer {
                                 }
                                 if (!hex.isHasBeenAttackedThisTurn() && isFree) {
                                     arrHexDefender.add(hex);
-                                    UnitHexToAttack unitInt =addUnitHex(unit,hex,arrUnitHexAttack);
+                                    UnitHexToAttack unitInt = UnitHexToAttack.addUnitHex(unit,hex);
                                 }
                             }
                         }
@@ -585,44 +587,8 @@ public class Combat implements Observer {
             doCombatPhase();
         }
     }
-    private UnitHexToAttack addUnitHex(Unit unit,Hex hexAttack,ArrayList<UnitHexToAttack> arrWork){
-        UnitHexToAttack unitHexToAttack  = findUnitInt(unit,arrWork);
-        if (unitHexToAttack == null){
-            unitHexToAttack = new UnitHexToAttack(unit,hexAttack);
-            arrWork.add(unitHexToAttack);
-            return unitHexToAttack;
-        }else{
-            unitHexToAttack.arrToAttack.add(hexAttack);
-            HexHelper.removeDupes(unitHexToAttack.arrToAttack);
-        }
-        return unitHexToAttack;
-
-    }
-    private UnitHexToAttack findUnitInt(Unit unit, ArrayList<UnitHexToAttack> arrWork) {
-        for (UnitHexToAttack unitInt : arrWork){
-            if (unitInt.getUnit() == unit){
-                return unitInt;
-            }
-        }
-        return null;
-    }
 
 
-    class UnitHexToAttack {
-        Unit unit;
-        ArrayList<Hex> arrToAttack = new ArrayList<>();
-        private UnitHexToAttack(Unit unit, Hex hexAttack) {
-            this.unit = unit;
-            arrToAttack.add(hexAttack);
-        }
-
-        public Unit getUnit() {
-            return unit;
-        }
-        public ArrayList<Hex> getArrToAttack() {
-            return arrToAttack;
-        }
-    }
 
 
 }

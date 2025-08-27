@@ -62,8 +62,11 @@ public class WinStackCombat implements Observer {
     TextButton.TextButtonStyle tx = GameSelection.instance.textButtonStyle;
     TextButton attackButton;
     TextButton dummyButton;
+    Label actLabel;
     boolean isRollDie = false;
     int cntHilited = 0;
+    WinStackDefense winStackDefense;
+    float[] pWinsDefense;
 
 
 
@@ -115,6 +118,8 @@ public class WinStackCombat implements Observer {
     }
     private void showWindow() {
         Vector2 v2 = GamePreferences.getWindowLocation("StackOfUnits");
+        winStackDefense = new WinStackDefense(hex);
+        pWinsDefense = winStackDefense.getPoly();
         if (v2.x == 0 && v2.y == 0) {
             window.setPosition(Gdx.graphics.getWidth() / 2 - window.getWidth() / 2, Gdx.graphics.getHeight() / 2 - window.getHeight() / 2);
             v2.x  = Gdx.graphics.getWidth() - window.getWidth();
@@ -127,16 +132,25 @@ public class WinStackCombat implements Observer {
         window.remove();
 
         setCounters();
-        addAttackButton();
         window.row();
-      //  Label = getActivatedLabel();
-      //  window.row();
+
+        addAttackButton();
+        if (cntHilited == 0){
+            attackButton.setVisible(false);
+        }else{
+            window.addActor(actLabel);
+            window.row();
+            attackButton.setVisible(true);
+        }
+
+        //  Label = getActivatedLabel();
+        window.row();
         /**
          *  dummy used for positioning
          */
         window.add(dummyButton).width(150).height(40).bottom().padBottom(15).row();
        // window.add(textButton).width(textButton.getWidth()).height(textButton.getHeight());
-        //window.row();
+        window.row();
     //    window.pack();
         window.addActor(attackButton);
         float widthWindow = window.getWidth();
@@ -144,14 +158,15 @@ public class WinStackCombat implements Observer {
         attackButton.setX(widthWindow/2 - attackButton.getWidth()/2);
         attackButton.setY(dummyButton.getY());
         stage.addActor(window);
-    }
+     }
+
+
     /**
      * create new UI counters with listners for our window
      * These counters are differant than the map counters and are only used for this UI screen
      */
     private void  setCounters(){
         final int size =100;
-        boolean isFirst = true;
         int cnt = 0;
         for (Unit unit: arrUnits)
         {
@@ -184,6 +199,7 @@ public class WinStackCombat implements Observer {
                     }else{
                         attackButton.setVisible(true);
                     }
+                    setActivatedLabel(counterArrayList);
                 }
             });
             //              counter.stack.setSize( Counter.sizeOnMap,Counter.sizeOnMap);
@@ -197,6 +213,25 @@ public class WinStackCombat implements Observer {
         }
         //        reCalculate();
     }
+
+    private void setActivatedLabel(ArrayList<Counter> counterArrayList) {
+        boolean isAttackActivated = true;
+        for (Counter counter:counterArrayList){
+            if (counter.getCounterStack().isHilited()) {
+                if (!counter.getUnit().isActivated()) {
+                    isAttackActivated = false;
+                }
+            }
+        }
+        if (isAttackActivated){
+            Label.LabelStyle Lanbnew = new Label.LabelStyle(Fonts.getFont24(), Color.GREEN);
+            actLabel = new Label(i18NBundle.format("activate"),Lanbnew);
+        }else {
+            Label.LabelStyle Lanbnew = new Label.LabelStyle(Fonts.getFont24(), Color.ORANGE);
+            actLabel = new Label(i18NBundle.format("notactive"),Lanbnew);
+        }
+    }
+
     private void addAttackButton(){
         //String rollDie = i18NBundle.format("combatstack");
         String attack = i18NBundle.format("attack");
@@ -216,6 +251,7 @@ public class WinStackCombat implements Observer {
 
     private void end(){
         Gdx.app.log("WinStackCombat", "end()");
+        winStackDefense.end();
         isActive =false;
         int lastX = (int) window.getX();
         int lastY = (int) window.getY();
@@ -236,6 +272,8 @@ public class WinStackCombat implements Observer {
     }
     public void cancel() {
         Gdx.app.log("WinStackCombat", "cancel");
+        winStackDefense.end();
+
         isActive = false;
         window.remove();
         Borodino.instance.deleteObserver(this);
@@ -261,11 +299,19 @@ public class WinStackCombat implements Observer {
         float  winStarty = window.getY();
         float  winEndy = window.getY()+window.getHeight();
         int reverse = Gdx.graphics.getHeight() - op.y;
-        if (op.x < winStartx || op.x > winEndx || reverse < winStarty || reverse > winEndy) {
-            if (WinCRT.instance.checkOutsideWindow(op.x, op.y)){
-                if (CombatDisplay.instance.checkOutsideWindow(op.x,op.y)){
-                    cancel();
-                 }
+        Gdx.app.log("WinStackCombat", "update x="+pWinsDefense[0]);
+        Gdx.app.log("WinStackCombat", "update x="+pWinsDefense[1]);
+        Gdx.app.log("WinStackCombat", "update y="+pWinsDefense[2]);
+        Gdx.app.log("WinStackCombat", "update y="+pWinsDefense[3]);
+
+        if (op.x < pWinsDefense[0] || op.x > pWinsDefense[1] || reverse < pWinsDefense[2] || reverse > pWinsDefense[3]) {
+
+            if (op.x < winStartx || op.x > winEndx || reverse < winStarty || reverse > winEndy) {
+                if (WinCRT.instance.checkOutsideWindow(op.x, op.y)) {
+                    if (CombatDisplay.instance.checkOutsideWindow(op.x, op.y)) {
+                        cancel();
+                    }
+                }
             }
         }
     }
